@@ -28,7 +28,7 @@ mongoose.connect(
 
 // product
 const productRoute = require('../routes/productRoute')
-app.use('/api/v1/products', productRoute)
+app.use('/products', productRoute)
 
 
 // auth
@@ -39,8 +39,6 @@ app.use('/api/v1/products', productRoute)
 
 // user
 // ...
-
-
 
 
 
