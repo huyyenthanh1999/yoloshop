@@ -1,0 +1,168 @@
+@import url("https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@100;300;400;500;700;800;900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+
+:root {
+    --blue-color: #4267b2;
+    --pink-color: #fe7e73;
+    --orange-color: #fbb96b;
+    }
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 62.5%;
+    line-height: 1.6rem;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-size: 1.3rem;
+    font-family: 'Roboto', sans-serif;
+}
+
+ul {
+    list-style-type: none;
+}
+
+a {
+    text-decoration: none;
+    color: unset;
+}
+
+img {
+    max-width: 100%;
+}
+
+.grid-rows {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: -10px;
+    margin-right: -10px;
+}
+
+.grid-col-4 {
+    width: 25%;
+    padding: 0 10px;
+}
+
+.main {
+    margin-top: 170px;
+    margin-bottom: 2rem;
+    min-height: 100vh;
+}
+
+.btn {
+    border: 0;
+    outline: 0;
+    color: #fff;
+    font-weight: 600;
+    text-transform: uppercase;
+    cursor: pointer;
+    overflow: hidden;
+    position: relative;
+}
+
+.btn-large {
+    font-size: 1.95rem;
+}
+
+.btn-smaill {
+    font-size: 1.3rem;
+}
+
+.btn-primary {
+    background-color: #4267b2;
+}
+
+.btn-txt {
+    padding: 13px 26px;
+}
+
+.btn-icon,
+.btn-txt {
+    display: block;
+    transition: -webkit-transform .5s ease;
+    transition: transform .5s ease;
+    transition: transform .5s ease,-webkit-transform .5s ease;
+}
+
+.btn-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    -webkit-transform: translateX(-100%);
+    transform: translateX(-100%);
+}
+
+.btn:hover .btn-txt {
+    -webkit-transform: translateX(100%);
+    transform: translateX(100%);
+}
+
+.btn:hover .btn-icon {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+}
+/* section css */
+.section {
+    margin-bottom: 80px;
+}
+
+.section-title {
+    font-size: 2.6rem;
+    text-transform: capitalize;
+    text-align: center;
+}
+
+.section-body {
+    margin-top: 70px;
+}
+
+
+@media only screen and (max-width: 64em) {
+    .grid-col-4 {
+        width: 50%;
+        margin-bottom: 20px;
+    }
+
+    .main {
+        margin-top: 90px;
+    }
+}
+
+
+
+@media only screen and (max-width: 37.5em) {
+    html {
+        font-size: 1.1rem;
+    }
+    
+    .grid-col-4 {
+        width: 100%;
+    }
+
+    .main {
+        margin-top: 50px;
+    }
+
+    .btn-txt {
+        padding: 11px 22px;
+    }
+
+    .btn {
+        font-size: 0.6rem;
+    }
+
+    .section-title {
+        font-size: 1.3rem;
+    }
+}
