@@ -20,7 +20,6 @@ app.set('views', 'views')
 
 
 // setup public folder
-// app.use(express.static('public'))
 app.use("/public",express.static(path.join(__dirname, 'public')));
 
 
@@ -55,6 +54,12 @@ app.use('/', indexRoute)
 const userRoute = require('./routes/userRoute')
 app.use('/users', userRoute)
 
+
+
+// admin
+app.get('/admin', (req, res) => {
+    res.render('pages/admin')
+})
 
 
 
