@@ -41,9 +41,8 @@ app.use('/', indexRoute)
 
 // setup router
 // product
-const productRoute = require('./routes/productRoute')
-app.use('/products', productRoute)
-
+// const productRoute = require('./routes/productRoute')
+// app.use('/products', productRoute)
 
 
 // auth

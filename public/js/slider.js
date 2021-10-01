@@ -21,6 +21,11 @@ function showSlide(index) {
     $('.index').text(`${currentSlide + 1}/${slides.length}`);
 }
 
+setInterval(() => {
+    currentSlide++;
+    showSlide(currentSlide)
+}, 5000)
+
 //remove active class for all slide
 function removeActiveSlices(){
     slides.forEach(slide => slide.classList.remove('active'));
