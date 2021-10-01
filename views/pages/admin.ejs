@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<%- include ('../components/admin/admin-head'); -%>
+	</head>
+
+	<body>
+		<%- include ('../components/admin/admin-nav'); -%>
+
+		<div class="admin-main">
+			<div>
+				<%- include ('../components/admin/admin-header'); -%>
+
+				<div class="admin-content">
+					<div v-if="navItemCurrent == 'dashboard' ">
+						<%- include ('../components/admin/admin-dashboard'); -%>
+					</div>
+					<div v-else-if="navItemCurrent == 'products' ">
+						<%- include ('../components/admin/admin-products'); -%>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+		<script src="https://unpkg.com/vue@next"></script>
+		<script src="/public/js/admin.js"></script>
+	</body>
+</html>

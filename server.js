@@ -57,6 +57,12 @@ app.use('/users', userRoute)
 
 
 
+// admin
+app.get('/admin', (req, res) => {
+    res.render('pages/admin')
+})
+
+
 
 // test server
 app.get('/test', (req, res) => {
