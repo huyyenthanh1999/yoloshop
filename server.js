@@ -39,7 +39,6 @@ const indexRoute = require('./routes/indexRoute');
 app.use('/', indexRoute)
 
 
-// setup router
 // product
 // const productRoute = require('./routes/productRoute')
 // app.use('/products', productRoute)
@@ -57,9 +56,8 @@ app.use('/users', userRoute)
 
 
 // admin
-app.get('/admin', (req, res) => {
-    res.render('pages/admin')
-})
+const adminRoute = require('./routes/adminRoute')
+app.use('/admin', adminRoute)
 
 
 
@@ -67,6 +65,8 @@ app.get('/admin', (req, res) => {
 app.get('/test', (req, res) => {
     res.json('Test thanh cong')
 })
+
+
 
 // listening
 const PORT = process.env.PORT || 3000
