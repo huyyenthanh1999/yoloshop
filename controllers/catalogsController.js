@@ -35,12 +35,12 @@ module.exports.getCatalogs = async (req, res) => {
   if (arrSize[0] === "") {
     arrSize = ["s", "m", "l", "xl"];
   }
-  // if (arrColor[0] === "") {
-  //   arrColor = ["red", "white", "blue", "orange"];
-  // }
-  // if (arrType[0] === "") {
-  //   arrType = ["ao-somi", "ao-thun", "quan-jean"];
-  // }
+  if (arrColor[0] === "") {
+    arrColor = ["red", "white", "blue", "orange"];
+  }
+  if (arrType[0] === "") {
+    arrType = ["ao-somi", "ao-thun", "quan-jean"];
+  }
   try {
     const typeProduct = await ProductCode.find({
       type: { $in: arrType },

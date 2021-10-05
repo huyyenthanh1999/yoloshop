@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<%- include ('../components/admin/admin-head'); -%>
+	</head>
+
+	<body>
+		<%- include ('../components/admin/admin-nav'); -%>
+
+		<div class="admin-main">
+			<div>
+				<%- include ('../components/admin/admin-header'); -%>
+
+				<div class="admin-content">
+					<div class="admin-dashboard">
+						<%- include ('../components/admin/admin-dashboard'); -%>
+					</div>
+					<div class="admin-products">
+						<%- include ('../components/admin/admin-products'); -%>
+					</div>
+					<div class="admin-add-product">
+						<%- include ('../components/admin/admin-add-product'); -%>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Jquery -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+		<script src="public/js/admin.js"></script>
+		<script src="public/js/admin-add-product.js"></script>
+	</body>
+</html>

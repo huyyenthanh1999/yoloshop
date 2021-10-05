@@ -34,17 +34,24 @@ connectDB();
 const indexRoute = require("./routes/indexRoute");
 app.use("/", indexRoute);
 
-// setup router
 // product
-const productRoute = require("./routes/productRoute");
-app.use("/products", productRoute);
+const productRoute = require('./routes/productRoute')
+app.use('/api/products', productRoute)
+
 
 // auth
 // ...
 
 // user
-const userRoute = require("./routes/userRoute");
-app.use("/users", userRoute);
+const userRoute = require('./routes/userRoute')
+app.use('/api/users', userRoute)
+
+
+
+// admin
+const adminRoute = require('./routes/adminRoute')
+app.use('/admin', adminRoute)
+
 
 // Products detail
 const catalogsRoute = require("./routes/catalogsRoute");
@@ -54,6 +61,11 @@ app.use("/catalogs", catalogsRoute);
 app.get("/test", (req, res) => {
   res.json("Test thanh cong");
 });
+
+
+// Not found
+app.use((req,res) => res.render('pages/notfound'))
+
 
 // listening
 const PORT = process.env.PORT || 3000;
