@@ -2,16 +2,16 @@
     <div class="section-title">Top sản phẩm bán chạy trong tuần</div>
     <div class="section-body">
         <div class="grid-rows">
-            <% hotProducts.forEach(product => { %>
+            <% hotIndexes.forEach(hotIndex => { %>
             <div class="grid-col-4">
                 <div class="product-card">
-                    <a href="">
+                    <a href="/products/<%= products[hotIndex]._id %>">
                         <div class="product-card__image">
-                            <img src="<%= product.images[0] %>" alt="">
-                            <img src="<%= product.images[1] %>" alt="">
+                            <img src="<%= products[hotIndex].images[0] %>" alt="">
+                            <img src="<%= products[hotIndex].images[1] %>" alt="">
                         </div>
-                        <h3 class="product-card__name"><%= product.name %></h3>
-                        <div class="product-card__price"><%= product.price %></div>
+                        <h3 class="product-card__name"><%= products[hotIndex].name %></h3>
+                        <div class="product-card__price"><%= products[hotIndex].price %></div>
                     </a>
                     <div class="product-card__btn">
                         <button class="btn btn-primary btn-small">

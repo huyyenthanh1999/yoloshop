@@ -1,19 +1,19 @@
 <div class="section">
     <div class="section-title">Sản phẩm mới</div>
     <div class="section-body">
-        <% for (var i = 1; i <= newProducts.length - 3; i++) { %>
+        <% for (var i = 1; i <= newIndexes.length - 3; i++) { %>
             <% if (i % 4 == 1){ %>
                 <div class="grid-rows">
                     <% for (var j = i - 1; j < (i + 3); j++) { %>
                         <div class="grid-col-4">
                             <div class="product-card">
-                                <a href="">
+                                <a href="<%= products[newIndexes[j]]._id %>">
                                     <div class="product-card__image">
-                                        <img src="<%= newProducts[j].images[0] %>" alt="">
-                                        <img src="<%= newProducts[j].images[1] %>" alt="">
+                                        <img src="<%= products[newIndexes[j]].images[0] %>" alt="">
+                                        <img src="<%= products[newIndexes[j]].images[1] %>" alt="">
                                     </div>
-                                    <h3 class="product-card__name"><%= newProducts[j].name %></h3>
-                                    <div class="product-card__price"><%= newProducts[j].price %></div>
+                                    <h3 class="product-card__name"><%= products[newIndexes[j]].name %></h3>
+                                    <div class="product-card__price"><%= products[newIndexes[j]].price %></div>
                                 </a>
                                 <div class="product-card__btn">
                                     <button class="btn btn-primary btn-small">
