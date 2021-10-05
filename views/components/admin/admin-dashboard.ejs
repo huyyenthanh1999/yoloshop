@@ -1,19 +1,31 @@
 <h2>Dashboard</h2>
 <div class="admin-statistical">
-	<div class="box">
+	<div class="box" name-nav="products">
 		<p>20<br /><span>Products</span></p>
 		<i class="fas fa-list"></i>
 	</div>
-	<div class="box">
+	<div class="box" name-nav="customers">
 		<p>10<br /><span>Customers</span></p>
 		<i class="fas fa-user-friends"></i>
 	</div>
-	<div class="box">
+	<div class="box" name-nav="orders">
 		<p>30<br /><span>Orders</span></p>
 		<i class="fas fa-shopping-bag"></i>
 	</div>
-	<div class="box">
+	<div class="box" name-nav="sales">
 		<p>40<br /><span>Sales</span></p>
 		<i class="fas fa-shopping-cart"></i>
 	</div>
 </div>
+
+<script>
+	const boxes = document.querySelectorAll('.admin-statistical .box')
+	boxes.forEach((box) => {
+		box.addEventListener('click', (e) => {
+			const element = document.querySelector(
+				`.admin-nav a[name-nav=${e.currentTarget.getAttribute('name-nav')}]`
+			)
+			element.click()
+		})
+	})
+</script>

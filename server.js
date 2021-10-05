@@ -39,10 +39,9 @@ const indexRoute = require('./routes/indexRoute');
 app.use('/', indexRoute)
 
 
-// setup router
 // product
-// const productRoute = require('./routes/productRoute')
-// app.use('/products', productRoute)
+const productRoute = require('./routes/productRoute')
+app.use('/api/products', productRoute)
 
 
 // auth
@@ -52,14 +51,13 @@ app.use('/', indexRoute)
 
 // user
 const userRoute = require('./routes/userRoute')
-app.use('/users', userRoute)
+app.use('/api/users', userRoute)
 
 
 
 // admin
-app.get('/admin', (req, res) => {
-    res.render('pages/admin')
-})
+const adminRoute = require('./routes/adminRoute')
+app.use('/admin', adminRoute)
 
 
 
@@ -67,6 +65,11 @@ app.get('/admin', (req, res) => {
 app.get('/test', (req, res) => {
     res.json('Test thanh cong')
 })
+
+
+// Not found
+app.use((req,res) => res.render('pages/notfound'))
+
 
 // listening
 const PORT = process.env.PORT || 3000
