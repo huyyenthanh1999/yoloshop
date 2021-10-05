@@ -6,7 +6,6 @@ const upload = require('../middlewares/uploadImgOfUser')
 router.post('/register', upload.single('avatar'), controller.register)
 
 // login
-// a trung thanh
 
 // edit user
 router.put('/:id', upload.single('avatar'), controller.editUser)
