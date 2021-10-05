@@ -19,18 +19,10 @@ app.set("views", "views");
 app.use("/public", express.static(path.join(__dirname, "public")));
 
 // connect to database
-<<<<<<< HEAD
-async function connectDB(){
-    await mongoose.connect(
-        `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0.k7qck.mongodb.net/k14shop?retryWrites=true&w=majority`
-    )
-    console.log("Connect DB successfully");
-=======
 async function connectDB() {
   await mongoose.connect(
     `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0.k7qck.mongodb.net/k14shop?retryWrites=true&w=majority`
   );
->>>>>>> 5b0319d4aa6bcbc2913c3e29f08dd0a5e09d4646
 }
 //hoang database local
 // async function connectDB() {
@@ -55,16 +47,13 @@ const userRoute = require('./routes/userRoute')
 app.use('/api/users', userRoute)
 
 
-<<<<<<< HEAD
 // cart
 const cartRoute = require('./routes/cartRoute')
-app.use('/carts', cartRoute)
-=======
+app.use('/api/carts', cartRoute)
 
 // admin
 const adminRoute = require('./routes/adminRoute')
 app.use('/admin', adminRoute)
->>>>>>> 5b0319d4aa6bcbc2913c3e29f08dd0a5e09d4646
 
 
 // Products detail
@@ -82,11 +71,7 @@ app.use((req,res) => res.render('pages/notfound'))
 
 
 // listening
-<<<<<<< HEAD
-const PORT = process.env.PORT || 8000
-=======
 const PORT = process.env.PORT || 3000;
->>>>>>> 5b0319d4aa6bcbc2913c3e29f08dd0a5e09d4646
 app.listen(PORT, () => {
   console.log("Listening...");
 });
