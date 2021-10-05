@@ -30,6 +30,7 @@ async function connectDB(){
     await mongoose.connect(
         `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0.k7qck.mongodb.net/k14shop?retryWrites=true&w=majority`
     )
+    console.log("Connect DB successfully");
 }
 connectDB()
 
@@ -55,7 +56,9 @@ app.use('/products', productRoute)
 const userRoute = require('./routes/userRoute')
 app.use('/users', userRoute)
 
-
+// cart
+const cartRoute = require('./routes/cartRoute')
+app.use('/carts', cartRoute)
 
 
 // test server
@@ -64,7 +67,7 @@ app.get('/test', (req, res) => {
 })
 
 // listening
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT || 8000
 app.listen(PORT, () => {
 	console.log('Listening...')
 })

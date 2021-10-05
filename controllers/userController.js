@@ -7,7 +7,7 @@ module.exports.register = async (req, res) => {
 		const { email, phoneNumber } = req.body
 		const user = await User.findOne({ $or: [{ email }, { phoneNumber }] })
 
-		if (user)
+		if (user) 
 			return res
 				.status(400)
 				.json({ status: 'fail', message: 'User đã tồn tại.' })
