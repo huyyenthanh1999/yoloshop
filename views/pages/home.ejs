@@ -12,27 +12,42 @@
 		<link rel="stylesheet" href="../../public/css/homeBase.css" />
 		<link rel="stylesheet" href="../../public/css/product-card.css" />
 
-    <div class="container">
-        <div class="main">
-            <div>
-                <%- include ('../components/slider'); -%>
-                <%- include ('../components/featured-card'); -%>
-                <%- include ('../components/hot-products'); -%>
-                <%- include ('../components/new-products'); -%>
-                <div class="section">
-                    <div class="section-body">
-                        <a href="">
-                            <img src="/public/images/banner.png" alt="">
-                        </a>
-                    </div>
-                </div>
-                <%- include ('../components/popular-product') -%>
-            </div>
-        </div>
-    </div>
-    <%- include ('../components/footer'); -%> 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="../../public/js/header.js"></script>
-    <script src="../../public/js/slider.js"></script>
-</body>
+		<link
+			href="https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css"
+			rel="stylesheet"
+		/>
+	</head>
+	<style>
+		:root {
+			--blue-color: #4267b2;
+			--pink-color: #fe7e73;
+			--orange-color: #fbb96b;
+		}
+	</style>
+	<body>
+		<%- include ('../components/header'); -%>
+
+		<div id="app" class="container">
+			<div class="main">
+				<div>
+					<%- include ('../components/slider'); -%> <%- include
+					('../components/featured-card'); -%> <%- include
+					('../components/hot-products'); -%> <%- include
+					('../components/new-products'); -%>
+					<div class="section">
+						<div class="section-body">
+							<a href="">
+								<img src="/public/images/banner.png" alt="" />
+							</a>
+						</div>
+					</div>
+					<%- include ('../components/popular-product') -%>
+				</div>
+			</div>
+		</div>
+		<%- include ('../components/footer'); -%>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+		<script src="../../public/js/header.js"></script>
+		<script src="../../public/js/slider.js"></script>
+	</body>
 </html>
