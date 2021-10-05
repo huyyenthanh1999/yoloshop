@@ -40,8 +40,8 @@ app.use('/', indexRoute)
 
 
 // product
-// const productRoute = require('./routes/productRoute')
-// app.use('/products', productRoute)
+const productRoute = require('./routes/productRoute')
+app.use('/api/products', productRoute)
 
 
 // auth
@@ -51,7 +51,7 @@ app.use('/', indexRoute)
 
 // user
 const userRoute = require('./routes/userRoute')
-app.use('/users', userRoute)
+app.use('/api/users', userRoute)
 
 
 
