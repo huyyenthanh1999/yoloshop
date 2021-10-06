@@ -1,4 +1,4 @@
-let navCurrentItem = 'dashboard'
+let navCurrentItem = 'add-product'
 
 function showAdminContent() {
 	const contents = document.querySelectorAll('.admin-content > div')

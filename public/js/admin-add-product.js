@@ -58,6 +58,12 @@ form.addEventListener('submit', async (e) => {
 		'size',
 		document.querySelector('#product-size > .active-size').innerText
 	)
+
+	// add lazing add product
+	const lazy = document.querySelector('.lazy-add-product')
+	lazy.classList.toggle('hide')
+
+
 	// console.log(formData)
 	let response = await fetch('/api/products', {
 		method: 'POST',
@@ -66,7 +72,7 @@ form.addEventListener('submit', async (e) => {
 	// let result = await response.json()
 
 	if (response.status == 200) {
+		lazy.classList.toggle('hide')
 		alert('Thêm sản phẩm thành công')
-		window.location.href = '/'
 	}
 })
