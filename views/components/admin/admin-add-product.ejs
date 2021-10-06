@@ -1,0 +1,93 @@
+<form enctype="multipart/form-data">
+	<h2>Thêm sản phẩm</h2>
+
+	<label for="product-name">Tên sản phẩm</label>
+	<input
+		type="text"
+		placeholder="Tên sản phẩm"
+		name="name"
+		id="product-name"
+		required
+	/>
+
+	<div class="row mb-1 d-flex align-items-center">
+		<div class="col-4">
+			<label for="product-cost">Giá sản phẩm</label>
+			<input
+				type="number"
+				placeholder="Giá sản phẩm"
+				name="cost"
+				id="product-cost"
+				required
+			/>
+		</div>
+		<div class="col-4">
+			<select name="type" required>
+				<option value="" selected>Chọn loại trang phục</option>
+				<option value="ao-so-mi">Áo sơ mi</option>
+				<option value="ao-thun">Áo thun</option>
+				<option value="quan-jean">Quần jean</option>
+				<option value="other">Khác</option>
+			</select>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-4">
+			<label for="product-color" class="mb-1">Chọn màu sắc</label>
+			<div class="wrap-color d-flex align-items-center">
+				<div class="preview-color"></div>
+				<input
+					type="text"
+					name="color"
+					id="product-color"
+					placeholder="Màu sản phẩm"
+					required
+				/>
+			</div>
+		</div>
+		<div class="col-4 ps-5">
+			<label for="product-size" class="mb-1">Chọn size</label>
+			<div id="product-size" class="wrap-size d-flex align-items-center">
+				<div>S</div>
+				<div>M</div>
+				<div>L</div>
+				<div>XL</div>
+				<div>XXL</div>
+			</div>
+		</div>
+		<div class="col-4">
+			<label for="product-total">Số lượng</label>
+			<input
+				type="number"
+				name="total"
+				id="product-total"
+				placeholder="Số lượng"
+				required
+			/>
+		</div>
+	</div>
+
+	<label for="product-description">Miêu tả sản phẩm</label>
+	<textarea
+		class="form-control"
+		placeholder="Miêu tả sản phẩm"
+		name="description"
+		id="product-description"
+		required
+	></textarea>
+
+	<div class="input-images mt-4">
+		<label for="product-images">Thêm ảnh cho sản phẩm</label>
+		<input type="file" multiple required id="product-images" name="images" />
+		<div class="preview-images d-flex flex-wrap"></div>
+	</div>
+
+	<button type="submit" class="add-product-button">Thêm</button>
+</form>
+
+<!-- Tạo lớp overlay loading trong đi đợi upload sản phẩm thàng công -->
+<div class="lazy-add-product hide">
+	<div class="lazy-text">Đang thêm sản phẩm</div>
+	<div class="line-loading"></div>
+</div>
