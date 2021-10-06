@@ -4,6 +4,8 @@ const cards = require('../public/data/cardData');
 const hotProducts = require('../public/data/hotProduct');
 const products = require('../public/data/products');
 const newProducts = require('../public/data/newProduct');
+const router = require('./userRoute');
+const path = require('path');
 
 indexRoute.get('/', (req, res) => {
     res.render('pages/home', {

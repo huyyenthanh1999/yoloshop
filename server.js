@@ -20,18 +20,20 @@ app.set('views', 'views')
 
 
 // setup public folder
-app.use("/public",express.static(path.join(__dirname, 'public')));
+app.use("/public", express.static(path.join(__dirname, 'public')));
 
 
 
 
 // connect to database
-async function connectDB(){
-    await mongoose.connect(
-        `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0.k7qck.mongodb.net/k14shop?retryWrites=true&w=majority`
-    )
+async function connectDB() {
+    // await mongoose.connect(
+    //     `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0.k7qck.mongodb.net/k14shop?retryWrites=true&w=majority`
+    // )
+    await mongoose.connect('mongodb://localhost:27017/k14shop');
 }
 connectDB()
+
 
 
 // setup router
@@ -71,5 +73,5 @@ app.get('/test', (req, res) => {
 // listening
 const PORT = process.env.PORT || 3000
 app.listen(PORT, () => {
-	console.log('Listening...')
+    console.log('Listening...')
 })
