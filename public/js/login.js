@@ -10,7 +10,7 @@ form.addEventListener('submit', async (e) => {
 
 
     const result = $.ajax({
-        url: '/users/login',
+        url: '/api/users/login',
         type: 'POST',
         data: {
             password, email, phoneNumber
@@ -20,7 +20,7 @@ form.addEventListener('submit', async (e) => {
             console.log(data)
             localStorage.setItem('tokenId', data.data.token)
             // document.cookie = `tokenID=${data.data.token}`
-            // window.location.href = '/'
+            window.location.href = '/'
         })
         .catch(error => {
             alert('Mật khẩu hoặc email/phone không đúng')
