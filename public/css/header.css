@@ -64,6 +64,27 @@
     color: #4267b2;
 }
 
+.header-menu__item {
+    position: relative;
+}
+
+.log-btn {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: -100%;
+    min-width: 105px;
+    align-items: center;
+}
+
+.log-btn:hover {
+    background-color: #ddd;
+}
+
+.header-menu__item:hover .log-btn {
+    display: flex;
+}
+
 .header-menu__item.active {
     font-weight: 600;
     color: #4267b2;

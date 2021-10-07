@@ -47,7 +47,9 @@ app.use('/api/products', productRoute)
 const userRoute = require('./routes/userRoute')
 app.use('/api/users', userRoute)
 
-
+//account
+const accountRoute = require('./routes/accountRoute');
+app.use('/api/account', accountRoute)
 
 // admin
 const adminRoute = require('./routes/adminRoute')
