@@ -1,0 +1,77 @@
+.account-avatar {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.account-avatar img {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
+}
+
+.account-avatar__info {
+    display: flex;
+    flex-direction: column;
+}
+
+.account-avatar__info strong {
+    font-weight: 500;
+}
+
+.account-action li {
+    padding: 8px 16px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.account-action li.active,
+.account-action li:hover {
+    background-color: #ebebf0;
+}
+
+.account-action li i {
+    font-size: 20px;
+    margin-right: 20px;
+}
+
+.account-wrapper h3 {
+    font-size: 1.9rem;
+    font-weight: 400;
+    line-height: 2.1;
+}
+
+.account-info {
+    padding: 30px 20px;
+    border-radius: 4px;
+}
+
+.form-control {
+    display: flex;
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+.form-control label {
+    width: 110px;
+}
+
+.form-control label span {
+    display: block;
+}
+
+.form-control > div {
+    display: flex;
+    flex: 1;
+    align-items: center;
+}
+
+.form-control div > input {
+    width: 100%;
+    padding: 6px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}

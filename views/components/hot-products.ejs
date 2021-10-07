@@ -2,26 +2,15 @@
     <div class="section-title">Top sản phẩm bán chạy trong tuần</div>
     <div class="section-body">
         <div class="grid-rows">
-            <% hotProducts.forEach(product => { %>
+            <% hotIndexes.forEach(hotIndex => { %>
             <div class="grid-col-4">
-                <div class="product-card">
-                    <a href="">
-                        <div class="product-card__image">
-                            <img src="<%= product.images[0] %>" alt="">
-                            <img src="<%= product.images[1] %>" alt="">
-                        </div>
-                        <h3 class="product-card__name"><%= product.name %></h3>
-                        <div class="product-card__price"><%= product.price %></div>
-                    </a>
-                    <div class="product-card__btn">
-                        <button class="btn btn-primary btn-small">
-                            <span class="btn-txt">Chọn mua</span>
-                            <span class="btn-icon">
-                                <i class="bx bx-cart bx-tada"></i>
-                            </span>
-                        </button>
-                    </div>
-                </div>
+                <%- include ('./product-card', {
+                    name: products[hotIndex].name,
+                    price: products[hotIndex].price,
+                    id: products[hotIndex]._id,
+                    imgFront: products[hotIndex].images[0],
+                    imgBack: products[hotIndex].images[1]
+                }) -%>
             </div>
             <% }) %>
         </div>
