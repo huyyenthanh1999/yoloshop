@@ -30,6 +30,7 @@ async function connectDB() {
 // }
 connectDB();
 
+
 // setup router
 const indexRoute = require("./routes/indexRoute");
 app.use("/", indexRoute);
@@ -79,7 +80,7 @@ app.get('/products/123', (req, res) => {
 
 
 // Not found
-app.use((req,res) => res.render('pages/notfound'))
+app.use((req, res) => res.render('pages/notfound'))
 
 
 // listening
