@@ -3,7 +3,7 @@ const cartController = require('../controllers/cartController')
 const upload = require('../middlewares/uploadImgOfCart')
 
 // cart page
-cartRouter.get('/', cartController.loadCart)
+cartRouter.get('/', cartController.renderCart)
 
 // create cart
 // cartRouter.get('/create', cartController.createCart)

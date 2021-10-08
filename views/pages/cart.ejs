@@ -29,7 +29,7 @@
             <%- include ('../components/header'); -%>
         </div>
 
-        <form method="POST" action="/checkout" >
+        <form method="POST" action="/checkout">
             <div id="cart">
                 <div class="cart-info">
                     <div class="cart-info-txt">
@@ -37,23 +37,25 @@
                             Bạn đang có 3 sản phẩm trong giỏ hàng
                         </p>
                         <div class="cart-info-price">
-                            <span>Thành tiền:</span> <span>200000</span>
+                            <span>Thành tiền:</span>
+                            <span>200000</span>
                         </div>
                     </div>
                     <div class="cart-info-btn">
-                        <button class="btn-order" type="submit">
+                        <button class="btn btn-small btn-order" type="submit">
                             <span class="btn-txt-cart">Đặt hàng</span>
                         </button>
-                        <button class="btn-cart">
+                        <button class="btn btn-small btn-cart">
                             <span class="btn-txt-cart">Tiếp tục mua hàng</span>
                         </button>
                     </div>
                 </div>
-                
-                <!-- <div class="cart-list">
+            
+                <div class="cart-list">
                     <div class="cart-item">
                         <div class="cart-item-image">
                             <img src="" alt="">
+                            IMG
                         </div>
                         <div class="cart-item-info">
                             <div class="cart-item-info-name">
@@ -63,18 +65,22 @@
                                 194,000
                             </div>
                             <div class="cart-item-info-quantity">
-                                <div class="product-info-item-quantity">
-                                    <div class="product-info-item-quantity"></div>
-                                    <div class="product-info-item-quantity-input"></div>
-                                    <div class="product-info-item-quantity"></div>
+                                <div class="product-info-inc-quantity">
+                                    -
+                                </div>
+                                <div class="product-info-item-quantity-input">
+                                    2
+                                </div>
+                                <div class="product-info-dec-quantity">
+                                    +
                                 </div>
                             </div>
                             <div class="cart-item-del">
-                                
+                                Delete
                             </div>
                         </div>
                     </div>
-                </div> -->
+                </div>
             </div>
         </form>
     

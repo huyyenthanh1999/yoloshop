@@ -1,36 +1,32 @@
-// async function render() {
-//     try {
-//         const cartList = await $.ajax({
-//             url: '',
-//             type: 'GET',
-//         });
+// bien du lieu
+let listData = undefined;
 
-//         cartList.map((ele) => {
-//             const cartItem = `
-//                 <div class="cart-item-image">
-//                     <img src="" alt="">
-//                 </div>
-//                 <div class="cart-item-info">
-//                     <div class="cart-item-info-name">
-            
-//                     </div>
-//                     <div class="cart-item-info-price">
-            
-//                     </div>
-//                     <div class="cart-item-info-quantity">
-            
-//                     </div>
-//                     <div class="cart-item-del">
-                        
-//                     </div>
-//                 </div>
-//             `;
-//             $('.cart-item').append(cartItem);
-//         })
-        
-//     } catch (error) {
-//         console.log(error);
-//     }
-// }
+// Check dang nhap
 
-// render();
+// Chua dang nhap(khong co id)
+// listData = JSON.parse(localStorage.getItem("listData")) || [];
+
+// Da dang nhap
+// listData = fetch('/api/carts/:id').then
+// Lay localStorage
+listData = JSON.parse(localStorage.getItem("listData")) || [];
+let detailProducts = []
+listData.forEach((item) => {
+    $.ajax({
+        url: `/api/products/${item.productId}`,
+        type: 'GET',
+    })
+    .then((data) => {
+        detailProducts.push(data)
+        detailProducts.map((ele) => {
+            console.log(ele.data.product._id)
+        })
+    })
+    .catch((error) => {
+        console.log(error);
+    })
+})
+console.log(detailProducts);
+
+// an tien hanh dat hang => kiem tra dang nhap or not
+// window

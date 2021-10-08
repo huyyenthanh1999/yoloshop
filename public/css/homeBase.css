@@ -70,8 +70,9 @@ img {
     font-size: 1.95rem;
 }
 
-.btn-smaill {
-    font-size: 1.3rem;
+.btn-small {
+    font-size: 1.95rem;
+    background-color: #4267b2;
 }
 
 .btn-primary {

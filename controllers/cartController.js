@@ -1,22 +1,21 @@
-// const Product = require('../models/productModel')
-// const ProductCode = require('../models/productCodeModel')
-// const { totalProduct , totalCost } = require('../public/js/cart')
-const imgbbUploader = require('imgbb-uploader')
-const User = require('../models/userModel')
 const Cart = require('../models/CartModel')
-const upload = require('../middlewares/uploadImgOfCart')
+
+module.exports.renderCart = (req, res) => {
+	res.render('pages/cart')
+}
 
 module.exports.loadCart = async (req, res) => {
 	try {
-        const carts = await Cart.find({});
+		// find theo id
+        const carts = await Cart.find({ });
 
 		// res.status(200).json({
 		// 	status: 'success',
         //     carts,
 		// })
-        res.render('pages/cart', {
-            carts
-        });
+        // res.render('pages/cart', {
+        //     carts
+        // });
 	} catch (error) {
 		res.status(500).json({
 			status: 'fail',
