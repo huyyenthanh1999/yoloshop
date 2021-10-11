@@ -30,82 +30,84 @@
         </div>
 
         <div class="container">
-            <form method="POST" action="/checkout">
-                <div id="cart">
-                    <div class="cart__info">
-                        <div class="cart__info__txt">
-                            <p>
-                                Bạn đang có 2 sản phẩm trong giỏ hàng
-                            </p>
-                            <div class="cart__info__txt__price">
-                                <span>Thành tiền:</span>
-                                <span>378,000 VNĐ</span>
-                            </div>
-                        </div>
-                        <div class="cart__info__btn">
-                            <input type="text" name="q">
-                            <button class="btn btn-small btn-order" type="submit">
-                                <span class="btn-txt-cart">Đặt hàng</span>
-                            </button>
-                            <button class="btn btn-small btn-cart">
-                                <span class="btn-txt-cart">Tiếp tục mua hàng</span>
-                            </button>
+            <div id="cart">
+                <div class="cart__info">
+                    <div class="cart__info__txt">
+                        <p>
+                            Bạn đang có
+                            <span></span>
+                            sản phẩm trong giỏ hàng
+                        </p>
+                        <div class="cart__info__txt__price">
+                            <span>Thành tiền:</span>
+                            <span>378,000 VNĐ</span>
                         </div>
                     </div>
-                    <div class="cart__list">
-                        <div class="cart__item">
-                            <div class="cart__item__image">
-                                <img src="/public/images/products/product-01_1.jpg" alt="">
+                    <div class="cart__info__btn">
+                        <form method="POST" action="/checkout">
+                            <input type="text" name="q">
+                            <button onclick="order()" class="btn btn-small btn-order" type="submit">
+                                <span class="btn-txt-cart">Đặt hàng</span>
+                            </button>
+                        </form>
+                        <button class="btn btn-small btn-cart">
+                            <span class="btn-txt-cart">Tiếp tục mua hàng</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="cart__list">
+                    <div class="cart__item">
+                        <div class="cart__item__image">
+                            <img src="/public/images/products/product-01_1.jpg" alt="">
+                        </div>
+                        <div class="cart__item__info">
+                            <div class="cart__item__info__name">
+                                <a href="/catalog/ao-thun-dinosaur-01">Áo thun Dinosaur 01 - red - l</a>
                             </div>
-                            <div class="cart__item__info">
-                                <div class="cart__item__info__name">
-                                    <a href="/catalog/ao-thun-dinosaur-01">Áo thun Dinosaur 01 - red - l</a>
-                                </div>
-                                <div class="cart__item__info__price">189,000</div>
-                                <div class="cart__item__info__quantity">
-                                    <div class="product__info__item__quantity">
-                                        <div class="product__info__item__quantity__btn dec__btn">
-                                            <i class="bx bx-minus"></i>
-                                        </div>
-                                        <div class="product__info__item__quantity__input">1</div>
-                                        <div class="product__info__item__quantity__btn inc__btn">
-                                            <i class="bx bx-plus"></i>
-                                        </div>
+                            <div class="cart__item__info__price">189,000</div>
+                            <div class="cart__item__info__quantity">
+                                <div class="product__info__item__quantity">
+                                    <div class="product__info__item__quantity__btn dec__btn">
+                                        <i class="bx bx-minus"></i>
+                                    </div>
+                                    <div class="product__info__item__quantity__input">1</div>
+                                    <div class="product__info__item__quantity__btn inc__btn">
+                                        <i class="bx bx-plus"></i>
                                     </div>
                                 </div>
-                                <div class="cart__item__del">
-                                    <i class="bx bx-trash"></i>
-                                </div>
+                            </div>
+                            <div class="cart__item__del">
+                                <i class="bx bx-trash"></i>
                             </div>
                         </div>
-                        <div class="cart__item">
-                            <div class="cart__item__image">
-                                <img src="/public/images/products/product-01_2.jpg" alt="">
+                    </div>
+                    <div class="cart__item">
+                        <div class="cart__item__image">
+                            <img src="/public/images/products/product-01_2.jpg" alt="">
+                        </div>
+                        <div class="cart__item__info">
+                            <div class="cart__item__info__name">
+                                <a href="/catalog/ao-thun-dinosaur-01">Áo thun Dinosaur 01 - red - m</a>
                             </div>
-                            <div class="cart__item__info">
-                                <div class="cart__item__info__name">
-                                    <a href="/catalog/ao-thun-dinosaur-01">Áo thun Dinosaur 01 - red - m</a>
-                                </div>
-                                <div class="cart__item__info__price">189,000</div>
-                                <div class="cart__item__info__quantity">
-                                    <div class="product__info__item__quantity">
-                                        <div class="product__info__item__quantity__btn dec__btn">
-                                            <i class="bx bx-minus"></i>
-                                        </div>
-                                        <div class="product__info__item__quantity__input">1</div>
-                                        <div class="product__info__item__quantity__btn inc__btn">
-                                            <i class="bx bx-plus"></i>
-                                        </div>
+                            <div class="cart__item__info__price">189,000</div>
+                            <div class="cart__item__info__quantity">
+                                <div class="product__info__item__quantity">
+                                    <div class="product__info__item__quantity__btn dec__btn">
+                                        <i class="bx bx-minus"></i>
+                                    </div>
+                                    <div class="product__info__item__quantity__input">1</div>
+                                    <div class="product__info__item__quantity__btn inc__btn">
+                                        <i class="bx bx-plus"></i>
                                     </div>
                                 </div>
-                                <div class="cart__item__del">
-                                    <i class="bx bx-trash"></i>
-                                </div>
+                            </div>
+                            <div class="cart__item__del">
+                                <i class="bx bx-trash"></i>
                             </div>
                         </div>
                     </div>
                 </div>
-            </form>
+            </div>
         </div>
         
         <div>
