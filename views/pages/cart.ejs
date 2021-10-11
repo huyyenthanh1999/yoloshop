@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yolo - Trang chủ</title>
+    <title>Yolo - Trang giỏ hàng</title>
     <link rel="stylesheet" href="../../public/css/header.css">
     <link rel="stylesheet" href="../../public/css/slider.css">
     <link rel="stylesheet" href="../../public/css/featured-card.css">
@@ -29,68 +29,90 @@
             <%- include ('../components/header'); -%>
         </div>
 
-        <form method="POST" action="/checkout">
-            <div id="cart">
-                <div class="cart-info">
-                    <div class="cart-info-txt">
-                        <p>
-                            Bạn đang có 3 sản phẩm trong giỏ hàng
-                        </p>
-                        <div class="cart-info-price">
-                            <span>Thành tiền:</span>
-                            <span>200000</span>
+        <div class="container">
+            <form method="POST" action="/checkout">
+                <div id="cart">
+                    <div class="cart__info">
+                        <div class="cart__info__txt">
+                            <p>
+                                Bạn đang có 3 sản phẩm trong giỏ hàng
+                            </p>
+                            <div class="cart__info__txt__price">
+                                <span>Thành tiền:</span>
+                                <span>200,000 VNĐ</span>
+                            </div>
+                        </div>
+                        <div class="cart__info__btn">
+                            <button class="btn btn-small btn-order" type="submit">
+                                <span class="btn-txt-cart">Đặt hàng</span>
+                            </button>
+                            <button class="btn btn-small btn-cart">
+                                <span class="btn-txt-cart">Tiếp tục mua hàng</span>
+                            </button>
                         </div>
                     </div>
-                    <div class="cart-info-btn">
-                        <button class="btn btn-small btn-order" type="submit">
-                            <span class="btn-txt-cart">Đặt hàng</span>
-                        </button>
-                        <button class="btn btn-small btn-cart">
-                            <span class="btn-txt-cart">Tiếp tục mua hàng</span>
-                        </button>
+                    <div class="cart__list">
+                        <div class="cart__item">
+                            <div class="cart__item__image">
+                                <img src="/public/images/products/product-01_1.jpg" alt="">
+                            </div>
+                            <div class="cart__item__info">
+                                <div class="cart__item__info__name">
+                                    <a href="/catalog/ao-thun-dinosaur-01">Áo thun Dinosaur 01 - red - l</a>
+                                </div>
+                                <div class="cart__item__info__price">189,000</div>
+                                <div class="cart__item__info__quantity">
+                                    <div class="product__info__item__quantity">
+                                        <div class="product__info__item__quantity__btn">
+                                            <i class="bx bx-minus"></i>
+                                        </div>
+                                        <div class="product__info__item__quantity__input">1</div>
+                                        <div class="product__info__item__quantity__btn">
+                                            <i class="bx bx-plus"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="cart__item__del">
+                                    <i class="bx bx-trash"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cart__item">
+                            <div class="cart__item__image">
+                                <img src="/public/images/products/product-01_2.jpg" alt="">
+                            </div>
+                            <div class="cart__item__info">
+                                <div class="cart__item__info__name">
+                                    <a href="/catalog/ao-thun-dinosaur-01">Áo thun Dinosaur 01 - red - m</a>
+                                </div>
+                                <div class="cart__item__info__price">189,000</div>
+                                <div class="cart__item__info__quantity">
+                                    <div class="product__info__item__quantity">
+                                        <div class="product__info__item__quantity__btn">
+                                            <i class="bx bx-minus"></i>
+                                        </div>
+                                        <div class="product__info__item__quantity__input">1</div>
+                                        <div class="product__info__item__quantity__btn">
+                                            <i class="bx bx-plus"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="cart__item__del">
+                                    <i class="bx bx-trash"></i>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            
-                <div class="cart-list">
-                    <div class="cart-item">
-                        <div class="cart-item-image">
-                            <img src="" alt="">
-                            IMG
-                        </div>
-                        <div class="cart-item-info">
-                            <div class="cart-item-info-name">
-                                Quần Jean 11 - Blue - M
-                            </div>
-                            <div class="cart-item-info-price">
-                                194,000
-                            </div>
-                            <div class="cart-item-info-quantity">
-                                <div class="product-info-inc-quantity">
-                                    -
-                                </div>
-                                <div class="product-info-item-quantity-input">
-                                    2
-                                </div>
-                                <div class="product-info-dec-quantity">
-                                    +
-                                </div>
-                            </div>
-                            <div class="cart-item-del">
-                                Delete
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </form>
-    
+            </form>
+        </div>
+        
         <div>
             <%- include ('../components/footer'); -%> 
         </div>
     </div>
+    
 </body>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="../../public/js/header.js"></script>
-    <script src="../../public/js/slider.js"></script>
     <script src="../../public/js/cart.js"></script>
 </html>
