@@ -54,6 +54,12 @@ html {
     padding: 12px;
 }
 
+.btn-order:hover,
+.btn-cart:hover {
+    opacity: 0.6;
+    color: lightseagreen;
+}
+
 .btn-txt-cart {
     border: 0;
     outline: 0;
@@ -64,10 +70,6 @@ html {
     overflow: hidden;
     position: relative;
     padding: 13px 26px;
-}
-
-.btn-txt-cart:hover {
-
 }
 
 /* css for cart list */
@@ -133,6 +135,18 @@ html {
     cursor: pointer;
 }
 
+.dec__btn:hover,
+.inc__btn:hover {
+    opacity: 0.6;
+    color:lightseagreen;   
+}
+
 .cart__item__del {
     font-size: 15px;
+    cursor: pointer;
+}
+
+.cart__item__del:hover {
+    opacity: 0.6;
+    color:lightseagreen;
 }

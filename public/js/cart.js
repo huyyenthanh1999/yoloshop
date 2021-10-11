@@ -27,7 +27,6 @@ listData.forEach((item) => {
     })
 })
 console.log(detailProducts);
-listData
 
 // an tien hanh dat hang => kiem tra dang nhap or not
 // window
