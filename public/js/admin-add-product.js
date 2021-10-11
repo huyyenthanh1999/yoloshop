@@ -70,6 +70,14 @@ form.addEventListener('submit', async (e) => {
 	formData.set('total', total.value)
 	formData.set('description', description.value)
 
+	const previewImages = $('.preview-images img')
+	if(previewImages.length == 0) 
+	{
+		alert('Vui lòng chọn ảnh sản phẩm')
+		return
+	}
+	
+
 	// add lazing add product
 	const lazy = document.querySelector('.lazy-loading')
 	lazy.classList.toggle('hide')

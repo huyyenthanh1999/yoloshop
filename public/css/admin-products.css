@@ -24,8 +24,10 @@ a {
 .admin-products table td img {
   width: 60px;
   height: 60px;
-  object-fit: cover;
-  object-position: center;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -o-object-position: center;
+     object-position: center;
 }
 
 .admin-products table thead {
@@ -119,3 +121,4 @@ a {
   background-color: var(--main-color);
   color: white;
 }
+/*# sourceMappingURL=admin-products.css.map */
