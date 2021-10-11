@@ -129,6 +129,15 @@ h3::after {
     padding: 5px;
 }
 
+.btn__pay__info {
+    display: flex;
+    flex-direction: row;
+}
+
+.btn__pay__info > * {
+    padding: 10px;
+}
+
 .btn-txt-checkout {
     border: 0;
     outline: 0;
@@ -138,5 +147,10 @@ h3::after {
     cursor: pointer;
     overflow: hidden;
     position: relative;
-    padding: 13px 26px;
+    padding: 16px 24px;
+}
+
+.btn-pay,
+.btn-back {
+    padding: 8px;
 }
