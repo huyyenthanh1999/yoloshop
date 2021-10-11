@@ -33,6 +33,6 @@ module.exports.adminDashboardData = async (req, res) => {
 // see and edit the product
 module.exports.adminEditProduct = async (req, res) => {
 	res.render('components/admin/admin-base', {
-        content: 'add-product',
+        content: 'edit-product',
     })
 }

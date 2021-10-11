@@ -39,7 +39,7 @@
             <% if (content == 'products') { %>
                 <link rel="stylesheet" href="/public/css/admin-products.css" />
             <% } %>
-            <% if (content == 'add-product') { %>
+            <% if (content == 'add-product' || content == 'edit-product') { %>
                 <link rel="stylesheet" href="/public/css/admin-add-product.css" />
             <% } %>
         </head>
@@ -99,7 +99,7 @@
                     <% if (content == 'products') { %>
                         <%- include ('admin-products'); -%>
                     <% } %>
-                    <% if (content == 'add-product') { %>
+                    <% if (content == 'add-product' || content == 'edit-product') { %>
                         <%- include ('admin-add-product'); -%>
                     <% } %>
 				</div>
@@ -126,8 +126,14 @@
         <% if (content == 'products') { %>
             <script src="/public/js/admin-products.js"></script>
         <% } %>
+
+        <!-- Only add product -->
         <% if (content == 'add-product') { %>
             <script src="/public/js/admin-add-product.js"></script>
+        <% } %>
+
+        <!-- Edit and see product -->
+        <% if (content == 'edit-product') { %>
             <script src="/public/js/admin-edit-product.js"></script>
         <% } %>
         

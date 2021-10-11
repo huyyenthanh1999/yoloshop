@@ -48,7 +48,7 @@ function renderListOfProducts(products) {
                     <i class="fas fa-edit"></i>
                 </button>
             </a>
-            <a href="">
+            <a href="#" onclick="deleteProduct(event)">
                 <button>
                     <i class="far fa-trash-alt"></i>
                 </button>
@@ -67,7 +67,7 @@ function renderListOfProducts(products) {
 // fetch list of products
 function getAllProducts() {
 	$.ajax({
-		url: '/api/products',
+		url: '/products/api',
 	}).then((data) => {
 		// console.log(data.data.products)
 		const html = renderListOfProducts(data.data.products)
@@ -84,6 +84,34 @@ function getAllProducts() {
 		document.querySelector('.total-products span').innerHTML =
 			data.data.products.length
 	})
+}
+
+async function deleteProduct(event) {
+	event.preventDefault()
+
+	const tr = event.target.closest('tr')
+	// console.log(tr)
+
+	const idProduct = tr.querySelector('.id-product a').innerText
+	// console.log(idProduct)
+	const conf = confirm('Bạn chắc chắn muốn xóa sản phẩm')
+	// console.log(conf)
+	if (!conf) return
+
+	const res = await $.ajax({
+		url: `/products/api/${idProduct}`,
+		type: 'delete',
+	})
+
+	// console.log(res.status == 'success')
+	if (res.status == 'success') {
+		alert('Xóa sản phẩm thành công')
+        tr.remove();
+
+        document.querySelector('.total-products span').innerHTML--
+	} else {
+		alert('Xóa sản phẩm thất bại')
+	}
 }
 
 getAllProducts()
