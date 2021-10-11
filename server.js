@@ -24,10 +24,7 @@ async function connectDB() {
     `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0.k7qck.mongodb.net/k14shop?retryWrites=true&w=majority`
   );
 }
-//hoang database local
-// async function connectDB() {
-//   await mongoose.connect(process.env.DB);
-// }
+
 connectDB();
 
 
@@ -35,17 +32,17 @@ connectDB();
 const indexRoute = require("./routes/indexRoute");
 app.use("/", indexRoute);
 
+
+
 // product
 const productRoute = require('./routes/productRoute')
-app.use('/api/products', productRoute)
+app.use('/products', productRoute)
 
 
-// auth
-// ...
 
 // user
 const userRoute = require('./routes/userRoute')
-app.use('/api/users', userRoute)
+app.use('/users', userRoute)
 
 
 // cart
@@ -64,6 +61,8 @@ app.use('/admin', adminRoute)
 // Products detail
 const catalogsRoute = require("./routes/catalogsRoute");
 app.use("/catalogs", catalogsRoute);
+
+
 
 // test server
 app.get("/test", (req, res) => {
@@ -88,3 +87,6 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log("Listening...");
 });
+
+
+// 

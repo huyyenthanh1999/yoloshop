@@ -4,7 +4,10 @@ const imgbbUploader = require('imgbb-uploader')
 
 module.exports.addProduct = async (req, res) => {
 	try {
+		// console.log(req.body)
 		const { name, cost, description, type, color, size, total } = req.body
+
+		// console.log(req.files)
 
 		// get images of product
 		let images = req.files.map((file) => {
@@ -83,11 +86,21 @@ module.exports.editProduct = async (req, res) => {
 		let productCode = await ProductCode.findById(product.idProductCode)
 
 		// get images if admin changes images
-		let images = req.files
+		let images = req.files.map((file) => {
+			return file.path
+		})
 
 		if (images.length > 0) {
-			images = images.map((file) => file.filename)
+			// images = images.map((file) => file.filename)
 
+			// upload img to host
+			images = await Promise.all(
+				images.map(async (file) => {
+					// console.log(file)
+					const upload = await imgbbUploader(process.env.IMGBB_KEY, file)
+					return upload.url
+				})
+			)
 			productCode.images = images
 		}
 

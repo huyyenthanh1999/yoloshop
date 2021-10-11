@@ -45,7 +45,7 @@ module.exports.login = async (req, res) => {
 
 	// lay email or phone, va password
 	const { email, phoneNumber, password } = req.body
-	console.log(req.body)
+	// console.log(req.body)
 
 
 	// tim user
@@ -60,7 +60,7 @@ module.exports.login = async (req, res) => {
 			message: 'User khong ton tai'
 		})
 
-	console.log(user)
+	// console.log(user)
 
 	// user => check password
 	const isPassword = await bcrypt.compare(password, user.password)

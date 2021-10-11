@@ -1,5 +1,5 @@
 <form enctype="multipart/form-data">
-	<h2>Thêm sản phẩm</h2>
+	<h2 class="title-header">Thêm sản phẩm</h2>
 
 	<label for="product-name">Tên sản phẩm</label>
 	<input
@@ -22,7 +22,7 @@
 			/>
 		</div>
 		<div class="col-4">
-			<select name="type" required>
+			<select name="type" required id="product-type">
 				<option value="" selected>Chọn loại trang phục</option>
 				<option value="ao-so-mi">Áo sơ mi</option>
 				<option value="ao-thun">Áo thun</option>
@@ -49,11 +49,11 @@
 		<div class="col-4 ps-5">
 			<label for="product-size" class="mb-1">Chọn size</label>
 			<div id="product-size" class="wrap-size d-flex align-items-center">
-				<div>S</div>
-				<div>M</div>
-				<div>L</div>
-				<div>XL</div>
-				<div>XXL</div>
+				<div class="size-S">S</div>
+				<div class="size-M">M</div>
+				<div class="size-L">L</div>
+				<div class="size-XL">XL</div>
+				<div class="size-XXL">XXL</div>
 			</div>
 		</div>
 		<div class="col-4">
@@ -77,17 +77,20 @@
 		required
 	></textarea>
 
-	<div class="input-images mt-4">
-		<label for="product-images">Thêm ảnh cho sản phẩm</label>
-		<input type="file" multiple required id="product-images" name="images" />
+	<div class="input-images mt-5">
+		<label for="product-images">
+			Thêm ảnh cho sản phẩm
+		</label>
+		<input
+			hidden
+			type="file"
+			multiple
+			accept=".jpg, .jpeg, .png"
+			id="product-images"
+			name="images"
+		/>
 		<div class="preview-images d-flex flex-wrap"></div>
 	</div>
 
 	<button type="submit" class="add-product-button">Thêm</button>
 </form>
-
-<!-- Tạo lớp overlay loading trong đi đợi upload sản phẩm thàng công -->
-<div class="lazy-add-product hide">
-	<div class="lazy-text">Đang thêm sản phẩm</div>
-	<div class="line-loading"></div>
-</div>

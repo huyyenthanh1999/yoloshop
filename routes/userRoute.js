@@ -5,11 +5,11 @@ const userModel = require('../models/userModel');
 
 
 
-// register/ add user
+// register
 router.post('/register', upload.single('avatar'), controller.register)
+// router.get('/register', controller.getRegister)
 
 // login
-// a trung thanh
 router.post('/login', controller.login)
 router.get('/login', controller.getLogin)
 
