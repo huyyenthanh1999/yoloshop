@@ -29,9 +29,7 @@ module.exports.getDetailCart = async (req, res) => {
     const cart = await Cart.find({ _id: "615a49d9ff54f53a4fa59382" })
     //   .populate("userId")
       .populate({ path: "list", populate: { path: "productId" } });
-    // res.render('pages/cart', {
-    //     cart: cart,
-    // });
+    
     res.status(200).json({
       status: "success",
       cart,
