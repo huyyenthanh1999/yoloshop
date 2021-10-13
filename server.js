@@ -48,6 +48,14 @@ app.use('/users', userRoute)
 const accountRoute = require('./routes/accountRoute');
 app.use('/user/account', accountRoute)
 
+// cart
+const cartRoute = require('./routes/cartRoute')
+app.use('/carts', cartRoute)
+
+// checkout
+const checkoutRoute = require('./routes/checkoutRoute')
+app.use('/checkout', checkoutRoute)
+
 // admin
 const adminRoute = require('./routes/adminRoute')
 app.use('/admin', adminRoute)
@@ -63,6 +71,14 @@ app.use("/catalogs", catalogsRoute);
 app.get("/test", (req, res) => {
   res.json("Test thanh cong");
 });
+
+
+
+// detail product
+app.get('/products/123', (req, res) => {
+  res.render('pages/detail-product')
+})
+
 
 
 // Not found
