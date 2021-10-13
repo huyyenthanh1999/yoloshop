@@ -49,7 +49,7 @@ app.use('/api/users', userRoute)
 
 //account
 const accountRoute = require('./routes/accountRoute');
-app.use('/api/account', accountRoute)
+app.use('/user/account', accountRoute)
 
 // admin
 const adminRoute = require('./routes/adminRoute')
