@@ -1,34 +1,31 @@
 const router = require('express').Router()
 const controller =  require('../controllers/adminController')
 
-// dashboard
+// render dashboard
 router.get('/', controller.adminDashboard)
-router.get('/adminDashboardData', controller.adminDashboardData)
 
-
-// products
-router.get('/products', (req, res) => {
-    res.render('components/admin/admin-base', {
-        content: 'products'
-    })
-})
+// render products
+router.get('/products', controller.adminProducts)
 
 
 // add product
-router.get('/add-product', (req, res) => {
-    res.render('components/admin/admin-base', {
-        content: 'add-product',
-    })
-})
+router.get('/add-product', controller.adminAddProduct)
 
 // see and edit product
 router.get('/products/:id', controller.adminEditProduct)
 
 
 // customers
+router.get('/customers', controller.adminCustomer)
+
+
+// see and edit product
+router.get('/customers/:id', controller.adminEditCustomer)
+
 
 
 // order
+router.get('/orders', controller.adminOrder)
 
 
 // sales

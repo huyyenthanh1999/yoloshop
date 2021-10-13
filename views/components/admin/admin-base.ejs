@@ -39,8 +39,14 @@
             <% if (content == 'products') { %>
                 <link rel="stylesheet" href="/public/css/admin-products.css" />
             <% } %>
-            <% if (content == 'add-product') { %>
+            <% if (content == 'add-product' || content == 'edit-product') { %>
                 <link rel="stylesheet" href="/public/css/admin-add-product.css" />
+            <% } %>
+            <% if (content == 'customers') { %>
+                <link rel="stylesheet" href="/public/css/admin-customers.css" />
+            <% } %>
+            <% if (content == 'edit-customer') { %>
+                <link rel="stylesheet" href="/public/css/admin-edit-customer.css" />
             <% } %>
         </head>
         
@@ -94,13 +100,22 @@
 
 				<div class="admin-content">
                     <% if (content == 'dashboard') { %>
-                        <%- include ('admin-dashboard'); -%>
+                        <%- include ('admin-dashboard', {data: data}) -%>
                     <% } %>
                     <% if (content == 'products') { %>
                         <%- include ('admin-products'); -%>
                     <% } %>
-                    <% if (content == 'add-product') { %>
+                    <% if (content == 'customers') { %>
+                        <%- include ('admin-customers'); -%>
+                    <% } %>
+                    <% if (content == 'add-product' || content == 'edit-product') { %>
                         <%- include ('admin-add-product'); -%>
+                    <% } %>
+                    <% if (content == 'edit-customer') { %>
+                        <%- include ('admin-edit-customer', {user: data.user}); -%>
+                    <% } %>
+                    <% if (content == 'orders') { %>
+                        <%- include ('admin-orders'); -%>
                     <% } %>
 				</div>
 			</div>
@@ -117,6 +132,9 @@
 		<!-- Jquery -->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+        <!-- Pagination -->
+        <script src="/public/js/pagination.min.js"></script>
+
 
         <script src="/public/js/admin.js"></script>
 
@@ -126,10 +144,23 @@
         <% if (content == 'products') { %>
             <script src="/public/js/admin-products.js"></script>
         <% } %>
+        <% if (content == 'customers') { %>
+            <script src="/public/js/admin-customers.js"></script>
+        <% } %>
+
+        <!-- Only add product -->
         <% if (content == 'add-product') { %>
             <script src="/public/js/admin-add-product.js"></script>
+        <% } %>
+
+        <!-- Edit and see product -->
+        <% if (content == 'edit-product') { %>
             <script src="/public/js/admin-edit-product.js"></script>
         <% } %>
-        
+
+        <!-- Edit customer -->
+        <% if (content == 'edit-customer') { %>
+            <script src="/public/js/admin-edit-customer.js"></script>
+        <% } %>
 	</body>
 </html>

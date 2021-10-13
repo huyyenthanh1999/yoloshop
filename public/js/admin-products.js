@@ -6,11 +6,9 @@ document.querySelector('.action-add').addEventListener('click', (e) => {
 })
 
 // render list of products
-function renderListOfProducts(products) {
+function renderListOfProducts() {
 	let html = ''
-	// console.log(products)
 	products.forEach((product, index) => {
-		// console.log(product, index)
 		html += `
         <tr>
         <td class="stt-product">${index + 1}</td>
@@ -48,7 +46,7 @@ function renderListOfProducts(products) {
                     <i class="fas fa-edit"></i>
                 </button>
             </a>
-            <a href="">
+            <a href="#" onclick="deleteProduct(event)">
                 <button>
                     <i class="far fa-trash-alt"></i>
                 </button>
@@ -60,30 +58,47 @@ function renderListOfProducts(products) {
         `
 	})
 
-	// console.log(html)
-	return html
+	// create tbody
+	const tbody = document.createElement('tbody')
+	tbody.innerHTML = html
+
+	document.querySelector('.admin-products table').appendChild(tbody)
+
+	document.querySelector('.total-products span').innerHTML = total
 }
 
-// fetch list of products
-function getAllProducts() {
-	$.ajax({
-		url: '/api/products',
-	}).then((data) => {
-		// console.log(data.data.products)
-		const html = renderListOfProducts(data.data.products)
-		// console.log(html)
+renderListOfProducts()
 
-		// create tbody
-		const tbody = document.createElement('tbody')
-		tbody.innerHTML = html
 
-		document.querySelector('.admin-products table').appendChild(tbody)
-		document.querySelector('.admin-products table tbody').innerHTML =
-			renderListOfProducts(data.data.products)
+async function deleteProduct(event) {
+	event.preventDefault()
 
-		document.querySelector('.total-products span').innerHTML =
-			data.data.products.length
+	const tr = event.target.closest('tr')
+	// console.log(tr)
+
+	const idProduct = tr.querySelector('.id-product a').innerText
+	// console.log(idProduct)
+	const conf = confirm('Bạn chắc chắn muốn xóa sản phẩm')
+	// console.log(conf)
+	if (!conf) return
+
+    // add lazing add product
+	const lazy = document.querySelector('.lazy-loading')
+	lazy.classList.toggle('hide')
+
+	const res = await $.ajax({
+		url: `/products/api/${idProduct}`,
+		type: 'delete',
 	})
-}
 
-getAllProducts()
+	// console.log(res.status == 'success')
+	if (res.status == 'success') {
+        lazy.classList.toggle('hide')
+		alert('Xóa sản phẩm thành công')
+		tr.remove()
+
+		document.querySelector('.total-products span').innerHTML--
+	} else {
+		alert('Xóa sản phẩm thất bại')
+	}
+}

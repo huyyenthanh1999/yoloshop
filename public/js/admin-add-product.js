@@ -1,3 +1,6 @@
+const form = document.querySelector('form')
+const formData = new FormData(form)
+
 // change color
 const colorInput = document.querySelector('#product-color')
 
@@ -22,68 +25,70 @@ sizeInputs.forEach((size) => {
 
 // add images
 $('#product-images').on('change', function () {
-	let files = $('#product-images').get(0).files
+	let files = this.files
 	// console.log(files)
+	if (files.length == 0) return
+
 	const previewImages = $('.preview-images')
 
-	if (files.length > 0) {
-		previewImages.empty()
-	}
+	previewImages.empty()
+	formData.delete('images')
 
 	for (let i = 0; i < files.length; i++) {
-		const reader = new FileReader()
+		$('<img />', {
+			src: URL.createObjectURL(files[i]),
+		}).appendTo(previewImages)
 
-		reader.onload = function (e) {
-			$('<img />', {
-				src: e.target.result,
-			}).appendTo(previewImages)
-		}
-		reader.readAsDataURL(files[i])
+		// append img to formData
+		formData.append('images', files[i])
 	}
 })
 
 // add product
-const form = document.querySelector('form')
 form.addEventListener('submit', async (e) => {
 	e.preventDefault()
-	const formData = new FormData(form)
 
-	formData.append(
-		'size',
-		document.querySelector('#product-size > .active-size').innerText
-	)
+	const sizeActive = document.querySelector('#product-size > .active-size')
+	if (!sizeActive) {
+		alert('Vui lòng nhập kích thước sản phẩm')
+		return
+	}
 
-	formData.delete('images')
+	formData.set('size', sizeActive.innerText)
 
-	// add images to formData
-	const previewImages = document.querySelectorAll('.preview-images img')
-	if (previewImages.length == 0) return alert('Vui lòng chọn ảnh')
+	const name = document.querySelector('#product-name')
+	const cost = document.querySelector('#product-cost')
+	const type = document.querySelector('#product-type')
+	const color = document.querySelector('#product-color')
+	const total = document.querySelector('#product-total')
+	const description = document.querySelector('#product-description')
 
+	formData.set('name', name.value)
+	formData.set('cost', cost.value)
+	formData.set('type', type.value)
+	formData.set('color', color.value)
+	formData.set('total', total.value)
+	formData.set('description', description.value)
 
-	const src = []
-	previewImages.forEach((img) => {
-		src.push(img.src)
-	})
-
-	const blob = new Blob([src], { type: "'image/png'"});
+	const previewImages = $('.preview-images img')
+	if(previewImages.length == 0) 
+	{
+		alert('Vui lòng chọn ảnh sản phẩm')
+		return
+	}
 	
-	formData.append('images', src)
-
-	// const imgBlob = new Blob([src], { type: 'image/jpeg' } );
-
-    // formData.append('images', imgBlob);
 
 	// add lazing add product
 	const lazy = document.querySelector('.lazy-loading')
 	lazy.classList.toggle('hide')
 
-	// console.log(formData)
-	let response = await fetch('/api/products', {
+	let response = await fetch('/products/api', {
 		method: 'POST',
 		body: formData,
 	})
 	// let result = await response.json()
 
+	// console.log(result)
 	if (response.status == 200) {
 		lazy.classList.toggle('hide')
 		alert('Thêm sản phẩm thành công')
