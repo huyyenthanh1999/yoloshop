@@ -4,30 +4,33 @@ const imgbbUploader = require('imgbb-uploader')
 
 module.exports.addProduct = async (req, res) => {
 	try {
+		// console.log(req.body)
 		const { name, cost, description, type, color, size, total } = req.body
+
+		// console.log(req.files)
 
 		// get images of product
 		let images = req.files.map((file) => {
 			return file.path
 		})
 
+		// upload img to host
+		images = await Promise.all(
+			images.map(async (file) => {
+				const upload = await imgbbUploader(process.env.IMGBB_KEY, file)
+				return upload.url
+			})
+		)
+
 		let productCode = await ProductCode.findOne({
 			name,
 			cost,
 			description,
 			type,
-			// images
+			images: [...images]
 		})
 
 		if (!productCode) {
-			// upload img to host
-			images = await Promise.all(
-				images.map(async (file) => {
-					const upload = await imgbbUploader(process.env.IMGBB_KEY, file)
-					return upload.url
-				})
-			)
-
 			productCode = new ProductCode({
 				name,
 				cost,
@@ -68,7 +71,7 @@ module.exports.editProduct = async (req, res) => {
 	// get id of product
 	const idProduct = req.params.id
 
-	try {
+	// try {
 		// find product
 		let product = await Product.findById(idProduct)
 
@@ -83,11 +86,21 @@ module.exports.editProduct = async (req, res) => {
 		let productCode = await ProductCode.findById(product.idProductCode)
 
 		// get images if admin changes images
-		let images = req.files
+		let images = req.files.map((file) => {
+			return file.path
+		})
 
 		if (images.length > 0) {
-			images = images.map((file) => file.filename)
+			// images = images.map((file) => file.filename)
 
+			// upload img to host
+			images = await Promise.all(
+				images.map(async (file) => {
+					// console.log(file)
+					const upload = await imgbbUploader(process.env.IMGBB_KEY, file)
+					return upload.url
+				})
+			)
 			productCode.images = images
 		}
 
@@ -107,12 +120,12 @@ module.exports.editProduct = async (req, res) => {
 				product: await product.populate('idProductCode'),
 			},
 		})
-	} catch (error) {
-		res.status(500).json({
-			status: 'fail',
-			message: 'Lỗi server',
-		})
-	}
+	// } catch (error) {
+	// 	res.status(500).json({
+	// 		status: 'fail',
+	// 		message: 'Lỗi server',
+	// 	})
+	// }
 }
 
 module.exports.deleteProduct = async (req, res) => {
