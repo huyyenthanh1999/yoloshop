@@ -2,10 +2,10 @@
     <div class="grid-rows">
         <div class="grid-col-4 ms-grid-col-full" height="100">
             <div class="account-avatar">
-                <img src="/public/images/noavatar.png" alt="">
+                <img src="<%= user.avatar %>" alt="">
                 <div class="account-avatar__info">
                     <span>Tài khoản của</span>
-                    <strong class="user-account__name"></strong>
+                    <strong class="user-account__name"><%= user.name %></strong>
                 </div>
             </div>
             <ul class="account-action">
@@ -26,19 +26,19 @@
                     <div class="form-control">
                         <label for="">Họ tên</label>
                         <div>
-                            <input type="text" name="fullName" maxlength="128" id="user-account__fullname" value="Phạm Văn Huy">
+                            <input type="text" name="fullName" maxlength="128" id="user-account__fullname" value="<%= user.name %>">
                         </div>
                     </div>
                     <div class="form-control">
                         <label for="">Số điện thoại</label>
                         <div>
-                            <input type="tel" id="user-account__tel" name="phoneNumber" placeholder="Hãy nhập SĐT để trải nghiệm tốt hơn" value="0362977647">
+                            <input type="tel" id="user-account__tel" name="phoneNumber" placeholder="Hãy nhập SĐT để trải nghiệm tốt hơn" value="<%= user.phoneNumber %>">
                         </div>
                     </div>
                     <div class="form-control">
                         <label for="">Email</label>
                         <div>
-                            <input type="text" id="user-account__email" name="email" value="ronando432@gmail.com">
+                            <input type="text" id="user-account__email" name="email" value="<%= user.email %>">
                         </div>
                     </div>
                     <div class="form-control">
@@ -71,7 +71,7 @@
                     <div class="form-control">
                         <label class="input-label">&nbsp;</label>
                         <label style="display: flex; flex: 1;">
-                            <input type="checkbox" class="changePass">
+                            <input type="checkbox" class="changePass" onclick="changePassActive()">
                             <span class="label">Thay đổi mật khẩu</span>
                         </label>
                     </div>
@@ -79,19 +79,19 @@
                     <div class="form-control ">
                         <label class="input-label">Mật khẩu cũ</label>
                         <div>
-                            <input type="password" required="" name="user-account__oldPassword" placeholder="Nhập mật khẩu cũ" value="">
+                            <input type="password" name="user-account__oldPassword" placeholder="Nhập mật khẩu cũ" value="">
                         </div>
                     </div>
                     <div class="form-control ">
                         <label class="input-label">Mật khẩu mới</label>
                         <div>
-                            <input type="password" required="" name="user-account__newPassword" placeholder="Mật khẩu từ 6 đến 32 ký tự" value="">
+                            <input type="password" name="user-account__newPassword" placeholder="Mật khẩu từ 6 đến 32 ký tự" value="">
                         </div>
                     </div>
                     <div class="form-control ">
                         <label class="input-label">Nhập lại</label>
                         <div>
-                            <input type="password" required="" name="user-account__passwordConfirm" placeholder="Nhập lại mật khẩu mới" value="">
+                            <input type="password" name="user-account__passwordConfirm" placeholder="Nhập lại mật khẩu mới" value="">
                         </div>
                     </div>
                     <div class="form-group">

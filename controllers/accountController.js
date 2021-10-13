@@ -1,27 +1,24 @@
 const User = require('../models/userModel');
+const Product = require('../models/productModel')
+const ProductCode = require('../models/productCodeModel')
+const jwt = require('jsonwebtoken')
 
 // get account
 
 module.exports.getAccount = async (req, res) => {
     try {
-        //get user detail from localStorage
-
-        // var accountId= localStorage.getItem('user');
-        console.log(req.cookie)
-        // console.log(accountId);
-        // const account = await User.findOne({_id: accountId});
-        // console.log(account);
-
-
-        // doc token
-        // ma hoa id
-        // tim user
-        res.render('pages/account', {user})
-        // if (!account)
-        //     return res.status(400).json({
-        //         status: 'fail',
-        //         message: 'Không tìm thấy trang',
-        //     })
+        //giai ma token
+        var decoded  = jwt.verify(req.cookies.tokenId, process.env.TOKEN_KEY);
+        //doc id
+        const accountId = decoded.userId;
+        //tim id trong db
+        var account = await User.findById(accountId);
+        if (!account)
+			return res.status(400).json({
+				status: 'fail',
+				message: 'Không tìm thấy trang',
+			})
+        res.render('pages/account', {user: account})
     } catch (error) {
         res.status(500).json({
             status: 'fail',
@@ -32,8 +29,8 @@ module.exports.getAccount = async (req, res) => {
 
 //edit account
 module.exports.editAccount = async (req, res) => {
-    const accountId = req.params.id
     try {
+        const accountId = req.params.id
         const account = await User.findByIdAndUpdate(accountId, req.body)
         if (!account)
             return res.status(400).json({
