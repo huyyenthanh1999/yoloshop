@@ -1,1 +1,96 @@
 <h2>Quản lí đơn hàng</h2>
+<div class="admin-orders">
+	<div class="orders-action">
+		<div class="action-search">
+			<input type="text" placeholder="Tìm đơn hàng" />
+		</div>
+		<div class="action-filter">
+			<i class="fas fa-filter"></i>
+			Add filter
+            <ul>
+                <li>
+                    <span>Đang chờ</span>
+                </li>
+                <li>
+                    <span>Đã giao</span>
+                </li>
+            </ul>
+		</div>
+		<div class="total-orders">
+			<i class="fas fa-box"></i>
+			Tổng đơn hàng:&nbsp;
+			<span>0</span>
+		</div>
+	</div>
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th>STT</th>
+				<th>Người đặt</th>
+				<th>Người nhận</th>
+				<th>Sản phẩm</th>
+				<th>Tổng tiền</th>
+				<th>Trạng thái</th>
+				<th>Hành động</th>
+			</tr>
+		</thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>615d2755a4bb5cf7be279ca6</td>
+                <td>Nguyễn Văn A - 0123456789</td>
+                <td>Áo thun Dis 01... và 2 sản phẩm khác</td>
+                <td>400000</td>
+                <td>Đang chờ</td>
+                <td>
+                    <button class="detail-order">
+                        <a href="/admin/orders/123">
+                            Chi tiết
+                        </a>
+                    </button>
+                    <button class="delivery-order ">
+                        Giao hàng
+                    </button>
+                    <button class="delete-order">
+                        Hủy đơn hàng
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>615d2755a4bb5cf7be279ca6</td>
+                <td>Nguyễn Văn A - 0123456789</td>
+                <td>Áo thun Dis 01... và 2 sản phẩm khác</td>
+                <td>400000</td>
+                <td>Đã giao</td>
+                <td>
+                    <button class="detail-order">
+                        <a href="/admin/orders/123">
+                            Chi tiết
+                        </a>
+                    </button>
+                    <button class="delivery-order ">
+                        Giao hàng
+                    </button>
+                    <button class="delete-order">
+                        Hủy đơn hàng
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+	</table>
+	<div class="pagination">
+	</div>
+</div>
+
+<style>
+	.form-check.form-switch input {
+		width: 45px;
+		cursor: pointer;
+	}
+</style>
+
+<script>
+	// let orders = JSON.parse('<%- JSON.stringify(data.orders) %>')
+	// let total = JSON.parse('<%- JSON.stringify(data.total) %>')
+</script>
