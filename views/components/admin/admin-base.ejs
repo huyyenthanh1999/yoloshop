@@ -48,6 +48,9 @@
             <% if (content == 'edit-customer') { %>
                 <link rel="stylesheet" href="/public/css/admin-edit-customer.css" />
             <% } %>
+            <% if (content == 'orders') { %>
+                <link rel="stylesheet" href="/public/css/admin-orders.css" />
+            <% } %>
         </head>
         
 	</head>
@@ -146,6 +149,9 @@
         <% } %>
         <% if (content == 'customers') { %>
             <script src="/public/js/admin-customers.js"></script>
+        <% } %>
+        <% if (content == 'orders') { %>
+            <script src="/public/js/admin-orders.js"></script>
         <% } %>
 
         <!-- Only add product -->

@@ -106,5 +106,8 @@ module.exports.adminEditCustomer = async (req, res) => {
 module.exports.adminOrder = async (req, res) => {
 	res.render('components/admin/admin-base', {
 		content: 'orders',
+		data: {
+			
+		}
 	})
 }

@@ -23,7 +23,11 @@ form.addEventListener('submit', async (e) => {
 	e.preventDefault()
 	const newFormData = new FormData(form)
 
-	newFormData.set('avatar', formData.get('avatar'))
+	// if formData is empty
+	if(formData.get('avatar'))
+	{
+		newFormData.set('avatar', formData.get('avatar'))
+	}
 	// for (let i of newFormData.entries()) console.log(i)
 
 	// add lazing add product

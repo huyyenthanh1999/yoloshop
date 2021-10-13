@@ -100,16 +100,14 @@ module.exports.editUser = async (req, res) => {
 	const idUser = req.params.id
 	try {
 		const file = req.file
-		let avatar = ''
-
-		if (file == undefined) {
-			avatar = 'public/images/userImg/default-avatar.png'
-		} else {
+		
+		if(file) {
 			const upload = await imgbbUploader(process.env.IMGBB_KEY, file.path)
-			avatar = upload.url
+			req.body.avatar = upload.url
+			// console.log(req.body)
 		}
 
-		const user = await User.findByIdAndUpdate(idUser, { ...req.body, avatar })
+		const user = await User.findByIdAndUpdate(idUser, req.body)
 		if (!user)
 			return res.status(400).json({
 				status: 'fail',
