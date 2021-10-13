@@ -82,6 +82,7 @@ $('#product-images').on('change', function () {
 	if (files.length == 0) return
 
 	previewImages.empty()
+	formData.delete('images')
 
 	for (let i = 0; i < files.length; i++) {
 		$('<img />', {
@@ -105,7 +106,7 @@ form.addEventListener('submit', async (e) => {
 		return
 	}
 
-	formData.append('size', sizeActive.innerText)
+	formData.set('size', sizeActive.innerText)
 
 	formData.set('name', name.value)
 	formData.set('cost', cost.value)
@@ -122,6 +123,9 @@ form.addEventListener('submit', async (e) => {
 		return
 	}
 
+	for(let i of formData.entries())
+		console.log(i)
+
 	// add lazing add product
 	const lazy = document.querySelector('.lazy-loading')
 	lazy.classList.toggle('hide')
@@ -136,6 +140,6 @@ form.addEventListener('submit', async (e) => {
 	if (response.status == 200) {
 		lazy.classList.toggle('hide')
 		alert('Sửa sản phẩm thành công')
-        window.location.href = '/admin/products'
+        // window.location.href = '/admin/products'
 	}
 })

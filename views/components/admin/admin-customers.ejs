@@ -1,20 +1,16 @@
-<h2>Products</h2>
-<div class="admin-products">
-	<div class="products-action">
+<h2>Customers</h2>
+<div class="admin-customers">
+	<div class="customers-action">
 		<div class="action-search">
-			<input type="text" placeholder="Tìm sản phẩm" />
+			<input type="text" placeholder="Tìm khách hàng" />
 		</div>
 		<div class="action-filter">
 			<i class="fas fa-filter"></i>
 			Add filter
 		</div>
-		<div class="action-add">
-			<i class="fas fa-plus-square"></i>
-			Thêm sản phẩm
-		</div>
-		<div class="total-products">
+		<div class="total-customers">
 			<i class="fas fa-box"></i>
-			Tổng sản phẩm:&nbsp;
+			Tổng khách hàng:&nbsp;
 			<span>0</span>
 		</div>
 	</div>
@@ -24,10 +20,8 @@
 				<th>STT</th>
 				<th>ID</th>
 				<th>Cover</th>
-				<th>Sản phẩm</th>
-				<th>Giá</th>
-				<th>Đã bán</th>
-				<th>Còn lại</th>
+				<th>Tên</th>
+				<th>Đã mua</th>
 				<th>Active</th>
 				<th>Hành động</th>
 			</tr>
@@ -45,6 +39,7 @@
 </style>
 
 <script>
-	let products = JSON.parse('<%- JSON.stringify(data.products) %>')
+	let customers = JSON.parse('<%- JSON.stringify(data.customers) %>')
 	let total = JSON.parse('<%- JSON.stringify(data.total) %>')
+    // console.log(customers)
 </script>

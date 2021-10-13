@@ -14,23 +14,23 @@ module.exports.addProduct = async (req, res) => {
 			return file.path
 		})
 
+		// upload img to host
+		images = await Promise.all(
+			images.map(async (file) => {
+				const upload = await imgbbUploader(process.env.IMGBB_KEY, file)
+				return upload.url
+			})
+		)
+
 		let productCode = await ProductCode.findOne({
 			name,
 			cost,
 			description,
 			type,
-			// images
+			images: [...images]
 		})
 
 		if (!productCode) {
-			// upload img to host
-			images = await Promise.all(
-				images.map(async (file) => {
-					const upload = await imgbbUploader(process.env.IMGBB_KEY, file)
-					return upload.url
-				})
-			)
-
 			productCode = new ProductCode({
 				name,
 				cost,
@@ -71,7 +71,7 @@ module.exports.editProduct = async (req, res) => {
 	// get id of product
 	const idProduct = req.params.id
 
-	try {
+	// try {
 		// find product
 		let product = await Product.findById(idProduct)
 
@@ -120,12 +120,12 @@ module.exports.editProduct = async (req, res) => {
 				product: await product.populate('idProductCode'),
 			},
 		})
-	} catch (error) {
-		res.status(500).json({
-			status: 'fail',
-			message: 'Lỗi server',
-		})
-	}
+	// } catch (error) {
+	// 	res.status(500).json({
+	// 		status: 'fail',
+	// 		message: 'Lỗi server',
+	// 	})
+	// }
 }
 
 module.exports.deleteProduct = async (req, res) => {

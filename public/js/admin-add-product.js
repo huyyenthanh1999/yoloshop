@@ -54,7 +54,7 @@ form.addEventListener('submit', async (e) => {
 		return
 	}
 
-	formData.append('size', sizeActive.innerText)
+	formData.set('size', sizeActive.innerText)
 
 	const name = document.querySelector('#product-name')
 	const cost = document.querySelector('#product-cost')

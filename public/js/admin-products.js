@@ -6,11 +6,9 @@ document.querySelector('.action-add').addEventListener('click', (e) => {
 })
 
 // render list of products
-function renderListOfProducts(products) {
+function renderListOfProducts() {
 	let html = ''
-	// console.log(products)
 	products.forEach((product, index) => {
-		// console.log(product, index)
 		html += `
         <tr>
         <td class="stt-product">${index + 1}</td>
@@ -60,31 +58,17 @@ function renderListOfProducts(products) {
         `
 	})
 
-	// console.log(html)
-	return html
+	// create tbody
+	const tbody = document.createElement('tbody')
+	tbody.innerHTML = html
+
+	document.querySelector('.admin-products table').appendChild(tbody)
+
+	document.querySelector('.total-products span').innerHTML = total
 }
 
-// fetch list of products
-function getAllProducts() {
-	$.ajax({
-		url: '/products/api',
-	}).then((data) => {
-		// console.log(data.data.products)
-		const html = renderListOfProducts(data.data.products)
-		// console.log(html)
+renderListOfProducts()
 
-		// create tbody
-		const tbody = document.createElement('tbody')
-		tbody.innerHTML = html
-
-		document.querySelector('.admin-products table').appendChild(tbody)
-		document.querySelector('.admin-products table tbody').innerHTML =
-			renderListOfProducts(data.data.products)
-
-		document.querySelector('.total-products span').innerHTML =
-			data.data.products.length
-	})
-}
 
 async function deleteProduct(event) {
 	event.preventDefault()
@@ -98,6 +82,10 @@ async function deleteProduct(event) {
 	// console.log(conf)
 	if (!conf) return
 
+    // add lazing add product
+	const lazy = document.querySelector('.lazy-loading')
+	lazy.classList.toggle('hide')
+
 	const res = await $.ajax({
 		url: `/products/api/${idProduct}`,
 		type: 'delete',
@@ -105,26 +93,12 @@ async function deleteProduct(event) {
 
 	// console.log(res.status == 'success')
 	if (res.status == 'success') {
+        lazy.classList.toggle('hide')
 		alert('Xóa sản phẩm thành công')
-        tr.remove();
+		tr.remove()
 
-        document.querySelector('.total-products span').innerHTML--
+		document.querySelector('.total-products span').innerHTML--
 	} else {
 		alert('Xóa sản phẩm thất bại')
 	}
 }
-
-getAllProducts()
-
-
-// pagination
-$('.pagination').pagination({
-    dataSource: [1, 2, 3, 4, 5, 6, 7, 195 ] ,
-    // callback: function(data, pagination) {
-    //     var html = `
-    //         <p>Phan tu</p>
-    //     `;
-    //     $('.admin-products').html(html);
-    // }
-    pageSize: 5
-})
