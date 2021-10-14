@@ -17,17 +17,16 @@ a {
 .admin-orders table th,
 .admin-orders table td {
   text-align: left;
-  padding: 7px 15px;
+  padding: 7px 5px;
+  white-space: nowrap;
 }
 
 .admin-orders table th img,
 .admin-orders table td img {
   width: 60px;
   height: 60px;
-  -o-object-fit: cover;
-     object-fit: cover;
-  -o-object-position: center;
-     object-position: center;
+  object-fit: cover;
+  object-position: center;
 }
 
 .admin-orders table thead {
@@ -86,7 +85,6 @@ a {
 
 .admin-orders .orders-action .action-filter > ul li {
   list-style: none;
-  white-space: nowrap;
   padding: 8px 20px;
   font-size: 19px;
 }
@@ -162,4 +160,3 @@ button {
 td:last-child {
   padding-right: 0 !important;
 }
-/*# sourceMappingURL=admin-orders.css.map */
