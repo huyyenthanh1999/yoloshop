@@ -31,13 +31,13 @@ let addCartList = (product, index) => {
           <div class="cart__item__info__price">${product.idProductCode.cost * listData[index].quantity}</div>
           <div class="cart__item__info__quantity">
               <div class="product__info__item__quantity">
-                  <div class="product__info__item__quantity__btn dec__btn">
+                  <button class="product__info__item__quantity__btn dec__btn">
                       <i class="bx bx-minus"></i>
-                  </div>
+                  </button>
                   <div class="product__info__item__quantity__input">${listData[index].quantity}</div>
-                  <div class="product__info__item__quantity__btn inc__btn">
+                  <button class="product__info__item__quantity__btn inc__btn">
                       <i class="bx bx-plus"></i>
-                  </div>
+                  </button>
               </div>
           </div>
           <div class="cart__item__del">
@@ -52,6 +52,12 @@ let addCartList = (product, index) => {
       addCartInfo()
       i = 0
     }
+
+    const btn_dec_product = document.querySelectorAll('.dec__btn')
+    btn_dec_product.addEventListener('click', (e) => {
+      e.preventDefault()
+      console.log(123)
+    })
 }
 
 // docume.querySelector().addEventListener('click', () => {
@@ -67,10 +73,6 @@ let addCartList = (product, index) => {
 async function render() {
   // bien du lieu
   listData = JSON.parse(localStorage.getItem("listData")) || [];
-
-//   document.querySelector(
-//     "#cart .cart__info .cart__info__txt p span "
-//   ).innerText = 10;
 
   // chua dang nhap -> datalist = local
   // get api -> idProdct -> get
@@ -91,10 +93,15 @@ async function render() {
     detailProducts.push(result)
     console.log(result)
     addCartList(result.data.product, index)
+
+    
   })
 }
 
 render()
+
+console.log(103, totalPrice)
+
 
 // console.log(document.querySelector('.cart__info__btn'));
 
@@ -115,3 +122,10 @@ btn_cart.addEventListener("click", (e) => {
   e.preventDefault()
   window.location.href = "/"
 })
+
+// const btn_dec_product = document.querySelector('.dec__btn')
+// console.log(btn_dec_product)
+// btn_dec_product.addEventListener("click", (e) => {
+//   e.preventDefault()
+//   console.log(123)
+// })
