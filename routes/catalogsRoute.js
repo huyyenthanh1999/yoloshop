@@ -4,6 +4,7 @@ const controller = require("../controllers/catalogsController");
 // get one detail product
 router.get("/:id", controller.getProductDetail);
 //get catalogs
-router.get("/", controller.getCatalogs);
+router.get("/api", controller.getCatalogs);
+router.get("/", controller.getAllCatalog);
 
 module.exports = router;

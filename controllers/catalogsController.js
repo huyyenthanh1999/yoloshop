@@ -9,14 +9,14 @@ module.exports.getProductDetail = async (req, res) => {
     const products = await Product.find({
       idProductCode: productCode.id,
     });
-
-    res.status(200).json({
-      status: "success",
-      data: {
-        productCode,
-        products,
-      },
-    });
+    res.render("pages/catalog-detail");
+    // res.status(200).json({
+    //   status: "success",
+    //   data: {
+    //     productCode,
+    //     products,
+    //   },
+    // });
   } catch (error) {
     res.status(500).json({
       status: "fail",
@@ -35,12 +35,12 @@ module.exports.getCatalogs = async (req, res) => {
   if (arrSize[0] === "") {
     arrSize = ["s", "m", "l", "xl"];
   }
-  // if (arrColor[0] === "") {
-  //   arrColor = ["red", "white", "blue", "orange"];
-  // }
-  // if (arrType[0] === "") {
-  //   arrType = ["ao-somi", "ao-thun", "quan-jean"];
-  // }
+  if (arrColor[0] === "") {
+    arrColor = ["red", "white", "blue", "orange"];
+  }
+  if (arrType[0] === "") {
+    arrType = ["ao-somi", "ao-thun", "quan-jean"];
+  }
   try {
     const typeProduct = await ProductCode.find({
       type: { $in: arrType },
@@ -74,6 +74,24 @@ module.exports.getCatalogs = async (req, res) => {
         catalogProduct,
       },
     });
+  } catch (error) {
+    res.status(500).json({
+      status: "fail",
+      message: "Lỗi server",
+    });
+  }
+};
+
+module.exports.getAllCatalog = async (req, res) => {
+  try {
+    // const products = await ProductCode.find();
+    res.render("pages/catalog");
+    // res.status(200).json({
+    //   status: "success",
+    //   data: {
+    //     products,
+    //   },
+    // });
   } catch (error) {
     res.status(500).json({
       status: "fail",
