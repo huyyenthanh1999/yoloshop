@@ -108,7 +108,7 @@ const btn_order = document.querySelector('.btn-order')
 btn_order.addEventListener('click', (e) => {
 	e.preventDefault()
 	window.location.href = '/checkout'
-
+})
   // chua dang nhap -> datalist = local
   // get api -> idProdct -> get
 
@@ -140,10 +140,3 @@ btn_cart.addEventListener("click", (e) => {
   e.preventDefault()
   window.location.href = "/"
 })
-
-// const btn_dec_product = document.querySelector('.dec__btn')
-// console.log(btn_dec_product)
-// btn_dec_product.addEventListener("click", (e) => {
-//   e.preventDefault()
-//   console.log(123)
-// })
