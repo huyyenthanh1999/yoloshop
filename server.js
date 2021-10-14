@@ -24,7 +24,7 @@ async function connectDB() {
     `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0.k7qck.mongodb.net/k14shop?retryWrites=true&w=majority`
   );
 }
-//hoang database local
+// hoang database local
 // async function connectDB() {
 //   await mongoose.connect(process.env.DB);
 // }
@@ -35,23 +35,19 @@ const indexRoute = require("./routes/indexRoute");
 app.use("/", indexRoute);
 
 // product
-const productRoute = require('./routes/productRoute')
-app.use('/api/products', productRoute)
-
+const productRoute = require("./routes/productRoute");
+app.use("/api/products", productRoute);
 
 // auth
 // ...
 
 // user
-const userRoute = require('./routes/userRoute')
-app.use('/api/users', userRoute)
-
-
+const userRoute = require("./routes/userRoute");
+app.use("/api/users", userRoute);
 
 // admin
-const adminRoute = require('./routes/adminRoute')
-app.use('/admin', adminRoute)
-
+const adminRoute = require("./routes/adminRoute");
+app.use("/admin", adminRoute);
 
 // Products detail
 const catalogsRoute = require("./routes/catalogsRoute");
@@ -62,10 +58,8 @@ app.get("/test", (req, res) => {
   res.json("Test thanh cong");
 });
 
-
 // Not found
-app.use((req,res) => res.render('pages/notfound'))
-
+app.use((req, res) => res.render("pages/notfound"));
 
 // listening
 const PORT = process.env.PORT || 3000;
