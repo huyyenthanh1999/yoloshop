@@ -96,7 +96,7 @@
     flex-grow: 1;
     position: relative;
     height: 100%;
-    z-index: 99;
+    z-index: 98;
     pointer-events: none;
 }
 
