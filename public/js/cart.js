@@ -16,6 +16,7 @@ let addCartInfo = () => {
   </div>
   `
 }
+
 let i = 0
 let addCartList = (product, index) => {
 	i++
@@ -26,22 +27,20 @@ let addCartList = (product, index) => {
     </div>
       <div class="cart__item__info">
           <div class="cart__item__info__name">
-              <a href="${product._id}">${product.idProductCode.name}</a>
+              <a href="${product._id}">${product.idProductCode.name} - ${product.color} - ${product.size}</a>
           </div>
           <div class="cart__item__info__price">${
 						product.idProductCode.cost * listData[index].quantity
 					}</div>
           <div class="cart__item__info__quantity">
               <div class="product__info__item__quantity">
-                  <div class="product__info__item__quantity__btn dec__btn">
+                  <button class="product__info__item__quantity__btn dec__btn">
                       <i class="bx bx-minus"></i>
-                  </div>
-                  <div class="product__info__item__quantity__input">${
-										listData[index].quantity
-									}</div>
-                  <div class="product__info__item__quantity__btn inc__btn">
+                  </button>
+                  <div class="product__info__item__quantity__input">${listData[index].quantity}</div>
+                  <button class="product__info__item__quantity__btn inc__btn">
                       <i class="bx bx-plus"></i>
-                  </div>
+                  </button>
               </div>
           </div>
           <div class="cart__item__del">
@@ -50,12 +49,18 @@ let addCartList = (product, index) => {
       </div>
     </div>
     `
-	totalPrice += product.idProductCode.cost * listData[index].quantity
-	// console.log(totalPrice)
-	if (i == listData.length) {
-		addCartInfo()
-		i = 0
-	}
+    totalPrice += product.idProductCode.cost * listData[index].quantity
+    console.log(totalPrice)
+    if (i == listData.length) {
+      addCartInfo()
+      i = 0
+    }
+
+    // const btn_dec_product = document.querySelectorAll('.dec__btn')
+    // btn_dec_product.addEventListener('click', (e) => {
+    //   e.preventDefault()
+    //   console.log(123)
+    // })
 }
 
 async function render() {
@@ -104,33 +109,41 @@ btn_order.addEventListener('click', (e) => {
 	e.preventDefault()
 	window.location.href = '/checkout'
 
-    // call api -> dang nhap
-    // check cookies
-    // console.log(document.cookie)
-    // const tokenId = getCookie('tokenId')
-    // // console.log(tokenId)
-
-    // if(!tokenId) {
-    //     window.location.href = '/users/login'
-    // }
-})
+  // chua dang nhap -> datalist = local
+  // get api -> idProdct -> get
 
 
 
 /*
 + Đã đăng nhập -> ấn chọn sản phẩm -> lưu vào cart db, vào trang cart, product ton kho -> render + đọc bảng cart -> ấn đặt hàng -> render trang đặt hàng
 
+    detailProducts.push(result)
+    console.log(result)
+    addCartList(result.data.product, index)
+
+    
+  })
+}
 
 + Chưa đăng nhập -> ấn chọn sản phẩm, số lượng (thông tin sản phẩm, total) -> lưu vào localStorage -> vào trang cart + đọc local -> login(nhận local + id) => lưu cart -> ấn đặt hàng 
 */
 
+console.log(103, totalPrice)
+
+
+// console.log(document.querySelector('.cart__info__btn'));
 
 
 
-
-
-const btn_cart = document.querySelector('.btn-cart')
-btn_cart.addEventListener('click', (e) => {
-	e.preventDefault()
-	window.location.href = '/'
+const btn_cart = document.querySelector(".btn-cart")
+btn_cart.addEventListener("click", (e) => {
+  e.preventDefault()
+  window.location.href = "/"
 })
+
+// const btn_dec_product = document.querySelector('.dec__btn')
+// console.log(btn_dec_product)
+// btn_dec_product.addEventListener("click", (e) => {
+//   e.preventDefault()
+//   console.log(123)
+// })
