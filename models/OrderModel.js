@@ -23,6 +23,10 @@ const OrderSchema = mongoose.Schema(
 			type: String,
 			required: false,
 		},
+		detailAddress: {
+			type: String,
+			required: true,
+		},
 		orderList: [{ 
 			productId: {
 				type: String,
