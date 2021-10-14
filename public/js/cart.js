@@ -16,6 +16,7 @@ let addCartInfo = () => {
   </div>
   `
 }
+
 let i = 0
 let addCartList = (product, index) => {
     i++;
@@ -26,7 +27,7 @@ let addCartList = (product, index) => {
     </div>
       <div class="cart__item__info">
           <div class="cart__item__info__name">
-              <a href="${product._id}">${product.idProductCode.name}</a>
+              <a href="${product._id}">${product.idProductCode.name} - ${product.color} - ${product.size}</a>
           </div>
           <div class="cart__item__info__price">${product.idProductCode.cost * listData[index].quantity}</div>
           <div class="cart__item__info__quantity">
@@ -53,11 +54,11 @@ let addCartList = (product, index) => {
       i = 0
     }
 
-    const btn_dec_product = document.querySelectorAll('.dec__btn')
-    btn_dec_product.addEventListener('click', (e) => {
-      e.preventDefault()
-      console.log(123)
-    })
+    // const btn_dec_product = document.querySelectorAll('.dec__btn')
+    // btn_dec_product.addEventListener('click', (e) => {
+    //   e.preventDefault()
+    //   console.log(123)
+    // })
 }
 
 // docume.querySelector().addEventListener('click', () => {

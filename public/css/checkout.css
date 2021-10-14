@@ -47,6 +47,8 @@ h3::after {
 }
 
 .address__info {
+    display: flex;
+    flex-direction: row;
     padding: 10px;
     margin-right: 30px;
     margin-top: 10px;
@@ -54,13 +56,9 @@ h3::after {
     box-shadow: 0 8px 24px rgb(149 157 165 / 20%);
 }
 
-.address__info {
-    display: flex;
-    flex-direction: row;
-}
-
-.address__input {
+.address__info__input {
     font-size: 16.5px;
+    width: 275px;
 }
 
 .address__info__1 {
@@ -73,8 +71,12 @@ h3::after {
     padding: 8px 0;
 }
 
-.pd1 {
+.p__info {
     padding-bottom: 8px;
+}
+
+.detail__address textarea {
+    height: 108px;
 }
 
 .order_all {
@@ -85,7 +87,7 @@ h3::after {
     margin-bottom: 40px;
 }
 
-.detail__order_info {
+.detail__order__info {
     padding: 10px;
     margin-right: 30px;
     margin-top: 15px;
@@ -102,7 +104,7 @@ h3::after {
     padding: 10px;
 }
 
-.order__text__info {
+.order__text {
     display: flex;
     align-items: center;
     justify-content: space-between;

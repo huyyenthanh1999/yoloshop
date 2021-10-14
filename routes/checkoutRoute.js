@@ -1,6 +1,6 @@
 const checkoutRouter = require('express').Router()
 const checkoutController = require('../controllers/checkoutController')
-const upload = require('../middlewares/uploadImgOfCart')
+// const upload = require('../middlewares/uploadImgOfCart')
 
 // cart page
 checkoutRouter.get('/', checkoutController.renderCheckout)
