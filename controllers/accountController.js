@@ -20,10 +20,11 @@ module.exports.getAccount = async (req, res) => {
 			})
         res.render('pages/account', {user: account})
     } catch (error) {
-        res.status(500).json({
-            status: 'fail',
-            message: 'Lỗi server',
-        })
+        // res.status(500).json({
+        //     status: 'fail',
+        //     message: 'Lỗi server',
+        // }) 
+        res.redirect('/users/login')
     }
 }
 

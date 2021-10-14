@@ -126,6 +126,19 @@ module.exports.editUser = async (req, res) => {
 	}
 }
 
+module.exports.editUserFromUser = () => {
+	// const id = cookie 
+	// tim user find().select('password')
+
+
+	// => 
+	// 
+	// bcrypt.compare(req.body.pass, user.pass)
+
+	// res
+}
+
+
 module.exports.deleteUser = async (req, res) => {
 	const idUser = req.params.id
 	try {

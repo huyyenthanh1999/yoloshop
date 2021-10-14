@@ -20,4 +20,7 @@ cartRouter.put('/:id', cartController.updateCart)
 // delete cart
 cartRouter.delete('/:id', cartController.deleteCart)
 
+
+// chuyen tu localStorage to cart
+
 module.exports = cartRouter

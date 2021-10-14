@@ -19,7 +19,7 @@ form.addEventListener('submit', async (e) => {
     const password = document.querySelector('#password').value
 
     const result = $.ajax({
-        url: '/api/users/login',
+        url: '/users/login',
         type: 'POST',
         data: {
             password, email, phoneNumber
@@ -28,6 +28,13 @@ form.addEventListener('submit', async (e) => {
         .then(data => {
             createCookie('tokenId', data.data.token)
             alert('Đăng nhập thành công')
+
+            // chuyen localStorage ve cart
+            // call api
+
+            
+
+
             window.history.back()
         })
         .catch(error => {
