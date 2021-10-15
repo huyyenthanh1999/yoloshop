@@ -17,7 +17,8 @@ a {
 .admin-orders table th,
 .admin-orders table td {
 	text-align: left;
-	padding: 7px 15px;
+	padding: 7px 5px;
+	white-space: nowrap;
 }
 
 .admin-orders table th img,
@@ -146,6 +147,7 @@ button {
 	color: white;
 	border-radius: 5px;
 	margin: 0 2px;
+	font-size: 14px;
 }
 
 .detail-order {
