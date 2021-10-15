@@ -1,16 +1,16 @@
 const monthNames = [
-	'January',
-	'February',
-	'March',
-	'April',
-	'May',
-	'June',
-	'July',
-	'August',
-	'September',
-	'October',
-	'November',
-	'December',
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
 ]
 let qntYears = 60
 let selectYear = $('#year')
@@ -19,20 +19,20 @@ let selectDay = $('#day')
 let currentYear = new Date().getFullYear()
 
 for (var y = 0; y < qntYears; y++) {
-	let date = new Date(currentYear)
-	let yearElem = document.createElement('option')
-	yearElem.value = currentYear
-	yearElem.textContent = currentYear
-	selectYear.append(yearElem)
-	currentYear--
+  let date = new Date(currentYear)
+  let yearElem = document.createElement('option')
+  yearElem.value = currentYear
+  yearElem.textContent = currentYear
+  selectYear.append(yearElem)
+  currentYear--
 }
 
 for (var m = 0; m < 12; m++) {
-	let month = monthNames[m]
-	let monthElem = document.createElement('option')
-	monthElem.value = m
-	monthElem.textContent = month
-	selectMonth.append(monthElem)
+  let month = monthNames[m]
+  let monthElem = document.createElement('option')
+  monthElem.value = m
+  monthElem.textContent = month
+  selectMonth.append(monthElem)
 }
 
 var d = new Date()
@@ -49,40 +49,40 @@ AdjustDays()
 selectDay.val(day)
 
 function AdjustDays() {
-	var year = selectYear.val()
-	var month = parseInt(selectMonth.val()) + 1
-	selectDay.empty()
+  var year = selectYear.val()
+  var month = parseInt(selectMonth.val()) + 1
+  selectDay.empty()
 
-	//get the last day, so the number of days in that month
-	var days = new Date(year, month, 0).getDate()
+  //get the last day, so the number of days in that month
+  var days = new Date(year, month, 0).getDate()
 
-	//lets create the days of that month
-	for (var d = 1; d <= days; d++) {
-		var dayElem = document.createElement('option')
-		dayElem.value = d
-		dayElem.textContent = d
-		selectDay.append(dayElem)
-	}
+  //lets create the days of that month
+  for (var d = 1; d <= days; d++) {
+    var dayElem = document.createElement('option')
+    dayElem.value = d
+    dayElem.textContent = d
+    selectDay.append(dayElem)
+  }
 }
 
 //show change pass info
 function changePassActive() {
-	if ($('.changePass').is(':checked')) {
-		$('#showChangePass').attr('checked', true)
-		$(
-			"[name='user-account__oldPassword'], [name='user-account__newPassword'], [name='user-account__passwordConfirm']"
-		).prop('required', true)
-		$('#showChangePass:checked ~ .form-control').css(
-			'display',
-			'flex !important'
-		)
-	} else {
-		$('#showChangePass').removeAttr('checked')
-		$(
-			"[name='user-account__oldPassword'], [name='user-account__newPassword'], [name='user-account__passwordConfirm']"
-		).prop('required', false)
-		$('#showChangePass:checked ~ .form-control').css('display', 'none')
-	}
+  if ($('.changePass').is(':checked')) {
+    $('#showChangePass').attr('checked', true)
+    $(
+      "[name='user-account__oldPassword'], [name='user-account__newPassword'], [name='user-account__passwordConfirm']"
+    ).prop('required', true)
+    $('#showChangePass:checked ~ .form-control').css(
+      'display',
+      'flex !important'
+    )
+  } else {
+    $('#showChangePass').removeAttr('checked')
+    $(
+      "[name='user-account__oldPassword'], [name='user-account__newPassword'], [name='user-account__passwordConfirm']"
+    ).prop('required', false)
+    $('#showChangePass:checked ~ .form-control').css('display', 'none')
+  }
 }
 // change active account_action item
 var accountActionItems = document.querySelectorAll('.account-action__item')
@@ -90,24 +90,82 @@ var acountRights = document.querySelectorAll('.account-right')
 accountActionItems[0].classList.add('active')
 acountRights[0].classList.add('active')
 accountActionItems.forEach((accountActionItem, index) => {
-	accountActionItem.addEventListener('click', () => {
-		removeActiveAction()
-		accountActionItem.classList.add('active')
-		acountRights[index].classList.add('active')
-	})
+  accountActionItem.addEventListener('click', () => {
+    removeActiveAction()
+    accountActionItem.classList.add('active')
+    acountRights[index].classList.add('active')
+  })
 })
 
 //remove active account_action item
 function removeActiveAction() {
-	accountActionItems.forEach((accountActionItem) => {
-		accountActionItem.classList.remove('active')
-	})
-	acountRights.forEach((acountRight) => {
-		acountRight.classList.remove('active')
-	})
+  accountActionItems.forEach((accountActionItem) => {
+    accountActionItem.classList.remove('active')
+  })
+  acountRights.forEach((acountRight) => {
+    acountRight.classList.remove('active')
+  })
 }
 
 
 // submit -> preven
 // get data -> formData
 // 
+
+const formData = new FormData()
+const form = document.querySelector('form')
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault()
+  const name = $('input[name="fullName"]').val();
+  const phone = $('input[name="phoneNumber"]').val();
+  const email = $('input[name="email"]').val();
+  var oldPass, newPass, confirmPass;
+  if ($('.changePass').is(':checked')) {
+    const res1 = await $.ajax(
+      {
+        url: `/user/account/edit-info`,
+        type: 'put',
+        data: { name, phone, email }
+      })
+    if (res1.status == 'success') {
+      alert('Cập nhật thông tin thành công')
+    } else {
+      alert('Cập nhật thông tin thất bại')
+    }
+    oldPass = $('input[name="user-account__oldPassword"]').val();
+    newPass = $('input[name="user-account__newPassword"]').val();
+    confirmPass = $('input[name="user-account__confirmPassword"]').val();
+    if (newPass == confirmPass) {
+      const res2 = await $.ajax(
+        {
+          url: `/user/account/edit-pass`,
+          type: 'PUT',
+          data: { oldPass, newPass, confirmPass }
+        })
+      if (res2.status == 'success') {
+        alert(res2.message)
+        location.reload()
+      } else {
+        alert(res2.message)
+      }
+    } else {
+      alert('Mật khẩu mới không trùng khớp')
+    }
+  } else {
+    const res = await $.ajax(
+      {
+        url: `/user/account/edit-info`,
+        type: 'put',
+        data: { name, phone, email }
+      })
+
+    if (res.status == 'success') {
+      alert('Cập nhật thông tin tài khoản thành công')
+      location.reload()
+    } else {
+      alert('Cập nhật thông tin thất bại')
+    }
+  }
+  // console.log(name, phone, email, oldPass, newPass, confirmPass)
+})
