@@ -107,6 +107,11 @@ function removeActiveAction() {
   })
 }
 
+var url = window.location.search
+url = url.replace('?', '')
+if (url == 'orders') {
+	$('.my-orders').click()
+}
 
 // submit -> preven
 // get data -> formData
