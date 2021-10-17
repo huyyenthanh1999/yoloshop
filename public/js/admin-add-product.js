@@ -1,3 +1,6 @@
+const form = document.querySelector('form')
+const formData = new FormData(form)
+
 // change color
 const colorInput = document.querySelector('#product-color')
 
@@ -13,64 +16,79 @@ const sizeInputs = document.querySelectorAll('.wrap-size > div')
 sizeInputs.forEach((size) => {
 	size.addEventListener('click', (e) => {
 		sizeInputs.forEach((size) => {
-			size.style.borderColor = '#ccc'
 			size.classList.remove('active-size')
 		})
 
-		e.currentTarget.style.borderColor = 'var(--main-color)'
 		e.currentTarget.classList.add('active-size')
 	})
 })
 
 // add images
 $('#product-images').on('change', function () {
-	//Get count of selected files
-	const countFiles = $(this)[0].files.length
-	const imgPath = $(this)[0].value
-	const ext = imgPath.substring(imgPath.lastIndexOf('.') + 1).toLowerCase()
+	let files = this.files
+	// console.log(files)
+	if (files.length == 0) return
+
 	const previewImages = $('.preview-images')
+
 	previewImages.empty()
-	if (ext == 'gif' || ext == 'png' || ext == 'jpg' || ext == 'jpeg') {
-		// add images
-		for (let i = 0; i < countFiles; i++) {
-			const reader = new FileReader()
-			reader.onload = function (e) {
-				$('<img />', {
-					src: e.target.result,
-					class: 'thumb-image',
-				}).appendTo(previewImages)
-			}
-			previewImages.show()
-			reader.readAsDataURL($(this)[0].files[i])
-		}
-	} else {
-		alert('Vui lòng chọn ảnh')
+	formData.delete('images')
+
+	for (let i = 0; i < files.length; i++) {
+		$('<img />', {
+			src: URL.createObjectURL(files[i]),
+		}).appendTo(previewImages)
+
+		// append img to formData
+		formData.append('images', files[i])
 	}
 })
 
 // add product
-const form = document.querySelector('form')
 form.addEventListener('submit', async (e) => {
 	e.preventDefault()
-	const formData = new FormData(form)
 
-	formData.append(
-		'size',
-		document.querySelector('#product-size > .active-size').innerText
-	)
+	const sizeActive = document.querySelector('#product-size > .active-size')
+	if (!sizeActive) {
+		alert('Vui lòng nhập kích thước sản phẩm')
+		return
+	}
+
+	formData.set('size', sizeActive.innerText)
+
+	const name = document.querySelector('#product-name')
+	const cost = document.querySelector('#product-cost')
+	const type = document.querySelector('#product-type')
+	const color = document.querySelector('#product-color')
+	const total = document.querySelector('#product-total')
+	const description = document.querySelector('#product-description')
+
+	formData.set('name', name.value)
+	formData.set('cost', cost.value)
+	formData.set('type', type.value)
+	formData.set('color', color.value)
+	formData.set('total', total.value)
+	formData.set('description', description.value)
+
+	const previewImages = $('.preview-images img')
+	if(previewImages.length == 0) 
+	{
+		alert('Vui lòng chọn ảnh sản phẩm')
+		return
+	}
+	
 
 	// add lazing add product
-	const lazy = document.querySelector('.lazy-add-product')
+	const lazy = document.querySelector('.lazy-loading')
 	lazy.classList.toggle('hide')
 
-
-	// console.log(formData)
-	let response = await fetch('/api/products', {
+	let response = await fetch('/products/api', {
 		method: 'POST',
 		body: formData,
 	})
 	// let result = await response.json()
 
+	// console.log(result)
 	if (response.status == 200) {
 		lazy.classList.toggle('hide')
 		alert('Thêm sản phẩm thành công')

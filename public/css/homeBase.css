@@ -49,6 +49,11 @@ img {
     padding: 0 10px;
 }
 
+.grid-col-3_4 {
+    width: 75%;
+    padding: 0 10px;
+}
+
 .main {
     margin-bottom: 2rem;
     min-height: 100vh;
@@ -65,12 +70,22 @@ img {
     position: relative;
 }
 
+.log-btn {
+    padding: 4px 8px;
+    font-size: 18px;
+    line-height: 1.3333333;
+    border-radius: 6px;
+    border: none;
+    color: var(--blue-color);
+}
+
 .btn-large {
     font-size: 1.95rem;
 }
 
-.btn-smaill {
-    font-size: 1.3rem;
+.btn-small {
+    font-size: 1.95rem;
+    background-color: #4267b2;
 }
 
 .btn-primary {

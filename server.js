@@ -24,10 +24,6 @@ async function connectDB() {
     `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0.k7qck.mongodb.net/k14shop?retryWrites=true&w=majority`
   );
 }
-//hoang database local
-// async function connectDB() {
-//   await mongoose.connect(process.env.DB);
-// }
 connectDB();
 
 
@@ -35,32 +31,52 @@ connectDB();
 const indexRoute = require("./routes/indexRoute");
 app.use("/", indexRoute);
 
+
+
 // product
 const productRoute = require('./routes/productRoute')
-app.use('/api/products', productRoute)
+app.use('/products', productRoute)
 
 
-// auth
-// ...
 
 // user
 const userRoute = require('./routes/userRoute')
 app.use('/users', userRoute)
 
+//account
+const accountRoute = require('./routes/accountRoute');
+app.use('/user/account', accountRoute)
+
+// cart
+const cartRoute = require('./routes/cartRoute')
+app.use('/carts', cartRoute)
+
+// checkout
+const checkoutRoute = require('./routes/checkoutRoute')
+app.use('/checkout', checkoutRoute)
 
 // admin
-const adminRoute = require('./routes/adminRoute')
-app.use('/admin', adminRoute)
-
+const adminRoute = require("./routes/adminRoute");
+app.use("/admin", adminRoute);
 
 // Products detail
 const catalogsRoute = require("./routes/catalogsRoute");
 app.use("/catalogs", catalogsRoute);
 
+
+
 // test server
 app.get("/test", (req, res) => {
   res.json("Test thanh cong");
 });
+
+
+
+// detail product
+app.get('/products/123', (req, res) => {
+  res.render('pages/detail-product')
+})
+
 
 
 // Not found

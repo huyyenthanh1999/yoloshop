@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yolo - Trang thanh toán</title>
+    <link rel="stylesheet" href="../../public/css/header.css">
+    <link rel="stylesheet" href="../../public/css/slider.css">
+    <link rel="stylesheet" href="../../public/css/featured-card.css">
+    <link rel="stylesheet" href="../../public/css/footer.css">
+    <link rel="stylesheet" href="../../public/css/homeBase.css">
+    <link rel="stylesheet" href="../../public/css/product-card.css">
+    <link rel="stylesheet" href="../../public/css/checkout.css">
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+</head>
+
+<style>
+    :root {
+    --blue-color: #4267b2;
+    --pink-color: #fe7e73;
+    --orange-color: #fbb96b;
+    }
+</style>
+
+<body>
+    <div class="main">
+        <div>
+            <%- include ('../components/header'); -%>
+        </div>
+
+        <div class="container" style="margin-top: 180px;">
+            <form method="POST" action="/">
+                <div id="checkout">
+                    <div class="checkout__all">
+                        <div class="delivery_address">
+                            <h3 class="fix__h3">ĐỊA CHỈ GIAO HÀNG</h3>
+                            <div class="address__info">
+                                <div class="address__info__1">
+                                    <div class="receiver__name">
+                                        <p class="p__info">Tên người nhận</p>
+                                        <input class="address__info__input" type="text" >
+                                    </div>
+                                    <div class="email">
+                                        <p class="p__info">E-mail</p>
+                                        <input class="address__info__input" type="text">
+                                    </div>
+                                    <div class="message">
+                                        <p class="p__info">Ghi chú</p>
+                                        <textarea class="address__info__input"></textarea>
+                                    </div>
+                                </div>
+                                <div class="address__info__2">
+                                    <div class="phone__number">
+                                        <p class="p__info">Số điện thoại</p>
+                                        <input class="address__info__input" type="text">
+                                    </div>
+                                    <div class="detail__address">
+                                        <p class="p__info">Địa chỉ</p>
+                                        <textarea class="address__info__input"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="order_all">
+                            <div class="detail__order">
+                                <h3>HÓA ĐƠN CHI TIẾT</h3>
+                                <div class="detail__order__info">
+                                    <div class="products__info">
+                                        <div class="order__text product__info">
+                                            <span>Áo thun Dinosaur 01 - red - l (1)</span>
+                                            <span>189000 VNĐ</span>
+                                        </div>
+                                        <div class="order__text product__info">
+                                            <span>Áo thun Dinosaur 01 - red - m (1)</span>
+                                            <span>189000 VNĐ</span>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="order__info">
+                                        <div class="order__text temp__bill">
+                                            <span>Tạm tính</span>
+                                            <span>378000 VNĐ</span>
+                                        </div>
+                                        <div class="order__text discount">
+                                            <span>Khuyến mãi</span>
+                                            <span>0 VNĐ</span>
+                                        </div>
+                                        <div class="order__text ship__fee">
+                                            <span>Phí ship</span>
+                                            <span>30000 VNĐ</span>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="total__bill__info">
+                                        <div class="order__text total__bill">
+                                            <span>Tổng tiền</span>
+                                            <span>408000 VNĐ</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pay__all">
+                                <h3>THANH TOÁN</h3>
+                                <div class="pay__info">
+                                    <div class="cash">
+                                        <input type="radio" name="pay__type" id="cash" value="cash">
+                                        <label for="cash">Tiền mặt</label>
+                                    </div>
+                                    <div class="transfer">
+                                        <input type="radio" name="pay__type" id="transfer" value="transfer">
+                                        <label for="transfer">Chuyển khoản</label>
+                                    </div>
+                                  
+                                    <div class="btn__pay__info">
+                                        <div class="btn__pay">
+                                            <button class="btn btn-small btn-pay" type="submit">
+                                                <span class="btn-txt-checkout">Đặt hàng</span>
+                                            </button>
+                                        </div>
+                                        <class class="btn__back">
+                                            <button class="btn btn-small btn-back">
+                                                <span class="btn-txt-checkout">Quay lại</span>
+                                            </button>
+                                        </class>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        
+        <div>
+            <%- include ('../components/footer'); -%> 
+        </div>
+    </div>
+    
+</body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="../../public/js/checkout.js"></script>
+</html>
