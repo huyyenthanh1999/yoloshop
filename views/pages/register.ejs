@@ -20,22 +20,26 @@
         <div class="noi-dung">
             <div class="form">
                 <h2>Register</h2>
-                <form action="">
+                <form>
                     <div class="input-form">
                         <span>Tên Đăng Nhập</span>
-                        <input type="text" name="" id="user" placeholder="Email or Phone">
+                        <input type="text" required name="name" id="user" placeholder="UserName">
+                    </div>
+                    <div class="input-form">
+                        <span>Số Điện Thoại</span>
+                        <input type="text" required name="phoneNumber" id="user" placeholder="Phone">
                     </div>
                     <div class="input-form">
                         <span>Email</span>
-                        <input type="text" name="" id="email" placeholder="Email">
+                        <input type="email" required name="email" id="email" placeholder="Email">
                     </div>
                     <div class="input-form">
                         <span>Mật Khẩu</span>
-                        <input type="password" name="" id="password" placeholder="PassWord">
+                        <input type="password" required name="password" id="password" placeholder="PassWord">
                     </div>
                     <div class="input-form">
                         <span>Nhập Lại Mật Khẩu</span>
-                        <input type="password" name="" id="confirm" placeholder="confirm">
+                        <input type="password" required id="confirm" placeholder="Confirm">
                     </div>
                     <div class="input-form">
                         <input type="submit" value="Register">
@@ -48,6 +52,6 @@
     </section>
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<!-- <script src="/public/js/login.js"></script> -->
+<script src="/public/js/register.js"></script>
 
 </html>
