@@ -1,66 +1,48 @@
+function createCookie(name, value, days = 15) {
+    if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        var expires = "; expires=" + date.toGMTString();
+    }
+    else var expires = "";
+    document.cookie = name + "=" + value + expires + "; path=/";
+}
+
 const form = document.querySelector('form')
 form.addEventListener('submit', async (e) => {
     e.preventDefault()
-    const formData = new FormData(form)
-    // for (let i of formData.entries())
-    // console.log(i)
 
-    // const result = $.ajax({
-    //     url: '/users/register',
-    //     type: 'POST',
-    //     data: formData
-    // })
-    // .then(data => {
-    //     // createCookie('tokenId', data.data.token)
-    //     // alert('Đăng nhập thành công')
+    const confirm = document.querySelector('#confirm').value
+    const password = document.querySelector('#password').value
 
-    //     // chuyen localStorage ve cart
-    //     // call api
-    //     console.log(123)
-    //     console.log(data)
+    // check 2 
+    if (password != confirm) {
+        alert('Mat khau khong khop')
+        return
+    }
+
+    const name = document.querySelector('#user').value
+    const phoneNumber = document.querySelector('#phoneNumber').value
+    const email = document.querySelector('#email').value
 
 
-    //     // window.history.back()
-    // })
-    // .catch(error => {
-    //     alert('Mật khẩu hoặc email/phone không đúng')
-    //     // window.location.href = '/users/login'
-    // })
-    // const response = await fetch('/users/register', {
-    //     method: 'POST', // *GET, POST, PUT, DELETE, etc.
-    //     // mode: 'cors', // no-cors, *cors, same-origin
-    //     // cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-    //     // credentials: 'same-origin', // include, *same-origin, omit
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //         'Content-Type': 'application/x-www-form-urlencoded',
-    //     },
-    //     // redirect: 'follow', // manual, *follow, error
-    //     // referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-    //     body: formData // body data type must match "Content-Type" header
-    //     // body: formData// body data type must match "Content-Type" header
-    // });
-    // console.log(await response.json());
-
-    // const result = await $.ajax({
-
-    //     type: "POST",
-
-    //     // enctype: 'multipart/form-data',
-
-    //     url: "/users/register",
-
-    //     data: formData,
-    // })
-    // console.log(result)
+    // const password = document.querySelector('#password').value
     $.ajax({
         url: '/users/register',
-        data: formData,
+        data: {
+            name, phoneNumber, email, password
+        },
         // processData: false,
         type: 'POST',
-        success: function (data) {
-            console.log(data)
-        }
-    });
+    })
+        .then(data => {
+            createCookie('tokenId', data.data.token)
+            alert('Đăng kí thành công')
 
+            window.location.href = '/'
+
+        })
+        .catch(error => {
+            alert('Mật khẩu hoặc email/phone không đúng')
+        })
 })
