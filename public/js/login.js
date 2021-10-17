@@ -20,7 +20,7 @@ form.addEventListener('submit', async (e) => {
             console.log(data)
             localStorage.setItem('tokenId', data.data.token)
             // document.cookie = `tokenID=${data.data.token}`
-            // window.location.href = '/'
+            window.location.href = '/'
         })
         .catch(error => {
             alert('Mật khẩu hoặc email/phone không đúng')

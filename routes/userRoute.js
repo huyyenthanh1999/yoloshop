@@ -14,6 +14,7 @@ router.post('/login', controller.login)
 router.get('/login', controller.getLogin)
 
 
+
 // edit user
 router.put('/:id', upload.single('avatar'), controller.editUser)
 

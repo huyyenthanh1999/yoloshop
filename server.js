@@ -45,8 +45,7 @@ app.use('/api/products', productRoute)
 
 // user
 const userRoute = require('./routes/userRoute')
-app.use('/api/users', userRoute)
-
+app.use('/users', userRoute)
 
 
 // admin

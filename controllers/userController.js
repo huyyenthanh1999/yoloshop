@@ -97,7 +97,12 @@ module.exports.getLogin = (req, res) => {
 }
 
 // logout
+// get post delete put
 
+//register
+module.exports.register = (req, res) => {
+	res.render('pages/register')
+}
 
 
 
