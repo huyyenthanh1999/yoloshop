@@ -1,11 +1,11 @@
-function createCookie(name,value,days = 15) {
+function createCookie(name, value, days = 15) {
     if (days) {
         var date = new Date();
-        date.setTime(date.getTime()+(days*24*60*60*1000));
-        var expires = "; expires="+date.toGMTString();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        var expires = "; expires=" + date.toGMTString();
     }
     else var expires = "";
-    document.cookie = name+"="+value+expires+"; path=/"; 
+    document.cookie = name + "=" + value + expires + "; path=/";
 }
 
 const form = document.querySelector('form')
@@ -32,7 +32,7 @@ form.addEventListener('submit', async (e) => {
             // chuyen localStorage ve cart
             // call api
 
-            
+
 
 
             window.history.back()

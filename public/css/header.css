@@ -9,58 +9,58 @@
 }
 
 #header .container {
-    height: 100%;
+  height: 100%;
 }
 
 .container {
-    width: 100%;
-    max-width: 1620px;
-    padding: 0 50px;
-    margin: auto;
+  width: 100%;
+  max-width: 1620px;
+  padding: 0 50px;
+  margin: auto;
 }
 
 .header-logo {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
 }
 
 .header-logo img {
-    height: 28px;
+  height: 28px;
 }
 
 .header-menu {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 100%;
-    font-size: 1.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  font-size: 1.85rem;
 }
 
 .header-menu__mobile-toggle {
-    display: none;
+  display: none;
 }
 
 .header-menu__left,
 .header-menu__right {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
 }
 
 .header-menu__left-close {
-    display: none;
+  display: none;
 }
 
 .header-menu__item:hover,
 .header-menu__mobile-toggle:hover,
 .header-menu__left-close:hover {
-    cursor: pointer;
-    color: #4267b2;
+  cursor: pointer;
+  color: #4267b2;
 }
 
 .header-menu__item {
@@ -85,12 +85,12 @@
 }
 
 .header-menu__item.active {
-    font-weight: 600;
-    color: #4267b2;
+  font-weight: 600;
+  color: #4267b2;
 }
 
-.header-menu__item~.header-menu__item {
-    margin-left: 39px;
+.header-menu__item ~ .header-menu__item {
+  margin-left: 39px;
 }
 
 .header-menu__item-user {
@@ -109,6 +109,7 @@
     background: #f1ebeb;
     display: none;
     border-radius: 10px;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.25);
 }
 
 .user-action::before {
@@ -161,68 +162,67 @@
 
 
 .header-menu__right {
-    font-size: 2.9rem;
+  font-size: 2.9rem;
 }
 
 #header.shrink {
-    height: 70px;
-    box-shadow: 0 8px 24px rgb(149 157 165 / 20%);
-    z-index: 100;
+  height: 70px;
+  box-shadow: 0 8px 24px rgb(149 157 165 / 20%);
+  z-index: 100;
 }
 
 @media only screen and (max-width: 64em) {
-    #header {
-        height: 70px;
-        box-shadow: 0 8px 24px rgb(149 157 165 / 20%);
-    }
+  #header {
+    height: 70px;
+    box-shadow: 0 8px 24px rgb(149 157 165 / 20%);
+  }
 
-    .container {
-        padding: 0 20px;
-    }
+  .container {
+    padding: 0 20px;
+  }
 
-    .header-menu__mobile-toggle {
-        display: block;
-        font-size: 3.2rem;
-    }
+  .header-menu__mobile-toggle {
+    display: block;
+    font-size: 3.2rem;
+  }
 
-    .header-menu__left {
-        flex-direction: column;
-        background-color: #fff;
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100vh;
-        justify-content: flex-start;
-        padding-top: 30px;
-        -webkit-transform: translateX(-100%);
-        transform: translateX(-100%);
-        transition: -webkit-transform .5s ease;
-        transition: transform .5s ease;
-        transition: transform .5s ease, -webkit-transform .5s ease;
+  .header-menu__left {
+    flex-direction: column;
+    background-color: #fff;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    justify-content: flex-start;
+    padding-top: 30px;
+    -webkit-transform: translateX(-100%);
+    transform: translateX(-100%);
+    transition: -webkit-transform 0.5s ease;
+    transition: transform 0.5s ease;
+    transition: transform 0.5s ease, -webkit-transform 0.5s ease;
+  }
 
-    }
+  .header-menu__left.active {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
 
-    .header-menu__left.active {
-        -webkit-transform: translateX(0);
-        transform: translateX(0);
-    }
+  .header-menu__left-close {
+    display: block;
+    position: absolute;
+    left: 20px;
+    font-size: 3.2rem;
+  }
 
-    .header-menu__left-close {
-        display: block;
-        position: absolute;
-        left: 20px;
-        font-size: 3.2rem;
-    }
+  .header-menu__item ~ .header-menu__item {
+    margin-left: 20px;
+  }
 
-    .header-menu__item~.header-menu__item {
-        margin-left: 20px;
-    }
-
-    .header-menu__item.left~.header-menu__item {
-        margin-left: unset;
-        margin-top: 20px;
-    }
+  .header-menu__item.left ~ .header-menu__item {
+    margin-left: unset;
+    margin-top: 20px;
+  }
 }
 
 @media only screen and (max-width: 37.5em) {

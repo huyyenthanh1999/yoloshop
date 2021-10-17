@@ -24,7 +24,6 @@ async function connectDB() {
     `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0.k7qck.mongodb.net/k14shop?retryWrites=true&w=majority`
   );
 }
-
 connectDB();
 
 
@@ -57,9 +56,8 @@ const checkoutRoute = require('./routes/checkoutRoute')
 app.use('/checkout', checkoutRoute)
 
 // admin
-const adminRoute = require('./routes/adminRoute')
-app.use('/admin', adminRoute)
-
+const adminRoute = require("./routes/adminRoute");
+app.use("/admin", adminRoute);
 
 // Products detail
 const catalogsRoute = require("./routes/catalogsRoute");
