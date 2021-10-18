@@ -9,41 +9,40 @@ function createCookie(name, value, days = 15) {
 }
 
 const form = document.querySelector('form')
-
 form.addEventListener('submit', async (e) => {
     e.preventDefault()
 
-    const user = document.querySelector('#user').value
-    let email = phoneNumber = user
-
+    const confirm = document.querySelector('#confirm').value
     const password = document.querySelector('#password').value
 
-    const result = $.ajax({
-        url: '/auth/login',
-        type: 'POST',
+    // check 2 
+    if (password != confirm) {
+        alert('Mat khau khong khop')
+        return
+    }
+
+    const name = document.querySelector('#user').value
+    const phoneNumber = document.querySelector('#phoneNumber').value
+    const email = document.querySelector('#email').value
+
+
+    // const password = document.querySelector('#password').value
+    $.ajax({
+        url: '/users/register',
         data: {
-            password, email, phoneNumber
-        }
+            name, phoneNumber, email, password
+        },
+        // processData: false,
+        type: 'POST',
     })
         .then(data => {
             createCookie('tokenId', data.data.token)
-            alert('Đăng nhập thành công')
+            alert('Đăng kí thành công')
 
-            // chuyen localStorage ve cart
-            // call api
+            window.location.href = '/'
 
-
-
-
-            window.history.back()
         })
         .catch(error => {
             alert('Mật khẩu hoặc email/phone không đúng')
-            // window.location.href = '/auth/login'
         })
-
 })
-
-// khi dang nhap 
-// jwt jsonwebtoken
-// user, token 
