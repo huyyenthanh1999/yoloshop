@@ -19,6 +19,7 @@ btn.addEventListener("click", (e) => {
 
   listData.push(newCartItem);
   listData.push(newCartItem1);
+
   console.log(listData);
 
   // luu local

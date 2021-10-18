@@ -7,21 +7,19 @@ const CartSchema = mongoose.Schema(
 			required: true,
 			ref: 'User',
 		},
-		list: [{ 
-			productId: {
-				type: String,
-				required: true,
-				ref: 'Product'
-			},
-			quantity: {
-				type: Number,
-				required: true,
-			}
-		}],
-		totalPrice: {
+		cost: {
 			type: Number,
-            required: true,
+			required: true,
 		},
+		productId: {
+			type: String,
+			required: true,
+			ref: 'Product'
+		},
+		quantity: {
+			type: Number,
+			required: true,
+		}
 	},
 	{
 		timestamp: true,
