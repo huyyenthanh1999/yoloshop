@@ -19,7 +19,7 @@ form.addEventListener('submit', async (e) => {
     const password = document.querySelector('#password').value
 
     const result = $.ajax({
-        url: '/users/login',
+        url: '/auth/login',
         type: 'POST',
         data: {
             password, email, phoneNumber
@@ -39,7 +39,7 @@ form.addEventListener('submit', async (e) => {
         })
         .catch(error => {
             alert('Mật khẩu hoặc email/phone không đúng')
-            // window.location.href = '/users/login'
+            // window.location.href = '/auth/login'
         })
 
 })
