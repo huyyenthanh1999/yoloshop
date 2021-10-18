@@ -3,6 +3,7 @@ const User = require('../models/userModel')
 const jwt = require('jsonwebtoken')
 
 module.exports.register = async (req, res) => {
+	console.log('vao register')
 	// check if user is exists
 	try {
 		console.log('register', req.body)
