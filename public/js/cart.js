@@ -4,22 +4,24 @@ let totalProduct = 0
 let totalPrice = 0
 let productName = ''
 let _quantity = 0
-const btn_order = document.querySelector('.btn-order')
-const btn_cart = document.querySelector(".btn-cart")
-const cart_list = document.querySelector('.cart__list')
+const btn_order = $('.btn-order')
+const btn_cart = $(".btn-cart")
+let cart_list = $('.cart__list')
 
 let addCartInfo = () => {
-	document.querySelector('.cart__info__txt').innerHTML += `
-  <p>
-      Bạn đang có
-      <span>${totalProduct}</span>
-      sản phẩm trong giỏ hàng
-  </p>
-  <div class="cart__info__txt__price">
-      <span>Thành tiền:</span>
-      <span>${totalPrice} VNĐ</span>
-  </div>
+  $('.cart__info__txt').html('')
+  let _div = `
+    <p>
+        Bạn đang có
+        <span>${totalProduct}</span>
+        sản phẩm trong giỏ hàng
+    </p>
+    <div class="cart__info__txt__price">
+        <span>Thành tiền:</span>
+        <span>${totalPrice} VNĐ</span>
+    </div>
   `
+  $('.cart__info__txt').append(_div)
 }
 
 let i = 0
@@ -56,7 +58,7 @@ let addCartList = (product, index) => {
       </tr>
     </table>
   `
-  $('.cart__list').append(div)
+  cart_list.append(div)
   totalPrice += product.idProductCode.cost * listData[index].quantity
   console.log(totalPrice)
   if (i == listData.length) {
@@ -64,7 +66,7 @@ let addCartList = (product, index) => {
     i = 0
   } 
 
-  // Delete
+  // Delete button
   $($('.cart__item__del')[index]).on('click', () => {
     console.log(68, index)
     productName = $('.cart__item__info__name')[index].innerHTML
@@ -78,7 +80,7 @@ let addCartList = (product, index) => {
     })
   })
 
-  // Decrease
+  // Decrease button
   $($('.dec__btn')[index]).on('click', () => {
     console.log(83, index)
     productName = $('.cart__item__info__name')[index].innerHTML
@@ -90,15 +92,17 @@ let addCartList = (product, index) => {
     if (_quantity > 1)
       _quantity--
     $('.product__info__item__quantity__input')[index].innerHTML = _quantity
+    listData[index].quantity = _quantity
 
     const temp = $.ajax({
       url: '/carts/',
       type: 'PUT',
       data: { _productId, _quantity }
     })
+    // render()
   })
 
-  // Increase
+  // Increase button
   $($('.inc__btn')[index]).on('click', () => {
     console.log(102, index)
     productName = $('.cart__item__info__name')[index].innerHTML
@@ -109,12 +113,123 @@ let addCartList = (product, index) => {
     console.log(_quantity);
     _quantity++
     $('.product__info__item__quantity__input')[index].innerHTML = _quantity
+    listData[index].quantity = _quantity
 
     const temp = $.ajax({
       url: '/carts/',
       type: 'PUT',
       data: { _productId, _quantity }
     })
+    // render()
+  })
+
+}
+
+let addCartList1 = (product, index, _listData) => {
+	i++
+  let div = `
+    <table class="tb1">
+      <tr>
+          <td class="td1 cart__item__image">
+            <img src="${product.idProductCode.images[0]}" alt="">
+          </td>
+          <td class="td1 cart__item__info__name">
+            <a href="${product._id}">${product.idProductCode.name} - ${product.color} - ${product.size}</a>
+          </td>
+          <td class="td1 cart__item__info__price">
+            ${product.idProductCode.cost * _listData[index].quantity}
+          </td>
+          <td class="td1 product_quantity">
+            <div class="product__info__item__quantity">
+              <button class="product__info__item__quantity__btn dec__btn">
+                  <i class="bx bx-minus"></i>
+              </button>
+              <div class="product__info__item__quantity__input">${_listData[index].quantity}</div>
+              <button class="product__info__item__quantity__btn inc__btn">
+                  <i class="bx bx-plus"></i>
+              </button>
+            </div>
+          </td>
+          <td class="td1">
+            <button class="cart__item__del">
+              <i class="bx bx-trash"></i>
+            </button>
+          </td>
+      </tr>
+    </table>
+  `
+  cart_list.append(div)
+  totalPrice += product.idProductCode.cost * _listData[index].quantity
+  console.log(totalPrice)
+  if (i == _listData.length) {
+    addCartInfo()
+    i = 0
+  } 
+
+  // Delete button
+  $($('.cart__item__del')[index]).on('click', () => {
+    console.log(68, index)
+    productName = $('.cart__item__info__name')[index].innerHTML
+    // console.log(productName)
+    let _productId = productName.slice(22, 46)
+    console.log(_productId);
+    const temp = $.ajax({
+      url: '/carts/',
+      type: 'DELETE',
+      data: { productId: _productId }
+    })
+    // renderCart()
+  })
+
+  // Decrease button
+  $($('.dec__btn')[index]).on('click', () => {
+    console.log(83, index)
+    productName = $('.cart__item__info__name')[index].innerHTML
+    // console.log(productName)
+    let _productId = productName.slice(22, 46)
+    console.log(_productId);
+    _quantity = $('.product__info__item__quantity__input')[index].innerHTML
+    console.log(_quantity);
+    if (_quantity > 1)
+      _quantity--
+    // $('.product__info__item__quantity__input')[index].innerHTML = _quantity
+    // $('.cart__item__info__price')[index].innerHTML = product.idProductCode.cost * _quantity
+    // _listData[index].quantity = _quantity
+    // addCartList1(product, index, _listData)
+
+    const temp = $.ajax({
+      url: '/carts/',
+      type: 'PUT',
+      data: { _productId, _quantity }
+    })
+    totalProduct = 0
+    totalPrice = 0
+    renderCart()
+  })
+
+  // Increase button
+  $($('.inc__btn')[index]).on('click', () => {
+    console.log(102, index)
+    productName = $('.cart__item__info__name')[index].innerHTML
+    // console.log(productName)
+    let _productId = productName.slice(22, 46)
+    console.log(_productId);
+    _quantity = $('.product__info__item__quantity__input')[index].innerHTML
+    console.log(_quantity);
+    _quantity++
+    // $('.product__info__item__quantity__input')[index].innerHTML = _quantity
+    // $('.cart__item__info__price')[index].innerHTML = product.idProductCode.cost * _quantity
+    // _listData[index].quantity = _quantity
+    // addCartList1(product, index, _listData)
+
+    const temp = $.ajax({
+      url: '/carts/',
+      type: 'PUT',
+      data: { _productId, _quantity }
+    })
+    totalProduct = 0
+    totalPrice = 0
+    renderCart()
   })
 
 }
@@ -124,8 +239,8 @@ async function render() {
 	listData = JSON.parse(localStorage.getItem('listData')) || []
 
   if (listData.length == 0) {
-    document.querySelector('.cart__info').setAttribute('style', 'display:none')
-    document.querySelector('.cart__list').innerHTML = `
+    $('.cart__info').setAttribute('style', 'display:none')
+    $('.cart__list').innerHTML = `
     <div class="empty__cart">  
       <img src="../../public/images/EmptyCart.png" alt="EmptyCart">
       <h2>Giỏ hàng của bạn còn trống!</h2>
@@ -143,7 +258,7 @@ async function render() {
 	})
 	// console.log(totalProduct)
 
-	cart_list.innerHTML = ''
+	cart_list.html('')
   listData.forEach(async (item, index) => {
       const result = await $.ajax({
         url: `/products/api/${item.productId}`,
@@ -154,7 +269,53 @@ async function render() {
   })
 }
 
-render()
+// render()
+
+async function renderCart() {
+	try {
+    cart_list.html('');
+    const data = await $.ajax({
+      url: '/carts/cartAll',
+      type:'GET',
+    })
+    console.log(data.carts)
+
+    // if (data.length == 0) {
+    //   $('.cart__info').setAttribute('style', 'display:none')
+    //   $('.cart__list').innerHTML = `
+    //   <div class="empty__cart">  
+    //     <img src="../../public/images/EmptyCart.png" alt="EmptyCart">
+    //     <h2>Giỏ hàng của bạn còn trống!</h2>
+    //     <a href="/">
+    //         <button class="btn btn-small">
+    //             <span class="btn-txt-cart">MUA NGAY</span>
+    //         </button>
+    //     </a>
+    //   </div>
+    //   `
+    //   return
+    // }
+
+    data.carts.map((item) => {
+      totalProduct += item.quantity
+    })
+    console.log(totalProduct)
+  
+    cart_list.html('')
+    data.carts.map(async (item, index) => {
+        const result = await $.ajax({
+          url: `/products/api/${item.productId}`,
+          type: 'GET',
+        })
+        
+        addCartList1(result.data.product, index, data.carts)
+    })
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+renderCart()
 
 function getCookie(cname) {
   let name = cname + "=";
@@ -172,7 +333,7 @@ function getCookie(cname) {
   return "";
 }
 
-btn_order.addEventListener('click', (e) => {
+$(btn_order).on('click', (e) => {
 	e.preventDefault()
 	window.location.href = '/checkout'
 })
@@ -195,9 +356,9 @@ btn_order.addEventListener('click', (e) => {
 + Chưa đăng nhập -> ấn chọn sản phẩm, số lượng (thông tin sản phẩm, total) -> lưu vào localStorage -> vào trang cart + đọc local -> login(nhận local + id) => lưu cart -> ấn đặt hàng 
 */
 
-// console.log(document.querySelector('.cart__info__btn'));
+// console.log($('.cart__info__btn'));
 
-btn_cart.addEventListener('click', (e) => {
+$(btn_cart).on('click', (e) => {
   e.preventDefault()
   window.location.href = '/'
 })
