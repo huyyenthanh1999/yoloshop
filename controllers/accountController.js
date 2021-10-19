@@ -26,7 +26,7 @@ module.exports.getAccount = async (req, res) => {
         //     status: 'fail',
         //     message: 'Lỗi server',
         // }) 
-        res.redirect('/users/login')
+        res.redirect('/auth/login')
     }
 }
 

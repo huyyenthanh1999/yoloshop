@@ -1,61 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yolo - Trang giỏ hàng</title>
-    <link rel="stylesheet" href="../../public/css/header.css">
-    <link rel="stylesheet" href="../../public/css/slider.css">
-    <link rel="stylesheet" href="../../public/css/featured-card.css">
-    <link rel="stylesheet" href="../../public/css/footer.css">
-    <link rel="stylesheet" href="../../public/css/homeBase.css">
-    <link rel="stylesheet" href="../../public/css/product-card.css">
-    <link rel="stylesheet" href="../../public/css/cart.css">
-    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
-</head>
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Yolo - Trang giỏ hàng</title>
+		<link rel="stylesheet" href="../../public/css/header.css" />
+		<link rel="stylesheet" href="../../public/css/slider.css" />
+		<link rel="stylesheet" href="../../public/css/featured-card.css" />
+		<link rel="stylesheet" href="../../public/css/footer.css" />
+		<link rel="stylesheet" href="../../public/css/homeBase.css" />
+		<link rel="stylesheet" href="../../public/css/product-card.css" />
+		<link rel="stylesheet" href="../../public/css/cart.css" />
+		<link
+			href="https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css"
+			rel="stylesheet"
+		/>
+	</head>
 
-<style>
-    :root {
-    --blue-color: #4267b2;
-    --pink-color: #fe7e73;
-    --orange-color: #fbb96b;
-    }
-</style>
+	<style>
+		:root {
+			--blue-color: #4267b2;
+			--pink-color: #fe7e73;
+			--orange-color: #fbb96b;
+		}
+	</style>
 
-<body>
-    <div class="main">
-        <div>
-            <%- include ('../components/header'); -%>
-        </div>
+	<body>
+		<div class="main">
+			<div><%- include ('../components/header'); -%></div>
 
-        <div class="container">
-            <div id="cart">
-                <div class="cart__info">
-                    <div class="cart__info__txt">
-                       
-                    </div>
-                    <div class="cart__info__btn">
-                        <button class="btn btn-small btn-order">
-                            <span class="btn-txt-cart">Đặt hàng</span>
-                        </button>
-                        <button class="btn btn-small btn-cart">
-                            <span class="btn-txt-cart">Tiếp tục mua hàng</span>
-                        </button>
-                    </div>
-                </div>
-                <div class="cart__list">
-                   
-                </div>
-            </div>
-        </div>
-        
-        <div>
-            <%- include ('../components/footer'); -%> 
-        </div>
-    </div>
-    
-</body>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="../../public/js/cart.js"></script>
+			<div class="container">
+				<div id="cart">
+					<div class="cart__info">
+						<div class="cart__info__txt"></div>
+						<div class="cart__info__btn">
+							<button class="btn btn-small btn-order">
+								<span class="btn-txt-cart">Đặt hàng</span>
+							</button>
+							<button class="btn btn-small btn-cart">
+								<span class="btn-txt-cart">Tiếp tục mua hàng</span>
+							</button>
+						</div>
+					</div>
+					<div class="cart__list"></div>
+				</div>
+			</div>
+
+			<div><%- include ('../components/footer'); -%></div>
+		</div>
+	</body>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<script>
+		let cart = JSON.parse('<%- JSON.stringify(cart) %>')
+		let totalMoney = JSON.parse('<%- JSON.stringify(totalMoney) %>')
+	</script>
+
+	<script src="../../public/js/cart.js"></script>
 </html>
