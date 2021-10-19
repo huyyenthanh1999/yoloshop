@@ -15,19 +15,15 @@ const OrderSchema = mongoose.Schema(
 			type: String,
 			required: true,
 		},
-		email: {
-			type: String,
-			required: true,
-		},
 		message: {
 			type: String,
 			required: false,
 		},
-		detailAddress: {
+		address: {
 			type: String,
 			required: true,
 		},
-		orderList: [{ 
+		products: [{ 
 			productId: {
 				type: String,
 				required: true,
@@ -38,13 +34,23 @@ const OrderSchema = mongoose.Schema(
 				required: true,
 			}
 		}],
-		totalPrice: {
+		totalCost: {
 			type: Number,
             required: true,
 		},
+		status: {
+			type: String,
+			enum: ['Đang chờ', 'Đã hủy', 'Đã giao'],
+			default: 'Đang chờ'
+		},
+		payment: {
+			type: String,
+			enum: ['transfer', 'cod'],
+			default: 'cod'
+		}
 	},
 	{
-		timestamp: true,
+		timestamps: true,
 	}
 )
 
