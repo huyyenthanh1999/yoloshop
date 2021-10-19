@@ -1,0 +1,39 @@
+<% for (var i = 1; i <= products.length; i++) { %>
+    <% if (i % 3 == 1){ %>
+        <div class="grid-rows">
+            <% for (var j = i - 1; j < (i + 2); j++) { %>
+                <% if (j < products.length) { %>
+                    <div class="grid-col-3 md-grid-col-2">
+                        <%- include ('./product-card', {
+                            id: products[j]._id,
+                            name: products[j].name,
+                            price: products[j].price,
+                            imgFront: products[j].images[0],
+                            imgBack: products[j].images[1]
+                        }) -%>
+                    </div>
+                <% } %>
+            <% } %>
+        </div>
+    <% } %>
+<% } %>
+
+<div class="pagination">
+    <ul>
+        <li>
+            <a href=""><i class='bx bx-chevron-left'></i></a>
+        </li>
+        <li class="active">
+            <a href="">1</a>
+        </li>
+        <li>
+            <a href="">2</a>
+        </li>
+        <li>
+            <a href="">3</a>
+        </li>
+        <li>
+            <a href=""><i class='bx bx-chevron-right'></i></a>
+        </li>
+    </ul>
+</div>

@@ -163,7 +163,7 @@ th, td {
 
 .account-order__list {
     max-height: 600px;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 @media only screen and (max-width: 67.5em){

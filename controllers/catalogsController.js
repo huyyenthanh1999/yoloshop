@@ -1,22 +1,39 @@
 const Product = require("../models/productModel");
 const ProductCode = require("../models/productCodeModel");
+const { render } = require("ejs");
 module.exports.getProductDetail = async (req, res) => {
-  const idProductCode = req.body.params;
+  const idProductCode = req.params.id;
   try {
-    const productCode = await ProductCode.findOne({
-      id: idProductCode,
-    });
+    const productCode = await ProductCode.findById(idProductCode);
     const products = await Product.find({
-      idProductCode: productCode.id,
+      idProductCode: idProductCode,
     });
-    res.render("pages/catalog-detail");
-    // res.status(200).json({
-    //   status: "success",
-    //   data: {
-    //     productCode,
-    //     products,
-    //   },
-    // });
+    var sizes = products.map(e => e.size);
+    var colors = products.map(e => e.color);
+    //get all product
+    const allProductCodes = await ProductCode.find();
+    const arr = Array.from(Array(allProductCodes.length).keys());
+    var moreIndexes = getRandom(arr, 8);
+    function getRandom(arr, n) {
+      var result = new Array(n),
+        len = arr.length,
+        taken = new Array(len);
+      if (n > len)
+        throw new RangeError("getRandom: more elements taken than available");
+      while (n--) {
+        var x = Math.floor(Math.random() * len);
+        result[n] = arr[x in taken ? taken[x] : x];
+        taken[x] = --len in taken ? taken[len] : len;
+      }
+      return result;
+    }
+    res.render("pages/product_detail",{
+      moreIndexes,
+      products: allProductCodes,
+      product: productCode, 
+      sizes: [...new Set(sizes)],
+      colors: [...new Set(colors)],
+    });
   } catch (error) {
     res.status(500).json({
       status: "fail",
@@ -42,6 +59,7 @@ module.exports.getCatalogs = async (req, res) => {
     arrType = ["ao-somi", "ao-thun", "quan-jean"];
   }
   try {
+    
     const typeProduct = await ProductCode.find({
       type: { $in: arrType },
     });
@@ -77,21 +95,93 @@ module.exports.getCatalogs = async (req, res) => {
   } catch (error) {
     res.status(500).json({
       status: "fail",
-      message: "Lỗi server",
+      message: "Lỗi loongf",
     });
   }
 };
 
+// module.exports.getProducts = async (req, res) => {
+//   try {
+//     console.log(req)
+//     // const products = await Product.find({idProductCode: '615d2755a4bb5cf7be279ca4' ,size: ["M", "S"],color: { $in: ["yellow"]}})
+//     const products = [1,2,3]
+//     res.send({
+//       data:products
+//     })
+//   } catch (error) {
+//     res.status(500).json({
+//       status: "fail",
+//       message: "Lỗi server",
+//     });
+//   }
+// }
+
 module.exports.getAllCatalog = async (req, res) => {
+  //get type, size and color from query
+  var arrType = JSON.parse(req.query.type)
+  var arrColor = JSON.parse(req.query.color)
+  var arrSize = JSON.parse(req.query.size)
   try {
-    // const products = await ProductCode.find();
-    res.render("pages/catalog");
-    // res.status(200).json({
-    //   status: "success",
-    //   data: {
-    //     products,
-    //   },
-    // });
+    //get all type
+    const productCodes = await ProductCode.find();
+    const types = [];
+    productCodes.forEach(productCode => {
+      types.push(productCode.type)
+    })
+    var uniqueTypes = types.filter((type, index) => {
+      return types.indexOf(type) === index;
+    });
+
+    //get all color
+    const products = await Product.find();
+    const colors = [];
+    products.forEach(product => {
+      colors.push(product.color)
+    })
+    var uniqueColors = colors.filter((color, index) => {
+      return colors.indexOf(color) === index;
+    });
+
+    //get all size
+    const sizes = []
+    products.forEach(product => {
+      sizes.push(product.size)
+    })
+    var uniqueSizes = sizes.filter((size, index) => {
+      return sizes.indexOf(size) === index;
+    });
+
+    //prepare field to find
+    if (arrSize[0] === undefined) {
+      arrSize = [...uniqueSizessizes];
+    }
+    if (arrColor[0] === undefined) {
+      arrColor = [...uniqueColors];
+    }
+    if (arrType[0] === undefined) {
+      arrType = [...uniqueTypes];
+    }
+
+    //find product with type
+    const arrProductCode = await ProductCode.find({type:{$in: arrType}});
+    var listProducCode = [];
+    arrProductCode.forEach(prdCode => listProducCode.push(prdCode._id));
+
+    const customProduct = await Product.find({
+      idProductCode:{$in: listProducCode},
+      type: {$in : arrType},
+      size: {$in : arrSize}
+    })
+    console.log(175, customProduct)
+    //render all data  
+    res.render("pages/product",
+      {
+        products: productCodes,
+        types: uniqueTypes,
+        colors: uniqueColors,
+        sizes: uniqueSizes
+      });
+
   } catch (error) {
     res.status(500).json({
       status: "fail",

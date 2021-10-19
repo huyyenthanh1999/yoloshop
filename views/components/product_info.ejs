@@ -1,0 +1,66 @@
+<div class="product-info">
+    <h1 class="product-info__title">
+        <%= product.name %>
+    </h1>
+    <div class="product-info__item">
+        <span class="product-info-item__price">
+            <%= product.cost %>
+        </span>
+    </div>
+    <div class="product-info__item">
+        <div class="product-info-item__title">Màu sắc</div>
+        <div class="product-info-item__list">
+            <% colors.forEach(color => { %>
+                <div class="product-info-item-list__item">
+                    <div class="circle" color="<%= color %>"></div>
+                </div>
+            <% }) %> 
+        </div>
+    </div>
+    <div class="product-info__item">
+        <div class="product-info-item__title">Kích cỡ</div>
+        <div class="product-info-item__list">
+            <% sizes.forEach(size=> { %>
+                <div class="product-info-item-list__item">
+                    <span class="product-info-item-list-item__size"><%= size %></span>
+                </div>
+            <% }) %>
+        </div>
+    </div>
+    <div class="product-info__item">
+        <div class="product-info-item__title">Số lượng</div>
+        <div class="product-info-item__quantity">
+            <div class="product-info-item-quantity__btn" onclick="plusQuantity(-1)">
+                <i class="bx bx-minus"></i>
+            </div>
+            <div class="product-info-item-quantity__input" total="<%= product.total %>"></div>
+            <div class="product-info-item-quantity__btn" onclick="plusQuantity(1)">
+                <i class="bx bx-plus"></i>
+            </div>
+        </div>
+    </div>
+    <div class="product-info__item">
+        <button class="btn btn-primary btn-large">
+            <span class="btn-txt">Thêm vào giỏ</span>
+        </button>
+        <button class="btn btn-primary btn-large">
+            <span class="btn-txt">Mua ngay</span>
+        </button>
+    </div>
+</div>
+<div class="product-description mobile">
+    <div class="product-description__title">
+        Chi tiết sản phẩm
+    </div>
+    <div class="product-description__content">
+        <%= product.description %> 
+    </div>
+    <div class="product-description__toggle">
+        <button class="btn btn-primary btn-small">
+            <span class="btn-txt">Xem thêm</span>
+        </button>
+        <button class="btn btn-primary btn-small">
+            <span class="btn-txt">Thu gọn</span>
+        </button>
+    </div>
+</div>

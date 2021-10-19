@@ -49,6 +49,11 @@ img {
     padding: 0 10px;
 }
 
+.grid-col-3 {
+    width: 33.3333%;
+    padding: 0 10px;
+}
+
 .grid-col-3_4 {
     width: 75%;
     padding: 0 10px;
@@ -98,7 +103,7 @@ img {
 
 .btn-icon,
 .btn-txt {
-    display: block;
+    display: inline-block;
     transition: -webkit-transform .5s ease;
     transition: transform .5s ease;
     transition: transform .5s ease,-webkit-transform .5s ease;
@@ -118,12 +123,12 @@ img {
     transform: translateX(-100%);
 }
 
-.btn:hover .btn-txt {
+.product-card__btn .btn:hover .btn-txt {
     -webkit-transform: translateX(100%);
     transform: translateX(100%);
 }
 
-.btn:hover .btn-icon {
+.product-card__btn .btn:hover .btn-icon {
     -webkit-transform: translateX(0);
     transform: translateX(0);
 }
@@ -144,7 +149,8 @@ img {
 
 
 @media only screen and (max-width: 64em) {
-    .grid-col-4 {
+    .grid-col-4,
+    .md-grid-col-2 {
         width: 50%;
         margin-bottom: 20px;
     }
@@ -161,7 +167,8 @@ img {
         font-size: 1.1rem;
     }
     
-    .grid-col-4 {
+    .grid-col-4,
+    .grid-col-3 {
         width: 100%;
     }
 
