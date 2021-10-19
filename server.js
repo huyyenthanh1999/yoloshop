@@ -33,10 +33,9 @@ app.use("/", indexRoute);
 
 
 
-product
+// product
 const productRoute = require('./routes/productRoute')
 app.use('/products', productRoute)
-
 
 
 // user
