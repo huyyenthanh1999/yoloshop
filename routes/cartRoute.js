@@ -1,6 +1,5 @@
 const cartRouter = require('express').Router()
 const cartController = require('../controllers/cartController')
-const upload = require('../middlewares/uploadImgOfCart')
 
 // cart page
 cartRouter.get('/', cartController.renderCart)

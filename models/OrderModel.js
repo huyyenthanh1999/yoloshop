@@ -38,8 +38,12 @@ const OrderSchema = mongoose.Schema(
 				required: true,
 			}
 		}],
-		totalPrice: {
+		totalCost: {
 			type: Number,
+            required: true,
+		},
+		status: {
+			type: String,
             required: true,
 		},
 	},
