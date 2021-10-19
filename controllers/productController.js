@@ -237,12 +237,14 @@ module.exports.userAddProduct = async (req, res) => {
 
 		req.session.cart = cart
 		req.session.totalMoney = totalMoney
-		console.log(req.session.cart)
-		console.log(req.session.totalMoney)
+		// console.log(req.session.cart)
+		// console.log(req.session.totalMoney)
 		res.status(200).json({
 			status: 'success',
 			message: 'Đã thêm sản phẩm vào giỏ hàng',
 		})
+
+		
 	} catch (error) {
 		res.status(400).json({
 			status: 'fail',

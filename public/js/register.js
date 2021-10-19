@@ -28,7 +28,7 @@ form.addEventListener('submit', async (e) => {
 
     // const password = document.querySelector('#password').value
     $.ajax({
-        url: '/users/register',
+        url: '/auth/register',
         data: {
             name, phoneNumber, email, password
         },
