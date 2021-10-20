@@ -27,10 +27,10 @@ module.exports.getProductDetail = async (req, res) => {
       }
       return result;
     }
-    res.render("pages/product_detail",{
+    res.render("pages/product_detail", {
       moreIndexes,
       products: allProductCodes,
-      product: productCode, 
+      product: productCode,
       sizes: [...new Set(sizes)],
       colors: [...new Set(colors)],
     });
@@ -59,7 +59,7 @@ module.exports.getCatalogs = async (req, res) => {
     arrType = ["ao-somi", "ao-thun", "quan-jean"];
   }
   try {
-    
+
     const typeProduct = await ProductCode.find({
       type: { $in: arrType },
     });
@@ -95,93 +95,115 @@ module.exports.getCatalogs = async (req, res) => {
   } catch (error) {
     res.status(500).json({
       status: "fail",
-      message: "Lỗi loongf",
+      message: "Lỗi server",
     });
   }
 };
 
-// module.exports.getProducts = async (req, res) => {
-//   try {
-//     console.log(req)
-//     // const products = await Product.find({idProductCode: '615d2755a4bb5cf7be279ca4' ,size: ["M", "S"],color: { $in: ["yellow"]}})
-//     const products = [1,2,3]
-//     res.send({
-//       data:products
-//     })
-//   } catch (error) {
-//     res.status(500).json({
-//       status: "fail",
-//       message: "Lỗi server",
-//     });
-//   }
-// }
-
-module.exports.getAllCatalog = async (req, res) => {
-  //get type, size and color from query
-  var arrType = JSON.parse(req.query.type)
-  var arrColor = JSON.parse(req.query.color)
-  var arrSize = JSON.parse(req.query.size)
+module.exports.getCustomProduct = async (req, res) => {
   try {
+    //get type, size and color from query
+    var arrType = req.query.type.split(',');
+    var arrColor = req.query.color.split(',');
+    var arrSize = req.query.size.split(',');
+
     //get all type
     const productCodes = await ProductCode.find();
-    const types = [];
-    productCodes.forEach(productCode => {
-      types.push(productCode.type)
-    })
-    var uniqueTypes = types.filter((type, index) => {
-      return types.indexOf(type) === index;
-    });
+    const types = productCodes.map(productCode => productCode.type)
+    var uniqueTypes = [...new Set(types)]
 
     //get all color
     const products = await Product.find();
-    const colors = [];
-    products.forEach(product => {
-      colors.push(product.color)
-    })
-    var uniqueColors = colors.filter((color, index) => {
-      return colors.indexOf(color) === index;
-    });
+    const colors = products.map(product => product.color)
+    var uniqueColors = [...new Set(colors)]
 
     //get all size
-    const sizes = []
-    products.forEach(product => {
-      sizes.push(product.size)
-    })
-    var uniqueSizes = sizes.filter((size, index) => {
-      return sizes.indexOf(size) === index;
-    });
+    const sizes = products.map(product => product.size)
+    var uniqueSizes = [...new Set(sizes)]
 
     //prepare field to find
-    if (arrSize[0] === undefined) {
-      arrSize = [...uniqueSizessizes];
+    if (arrSize[0] === "") {
+      arrSize = [...uniqueSizes];
     }
-    if (arrColor[0] === undefined) {
+    if (arrColor[0] === "") {
       arrColor = [...uniqueColors];
     }
-    if (arrType[0] === undefined) {
+    if (arrType[0] === "") {
       arrType = [...uniqueTypes];
     }
 
     //find product with type
-    const arrProductCode = await ProductCode.find({type:{$in: arrType}});
-    var listProducCode = [];
-    arrProductCode.forEach(prdCode => listProducCode.push(prdCode._id));
+    const arrPrdCodeType = await ProductCode.find({ type: { $in: arrType } });
+    var listPrdCodeTypeId = arrPrdCodeType.map(prdCode => prdCode._id);
 
+    //find product with color
+    const arrPrdCodeColor = await Product.find({
+      idProductCode: { $in: listPrdCodeTypeId },
+      color: { $in: arrColor }
+    });
+    var listPrCodeColorId = arrPrdCodeColor.map(prdCode => prdCode._id);
+
+    //find product with size
     const customProduct = await Product.find({
-      idProductCode:{$in: listProducCode},
-      type: {$in : arrType},
-      size: {$in : arrSize}
+      _id: { $in: listPrCodeColorId },
+      size: { $in: arrSize }
     })
-    console.log(175, customProduct)
-    //render all data  
-    res.render("pages/product",
-      {
-        products: productCodes,
-        types: uniqueTypes,
-        colors: uniqueColors,
-        sizes: uniqueSizes
-      });
 
+    //get productId to render
+    var listIdProduct = customProduct.map(prd => prd.idProductCode);
+    const renderProduct = await ProductCode.find({ _id: { $in: listIdProduct } })
+
+    res.status(200).json({
+      status: 'success',
+      data: renderProduct
+    })
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({
+      status: "fail",
+      message: "Lỗi server",
+    });
+  }
+}
+
+module.exports.getAllCatalog = async (req, res) => {
+  try {
+    let perPage = 12;
+    let page = req.params.page || 1;
+    //get all type
+    const productCodes = await ProductCode.find();
+    const types = productCodes.map(productCode => productCode.type)
+    var uniqueTypes = [...new Set(types)]
+
+    //get all color
+    const products = await Product.find();
+    const colors = products.map(product => product.color)
+    var uniqueColors = [...new Set(colors)]
+
+    //get all size
+    const sizes = products.map(product => product.size)
+    var uniqueSizes = [...new Set(sizes)]
+
+    //render data each page 
+    ProductCode
+      .find()
+      .skip((perPage * page) - perPage)
+      .limit(perPage)
+      .exec((err, prds) => {
+        ProductCode.countDocuments((err, count) => {
+          if (err) return next(err);
+
+          res.render("pages/product",
+            {
+              products: prds,
+              types: uniqueTypes,
+              colors: uniqueColors,
+              sizes: uniqueSizes,
+              current: page,
+              pages: Math.ceil(count / perPage)
+            });
+        });
+      });
   } catch (error) {
     res.status(500).json({
       status: "fail",

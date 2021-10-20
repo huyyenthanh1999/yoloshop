@@ -18,19 +18,20 @@ $(document).ready(function(){
         $(this).children().css("background-color",$(this).children().attr("color"))
     })
 
+ //required to select variant
+    $('')
+
 });
 
  //select quantity
  var quantity = 1;
  $('.product-info-item-quantity__input').text(1)
  function plusQuantity(n){
-    //  console.log($('.product-info-item-quantity__input').attr('total'))
      quantity+= n;
      if(quantity < 1){
          quantity = 1
      }
-    //  else if (quantity > $('.product-info-item-quantity__input').attr('total')){
-    //      quantity = $('.product-info-item-quantity__input').attr('total')
-    //  }
      $('.product-info-item-quantity__input').text(quantity)
  }
+
+ 
