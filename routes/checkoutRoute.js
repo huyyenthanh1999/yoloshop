@@ -1,9 +1,13 @@
 const checkoutRouter = require('express').Router()
 const checkoutController = require('../controllers/checkoutController')
 
-// cart page
-checkoutRouter.get('/', checkoutController.renderCheckout)
+// order page
+checkoutRouter.get('/', checkoutController.renderOrder)
 
-checkoutRouter.post('/', checkoutController.goToCheckout)
+// get all order
+checkoutRouter.get('/checkoutAll', checkoutController.getAllOrder)
+
+// update order
+checkoutRouter.put('/', checkoutController.updateOrder)
 
 module.exports = checkoutRouter

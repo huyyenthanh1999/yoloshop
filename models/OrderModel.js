@@ -23,11 +23,11 @@ const OrderSchema = mongoose.Schema(
 			type: String,
 			required: false,
 		},
-		detailAddress: {
+		address: {
 			type: String,
 			required: true,
 		},
-		orderList: [{ 
+		products: [{ 
 			productId: {
 				type: String,
 				required: true,
@@ -43,6 +43,10 @@ const OrderSchema = mongoose.Schema(
             required: true,
 		},
 		status: {
+			type: String,
+            required: true,
+		},
+		payment: {
 			type: String,
             required: true,
 		},

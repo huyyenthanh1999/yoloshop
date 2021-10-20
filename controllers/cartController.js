@@ -1,12 +1,12 @@
 const Cart = require("../models/CartModel");
 
 module.exports.renderCart = (req, res) => {
-  res.render("pages/cart");
+  res.render("pages/cart")
 };
 
 module.exports.getAllCart = async (req, res) => {
   try {
-    const carts = await Cart.find({});
+    const carts = await Cart.find({})
 
     res.status(200).json({
       status: "success",
