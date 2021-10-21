@@ -38,7 +38,6 @@ const productRoute = require('./routes/productRoute')
 app.use('/products', productRoute)
 
 
-
 // user
 const userRoute = require('./routes/userRoute')
 app.use('/users', userRoute)
@@ -61,7 +60,7 @@ app.use("/admin", adminRoute);
 
 // Products detail
 const catalogsRoute = require("./routes/catalogsRoute");
-app.use("/catalogs", catalogsRoute);
+app.use("/products", catalogsRoute);
 
 
 

@@ -52,6 +52,15 @@
   height: 100%;
 }
 
+.home {
+  height: 100%;
+  width: 120px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
+}
+
 .header-menu__left-close {
   display: none;
 }

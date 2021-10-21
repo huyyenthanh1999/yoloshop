@@ -1,3 +1,18 @@
+//active css nav-item
+var pathName = window.location.pathname;
+pathName = pathName.slice(1,pathName.length)
+switch (pathName){
+    case "products":
+        $(".header-menu #product").addClass('active');
+        break;
+    case "":
+        $(".header-menu #home").addClass('active');
+        break;
+    default:
+        break;
+}
+
+//go top button
 const menuLeft = $('.header-menu__left');
 const goTop = $('.go-top');
 
@@ -33,3 +48,4 @@ window.addEventListener('scroll', () => {
         header.css('background-color','')
     }
 })
+
