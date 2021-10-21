@@ -64,6 +64,8 @@ function render() {
         type: 'GET'
     })
         .then(res => {
+            const url = `filter?type=${data.type}&color=${data.color}&size=${data.size}`;
+            history.pushState(null, null, url);
             const products = res.data;
             $('.product-content').html('')
             $('.product-content').append('<div class="grid-rows"></div>');
@@ -95,21 +97,3 @@ function render() {
         })
         .catch(err => console.log(err))
 }
-
-//pagination
-// $.ajax({
-//     url:"/product?page=1&&size=10",
-//     type:"get",
-//     data: {
-//         page: 1,
-//         pageLimit: 10
-//     },
-//     success: (data) => {
-//         console.log(data)
-//     },
-//     error: (jqXHR, textStatus, errorThrown) => {
-//         console.log(jqXHR)
-//         console.log(textStatus)
-//         console.log(errorThrown)
-//     }
-// })

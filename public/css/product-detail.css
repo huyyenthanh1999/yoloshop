@@ -132,6 +132,15 @@
     margin-right: 10px;
 }
 
+.product-info-item-list__item input {
+    position: absolute;
+    width: 50px;
+    display: inline-block;
+    height: 50px;
+    opacity: 0;
+    cursor: pointer;
+}
+
 .product-info-item-list__item.active,
 .product-info-item-list__item:hover {
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);

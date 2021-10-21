@@ -1,11 +1,10 @@
 <div class="product-images">
     <div class="product-images__list">
-        <div class="product-images-list__item">
-            <img src="<%= product.images[0] %>" alt="">
-        </div>
-        <div class="product-images-list__item">
-            <img src="<%= product.images[1] %>" alt="">
-        </div>
+        <% for (let i = 0; i < product.images.length; i ++){ %>
+            <div class="product-images-list__item">
+                <img src="<%= product.images[0] %>" alt="">
+            </div>
+        <% } %> 
     </div>
     <div class="product-images__main">
         <img src="<%= product.images[0] %>" alt="">

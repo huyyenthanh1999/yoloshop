@@ -11,9 +11,10 @@
         <div class="product-info-item__title">Màu sắc</div>
         <div class="product-info-item__list">
             <% colors.forEach(color => { %>
-                <div class="product-info-item-list__item">
+                <label class="product-info-item-list__item">
+                    <input type="radio" name="color" value="<%= color %>">
                     <div class="circle" color="<%= color %>"></div>
-                </div>
+                </label>
             <% }) %> 
         </div>
     </div>
@@ -21,9 +22,10 @@
         <div class="product-info-item__title">Kích cỡ</div>
         <div class="product-info-item__list">
             <% sizes.forEach(size=> { %>
-                <div class="product-info-item-list__item">
+                <label class="product-info-item-list__item">
+                    <input type="radio" name="size" value="<%= size %>">
                     <span class="product-info-item-list-item__size"><%= size %></span>
-                </div>
+                </label>
             <% }) %>
         </div>
     </div>
@@ -41,7 +43,7 @@
     </div>
     <div class="product-info__item">
         <button class="btn btn-primary btn-large">
-            <span class="btn-txt">Thêm vào giỏ</span>
+            <span class="btn-txt" onclick="addCart()">Thêm vào giỏ</span>
         </button>
         <button class="btn btn-primary btn-large">
             <span class="btn-txt">Mua ngay</span>
