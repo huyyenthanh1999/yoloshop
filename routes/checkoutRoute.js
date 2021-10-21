@@ -4,11 +4,11 @@ const checkoutController = require('../controllers/checkoutController')
 // order page
 checkoutRouter.get('/', checkoutController.renderOrder)
 
-// get all order
-checkoutRouter.get('/checkoutAll', checkoutController.getAllOrder)
+// get detail order
+checkoutRouter.get('/detailOrder', checkoutController.detailOrder)
 
-// check user
-// checkoutRouter.get('/checkUser', checkoutController.checkUser)
+// check order
+// checkoutRouter.get('/checkOrder', checkoutController.checkOrder)
 
 // create order
 checkoutRouter.post('/', checkoutController.createOrder)

@@ -275,11 +275,9 @@ async function renderCart() {
 	try {
     cart_list.html('');
     const data = await $.ajax({
-      url: '/carts/cartAll',
+      url: '/carts/detailCart',
       type:'GET',
     })
-    console.log(data)
-    console.log(data.carts)
 
     // if (data.length == 0) {
     //   $('.cart__info').setAttribute('style', 'display:none')
@@ -297,19 +295,19 @@ async function renderCart() {
     //   return
     // }
 
-    data.carts.map((item) => {
+    data.cart.products.map((item) => {
       totalProduct += item.quantity
     })
-    console.log(totalProduct)
+    // console.log(totalProduct)
   
     cart_list.html('')
-    data.carts.map(async (item, index) => {
-        const result = await $.ajax({
-          url: `/products/api/${item.productId}`,
-          type: 'GET',
-        })
+    data.cart.products.map(async (item, index) => {
+      const result = await $.ajax({
+        url: `/products/api/${item.productId}`,
+        type: 'GET',
+      })
         
-        addCartList(result.data.product, index, data.carts)
+        addCartList(result.data.product, index, data.cart.products)
     })
   } catch (error) {
     console.log(error);

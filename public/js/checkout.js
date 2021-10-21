@@ -33,20 +33,18 @@ let addDetailOrder = (product, index, _listData) => {
 async function render() {
     try {
         const data = await $.ajax({
-            url: '/checkout/checkoutAll',
+            url: '/checkout/detailOrder',
             type:'GET',
         })
-        console.log(40, data)
-        console.log(40, data.orders[0].products)
         
         $('.products__info').html('')
-        data.orders[0].products.map(async (item, index) => {
+        data.order.products.map(async (item, index) => {
             const result = await $.ajax({
                 url: `/products/api/${item.productId}`,
                 type: 'GET',
             })
             
-            addDetailOrder(result.data.product, index, data.orders[0].products)
+            addDetailOrder(result.data.product, index, data.order.products)
         })
     } catch (error) {
         console.log(error)

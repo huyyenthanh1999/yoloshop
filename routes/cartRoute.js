@@ -4,11 +4,8 @@ const cartController = require('../controllers/cartController')
 // cart page
 cartRouter.get('/', cartController.renderCart)
 
-// get all cart
-cartRouter.get('/cartAll', cartController.getAllCart)
-
 // get detail cart
-// cartRouter.get('/:id', cartController.getDetailCart)
+cartRouter.get('/detailCart', cartController.detailCart)
 
 // create cart
 cartRouter.post('/', cartController.createCart)
