@@ -47,8 +47,8 @@ const indexRoute = require('./routes/indexRoute')
 app.use('/', indexRoute)
 
 // product
-const productRoute = require('./routes/productRoute')
-app.use('/products', productRoute)
+// const productRoute = require('./routes/productRoute')
+// app.use('/products', productRoute)
 
 // user
 const userRoute = require('./routes/userRoute')

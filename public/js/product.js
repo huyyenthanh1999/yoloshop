@@ -1,76 +1,127 @@
-// render();
+render()
 //display filter box
 $('.product-filter__toggle button').click(() => {
-    $('.product-filter').addClass('active');
-    $('.filter-overlay').addClass('active');
+	$('.product-filter').addClass('active')
+	$('.filter-overlay').addClass('active')
 })
 //hide filter box
 $('.product-filter__close').click(() => {
-    $('.filter-overlay').removeClass('active');
-    $('.product-filter').removeClass('active');
+	$('.filter-overlay').removeClass('active')
+	$('.product-filter').removeClass('active')
 })
 
 $('.filter-overlay').click(() => {
-    $('.product-filter').removeClass('active')
-    $('.filter-overlay').removeClass('active');
+	$('.product-filter').removeClass('active')
+	$('.filter-overlay').removeClass('active')
 })
 //display filter icon when scroll
 window.addEventListener('scroll', () => {
-    if (document.body.scrollTop > 75 || document.documentElement.scrollTop > 75) {
-        $('.product-filter__toggle').addClass('sticky')
-    } else {
-        $('.product-filter__toggle').removeClass('sticky')
-    }
+	if (document.body.scrollTop > 75 || document.documentElement.scrollTop > 75) {
+		$('.product-filter__toggle').addClass('sticky')
+	} else {
+		$('.product-filter__toggle').removeClass('sticky')
+	}
 })
 
-//delete all filter 
+//delete all filter
 $('.del-filter button').click(function () {
-    $('.custom-checkbox input').prop('checked', false);
-    window.location.href="/products"
+	$('.custom-checkbox input').prop('checked', false)
+	window.location.href = '/products'
 })
 
 //custom filter
 $('.custom-checkbox input').change(async (e) => {
-    render()
+	render()
 })
 
+// const urlParams = new URLSearchParams(window.location.search)
+// let type = urlParams.get('type')
+// let size = urlParams.get('size')
+// let color = urlParams.get('color')
+
+// type = !type ? [] : [...type.split(',')]
+// size = !size ? [] : [...size.split(',')]
+// color = !color ? [] : [...color.split(',')]
+
+// type.forEach((item) => {
+// 	$(`.product-filter-section__content.type input[value="${item}"]`).attr(
+// 		'checked',
+// 		true
+// 	)
+// })
+// size.forEach((item) => {
+// 	$(`.product-filter-section__content.size input[value="${item}"]`).attr(
+// 		'checked',
+// 		true
+// 	)
+// })
+// color.forEach((item) => {
+// 	$(`.product-filter-section__content.color input[value="${item}"]`).attr(
+// 		'checked',
+// 		true
+// 	)
+// })
+
+// let data = {
+//     color, type, size
+// }
+// renderProducts(data)
+
 function render() {
-    var data = {
-        type: [],
-        color: [],
-        size: []
-    }
-    $('.custom-checkbox input').each(function () {
-        if ($(this).is(':checked')) {
-            var name = $(this).attr("name");
-            switch (name) {
-                case 'type':
-                    data.type.push($(this).val());
-                    break;
-                case 'color':
-                    data.color.push($(this).val());
-                    break;
-                case 'size':
-                    data.size.push($(this).val());
-                    break;
-                default:
-                    break;
-            }
-        }
-    })
+	// get query of url
+	const urlParams = new URLSearchParams(window.location.search)
+	let type = urlParams.get('type')
+	let size = urlParams.get('size')
+	let color = urlParams.get('color')
+
+	// $('.checkbox').prop('checked', true);
+
+	console.log(type)
+
+	type = !type ? [] : [type]
+	size = !size ? [] : [size]
+	color = !color ? [] : [color]
+
+	// console.log(type)
+	let data = {
+		type,
+		color,
+		size,
+	}
+	$('.custom-checkbox input').each(function () {
+		if ($(this).is(':checked')) {
+			var name = $(this).attr('name')
+			switch (name) {
+				case 'type':
+					data.type.push($(this).val())
+					// data.type += ',' + $(this).val()
+					break
+				case 'color':
+					data.color.push($(this).val())
+					// data.color += ',' + $(this).val()
+					break
+				case 'size':
+					data.size.push($(this).val())
+					// data.size += ',' + $(this).val()
+					break
+				default:
+					break
+			}
+		}
+	})
 
     $.ajax({
-        url: `/products/filter?type=${data.type}&color=${data.color}&size=${data.size}`,
-        type: 'GET'
-    })
-        .then(res => {
-            const url = `filter?type=${data.type}&color=${data.color}&size=${data.size}`;
-            history.pushState(null, null, url);
-            const products = res.data;
-            $('.product-content').html('')
-            $('.product-content').append('<div class="grid-rows"></div>');
-            for(var i = 0; i <= products.length - 1; i++) {              
-                $('.product-content .grid-rows').append(`
+		url: `/products/filter?type=${data.type}&color=${data.color}&size=${data.size}`,
+		type: 'GET',
+	})
+		.then((res) => {
+			const url = `/products?type=${data.type}&color=${data.color}&size=${data.size}`
+			history.pushState(null, null, url)
+			const products = res.data
+			$('.product-content').html('')
+			$('.product-content').append('<div class="grid-rows"></div>')
+			for (var i = 0; i <= products.length - 1; i++) {
+				$('.product-content .grid-rows').append(`
                     <div class="grid-col-3 md-grid-col-2">
                         <div class="product-card pb-2">
                             <a href="/products/detail/${products[i]._id}">
@@ -92,8 +143,7 @@ function render() {
                         </div>
                     </div>
                 `)
-        
-            }
-        })
-        .catch(err => console.log(err))
+			}
+		})
+		.catch((err) => console.log(err))
 }
