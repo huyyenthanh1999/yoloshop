@@ -278,6 +278,7 @@ async function renderCart() {
       url: '/carts/cartAll',
       type:'GET',
     })
+    console.log(data)
     console.log(data.carts)
 
     // if (data.length == 0) {
