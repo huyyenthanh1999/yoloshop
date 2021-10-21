@@ -18,4 +18,8 @@ router.get('/api', controller.getAllProduct)
 // get one detail product
 router.get('/api/:id', controller.getDetailProduct)
 
+
+
+router.get('/add/:id', controller.userAddProduct)
+
 module.exports = router
