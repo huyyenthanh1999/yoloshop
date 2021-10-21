@@ -5,6 +5,16 @@ const userModel = require('../models/userModel');
 
 
 
+// register
+router.post('/register', upload.none(), controller.register)
+router.get('/register', controller.getRegister)
+
+// login
+router.post('/login', controller.login)
+router.get('/login', controller.getLogin)
+
+
+
 // edit user
 router.put('/:id', upload.single('avatar'), controller.editUser)
 

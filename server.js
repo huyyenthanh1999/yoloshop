@@ -7,6 +7,14 @@ const path = require('path')
 
 const app = express()
 
+// connect to database
+async function connectDB() {
+  await mongoose.connect(
+    `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0.k7qck.mongodb.net/k14shop?retryWrites=true&w=majority`
+  );
+}
+connectDB();
+
 // add middleware
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
@@ -32,7 +40,7 @@ app.use('/public', express.static(path.join(__dirname, 'public')))
 
 
 // connect mongodb
-require('./config/connectDB')
+// require('./config/connectDB')
 
 // index
 const indexRoute = require('./routes/indexRoute')

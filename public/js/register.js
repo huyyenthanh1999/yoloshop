@@ -1,48 +1,34 @@
-function createCookie(name, value, days = 15) {
-    if (days) {
-        var date = new Date();
-        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-        var expires = "; expires=" + date.toGMTString();
-    }
-    else var expires = "";
-    document.cookie = name + "=" + value + expires + "; path=/";
-}
+const form = document.querySelector('#form-register')
+console.log(form)
+form.addEventListener('submit', (e) => {
+	e.preventDefault()
 
-const form = document.querySelector('form')
-form.addEventListener('submit', async (e) => {
-    e.preventDefault()
+	const formData = new FormData(form)
+	for (let i of formData.entries()) console.log(i)
 
-    const confirm = document.querySelector('#confirm').value
-    const password = document.querySelector('#password').value
-
-    // check 2 
-    if (password != confirm) {
-        alert('Mat khau khong khop')
-        return
-    }
-
-    const name = document.querySelector('#user').value
-    const phoneNumber = document.querySelector('#phoneNumber').value
-    const email = document.querySelector('#email').value
-
-
-    // const password = document.querySelector('#password').value
-    $.ajax({
-        url: '/auth/register',
-        data: {
-            name, phoneNumber, email, password
-        },
-        // processData: false,
-        type: 'POST',
-    })
-        .then(data => {
-            createCookie('tokenId', data.data.token)
-            alert('Đăng kí thành công')
-
-            window.location.href = '/'
-
-        })
-        .catch(error => {
-            alert('Mật khẩu hoặc email/phone không đúng')
-        })
+	fetch('/users/register', {
+		method: 'POST',
+		body: formData,
+		// headers: { 'Content-Type': 'application/json' },
+		headers: {
+			// 'Content-Type': 'application/json',
+			// 'Content-Type': 'application/x-www-form-urlencoded',
+		},
+	})
+		.then((response) => response.json())
+		.then((result) => {
+			console.log('Success:', result)
+		})
+		.catch((error) => {
+			console.log('Error:', error)
+		})
+	// $.ajax({
+	// 	url: '/users/register',
+	// 	data: formData,
+	// 	contentType: 'application/json',
+	// 	type: 'POST',
+	// })
+	// .then(data => {
+	//     console.log(data)
+	// })
 })
