@@ -7,7 +7,7 @@ const userModel = require('../models/userModel');
 
 // register
 router.post('/register', upload.none(), controller.register)
-router.get('/register', controller.getRegister)
+// router.get('/register', controller.getRegister)
 
 // login
 router.post('/login', controller.login)
