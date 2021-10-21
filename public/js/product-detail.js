@@ -6,7 +6,7 @@ $(document).ready(function(){
      });
 //select size and color
     $(".product-info-item-list__item").click(function(){
-        $(this).toggleClass("active")
+        $(this).addClass("active")
         $(this).siblings().removeClass('active')
     })
 //change main image
@@ -15,11 +15,8 @@ $(document).ready(function(){
     })
 //set color 
     $('.product-info-item-list__item').each(function(){
-        $(this).children().css("background-color",$(this).children().attr("color"))
+        $(this).children('div').css("background-color",$(this).children('div').attr("color"))
     })
-
- //required to select variant
-    $('')
 
 });
 
@@ -34,4 +31,28 @@ $(document).ready(function(){
      $('.product-info-item-quantity__input').text(quantity)
  }
 
+function addCart() {
+    //required to select variant
+    var size, color;
+        $('.product-info-item-list__item input[name="size"]').each(function(){
+            if($(this).is(':checked')){
+                size = $(this).val();
+            }
+        })
+        if(size == undefined){
+            alert("Vui lòng chọn size!")
+        }
+        $('.product-info-item-list__item input[name="color"]').each(function(){
+            if($(this).is(':checked')){
+                color = $(this).val();
+            }
+        })
+        if(color == undefined){
+            alert("Vui lòng chọn color!")
+        }
+
+        if(size != undefined && color != undefined){
+            console.log(size, color)
+        }
+}
  
