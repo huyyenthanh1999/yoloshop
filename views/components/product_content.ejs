@@ -1,0 +1,81 @@
+<% for (var i = 1; i <= products.length; i++) { %>
+    <% if (i % 3 == 1){ %>
+        <div class="grid-rows">
+            <% for (var j = i - 1; j < (i + 2); j++) { %>
+                <% if (j < products.length) { %>
+                    <div class="grid-col-3 md-grid-col-2">
+                        <%- include ('./product-card', {
+                            id: products[j]._id,
+                            name: products[j].name,
+                            price: products[j].price,
+                            imgFront: products[j].images[0],
+                            imgBack: products[j].images[1]
+                        }) -%>
+                    </div>
+                <% } %>
+            <% } %>
+        </div>
+    <% } %>
+<% } %>
+
+ <!-- pagination -->
+ <div class="pagination">
+    <!-- hiển thị phân trang nếu có trang -->
+    <% if(pages > 0) { %>
+      <ul>
+        <!-- FIRST ITEM -->  
+        <% if(current == 1) { %> 
+            <li class="disabled">
+              <a href="#">First</a>
+            </li>
+        <% } else { %>
+            <li>
+              <a href="/products">First</a>
+            </li>
+        <% } %>
+        
+        <!-- ITEMS  -->
+        <% var i = (Number(current) > 3 ? Number(current) - 2 : 1) %> 
+        <% if(i !== 1) { %>
+            <li class="disabled">
+              <a href="#">...</a>
+            </li>
+        <% } %>
+        <% for(; i <= (Number(current) + 2) && i <= pages; i++) { %>
+          <% if(i == current) { %>
+            <li class="active">
+              <a href="/products/<%= i %>/">
+                <%= i %>
+              </a>
+            </li>
+        <% } else { %>
+            <li>
+              <a href="/products/<%= i %>/">
+                <%= i %>
+              </a>
+            </li>
+        <% } %>
+        <% if (i == Number(current) + 2 && i < pages) { %>
+            <li class="disabled">
+              <a href="#">...</a>
+            </li>
+        <% } %>
+        <% } %>
+        
+        <!-- LAST ITEM -->
+        <% if(current == pages) { %> 
+            <li class="disabled">
+              <a href="#">
+                Last
+              </a>
+            </li>
+        <% } else { %>
+            <li>
+              <a href="/products/<%= pages %>/">
+                Last
+              </a>
+            </li>
+        <% } %>
+      </ul>
+    <% } %>
+</div>

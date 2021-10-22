@@ -34,11 +34,6 @@ const adminRoute = require("./adminRoute");
 router.use("/admin", adminRoute);
 
 
-// orders
-const orderRoute = require('./orderRoute')
-router.use('/orders', orderRoute)
-
-
 // Not found page
 router.use((req, res) => res.render('pages/notfound'))
 
