@@ -31,10 +31,7 @@ form.addEventListener('submit', async (e) => {
 
             // chuyen localStorage ve cart
             // call api
-
-
-
-
+            
             window.history.back()
         })
         .catch(error => {

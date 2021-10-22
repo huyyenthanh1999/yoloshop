@@ -1,7 +1,7 @@
 let totalProduct = 0
 let totalPrice = 0
 let total = []
-let _userId = '6166ee383ebc1968bde162b6'  // Ham check dang nhap -> neu da dang nhap tra ve userId
+let _userId = '616e853bb6f54eb7c71eb50d'  // Ham check dang nhap -> neu da dang nhap tra ve userId
 
 const btn_order = $('.btn-order')
 const btn_cart = $('.btn-cart')

@@ -36,6 +36,9 @@ router.use('/checkout', checkoutRoute)
 const adminRoute = require("./adminRoute");
 router.use("/admin", adminRoute);
 
+const userRoute = require('./userRoute')
+router.use("/users", userRoute)
+
 
 // Not found page
 // router.use((req, res) => res.render('pages/notfound'))
