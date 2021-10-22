@@ -1,158 +1,46 @@
-let detailProducts = []
-let lisData = undefined
 let totalProduct = 0
 let totalPrice = 0
-let productName = ''
-let _quantity = 0
+let total = []
+let _userId = '6166ee383ebc1968bde162b6'  // Ham check dang nhap -> neu da dang nhap tra ve userId
+
 const btn_order = $('.btn-order')
-const btn_cart = $(".btn-cart")
+const btn_cart = $('.btn-cart')
 let cart_list = $('.cart__list')
 
 let addCartInfo = () => {
-  $('.cart__info__txt').html('')
-  let _div = `
-    <p>
-        Bạn đang có
-        <span>${totalProduct}</span>
-        sản phẩm trong giỏ hàng
-    </p>
-    <div class="cart__info__txt__price">
-        <span>Thành tiền:</span>
-        <span>${totalPrice} VNĐ</span>
-    </div>
-  `
-  $('.cart__info__txt').append(_div)
+  $('.total__product').html(`${totalProduct}`)
+  $('.total__price').html(`${totalPrice} VND`)
 }
 
 let i = 0
-// let addCartList = (product, index) => {
-// 	i++
-//   let div = `
-//     <table class="tb1">
-//       <tr>
-//           <td class="td1 cart__item__image">
-//             <img src="${product.idProductCode.images[0]}" alt="">
-//           </td>
-//           <td class="td1 cart__item__info__name">
-//             <a href="${product._id}">${product.idProductCode.name} - ${product.color} - ${product.size}</a>
-//           </td>
-//           <td class="td1 cart__item__info__price">
-//             ${product.idProductCode.cost * listData[index].quantity}
-//           </td>
-//           <td class="td1 product_quantity">
-//             <div class="product__info__item__quantity">
-//               <button class="product__info__item__quantity__btn dec__btn">
-//                   <i class="bx bx-minus"></i>
-//               </button>
-//               <div class="product__info__item__quantity__input">${listData[index].quantity}</div>
-//               <button class="product__info__item__quantity__btn inc__btn">
-//                   <i class="bx bx-plus"></i>
-//               </button>
-//             </div>
-//           </td>
-//           <td class="td1">
-//             <button class="cart__item__del">
-//               <i class="bx bx-trash"></i>
-//             </button>
-//           </td>
-//       </tr>
-//     </table>
-//   `
-//   cart_list.append(div)
-//   totalPrice += product.idProductCode.cost * listData[index].quantity
-//   console.log(totalPrice)
-//   if (i == listData.length) {
-//     addCartInfo()
-//     i = 0
-//   } 
-
-//   // Delete button
-//   $($('.cart__item__del')[index]).on('click', () => {
-//     console.log(68, index)
-//     productName = $('.cart__item__info__name')[index].innerHTML
-//     // console.log(productName)
-//     let _productId = productName.slice(22, 46)
-//     console.log(_productId);
-//     const temp = $.ajax({
-//       url: '/carts/',
-//       type: 'DELETE',
-//       data: { productId: _productId }
-//     })
-//   })
-
-//   // Decrease button
-//   $($('.dec__btn')[index]).on('click', () => {
-//     console.log(83, index)
-//     productName = $('.cart__item__info__name')[index].innerHTML
-//     // console.log(productName)
-//     let _productId = productName.slice(22, 46)
-//     console.log(_productId);
-//     _quantity = $('.product__info__item__quantity__input')[index].innerHTML
-//     console.log(_quantity);
-//     if (_quantity > 1)
-//       _quantity--
-//     $('.product__info__item__quantity__input')[index].innerHTML = _quantity
-//     listData[index].quantity = _quantity
-
-//     const temp = $.ajax({
-//       url: '/carts/',
-//       type: 'PUT',
-//       data: { _productId, _quantity }
-//     })
-//     // render()
-//   })
-
-//   // Increase button
-//   $($('.inc__btn')[index]).on('click', () => {
-//     console.log(102, index)
-//     productName = $('.cart__item__info__name')[index].innerHTML
-//     // console.log(productName)
-//     let _productId = productName.slice(22, 46)
-//     console.log(_productId);
-//     _quantity = $('.product__info__item__quantity__input')[index].innerHTML
-//     console.log(_quantity);
-//     _quantity++
-//     $('.product__info__item__quantity__input')[index].innerHTML = _quantity
-//     listData[index].quantity = _quantity
-
-//     const temp = $.ajax({
-//       url: '/carts/',
-//       type: 'PUT',
-//       data: { _productId, _quantity }
-//     })
-//     // render()
-//   })
-
-// }
-
 let addCartList = (product, index, _listData) => {
 	i++
   let div = `
-    <table class="tb1">
+    <table class='tb1'>
       <tr>
-          <td class="td1 cart__item__image">
-            <img src="${product.idProductCode.images[0]}" alt="">
+          <td class='td1 cart__item__image'>
+            <img src='${product.idProductCode.images[0]}' alt=''>
           </td>
-          <td class="td1 cart__item__info__name">
-            <a href="${product._id}">${product.idProductCode.name} - ${product.color} - ${product.size}</a>
+          <td class='td1 cart__item__info__name'>
+            <a href='${product._id}'>${product.idProductCode.name} - ${product.color} - ${product.size}</a>
           </td>
-          <td class="td1 cart__item__info__price">
+          <td class='td1 cart__item__info__price'>
             ${product.idProductCode.cost * _listData[index].quantity}
           </td>
-          <td class="td1 product_quantity">
-            <div class="product__info__item__quantity">
-              <button class="product__info__item__quantity__btn dec__btn">
-                  <i class="bx bx-minus"></i>
+          <td class='td1 product_quantity'>
+            <div class='product__info__item__quantity'>
+              <button class='product__info__item__quantity__btn dec__btn'>
+                  <i class='bx bx-minus'></i>
               </button>
-              <div class="product__info__item__quantity__input">${_listData[index].quantity}</div>
-              <button class="product__info__item__quantity__btn inc__btn">
-                  <i class="bx bx-plus"></i>
+              <div class='product__info__item__quantity__input'>${_listData[index].quantity}</div>
+              <button class='product__info__item__quantity__btn inc__btn'>
+                  <i class='bx bx-plus'></i>
               </button>
             </div>
           </td>
-          <td class="td1">
-            <button class="cart__item__del">
-              <i class="bx bx-trash"></i>
+          <td class='td1'>
+            <button class='cart__item__del'>
+              <i class='bx bx-trash'></i>
             </button>
           </td>
       </tr>
@@ -160,116 +48,77 @@ let addCartList = (product, index, _listData) => {
   `
   cart_list.append(div)
   totalPrice += product.idProductCode.cost * _listData[index].quantity
-  console.log(totalPrice)
   if (i == _listData.length) {
     addCartInfo()
     i = 0
-  } 
+  }
 
   // Delete button
   $($('.cart__item__del')[index]).on('click', () => {
-    console.log(68, index)
     productName = $('.cart__item__info__name')[index].innerHTML
-    // console.log(productName)
     let _productId = productName.slice(22, 46)
-    console.log(_productId);
     const temp = $.ajax({
       url: '/carts/',
       type: 'DELETE',
-      data: { productId: _productId }
+      data: { _userId: _userId, _productId: _productId }
     })
-    // renderCart()
+    renderCart()
   })
 
   // Decrease button
   $($('.dec__btn')[index]).on('click', () => {
-    console.log(83, index)
-    productName = $('.cart__item__info__name')[index].innerHTML
-    // console.log(productName)
+    let productName = $('.cart__item__info__name')[index].innerHTML
     let _productId = productName.slice(22, 46)
-    console.log(_productId);
-    _quantity = $('.product__info__item__quantity__input')[index].innerHTML
-    console.log(_quantity);
-    if (_quantity > 1)
+    let _quantity = $('.product__info__item__quantity__input')[index].innerHTML
+    let _price = parseInt($('.cart__item__info__price')[index].innerHTML)
+    let _cost = parseInt(_price)/parseInt(_quantity)
+    if (_quantity > 1) {
       _quantity--
-    // $('.product__info__item__quantity__input')[index].innerHTML = _quantity
-    // $('.cart__item__info__price')[index].innerHTML = product.idProductCode.cost * _quantity
-    // _listData[index].quantity = _quantity
-    // addCartList1(product, index, _listData)
+      _price -= _cost
+      totalProduct--
+      totalPrice -= _cost
+    }
+    else {
+      alert('Không thể chọn số lượng nhỏ hơn!')
+    }
+    $('.product__info__item__quantity__input')[index].innerHTML = _quantity
+    $('.cart__item__info__price')[index].innerHTML = _price
+    addCartInfo()
 
     const temp = $.ajax({
       url: '/carts/',
       type: 'PUT',
-      data: { _productId, _quantity }
+      data: { _userId: _userId, _productId: _productId, _quantity: _quantity }
     })
-    totalProduct = 0
-    totalPrice = 0
-    renderCart()
   })
 
   // Increase button
   $($('.inc__btn')[index]).on('click', () => {
-    console.log(102, index)
-    productName = $('.cart__item__info__name')[index].innerHTML
-    // console.log(productName)
+    let productName = $('.cart__item__info__name')[index].innerHTML
     let _productId = productName.slice(22, 46)
-    console.log(_productId);
-    _quantity = $('.product__info__item__quantity__input')[index].innerHTML
-    console.log(_quantity);
-    _quantity++
-    // $('.product__info__item__quantity__input')[index].innerHTML = _quantity
-    // $('.cart__item__info__price')[index].innerHTML = product.idProductCode.cost * _quantity
-    // _listData[index].quantity = _quantity
-    // addCartList1(product, index, _listData)
+    let _quantity = $('.product__info__item__quantity__input')[index].innerHTML
+    let _price = parseInt($('.cart__item__info__price')[index].innerHTML)
+    let _cost = parseInt(_price)/parseInt(_quantity)
+    if (_quantity < total[index]) {
+      _quantity++
+      _price += _cost
+      totalProduct++
+      totalPrice += _cost
+    }
+    else {
+      alert('Số lượng là tối đa!')
+    }
+    $('.product__info__item__quantity__input')[index].innerHTML = _quantity
+    $('.cart__item__info__price')[index].innerHTML = _price
+    addCartInfo()
 
     const temp = $.ajax({
       url: '/carts/',
       type: 'PUT',
-      data: { _productId, _quantity }
+      data: { _userId: _userId, _productId: _productId, _quantity: _quantity }
     })
-    totalProduct = 0
-    totalPrice = 0
-    renderCart()
-  })
-
-}
-
-async function render() {
-	// bien du lieu
-	listData = JSON.parse(localStorage.getItem('listData')) || []
-
-  if (listData.length == 0) {
-    $('.cart__info').setAttribute('style', 'display:none')
-    $('.cart__list').innerHTML = `
-    <div class="empty__cart">  
-      <img src="../../public/images/EmptyCart.png" alt="EmptyCart">
-      <h2>Giỏ hàng của bạn còn trống!</h2>
-      <a href="/">
-          <button class="btn btn-small">
-              <span class="btn-txt-cart">MUA NGAY</span>
-          </button>
-      </a>
-    </div>
-    `
-    return
-  }
-	listData.forEach((item) => {
-		totalProduct += item.quantity
-	})
-	// console.log(totalProduct)
-
-	cart_list.html('')
-  listData.forEach(async (item, index) => {
-      const result = await $.ajax({
-        url: `/products/api/${item.productId}`,
-        type: 'GET',
-      })
-      
-      addCartList(result.data.product, index)
   })
 }
-
-// render()
 
 async function renderCart() {
 	try {
@@ -277,28 +126,28 @@ async function renderCart() {
     const data = await $.ajax({
       url: '/carts/detailCart',
       type:'GET',
+      data: { _userId: _userId }
     })
 
-    // if (data.length == 0) {
-    //   $('.cart__info').setAttribute('style', 'display:none')
-    //   $('.cart__list').innerHTML = `
-    //   <div class="empty__cart">  
-    //     <img src="../../public/images/EmptyCart.png" alt="EmptyCart">
-    //     <h2>Giỏ hàng của bạn còn trống!</h2>
-    //     <a href="/">
-    //         <button class="btn btn-small">
-    //             <span class="btn-txt-cart">MUA NGAY</span>
-    //         </button>
-    //     </a>
-    //   </div>
-    //   `
-    //   return
-    // }
+    if (data.length == 0) {
+      $('.cart__info').setAttribute('style', 'display:none')
+      $('.cart__list').innerHTML = `
+      <div class='empty__cart'>  
+        <img src='../../public/images/EmptyCart.png' alt='EmptyCart'>
+        <h2>Giỏ hàng của bạn còn trống!</h2>
+        <a href='/'>
+            <button class='btn btn-small'>
+                <span class='btn-txt-cart'>MUA NGAY</span>
+            </button>
+        </a>
+      </div>
+      `
+      return
+    }
 
     data.cart.products.map((item) => {
       totalProduct += item.quantity
     })
-    // console.log(totalProduct)
   
     cart_list.html('')
     data.cart.products.map(async (item, index) => {
@@ -306,8 +155,8 @@ async function renderCart() {
         url: `/products/api/${item.productId}`,
         type: 'GET',
       })
-        
-        addCartList(result.data.product, index, data.cart.products)
+      total[index] = result.data.product.total
+      addCartList(result.data.product, index, data.cart.products)
     })
   } catch (error) {
     console.log(error);
@@ -317,7 +166,7 @@ async function renderCart() {
 renderCart()
 
 function getCookie(cname) {
-  let name = cname + "=";
+  let name = cname + '=';
   let decodedCookie = decodeURIComponent(document.cookie);
   let ca = decodedCookie.split(';');
   for(let i = 0; i <ca.length; i++) {
@@ -329,14 +178,20 @@ function getCookie(cname) {
       return c.substring(name.length, c.length);
     }
   }
-  return "";
+  return '';
 }
 
 $(btn_order).on('click', (e) => {
-	e.preventDefault()
+  e.preventDefault()
 	window.location.href = '/checkout'
 })
-  // chua dang nhap -> datalist = local
+
+$(btn_cart).on('click', (e) => {
+  e.preventDefault()
+  window.location.href = '/'
+})
+
+// chua dang nhap -> datalist = local
   // get api -> idProdct -> get
 
 
@@ -354,10 +209,3 @@ $(btn_order).on('click', (e) => {
 
 + Chưa đăng nhập -> ấn chọn sản phẩm, số lượng (thông tin sản phẩm, total) -> lưu vào localStorage -> vào trang cart + đọc local -> login(nhận local + id) => lưu cart -> ấn đặt hàng 
 */
-
-// console.log($('.cart__info__btn'));
-
-$(btn_cart).on('click', (e) => {
-  e.preventDefault()
-  window.location.href = '/'
-})
