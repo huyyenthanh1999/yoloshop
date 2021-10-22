@@ -75,8 +75,8 @@ const adminRoute = require('./routes/adminRoute')
 app.use('/admin', adminRoute)
 
 // Products detail
-// const catalogsRoute = require('./routes/catalogsRoute')
-// app.use('/catalogs', catalogsRoute)
+const catalogsRoute = require('./routes/catalogsRoute')
+app.use('/products', catalogsRoute)
 
 // // detail product
 // app.get('/products/123', (req, res) => {
