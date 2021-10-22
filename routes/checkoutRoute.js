@@ -1,10 +1,22 @@
 const checkoutRouter = require('express').Router()
 const checkoutController = require('../controllers/checkoutController')
-// const upload = require('../middlewares/uploadImgOfCart')
 
-// cart page
-checkoutRouter.get('/', checkoutController.renderCheckout)
+// order page
+checkoutRouter.get('/', checkoutController.renderOrder)
 
-checkoutRouter.post('/', checkoutController.goToCheckout)
+// get detail order
+checkoutRouter.get('/detailOrder', checkoutController.detailOrder)
+
+// check order
+// checkoutRouter.get('/checkOrder', checkoutController.checkOrder)
+
+// create order
+checkoutRouter.post('/', checkoutController.createOrder)
+
+// update order
+checkoutRouter.put('/', checkoutController.updateOrder)
+
+// delete order
+checkoutRouter.delete('/', checkoutController.deleteOrder)
 
 module.exports = checkoutRouter
