@@ -95,6 +95,7 @@ module.exports.login = async (req, res) => {
 // get login
 
 module.exports.getLogin = (req, res) => {
+	console.log('login')
 	res.render('pages/login')
 }
 

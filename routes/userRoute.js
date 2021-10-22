@@ -6,12 +6,12 @@ const userModel = require('../models/userModel');
 
 
 // register
-router.post('/register', upload.none(), controller.register)
-router.get('/register', controller.getRegister)
+// router.post('/register', upload.none(), controller.register)
+// router.get('/register', controller.getRegister)
 
 // login
-router.post('/login', controller.login)
-router.get('/login', controller.getLogin)
+// router.post('/login', controller.login)
+// router.get('/login', controller.getLogin)
 
 
 

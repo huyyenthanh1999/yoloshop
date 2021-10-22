@@ -1,5 +1,5 @@
 const form = document.querySelector('#form-register')
-console.log(form)
+// console.log(form)
 form.addEventListener('submit', (e) => {
 	e.preventDefault()
 

@@ -1,17 +1,20 @@
 const router = require('express').Router()
 
-// auth
-const authRoute = require('./authRoute')
-router.use('/auth', authRoute)
-
 // home page
 const indexRoute = require('./indexRoute')
 router.use('/', indexRoute)
 
+// auth
+const authRoute = require('./authRoute')
+router.use('/auth', authRoute)
 
-// products
+// for admin page to get products
 const productRoute = require('./productRoute')
 router.use('/products', productRoute)
+
+// for products page
+const catalogsRoute = require("./catalogsRoute");
+router.use("/products", catalogsRoute);
 
 
 // account
@@ -35,6 +38,6 @@ router.use("/admin", adminRoute);
 
 
 // Not found page
-router.use((req, res) => res.render('pages/notfound'))
+// router.use((req, res) => res.render('pages/notfound'))
 
 module.exports = router
