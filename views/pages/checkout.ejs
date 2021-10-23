@@ -30,7 +30,7 @@
         </div>
 
         <div class="container" style="margin-top: 180px;">
-            <!-- <form method="POST" action="/"> -->
+            <form method="POST">
                 <div id="checkout">
                     <div class="checkout__all">
                         <div class="delivery_address">
@@ -39,7 +39,7 @@
                                 <div class="address__info__1">
                                     <div class="receiver__name">
                                         <p class="p__info">Tên người nhận (*)</p>
-                                        <input class="address__info__input" type="text" >
+                                        <input class="address__info__input" type="text" required="required">
                                     </div>
                                     <div class="email">
                                         <p class="p__info">E-mail</p>
@@ -53,11 +53,11 @@
                                 <div class="address__info__2">
                                     <div class="phone__number">
                                         <p class="p__info">Số điện thoại (*)</p>
-                                        <input class="address__info__input" type="tel">
+                                        <input class="address__info__input" type="tel" required="required">
                                     </div>
                                     <div class="detail__address">
                                         <p class="p__info">Địa chỉ (*)</p>
-                                        <textarea class="address__info__input"></textarea>
+                                        <textarea class="address__info__input" required="required"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -107,7 +107,7 @@
                                   
                                     <div class="btn__pay__info">
                                         <div class="btn__pay">
-                                            <button class="btn btn-small btn-pay">
+                                            <button class="btn btn-small btn-pay" type="submit">
                                                 <span class="btn-txt-checkout">Mua hàng</span>
                                             </button>
                                         </div>
@@ -122,7 +122,7 @@
                         </div>
                     </div>
                 </div>
-            <!-- </form> -->
+            </form>
         </div>
         
         <div>

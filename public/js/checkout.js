@@ -23,7 +23,7 @@ let addDetailOrder = (product, index, _listData) => {
         $('.temp__price').html(`${tempPrice} VNĐ`)
         $('.total__price').html(`${totalPrice} VNĐ`)
         i = 0
-    } 
+    }
 }
 
 async function render() {

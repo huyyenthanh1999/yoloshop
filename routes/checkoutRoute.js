@@ -9,12 +9,6 @@ checkoutRouter.get('/detailOrder', checkoutController.detailOrder)
 
 // create order
 checkoutRouter.post('/', checkoutController.createOrder)
-checkoutRouter.put('/abc', checkoutController.create_Order)
-
-// update order
-checkoutRouter.put('/', checkoutController.updateOrder)
-
-// delete order
-checkoutRouter.delete('/', checkoutController.deleteOrder)
+checkoutRouter.put('/abc', checkoutController.create_Order)     // add products 
 
 module.exports = checkoutRouter
