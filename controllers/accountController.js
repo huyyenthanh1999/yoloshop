@@ -1,4 +1,5 @@
 const User = require('../models/userModel');
+const Order = require('../models/OrderModel');
 const Product = require('../models/productModel')
 const ProductCode = require('../models/productCodeModel')
 const jwt = require('jsonwebtoken')
@@ -14,13 +15,16 @@ module.exports.getAccount = async (req, res) => {
         const accountId = decoded.userId;
         //tim id trong db
         var account = await User.findById(accountId);
-
+        var orders = await Order.find({userId: accountId});
         if (!account)
             return res.status(400).json({
                 status: 'fail',
                 message: 'Không tìm thấy trang',
             })
-        res.render('pages/account', { user: account })
+        res.render('pages/account', {
+             user: account,
+             order 
+            })
     } catch (error) {
         // res.status(500).json({
         //     status: 'fail',
@@ -79,10 +83,21 @@ module.exports.editPasswordAccount = async (req, res) => {
                 // console.log('pass ko đung')
                 res.json({
                     status: 'fail',
-                    message: "Mat khau cũ không đúng"
+                    message: "Mat khẩu cũ không đúng"
                 })
             }
         })
+    } catch (error) {
+        res.status(500).json({
+            status: 'fail',
+            message: 'Lỗi server',
+        })
+    }
+}
+
+module.exports.getDetailBill = async (req, res) => {
+    try {
+        res.render('pages/bill')
     } catch (error) {
         res.status(500).json({
             status: 'fail',
