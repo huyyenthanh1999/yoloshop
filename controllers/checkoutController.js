@@ -1,4 +1,4 @@
-const Order = require('../models/OrderModel')
+const Order = require('../models/orderModel')
 
 module.exports.renderOrder = (req, res) => {
 	res.render('pages/checkout')

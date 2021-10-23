@@ -155,15 +155,29 @@ table {
     width: 100%;
 }
 
-th, td {
+th {
+    background-color: #4267b2;
+    padding: 20px 15px;
+    text-align: left;
+    color: #fff;
+    font-size: 1.8rem;
+}
+
+td {
     text-align: left;
     padding: 20px 15px;
     background-color: #ebebf0;
 }
 
+td a {
+    padding: 4px;
+    border: 1px solid #4267b2;
+    border-radius: 2px;
+}
+
 .account-order__list {
     max-height: 600px;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 @media only screen and (max-width: 67.5em){

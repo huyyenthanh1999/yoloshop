@@ -6,9 +6,23 @@
             <th>Ghi chú</th>
             <th>Tổng tiền</th>
             <th>Trạng thái</th>
+            <th>Hoạt động</th>
         </thead>
         <tbody>
-            <%%>
+            <% orders.forEach(order => { %>
+                <tr>
+                    <td><%= order._id %></td>
+                    <td class="order-product-list">
+                        <% order.products.forEach(product => { %>
+                            <div> <%= product.name %></div>
+                        <% }) %> 
+                    </td>
+                    <td><%= order.message %></td>
+                    <td><%= order.totalCost %></td>
+                    <td><%= order.status %></td>
+                    <td><a href="account/invoices/<%= order._id %>">Hoa don</a></td>
+                </tr>
+            <% }) %> 
         </tbody>
     </table>
 </div>

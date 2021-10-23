@@ -1,11 +1,11 @@
-function createCookie(name,value,days = 15) {
+function createCookie(name, value, days = 15) {
     if (days) {
         var date = new Date();
-        date.setTime(date.getTime()+(days*24*60*60*1000));
-        var expires = "; expires="+date.toGMTString();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        var expires = "; expires=" + date.toGMTString();
     }
     else var expires = "";
-    document.cookie = name+"="+value+expires+"; path=/"; 
+    document.cookie = name + "=" + value + expires + "; path=/";
 }
 
 const form = document.querySelector('form')
@@ -19,7 +19,7 @@ form.addEventListener('submit', async (e) => {
     const password = document.querySelector('#password').value
 
     const result = $.ajax({
-        url: '/users/login',
+        url: '/auth/login',
         type: 'POST',
         data: {
             password, email, phoneNumber
@@ -29,17 +29,14 @@ form.addEventListener('submit', async (e) => {
             createCookie('tokenId', data.data.token)
             alert('Đăng nhập thành công')
 
-            // chuyen localStorage ve cart
-            // call api
-
+            window.location.href = '/'
             
-
-
-            window.history.back()
+            // window.history.back()
+            
         })
         .catch(error => {
             alert('Mật khẩu hoặc email/phone không đúng')
-            // window.location.href = '/users/login'
+            // window.location.href = '/auth/login'
         })
 
 })

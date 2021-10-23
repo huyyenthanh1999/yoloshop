@@ -27,7 +27,7 @@ module.exports.addProduct = async (req, res) => {
 			cost,
 			description,
 			type,
-			images: [...images]
+			images: [...images],
 		})
 
 		if (!productCode) {
@@ -72,60 +72,69 @@ module.exports.editProduct = async (req, res) => {
 	const idProduct = req.params.id
 
 	// try {
-		// find product
-		let product = await Product.findById(idProduct)
+	// find product
+	let product = await Product.findById(idProduct)
 
-		if (!product) {
-			return res.status(400).json({
-				status: 'fail',
-				message: 'Không tìm thấy sản phẩm',
+	if (!product) {
+		return res.status(400).json({
+			status: 'fail',
+			message: 'Không tìm thấy sản phẩm',
+		})
+	}
+
+	// find if of product code
+	let productCode = await ProductCode.findById(product.idProductCode)
+
+	// get images if admin changes images
+	let images = req.files.map((file) => {
+		return file.path
+	})
+
+	if (images.length > 0) {
+		// images = images.map((file) => file.filename)
+
+		// upload img to host
+		images = await Promise.all(
+			images.map(async (file) => {
+				// console.log(file)
+				const upload = await imgbbUploader(process.env.IMGBB_KEY, file)
+				return upload.url
 			})
-		}
+		)
+		productCode.images = images
+	}
 
-		// find if of product code
-		let productCode = await ProductCode.findById(product.idProductCode)
+	// merge product object
+	for (let item in req.body) {
+		if (product[item]) product[item] = req.body[item]
+		if (productCode[item]) productCode[item] = req.body[item]
+	}
 
-		// get images if admin changes images
-		let images = req.files.map((file) => {
-			return file.path
-		})
+	await product.save()
+	await productCode.save()
 
-		if (images.length > 0) {
-			// images = images.map((file) => file.filename)
-
-			// upload img to host
-			images = await Promise.all(
-				images.map(async (file) => {
-					// console.log(file)
-					const upload = await imgbbUploader(process.env.IMGBB_KEY, file)
-					return upload.url
-				})
-			)
-			productCode.images = images
-		}
-
-		// merge product object
-		for (let item in req.body) {
-			if (product[item]) product[item] = req.body[item]
-			if (productCode[item]) productCode[item] = req.body[item]
-		}
-
-		await product.save()
-		await productCode.save()
-
-		// respond
-		res.status(200).json({
-			status: 'success',
-			data: {
-				product: await product.populate('idProductCode'),
-			},
-		})
+	// respond
+	res.status(200).json({
+		status: 'success',
+		data: {
+			product: await product.populate('idProductCode'),
+		},
+	})
 	// } catch (error) {
 	// 	res.status(500).json({
 	// 		status: 'fail',
 	// 		message: 'Lỗi server',
 	// 	})
 	// }
+}
+
+module.exports.deleteProductCode = async (req, res) => {
+	const productCode = await ProductCode.findById(req.params.id)
+
+	// tìm và xóa tất cả các product thuộc productCode đó
+	await Product.deleteMany({idProductCode: productCode._id})
+
+	await ProductCode.findByIdAndDelete(req.params.id)
 }
 
 module.exports.deleteProduct = async (req, res) => {
@@ -188,6 +197,67 @@ module.exports.getAllProduct = async (req, res) => {
 		res.status(500).json({
 			status: 'fail',
 			message: 'Lỗi server',
+		})
+	}
+}
+
+// add product to cart
+module.exports.userAddProduct = async (req, res) => {
+	// console.log('hello')
+	try {
+		const _id = req.params.id
+		const product = await Product.findById(_id).populate('idProductCode')
+
+		const cartItem = {
+			_id,
+			color: req.query.color,
+			size: req.query.size,
+			quantity: +req.query.quantity,
+			image: product.idProductCode.images[0],
+			name: product.idProductCode.name,
+		}
+
+		const cart = req.session.cart || []
+		let totalMoney = +req.session.totalMoney || 0
+
+		// kiểm tra xem sản phẩm đã được thêm vào trước đó không
+		// nếu đã được thêm thì chỉ cần tăng số lượng product
+		// nếu chưa thêm thì thêm
+		let newProduct = true
+		for (let i = 0; i < cart.length; i++) {
+			if (
+				cart[i]._id == cartItem._id &&
+				cart[i].size == cartItem.size &&
+				cart[i].color == cartItem.color
+			) {
+				// them so luong san pham va them tien
+				cart[i].quantity += cartItem.quantity
+				totalMoney += cartItem.quantity * product.idProductCode.cost
+
+				newProduct = false
+				break
+			}
+		}
+
+		if (newProduct) {
+			cart.push(cartItem)
+			totalMoney += cartItem.quantity * product.idProductCode.cost
+		}
+
+		req.session.cart = cart
+		req.session.totalMoney = totalMoney
+		// console.log(req.session.cart)
+		// console.log(req.session.totalMoney)
+		res.status(200).json({
+			status: 'success',
+			message: 'Đã thêm sản phẩm vào giỏ hàng',
+		})
+
+		
+	} catch (error) {
+		res.status(400).json({
+			status: 'fail',
+			message: 'Không tìm thấy id sản phẩm',
 		})
 	}
 }

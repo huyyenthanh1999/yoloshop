@@ -1,96 +1,130 @@
 const form = document.querySelector('form')
 const formData = new FormData(form)
 
+for(let i of formData.entries())
+	console.log(i)
+
 // change color
-const colorInput = document.querySelector('#product-color')
+// const colorInput = document.querySelector('.product-color')
 
-colorInput.addEventListener('input', () => {
-	const previewColor = colorInput.previousElementSibling
-	// console.log(previewColor)
-	previewColor.style.backgroundColor = colorInput.value
-})
+// colorInput.addEventListener('input', () => {
+// 	const previewColor = colorInput.previousElementSibling
+// 	// console.log(previewColor)
+// 	previewColor.style.backgroundColor = colorInput.value
+// })
 
-// change size
-const sizeInputs = document.querySelectorAll('.wrap-size > div')
-// console.log(sizeInputs)
-sizeInputs.forEach((size) => {
-	size.addEventListener('click', (e) => {
-		sizeInputs.forEach((size) => {
-			size.classList.remove('active-size')
-		})
+// // change size
+// const sizeInputs = document.querySelectorAll('.wrap-size > div')
+// // console.log(sizeInputs)
+// sizeInputs.forEach((size) => {
+// 	size.addEventListener('click', (e) => {
+// 		sizeInputs.forEach((size) => {
+// 			size.classList.remove('active-size')
+// 		})
 
-		e.currentTarget.classList.add('active-size')
-	})
-})
+// 		e.currentTarget.classList.add('active-size')
+// 	})
+// })
 
-// add images
-$('#product-images').on('change', function () {
-	let files = this.files
-	// console.log(files)
-	if (files.length == 0) return
+// // add images
+// $('#product-images').on('change', function () {
+// 	let files = this.files
+// 	// console.log(files)
+// 	if (files.length == 0) return
 
-	const previewImages = $('.preview-images')
+// 	const previewImages = $('.preview-images')
 
-	previewImages.empty()
-	formData.delete('images')
+// 	previewImages.empty()
+// 	formData.delete('images')
 
-	for (let i = 0; i < files.length; i++) {
-		$('<img />', {
-			src: URL.createObjectURL(files[i]),
-		}).appendTo(previewImages)
+// 	for (let i = 0; i < files.length; i++) {
+// 		$('<img />', {
+// 			src: URL.createObjectURL(files[i]),
+// 		}).appendTo(previewImages)
 
-		// append img to formData
-		formData.append('images', files[i])
-	}
-})
+// 		// append img to formData
+// 		formData.append('images', files[i])
+// 	}
+// })
 
-// add product
-form.addEventListener('submit', async (e) => {
-	e.preventDefault()
+// // add product
+// form.addEventListener('submit', async (e) => {
+// 	e.preventDefault()
 
-	const sizeActive = document.querySelector('#product-size > .active-size')
-	if (!sizeActive) {
-		alert('Vui lòng nhập kích thước sản phẩm')
-		return
-	}
+// 	const sizeActive = document.querySelector('.product-size > .active-size')
+// 	if (!sizeActive) {
+// 		alert('Vui lòng nhập kích thước sản phẩm')
+// 		return
+// 	}
 
-	formData.set('size', sizeActive.innerText)
+// 	formData.set('size', sizeActive.innerText)
 
-	const name = document.querySelector('#product-name')
-	const cost = document.querySelector('#product-cost')
-	const type = document.querySelector('#product-type')
-	const color = document.querySelector('#product-color')
-	const total = document.querySelector('#product-total')
-	const description = document.querySelector('#product-description')
+// 	const name = document.querySelector('#product-name')
+// 	const cost = document.querySelector('#product-cost')
+// 	const type = document.querySelector('#product-type')
+// 	const color = document.querySelector('.product-color')
+// 	const total = document.querySelector('.product-total')
+// 	const description = document.querySelector('#product-description')
 
-	formData.set('name', name.value)
-	formData.set('cost', cost.value)
-	formData.set('type', type.value)
-	formData.set('color', color.value)
-	formData.set('total', total.value)
-	formData.set('description', description.value)
+// 	formData.set('name', name.value)
+// 	formData.set('cost', cost.value)
+// 	formData.set('type', type.value)
+// 	formData.set('color', color.value)
+// 	formData.set('total', total.value)
+// 	formData.set('description', description.value)
 
-	const previewImages = $('.preview-images img')
-	if(previewImages.length == 0) 
-	{
-		alert('Vui lòng chọn ảnh sản phẩm')
-		return
-	}
-	
+// 	const previewImages = $('.preview-images img')
+// 	if (previewImages.length == 0) {
+// 		alert('Vui lòng chọn ảnh sản phẩm')
+// 		return
+// 	}
 
-	// add lazing add product
-	const lazy = document.querySelector('.lazy-loading')
-	lazy.classList.toggle('hide')
+// 	// add lazing add product
+// 	const lazy = document.querySelector('.lazy-loading')
+// 	lazy.classList.toggle('hide')
 
-	let response = await fetch('/products/api', {
-		method: 'POST',
-		body: formData,
-	})
-	// let result = await response.json()
+// 	let response = await fetch('/products/api', {
+// 		method: 'POST',
+// 		body: formData,
+// 	})
+// 	// let result = await response.json()
 
-	// console.log(result)
-	if (response.status == 200) {
-		lazy.classList.toggle('hide')
-		alert('Thêm sản phẩm thành công')
-	}
-})
+// 	// console.log(result)
+// 	if (response.status == 200) {
+// 		lazy.classList.toggle('hide')
+// 		alert('Thêm sản phẩm thành công')
+// 	}
+// })
+
+// document
+// 	.querySelector('.more-product-btn button')
+// 	.addEventListener('click', function (e) {
+// 		// let more = $(moreProductItem).clone()
+// 		// $('.more-product-wrap').append(moreProductItem)
+// 		// document.querySelector('.more-product-wrap').createElement
+// 		const moreProduct = document.createElement('div') // Create a <p> element
+// 		moreProduct.innerHTML = moreProductItem // Insert text
+// 		document.querySelector('.more-product-wrap').appendChild(moreProduct)
+
+// 		// change color
+// 		const colorInput = document.querySelector('.product-color')
+
+// 		colorInput.addEventListener('input', () => {
+// 			const previewColor = colorInput.previousElementSibling
+// 			// console.log(previewColor)
+// 			previewColor.style.backgroundColor = colorInput.value
+// 		})
+
+// 		// change size
+// 		const sizeInputs = document.querySelectorAll('.wrap-size > div')
+// 		// console.log(sizeInputs)
+// 		sizeInputs.forEach((size) => {
+// 			size.addEventListener('click', (e) => {
+// 				sizeInputs.forEach((size) => {
+// 					size.classList.remove('active-size')
+// 				})
+
+// 				e.currentTarget.classList.add('active-size')
+// 			})
+// 		})
+// 	})
