@@ -1,9 +1,18 @@
-const ProductCode = require('../models/productCodeModel')
+const ProductCode = require('../models/productCodeModel');
+const jwt = require('jsonwebtoken')
+const Cart = require('../models/cartModel');
 const slides = require('../public/data/sliderData')
 const cards = require('../public/data/cardData')
 
 module.exports.getAllData = async (req, res) => {
 	try {
+	// var decoded = jwt.verify(req.cookies.tokenId, process.env.TOKEN_KEY);
+        // const userId = decoded.userId || 0;	
+		// console.log(userId)
+		var cartNum;
+		// Cartfolio.findOne({userId: '616ec7d601129af4f9c5c194'})
+		// .then(cart => cartNum = cart)
+		// .catch(err => cartNum = 0)
 		const products = await ProductCode.find()
 		const arr = Array.from(Array(products.length).keys())
 
@@ -32,6 +41,7 @@ module.exports.getAllData = async (req, res) => {
 			newIndexes,
 			popularIndexes,
 			products,
+			// cartNum: cartNum.products.length
 		})
 	} catch (error) {
 		res.status(500).json({
