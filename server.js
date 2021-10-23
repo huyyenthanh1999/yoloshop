@@ -34,13 +34,17 @@ app.use(cookieParser())
 app.set('view engine', 'ejs')
 app.set('views', 'views')
 
-
 // setup public folder
 app.use('/public', express.static(path.join(__dirname, 'public')))
 
+// connect to database
+async function connectDB() {
+	await mongoose.connect(
+		`mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0.k7qck.mongodb.net/k14shop?retryWrites=true&w=majority`
+	)
+}
 
-// connect mongodb
-// require('./config/connectDB')
+connectDB()
 
 // index
 const indexRoute = require('./routes/indexRoute')
@@ -73,6 +77,9 @@ app.use('/checkout', checkoutRoute)
 // admin
 const adminRoute = require('./routes/adminRoute')
 app.use('/admin', adminRoute)
+
+const orderRoute = require('./routes/orderRoute')
+app.use('/orders', orderRoute)
 
 // Products detail
 const catalogsRoute = require('./routes/catalogsRoute')

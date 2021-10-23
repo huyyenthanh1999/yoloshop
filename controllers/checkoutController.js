@@ -1,4 +1,4 @@
-const Cart = require('../models/CartModel')
+const Cart = require('../models/cartModel')
 
 module.exports.renderCheckout = (req, res) => {
 	// console.log(req.query.q)
