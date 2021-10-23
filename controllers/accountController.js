@@ -8,7 +8,7 @@ const bcrypt = require('bcrypt')
 // get account
 
 module.exports.getAccount = async (req, res) => {
-    // try {
+    try {
         // console.log('vaof account')
         //giai ma token
         var decoded = jwt.verify(req.cookies.tokenId, process.env.TOKEN_KEY);
@@ -27,7 +27,7 @@ module.exports.getAccount = async (req, res) => {
            }
         }
 
-        console.log(orders[0].products)
+        // console.log(orders[0].products)
 
         if (!account)
             return res.status(400).json({
@@ -38,13 +38,13 @@ module.exports.getAccount = async (req, res) => {
              user: account,
              orders 
             })
-    // } catch (error) {
-    //     // res.status(500).json({
-    //     //     status: 'fail',
-    //     //     message: 'Lỗi server',
-    //     // }) 
-    //     res.redirect('/auth/login')
-    // }
+    } catch (error) {
+        // res.status(500).json({
+        //     status: 'fail',
+        //     message: 'Lỗi server',
+        // }) 
+        res.redirect('/auth/login')
+    }
 }
 
 //edit info account

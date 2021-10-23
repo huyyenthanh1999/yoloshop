@@ -1,7 +1,7 @@
 const Product = require('../models/productModel')
 const ProductCode = require('../models/productCodeModel')
 const User = require('../models/userModel')
-const Order = require('../models/orderModel')
+const Order = require('../models/OrderModel')
 
 // render dashboard
 module.exports.adminDashboard = async (req, res) => {
@@ -161,6 +161,8 @@ module.exports.adminOrder = async (req, res) => {
 	// console.log(orders)
 	res.render('components/admin/admin-base', {
 		content: 'orders',
-		data: {},
+		data: {
+			orders
+		},
 	})
 }

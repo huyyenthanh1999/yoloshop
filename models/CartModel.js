@@ -7,7 +7,7 @@ const CartSchema = mongoose.Schema(
 			required: true,
 			ref: 'User',
 		},
-		products: [{ 
+		list: [{ 
 			productId: {
 				type: String,
 				required: true,
@@ -18,6 +18,10 @@ const CartSchema = mongoose.Schema(
 				required: true,
 			}
 		}],
+		totalPrice: {
+			type: Number,
+            required: true,
+		},
 	},
 	{
 		timestamps: true,
