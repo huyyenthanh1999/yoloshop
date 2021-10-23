@@ -2,10 +2,10 @@ const Product = require('../models/productModel')
 const ProductCode = require('../models/productCodeModel')
 const imgbbUploader = require('imgbb-uploader')
 
-module.exports.addProduct = async (req, res) => {
+module.exports.addProductCode = async (req, res) => {
 	try {
 		// console.log(req.body)
-		const { name, cost, description, type, color, size, total } = req.body
+		const { name, cost, description, type } = req.body
 
 		// console.log(req.files)
 
@@ -42,21 +42,21 @@ module.exports.addProduct = async (req, res) => {
 		}
 
 		// create product
-		const product = new Product({
-			idProductCode: productCode._id,
-			color,
-			size,
-			total,
-		})
+		// const product = new Product({
+		// 	idProductCode: productCode._id,
+		// 	color,
+		// 	size,
+		// 	total,
+		// })
 
-		await product.save()
-		await product.populate('idProductCode')
+		// await product.save()
+		// await product.populate('idProductCode')
 
 		// respond the result
 		res.status(200).json({
 			status: 'success',
 			data: {
-				product,
+				productCode,
 			},
 		})
 	} catch (error) {
@@ -67,15 +67,43 @@ module.exports.addProduct = async (req, res) => {
 	}
 }
 
-module.exports.editProduct = async (req, res) => {
+module.exports.addProduct = async (req, res) => {
+	try {
+		// tìm kiếm xem đã tồn tại hay chưa
+		const product = await Product.findOne({ ...req.body })
+		if (product)
+			return res.status(200).json({
+				status: 'success',
+				product,
+			})
+
+		const newProduct = new Product({
+			...req.body,
+		})
+		await newProduct.save()
+		res.status(200).json({
+			status: 'success',
+			product: newProduct,
+		})
+	} catch (error) {
+		res.status(400).json({
+			status: 'fail',
+			message: 'Lỗi server',
+		})
+	}
+}
+
+module.exports.editProductCode = async (req, res) => {
 	// get id of product
-	const idProduct = req.params.id
+	const idProductCode = req.params.id
 
 	// try {
 	// find product
-	let product = await Product.findById(idProduct)
+	let productCode = await ProductCode.findById(idProductCode)
 
-	if (!product) {
+	// console.log(productCode)
+
+	if (!productCode) {
 		return res.status(400).json({
 			status: 'fail',
 			message: 'Không tìm thấy sản phẩm',
@@ -83,7 +111,7 @@ module.exports.editProduct = async (req, res) => {
 	}
 
 	// find if of product code
-	let productCode = await ProductCode.findById(product.idProductCode)
+	// let productCode = await ProductCode.findById(product.idProductCode)
 
 	// get images if admin changes images
 	let images = req.files.map((file) => {
@@ -92,7 +120,7 @@ module.exports.editProduct = async (req, res) => {
 
 	if (images.length > 0) {
 		// images = images.map((file) => file.filename)
-
+		// console.log('vao doi')
 		// upload img to host
 		images = await Promise.all(
 			images.map(async (file) => {
@@ -102,22 +130,27 @@ module.exports.editProduct = async (req, res) => {
 			})
 		)
 		productCode.images = images
+		// console.log(productCode)
+		// await productCode.save()
 	}
 
-	// merge product object
+	// merge product code object
 	for (let item in req.body) {
-		if (product[item]) product[item] = req.body[item]
+		// if (product[item]) product[item] = req.body[item]
 		if (productCode[item]) productCode[item] = req.body[item]
 	}
 
-	await product.save()
+	// await product.save()
 	await productCode.save()
+
+	// xóa toàn bộ products thuộc productCode
+	await Product.deleteMany({idProductCode: productCode._id})
 
 	// respond
 	res.status(200).json({
 		status: 'success',
 		data: {
-			product: await product.populate('idProductCode'),
+			productCode,
 		},
 	})
 	// } catch (error) {
@@ -129,12 +162,24 @@ module.exports.editProduct = async (req, res) => {
 }
 
 module.exports.deleteProductCode = async (req, res) => {
-	const productCode = await ProductCode.findById(req.params.id)
+	try {
+		const productCode = await ProductCode.findById(req.params.id)
 
-	// tìm và xóa tất cả các product thuộc productCode đó
-	await Product.deleteMany({idProductCode: productCode._id})
+		// tìm và xóa tất cả các product thuộc productCode đó
+		await Product.deleteMany({ idProductCode: productCode._id })
 
-	await ProductCode.findByIdAndDelete(req.params.id)
+		await ProductCode.findByIdAndDelete(req.params.id)
+
+		res.status(200).json({
+			status: 'success',
+			message: 'Xóa sản phẩm thành công',
+		})
+	} catch (error) {
+		res.status(500).json({
+			status: 'fail',
+			message: 'Lỗi server',
+		})
+	}
 }
 
 module.exports.deleteProduct = async (req, res) => {
@@ -156,25 +201,34 @@ module.exports.deleteProduct = async (req, res) => {
 	}
 }
 
-module.exports.getDetailProduct = async (req, res) => {
+module.exports.getDetailProductCode = async (req, res) => {
 	// get id of product
-	const idProduct = req.params.id
+	const idProductCode = req.params.id
 
 	try {
-		// find product
-		const product = await Product.findById(idProduct).populate('idProductCode')
+		// find product code
+		const productCode = await ProductCode.findById(idProductCode).lean()
 
-		// respond
-		if (product)
-			return res.status(200).json({
-				status: 'success',
-				data: {
-					product,
-				},
+		if (!productCode) {
+			return res.status(400).json({
+				status: 'fail',
+				message: 'Không tìm thấy sản phẩm',
 			})
-		res.status(400).json({
-			status: 'fail',
-			message: 'Không tìm thấy sản phẩm',
+		}
+
+		// find the list of products
+		const products = await Product.find(
+			{ idProductCode: productCode._id },
+			{ color: 1, size: 1, total: 1 }
+		).lean()
+
+		productCode.products = products
+		// console.log(productCode)
+		return res.status(200).json({
+			status: 'success',
+			data: {
+				productCode,
+			},
 		})
 	} catch (error) {
 		res.status(500).json({
@@ -252,8 +306,6 @@ module.exports.userAddProduct = async (req, res) => {
 			status: 'success',
 			message: 'Đã thêm sản phẩm vào giỏ hàng',
 		})
-
-		
 	} catch (error) {
 		res.status(400).json({
 			status: 'fail',

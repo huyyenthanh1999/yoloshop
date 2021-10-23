@@ -2,11 +2,14 @@ const router = require('express').Router()
 const controller = require('../controllers/productController')
 const upload = require('../middlewares/uploadImgOfProduct')
 
-// add product
-router.post('/api', upload.array('images', 12), controller.addProduct)
+// add productCode
+router.post('/api/code', upload.array('images', 12), controller.addProductCode)
+// add product from productCode
+router.post('/api', controller.addProduct )
+
 
 // edit product
-router.put('/api/:id', upload.array('images', 12) ,controller.editProduct)
+router.put('/api/:id', upload.array('images', 12) ,controller.editProductCode)
 
 // delete product
 router.delete('/api/:id', controller.deleteProduct)
@@ -19,9 +22,7 @@ router.delete('/code/api/:id', controller.deleteProductCode)
 router.get('/api', controller.getAllProduct)
 
 // get one detail product
-router.get('/api/:id', controller.getDetailProduct)
-
-
+router.get('/api/:id', controller.getDetailProductCode)
 
 router.get('/add/:id', controller.userAddProduct)
 

@@ -1,4 +1,8 @@
 const router = require('express').Router()
+const {checkUser} = require('../middlewares/checkUser')
+
+// gán req.user
+router.use(checkUser)
 
 // home page
 const indexRoute = require('./indexRoute')
