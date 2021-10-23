@@ -41,6 +41,6 @@ router.use("/users", userRoute)
 
 
 // Not found page
-// router.use((req, res) => res.render('pages/notfound'))
+router.use((req, res) => res.render('pages/notfound'))
 
 module.exports = router

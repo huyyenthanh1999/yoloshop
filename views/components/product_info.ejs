@@ -55,7 +55,6 @@
         Chi tiết sản phẩm
     </div>
     <div class="product-description__content">
-        <%= product.description %> 
     </div>
     <div class="product-description__toggle">
         <button class="btn btn-primary btn-small">
@@ -66,3 +65,8 @@
         </button>
     </div>
 </div>
+
+<script>
+    let description = JSON.parse('<%- JSON.stringify(product.description) %>')
+    document.querySelector('.product-description__content').innerHTML = description
+</script>

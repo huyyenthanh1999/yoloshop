@@ -52,7 +52,10 @@ a {
   width: 25%;
 }
 
-.admin-products table .sold-product,
+.admin-products table .sold-product {
+  padding-left: 15px;
+}
+
 .admin-products table .last-product {
   padding-left: 30px;
 }
@@ -120,5 +123,17 @@ a {
 .admin-products .products-action .total-products:hover {
   background-color: var(--main-color);
   color: white;
+}
+
+.admin-products > table tr.more-product-table {
+  display: none;
+}
+
+.admin-products > table tr.more-product-table table {
+  background: rgba(221, 221, 221, 0.7);
+}
+
+.admin-products > table tr.more-product-table table th, .admin-products > table tr.more-product-table table td {
+  width: 20px;
 }
 /*# sourceMappingURL=admin-products.css.map */

@@ -6,9 +6,11 @@ const imgbbUploader = require('imgbb-uploader')
 module.exports.register = async (req, res) => {
 	// check if user is exists
 	// try {
-		// console.log('register', req.body)
+		console.log('register', req.body)
 		const { email, phoneNumber } = req.body
 		const user = await User.findOne({ $or: [{ email }, { phoneNumber }] })
+
+		console.log(user)
 
 		if (user)
 			return res
@@ -47,7 +49,7 @@ module.exports.login = async (req, res) => {
 
 	// lay email or phone, va password
 	const { email, phoneNumber, password } = req.body
-	console.log(req.body)
+	// console.log(req.body)
 
 
 	// tim user

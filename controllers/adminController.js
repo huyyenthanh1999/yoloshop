@@ -1,4 +1,5 @@
 const Product = require('../models/productModel')
+const ProductCode = require('../models/productCodeModel')
 const User = require('../models/userModel')
 const Order = require('../models/orderModel')
 
@@ -29,14 +30,38 @@ module.exports.adminDashboard = async (req, res) => {
 // render products
 module.exports.adminProducts = async (req, res) => {
 	try {
-		const total = await Product.countDocuments()
-		const products = await Product.find().populate('idProductCode')
+		// tổng tất cả sản phẩm
+		let totalProducts = 0
+		// const products = await Product.find().populate('idProductCode')
+
+		const productCodes = await ProductCode.find().lean()
+
+		// đếm số lượng sản phẩm trong productCodes
+		for(let item of productCodes){
+			const products = await Product.find(
+				{ idProductCode: item._id },
+				{ total: 1, color: 1, size: 1 }
+			).lean()
+			// console.log(products)
+			let totalProductsOfCode = 0
+			products.forEach((item) => {
+				totalProductsOfCode += item.total
+			})
+
+			item.total = totalProductsOfCode
+			item.products = products
+			// console.log(item)
+			totalProducts += totalProductsOfCode
+		}
+
+		// console.log(productCodes)
+		// console.log(totalProducts)
 
 		res.render('components/admin/admin-base', {
 			content: 'products',
 			data: {
-				products,
-				total,
+				productCodes,
+				total: totalProducts,
 			},
 		})
 	} catch (error) {
@@ -53,6 +78,15 @@ module.exports.adminEditProduct = async (req, res) => {
 		content: 'edit-product',
 	})
 }
+
+// module.exports.adminEditProductCode = async (req, res) => {
+// 	const products = await Product.find({idProductCode: req.params.id})
+	
+// 	res.render('components/admin/admin-base', {
+// 		content: 'product',
+// 		products: products
+// 	})
+// }
 
 // render add product page
 module.exports.adminAddProduct = (req, res) => {
@@ -91,7 +125,7 @@ module.exports.adminCustomer = async (req, res) => {
 			content: 'customers',
 			data: {
 				customers,
-				total
+				total,
 			},
 		})
 	// } catch (error) {
@@ -102,7 +136,6 @@ module.exports.adminCustomer = async (req, res) => {
 	// }
 }
 
-
 // see and edit the product
 module.exports.adminEditCustomer = async (req, res) => {
 	try {
@@ -111,8 +144,8 @@ module.exports.adminEditCustomer = async (req, res) => {
 		res.render('components/admin/admin-base', {
 			content: 'edit-customer',
 			data: {
-				user
-			}
+				user,
+			},
 		})
 	} catch (error) {
 		res.status(400).json({
@@ -122,29 +155,12 @@ module.exports.adminEditCustomer = async (req, res) => {
 	}
 }
 
-
-
 // admin render order page
 module.exports.adminOrder = async (req, res) => {
 	const orders = await Order.find()
 	// console.log(orders)
 	res.render('components/admin/admin-base', {
 		content: 'orders',
-		orders
+		data: {},
 	})
-}
-
-// admin render detail order page
-module.exports.adminDetailOrder = async (req, res) => {
-	try {
-		const idOrder = req.params.id
-		const order = await Order.findById(idOrder)
-		res.json('hello')
-
-	} catch (error) {
-		res.status(400).json({
-			status: 'fail',
-			message: 'Không tìm thấy order',
-		})
-	}
 }
