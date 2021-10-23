@@ -27,8 +27,6 @@ module.exports.getAccount = async (req, res) => {
            }
         }
 
-        console.log(orders[0].products)
-
         if (!account)
             return res.status(400).json({
                 status: 'fail',
