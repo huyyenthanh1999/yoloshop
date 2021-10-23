@@ -20,7 +20,7 @@ const CartSchema = mongoose.Schema(
 		}],
 	},
 	{
-		timestamp: true,
+		timestamps: true,
 	}
 )
 

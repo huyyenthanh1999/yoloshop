@@ -43,32 +43,35 @@ function render() {
 
 	// $('.checkbox').prop('checked', true);
 
-	console.log(type)
-
 	type = !type ? [] : [type]
 	size = !size ? [] : [size]
 	color = !color ? [] : [color]
 
 	// console.log(type)
-	let data = {
+	var data = {
 		type,
 		color,
 		size,
 	}
+	console.log(91,data.type[0])
+
 	$('.custom-checkbox input').each(function () {
 		if ($(this).is(':checked')) {
 			var name = $(this).attr('name')
 			switch (name) {
 				case 'type':
-					data.type.push($(this).val())
+					// data.type.push($(this).val())
+					data.type = [...data.type,$(this).val()]
 					// data.type += ',' + $(this).val()
 					break
 				case 'color':
-					data.color.push($(this).val())
+					// data.color.push($(this).val())
+					data.color = [...data.color,$(this).val()]
 					// data.color += ',' + $(this).val()
 					break
 				case 'size':
-					data.size.push($(this).val())
+					data.size = [...data.size,$(this).val()]
+					// data.size.push($(this).val())
 					// data.size += ',' + $(this).val()
 					break
 				default:
@@ -76,6 +79,12 @@ function render() {
 			}
 		}
 	})
+	
+	data.type = [...new Set(data.type)]
+	data.color = [...new Set(data.color)]
+	data.size = [...new Set(data.size)]
+
+	console.log(118,data)
 
     $.ajax({
 		url: `/products/filter?type=${data.type}&color=${data.color}&size=${data.size}`,

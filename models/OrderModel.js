@@ -15,10 +15,6 @@ const OrderSchema = mongoose.Schema(
 			type: String,
 			required: true,
 		},
-		email: {
-			type: String,
-			required: true,
-		},
 		message: {
 			type: String,
 			required: false,
@@ -52,10 +48,8 @@ const OrderSchema = mongoose.Schema(
 		},
 	},
 	{
-		timestamp: true,
+		timestamps: true,
 	}
 )
 
-const OrderModel = mongoose.model('Order', OrderSchema)
-
-module.exports = OrderModel
+module.exports = mongoose.model('Order', OrderSchema)
