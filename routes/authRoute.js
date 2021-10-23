@@ -1,14 +1,14 @@
 const router = require('express').Router()
 const controller = require('../controllers/authController')
 const upload = require('../middlewares/uploadImgOfUser')
-const {checkUser} = require('../middlewares/checkUser')
+const {checkLogging} = require('../middlewares/checkLogging')
 
 // register
 router.post('/register', upload.none(), controller.register)
-router.get('/register', checkUser ,controller.getRegister)
+router.get('/register', checkLogging ,controller.getRegister)
 
 // login
 router.post('/login', controller.login)
-router.get('/login', checkUser ,controller.getLogin)
+router.get('/login', checkLogging ,controller.getLogin)
 
 module.exports = router

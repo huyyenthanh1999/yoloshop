@@ -8,23 +8,34 @@ document.querySelector('.action-add').addEventListener('click', (e) => {
 // render list of products
 function renderListOfProducts() {
 	let html = ''
-	products.forEach((product, index) => {
+	productCodes.forEach((productCode, index) => {
+        let productHTML = ''
+        productCode.products.forEach(item => {
+            productHTML += `
+                <tr>
+                    <td>${item.color}</td>
+                    <td>${item.size}</td>
+                    <td>${item.total}</td>
+                </tr>
+            `
+        })
+
 		html += `
         <tr>
         <td class="stt-product">${index + 1}</td>
         <td class="id-product">
-            <a href="/products/${product._id}">${product._id}</a>
+            <a href="/admin/products/${productCode._id}">${productCode._id}</a>
         </td>
         <td class="cover-product">
             <img
-                src="${product.idProductCode.images[0]}"
+                src="${productCode.images[0]}"
                 alt=""
             />
         </td>
-        <td class="name-product">${product.idProductCode.name}</td>
-        <td class="cost-product">${product.idProductCode.cost}</td>
-        <td class="sold-product">10</td>
-        <td class="last-product">${product.total}</td>
+        <td class="name-product">${productCode.name}</td>
+        <td class="cost-product">${productCode.cost}</td>
+        <td class="sold-product">${productCode.type}</td>
+        <td class="last-product">${productCode.total}</td>
         <td>
             <div class="form-check form-switch">
                 <input
@@ -36,17 +47,15 @@ function renderListOfProducts() {
             </div>
         </td>
         <td class="action-product">
-            <a href="/admin/products/${product._id}">
-                <button>
-                    <i class="far fa-eye"></i>
-                </button>
-            </a>
-            <a href="/admin/products/${product._id}">
+            <button onclick="showMoreProduct(event)">
+                <i class="fas fa-chevron-down"></i>
+            </button>
+            <a href="/admin/products/${productCode._id}">
                 <button>
                     <i class="fas fa-edit"></i>
                 </button>
             </a>
-            <a href="#" onclick="deleteProduct(event)">
+            <a href="#" onclick="deleteProductCode(event)">
                 <button>
                     <i class="far fa-trash-alt"></i>
                 </button>
@@ -54,8 +63,25 @@ function renderListOfProducts() {
             
         </td>
     </tr>
-        
-        `
+    <tr class="more-product-table">
+        <td></td>
+        <td></td>
+        <td colspan="3">
+            <table class="table table-border">
+                <tr>
+                    <th>Màu sắc</th>
+                    <th>Kích thước</th>
+                    <th>Số lượng</th>
+                </tr>
+                ${productHTML}
+            </table>
+        </td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    `
+
 	})
 
 	// create tbody
@@ -70,7 +96,13 @@ function renderListOfProducts() {
 renderListOfProducts()
 
 
-async function deleteProduct(event) {
+function showMoreProduct(event){
+    const moreProduct = event.currentTarget.closest('tr').nextElementSibling
+    // console.log(moreProduct)
+    $(moreProduct).toggle(100);
+}
+
+async function deleteProductCode(event) {
 	event.preventDefault()
 
 	const tr = event.target.closest('tr')
@@ -87,7 +119,7 @@ async function deleteProduct(event) {
 	lazy.classList.toggle('hide')
 
 	const res = await $.ajax({
-		url: `/products/api/${idProduct}`,
+		url: `/products/code/api/${idProduct}`,
 		type: 'delete',
 	})
 

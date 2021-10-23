@@ -29,10 +29,10 @@ form.addEventListener('submit', async (e) => {
             createCookie('tokenId', data.data.token)
             alert('Đăng nhập thành công')
 
-            // chuyen localStorage ve cart
-            // call api
+            window.location.href = '/'
             
-            window.history.back()
+            // window.history.back()
+            
         })
         .catch(error => {
             alert('Mật khẩu hoặc email/phone không đúng')

@@ -128,6 +128,15 @@ module.exports.editProduct = async (req, res) => {
 	// }
 }
 
+module.exports.deleteProductCode = async (req, res) => {
+	const productCode = await ProductCode.findById(req.params.id)
+
+	// tìm và xóa tất cả các product thuộc productCode đó
+	await Product.deleteMany({idProductCode: productCode._id})
+
+	await ProductCode.findByIdAndDelete(req.params.id)
+}
+
 module.exports.deleteProduct = async (req, res) => {
 	// get id of product
 	const idProduct = req.params.id

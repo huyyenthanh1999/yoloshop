@@ -34,39 +34,6 @@ $('.custom-checkbox input').change(async (e) => {
 	render()
 })
 
-// const urlParams = new URLSearchParams(window.location.search)
-// let type = urlParams.get('type')
-// let size = urlParams.get('size')
-// let color = urlParams.get('color')
-
-// type = !type ? [] : [...type.split(',')]
-// size = !size ? [] : [...size.split(',')]
-// color = !color ? [] : [...color.split(',')]
-
-// type.forEach((item) => {
-// 	$(`.product-filter-section__content.type input[value="${item}"]`).attr(
-// 		'checked',
-// 		true
-// 	)
-// })
-// size.forEach((item) => {
-// 	$(`.product-filter-section__content.size input[value="${item}"]`).attr(
-// 		'checked',
-// 		true
-// 	)
-// })
-// color.forEach((item) => {
-// 	$(`.product-filter-section__content.color input[value="${item}"]`).attr(
-// 		'checked',
-// 		true
-// 	)
-// })
-
-// let data = {
-//     color, type, size
-// }
-// renderProducts(data)
-
 function render() {
 	// get query of url
 	const urlParams = new URLSearchParams(window.location.search)
@@ -133,12 +100,14 @@ function render() {
                                 <div class="product-card__price">${products[i].cost}</div>
                             </a>
                             <div class="product-card__btn">
-                                <button class="btn btn-primary btn-small">
-                                    <span class="btn-txt">Chọn mua</span>
-                                        <span class="btn-icon">
-                                            <i class="bx bx-cart bx-tada"></i>
-                                        </span>
-                                </button>
+                                <a href="/products/detail/${products[i]._id}">
+									<button class="btn btn-primary btn-small">
+										<span class="btn-txt">Chọn mua</span>
+										<span class="btn-icon">
+											<i class="bx bx-cart bx-tada"></i>
+										</span>
+									</button>
+								</a>
                             </div>
                         </div>
                     </div>

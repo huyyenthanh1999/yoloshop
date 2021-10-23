@@ -13,12 +13,11 @@ form.addEventListener('submit', (e) => {
 		.then((response) => response.json())
 		.then((result) => {
 			console.log('Success:', result)
-			if(result.status = 'fail')
-				alert('User đã tồn tại')
-			
+			if ((result.status == 'fail')) alert('User đã tồn tại')
 			else {
 				alert('Đăng kí thành công')
-				window.location.href = '/auth/login'
+				window.location.href = '/'
+				// window.location.href = '/auth/login'
 			}
 		})
 		.catch((error) => {

@@ -188,7 +188,7 @@ $(btn_order).on('click', (e) => {
 
 $(btn_cart).on('click', (e) => {
   e.preventDefault()
-  window.location.href = '/'
+  window.location.href = '/products'
 })
 
 // chua dang nhap -> datalist = local
