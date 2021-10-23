@@ -31,8 +31,9 @@ form.addEventListener('submit', async (e) => {
 
             // chuyen localStorage ve cart
             // call api
+            window.location.href = '/'
             
-            window.history.back()
+            // window.history.back()
         })
         .catch(error => {
             alert('Mật khẩu hoặc email/phone không đúng')
