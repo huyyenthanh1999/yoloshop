@@ -21,14 +21,7 @@ app.use(express.json())
 app.use(cookieParser())
 
 // session middleware
-// app.use(
-// 	session({
-// 		secret: process.env.SESSION_SECRET,
-// 		resave: false,
-// 		saveUninitialized: true,
-// 		name: 'sessionId'
-// 	})
-// )
+app.use(require('./config/session'))
 
 // setup view
 app.set('view engine', 'ejs')
@@ -46,53 +39,63 @@ async function connectDB() {
 
 connectDB()
 
-// index
-const indexRoute = require('./routes/indexRoute')
-app.use('/', indexRoute)
+// // setup router
+// const indexRoute = require("./routes/indexRoute");
+// app.use("/", indexRoute);
 
-// product
-// const productRoute = require('./routes/productRoute')
-// app.use('/products', productRoute)
 
-// user
-const userRoute = require('./routes/userRoute')
-app.use('/users', userRoute)
 
-// auth
-const authRoute = require('./routes/authRoute')
-app.use('/auth', authRoute)
+// // product
+// // const productRoute = require('./routes/productRoute')
+// // app.use('/products', productRoute)
 
-// account
-const accountRoute = require('./routes/accountRoute')
-app.use('/user/account', accountRoute)
 
-// cart
-const cartRoute = require('./routes/cartRoute')
-app.use('/cart', cartRoute)
+// // user
+// const userRoute = require('./routes/userRoute')
+// app.use('/users', userRoute)
 
-// checkout
-const checkoutRoute = require('./routes/checkoutRoute')
-app.use('/checkout', checkoutRoute)
+// //account
+// const accountRoute = require('./routes/accountRoute');
+// app.use('/user/account', accountRoute)
 
-// admin
-const adminRoute = require('./routes/adminRoute')
-app.use('/admin', adminRoute)
+// // cart
+// const cartRoute = require('./routes/cartRoute')
+// app.use('/carts', cartRoute)
 
-const orderRoute = require('./routes/orderRoute')
-app.use('/orders', orderRoute)
+// // checkout
+// const checkoutRoute = require('./routes/checkoutRoute')
+// app.use('/checkout', checkoutRoute)
 
-// Products detail
-const catalogsRoute = require('./routes/catalogsRoute')
-app.use('/products', catalogsRoute)
+// // admin
+// const adminRoute = require("./routes/adminRoute");
+// app.use("/admin", adminRoute);
+
+// // Products detail
+// const catalogsRoute = require("./routes/catalogsRoute");
+// app.use("/products", catalogsRoute);
+
+
+
+// // test server
+// app.get("/test", (req, res) => {
+//   res.json("Test thanh cong");
+// });
+
+
 
 // // detail product
 // app.get('/products/123', (req, res) => {
-// 	// console.log(req.query)
-// 	res.render('pages/detail-product')
+//   res.render('pages/detail-product')
 // })
 
-// Not found
-app.use((req, res) => res.render('pages/notfound'))
+
+
+// // Not found
+// app.use((req, res) => res.render('pages/notfound'))
+
+const router = require("./routes/index")
+app.use(router)
+
 
 // listening
 const PORT = process.env.PORT || 3000

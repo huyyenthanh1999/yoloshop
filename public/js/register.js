@@ -1,34 +1,27 @@
 const form = document.querySelector('#form-register')
-console.log(form)
+// console.log(form)
 form.addEventListener('submit', (e) => {
 	e.preventDefault()
 
 	const formData = new FormData(form)
-	for (let i of formData.entries()) console.log(i)
+	// for (let i of formData.entries()) console.log(i)
 
-	fetch('/users/register', {
+	fetch('/auth/register', {
 		method: 'POST',
 		body: formData,
-		// headers: { 'Content-Type': 'application/json' },
-		headers: {
-			// 'Content-Type': 'application/json',
-			// 'Content-Type': 'application/x-www-form-urlencoded',
-		},
 	})
 		.then((response) => response.json())
 		.then((result) => {
 			console.log('Success:', result)
+			if(result.status = 'fail')
+				alert('User đã tồn tại')
+			
+			else {
+				alert('Đăng kí thành công')
+				window.location.href = '/auth/login'
+			}
 		})
 		.catch((error) => {
 			console.log('Error:', error)
 		})
-	// $.ajax({
-	// 	url: '/users/register',
-	// 	data: formData,
-	// 	contentType: 'application/json',
-	// 	type: 'POST',
-	// })
-	// .then(data => {
-	//     console.log(data)
-	// })
 })

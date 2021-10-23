@@ -40,14 +40,12 @@ const OrderSchema = mongoose.Schema(
 		},
 		status: {
 			type: String,
-			enum: ['Đang chờ', 'Đã hủy', 'Đã giao'],
-			default: 'Đang chờ'
+            required: true,
 		},
 		payment: {
 			type: String,
-			enum: ['transfer', 'cod'],
-			default: 'cod'
-		}
+            required: true,
+		},
 	},
 	{
 		timestamps: true,

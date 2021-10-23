@@ -144,7 +144,7 @@
     z-index: -1;
 }
 
-.user-action ul li {
+.user-action ul a {
     padding: 15px;
     font-size: 1.8rem;
     white-space: nowrap;
@@ -153,19 +153,19 @@
     color: black;
 }
 
-.user-action ul li:hover {
+.user-action ul a:hover {
     color: #4267b2;
     background: #e2dddd;
 }
 
-.user-action ul li:first-child {
+.user-action ul a:first-child {
     border-radius: 10px 10px 0 0;
 }
-.user-action ul li:last-child {
+.user-action ul a:last-child {
     border-radius: 0 0 10px 10px;
 }
 
-.user-action ul li i {
+.user-action ul a i {
     margin-right: 8px;
 }
 

@@ -39,35 +39,29 @@
 				<div class="header-menu__item">
 					<i class="bx bx-search"></i>
 				</div>
-				<div class="header-menu__item">
-					<a href="/carts">
+				<div class="header-menu__item cart__icon">
+					<a href="/cart">
 						<i class="bx bx-shopping-bag"></i>
 					</a>
 				</div>
 				<div class="header-menu__item header-menu__item-user">
-					<a href="/users/login">
+					<a href="/auth/login">
 						<i class="bx bx-user"> </i>
 					</a>
 					<div class="user-action">
 						<ul>
-							<li>
-								<a href="/user/account">
-									<i class="bx bx-user-circle"></i>
-									<span>Tài khoản của tôi</span>
-								</a>
-							</li>
-							<li>
-								<a href="/user/account?orders">
-									<i class="bx bx-bookmark-alt"></i>
-									<span>Đơn mua</span>
-								</a>
-							</li>
-							<li onclick="logout()">
-								<a href="">
-									<i class="bx bx-log-out-circle"></i>
-									<span>Đăng xuất</span>
-								</a>
-							</li>
+							<a href="/account">
+								<i class="bx bx-user-circle"></i>
+								<span>Tài khoản của tôi</span>
+							</a>
+							<a href="/account?orders">
+								<i class="bx bx-bookmark-alt"></i>
+								<span>Đơn mua</span>
+							</a>
+							<a href="" onclick="logout()">
+								<i class="bx bx-log-out-circle"></i>
+								<span>Đăng xuất</span>
+							</a>
 						</ul>
 					</div>
 				</div>

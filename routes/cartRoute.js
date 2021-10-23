@@ -1,25 +1,20 @@
 const cartRouter = require('express').Router()
 const cartController = require('../controllers/cartController')
-const upload = require('../middlewares/uploadImgOfCart')
 
 // cart page
 cartRouter.get('/', cartController.renderCart)
 
-// create cart
-// cartRouter.get('/create', cartController.createCart)
-
 // get detail cart
-cartRouter.get('/:id', cartController.getDetailCart)
+cartRouter.get('/detailCart', cartController.detailCart)
 
-// get all cart
-cartRouter.get('/cartAll', cartController.getAllCart)
+// create cart
+cartRouter.post('/', cartController.createCart)
 
 // update cart
-cartRouter.put('/:id', cartController.updateCart)
+cartRouter.put('/', cartController.updateCart)
 
 // delete cart
-cartRouter.delete('/:id', cartController.deleteCart)
-
+cartRouter.delete('/', cartController.deleteCart)
 
 // chuyen tu localStorage to cart
 
