@@ -29,8 +29,8 @@ router.get('/customers/:id', controller.adminEditCustomer)
 
 
 // order
-router.get('/orders', controller.adminOrder)
-router.get('/orders/:id', controller.adminDetailOrder)
+// router.get('/orders', controller.adminOrder)
+// router.get('/orders/:id', controller.adminDetailOrder)
 
 
 // sales

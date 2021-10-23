@@ -68,6 +68,7 @@ th:last-child {
 
 table {
     border-collapse: collapse;
+    width: 100%;
 }
 
 tr td {

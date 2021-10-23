@@ -8,14 +8,27 @@ const bcrypt = require('bcrypt')
 // get account
 
 module.exports.getAccount = async (req, res) => {
-    try {
+    // try {
+        // console.log('vaof account')
         //giai ma token
         var decoded = jwt.verify(req.cookies.tokenId, process.env.TOKEN_KEY);
         //doc id
         const accountId = decoded.userId;
         //tim id trong db
         var account = await User.findById(accountId);
-        var orders = await Order.find({userId: accountId});
+        var orders = await Order.find({userId: accountId}).lean();
+
+        for(let order of orders) {
+           for(let product of order.products){
+               // find productCode -> name
+                const productCode = await ProductCode.findById(product.productId);
+                console.log(productCode)
+                product.name = productCode.name
+           }
+        }
+
+        console.log(orders[0].products)
+
         if (!account)
             return res.status(400).json({
                 status: 'fail',
@@ -23,15 +36,15 @@ module.exports.getAccount = async (req, res) => {
             })
         res.render('pages/account', {
              user: account,
-             order 
+             orders 
             })
-    } catch (error) {
-        // res.status(500).json({
-        //     status: 'fail',
-        //     message: 'Lỗi server',
-        // }) 
-        res.redirect('/auth/login')
-    }
+    // } catch (error) {
+    //     // res.status(500).json({
+    //     //     status: 'fail',
+    //     //     message: 'Lỗi server',
+    //     // }) 
+    //     res.redirect('/auth/login')
+    // }
 }
 
 //edit info account
@@ -97,7 +110,13 @@ module.exports.editPasswordAccount = async (req, res) => {
 
 module.exports.getDetailBill = async (req, res) => {
     try {
-        res.render('pages/bill')
+        var order = await Order.findById(req.params.id).lean();
+        for(let product of order.products){
+             const productCode = await ProductCode.findById(product.productId);
+             product.name = productCode.name;
+             product.price = productCode.cost;
+        }
+        res.render('pages/bill',{order})
     } catch (error) {
         res.status(500).json({
             status: 'fail',
