@@ -184,6 +184,29 @@ module.exports.getDetailProduct = async (req, res) => {
 	}
 }
 
+module.exports.getDetail_Product = async (req, res) => {
+	try {
+		// find product
+		const product = await Product.findOne({ $and: [ { idProductCode: req.body.idProductCode }, { size: req.body.size }, { color: req.body.color } ] }).populate('idProductCode')
+
+		// respond
+		if (product)
+			return res.status(200).json({
+				status: 'success',
+				product,
+			})
+		res.status(400).json({
+			status: 'fail',
+			message: 'Không tìm thấy sản phẩm',
+		})
+	} catch (error) {
+		res.status(500).json({
+			status: 'fail',
+			message: 'Lỗi server',
+		})
+	}
+}
+
 module.exports.getAllProduct = async (req, res) => {
 	try {
 		const products = await Product.find().populate('idProductCode')

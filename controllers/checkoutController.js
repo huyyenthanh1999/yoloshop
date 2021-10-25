@@ -48,7 +48,7 @@ module.exports.createOrder = async (req, res) => {
 
 		res.status(200).json({
 			status: 'success',
-			message: 'Create order thành công',
+			message: 'Create new order thành công',
 			order,
 		})
 	} catch (error) {

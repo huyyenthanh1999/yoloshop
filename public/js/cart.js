@@ -58,7 +58,7 @@ let addCartList = (product, index, _listData) => {
     productName = $('.cart__item__info__name')[index].innerHTML
     let _productId = productName.slice(22, 46)
     const temp = $.ajax({
-      url: '/carts/',
+      url: '/cart/',
       type: 'DELETE',
       data: { _userId: _userId, _productId: _productId }
     })
@@ -86,7 +86,7 @@ let addCartList = (product, index, _listData) => {
     addCartInfo()
 
     const temp = $.ajax({
-      url: '/carts/',
+      url: '/cart/',
       type: 'PUT',
       data: { _userId: _userId, _productId: _productId, _quantity: _quantity }
     })
@@ -113,7 +113,7 @@ let addCartList = (product, index, _listData) => {
     addCartInfo()
 
     const temp = $.ajax({
-      url: '/carts/',
+      url: '/cart/',
       type: 'PUT',
       data: { _userId: _userId, _productId: _productId, _quantity: _quantity }
     })
@@ -124,7 +124,7 @@ async function renderCart() {
 	try {
     cart_list.html('');
     const data = await $.ajax({
-      url: '/carts/detailCart',
+      url: '/cart/detailCart',
       type: 'PUT',
       data: { _userId: _userId },
     })

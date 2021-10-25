@@ -31,7 +31,14 @@ $(document).ready(function(){
      $('.product-info-item-quantity__input').text(quantity)
  }
 
-function addCart() {
+var idProductCode = (window.location.pathname).slice(17)
+// console.log(productCodeId.slice(17))
+console.log(idProductCode)
+var userId = '61729596ef7161e2df06bf0d'
+// var userId = '616e853bb6fb7c71eb50d'
+var products = []
+var sl = 4
+async function addCart() {
     //required to select variant
     var size, color;
         $('.product-info-item-list__item input[name="size"]').each(function(){
@@ -41,6 +48,7 @@ function addCart() {
         })
         if(size == undefined){
             alert("Vui lòng chọn size!")
+            return
         }
         $('.product-info-item-list__item input[name="color"]').each(function(){
             if($(this).is(':checked')){
@@ -49,10 +57,35 @@ function addCart() {
         })
         if(color == undefined){
             alert("Vui lòng chọn color!")
+            return
         }
 
-        if(size != undefined && color != undefined){
-            console.log(size, color)
-        }
+        console.log(size, color)
+        const data = await $.ajax({
+            url: '/products/detail',
+            type: 'PUT',
+            data: { idProductCode, size, color, quantity },
+        })
+        console.log(data.product)
+        console.log(data.product._id)
+
+        const newData = await $.ajax({
+            url: '/cart/',
+            type: 'POST',
+            data: { userId, products, _productId: data.product._id, _quantity: quantity, _sl: sl }
+        })
+        console.log(newData)
+
+        // const _data = await $.ajax({
+        //     url: '/cart/create',
+        //     type: 'PUT',
+        //     data: { _userId: userId, _productId: data.product._id, _quantity: quantity }
+        // })
+        // console.log(_data)
+
+}
+
+function buyNow() {
+    window.location.href = '/cart'
 }
  

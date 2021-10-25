@@ -29,7 +29,7 @@ let addDetailOrder = (product, index, _listData) => {
 async function render() {
     try {
         const data = await $.ajax({
-            url: '/carts/detailCart',
+            url: '/cart/detailCart',
             type: 'PUT',
             data: { _userId: _userId}
         })
@@ -66,23 +66,22 @@ $(btn_pay).on('click', async () => {
 
     try {
         const data = await $.ajax({
-            url: '/carts/detailCart',
+            url: '/cart/detailCart',
             type: 'PUT',
             data: { _userId: _userId}
         })
         _products = data.cart.products
 
         const newData = $.ajax({
-            url: 'checkout/',
+            url: '/checkout/',
             type: 'POST',
             data: { _userId, _receiverName, _phoneNumber, _email, _message, _address, _products, _totalCost, _status, _payment },
         })
         console.log(newData);
 
         _products.map(async (item) => {
-            // console.log(item);
             const _data = await $.ajax({
-                url: 'checkout/abc',
+                url: '/checkout/create',
                 type: 'PUT',
                 data: { _userId: _userId, _productId: item.productId, _quantity: item.quantity }
             })
