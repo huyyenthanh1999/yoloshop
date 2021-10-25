@@ -192,6 +192,157 @@ a.cart-num {
   z-index: 100;
 }
 
+/* css for search modal */
+.modal {
+  display: none;
+}
+
+.modal.active {
+  position: fixed;
+  z-index: 100000;
+  left: 0;
+  top: 0;
+  right: 0;
+  height: 100%;
+  display: flex;
+}
+
+.overlay {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.overlay::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('http://www.nicdarkthemes.com/themes/travel/wp/demo/travel/wp-content/uploads/sites/2/2018/04/p-17.jpg');
+  z-index: -1;
+  background-position: center;
+  -webkit-animation: zoomin 20s ease-in;
+  animation: zoomin 20s ease-in;
+  transition: all .5s ease-in-out;
+  overflow: hidden;
+}
+
+/* Zoom in Keyframes */
+@-webkit-keyframes zoomin {
+  0% {transform: scale(1);}
+  50% {transform: scale(1.5);}
+  100% {transform: scale(1);}
+}
+@keyframes zoomin {
+  0% {transform: scale(1);}
+  50% {transform: scale(1.5);}
+  100% {transform: scale(1);}
+} /*End of Zoom in Keyframes */
+
+.modal-inner {
+  max-width: 600px;
+  width: 100%;
+  background-color: #f7f7f7;
+  border-radius: 5px;
+  padding:16px 20px;
+}
+
+.search-group {
+  
+}
+
+.modal-inner__head {
+  display: flex;
+  justify-content: space-between;
+  font-size: 32px;
+  margin-bottom: 16px;
+  align-items: center;
+}
+
+.modal-inner__head span:first-child {
+  color: #4267b2;
+  font-weight: 600;
+}
+
+.modal-inner__head span:last-child {
+  cursor: pointer;
+  color: #4267b2;
+  border-radius: 50%;
+}
+
+.modal-inner__head span:last-child:hover {
+  background-color: #4267b2;
+  color: #fff;
+}
+
+.search-input {
+  margin-bottom: 12px;
+  padding: 4px;
+  border: 1px solid #4267b2;
+  background-color: #fff;
+  display: flex;
+  border-radius: 4px;
+}
+
+.search-input input {
+  padding: 8px 12px;
+  font-size: 18px;
+  border: none;
+  outline: none;
+  min-width: 120px;
+  width: 85%;
+  margin-right: auto;
+  display: inline-block
+}
+
+.search-result {
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.search-input button {
+  padding: 8px 24px;
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+  color: #4267b2;
+  font-weight: 600;
+  background-color: transparent;
+  border: 1px solid #4267b2;
+  cursor: pointer;
+  border-radius: inherit;
+}
+
+.search-input button:hover {
+  background-color: #4267b2;
+  color: #fff;
+}
+
+.search-result__item {
+  display: flex;
+  padding: 8px 4px;
+  align-items: center;
+  border-bottom: 1px solid #4267b2;
+  font-size: 16px;
+}
+
+.search-result__item:hover {
+  background-color: #4267b2;
+  color: #fff;
+}
+
+.search-result-item__icon {
+  margin-right: 8px;
+}
+
+.search-result-item__price {
+  margin-left: auto;
+}
+/* end css for search modal */
+
 @media only screen and (max-width: 64em) {
   #header {
     height: 70px;

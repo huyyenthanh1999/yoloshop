@@ -41,8 +41,12 @@
                     <tbody>
                         <% order.products.forEach(product => { %>
                             <tr>
-                                <td><%= product.name %></td>
+                                <td><%= product.name %>(<%= product.quantity %>)</td>
                                 <td><%= product.price %></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td><%= parseInt(product.quantity) * parseInt(product.price) %></td>
                             </tr>
                         <% }) %> 
                         <tr class="price-total">

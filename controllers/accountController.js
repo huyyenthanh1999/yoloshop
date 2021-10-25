@@ -22,16 +22,17 @@ module.exports.getAccount = async (req, res) => {
            for(let product of order.products){
                // find productCode -> name
                 const productCode = await ProductCode.findById(product.productId);
-                console.log(productCode)
                 product.name = productCode.name
            }
         }
 
-        if (!account)
-            return res.status(400).json({
-                status: 'fail',
-                message: 'Không tìm thấy trang',
-            })
+        if (!account){
+        res.redirect('/auth/login')
+        }
+            // return res.status(400).json({
+            //     status: 'fail',
+            //     message: 'Không tìm thấy trang',
+            // })
         res.render('pages/account', {
              user: account,
              orders 

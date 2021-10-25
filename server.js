@@ -28,7 +28,6 @@ require('./config/connectDB')
 const router = require("./routes/index")
 app.use(router)
 
-
 // listening
 const PORT = process.env.PORT || 3000
 

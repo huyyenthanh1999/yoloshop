@@ -1,3 +1,25 @@
+<div class="modal">
+	<div class="overlay">
+		<div class="modal-inner">
+			<div class="modal-inner__head">
+				<span>YoloShop</span>
+				<span onclick="closeSearch()"><i class='bx bx-x' ></i></span>
+			</div>
+			<div class="modal-inner__body">
+				<div class="search-group">
+					<div class="search-input">
+						<input type="text" name="" placeholder="Search..." id="">
+						<!-- <button>
+							<i class='bx bx-search-alt'></i>
+						</button> -->
+					</div>
+					<div class="search-result">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 <div id="header">
 	<div class="container">
 		<div class="header-logo">
@@ -36,14 +58,18 @@
 			</div>
 			<a href="/" class="home"></a>
 			<div class="header-menu__right">
-				<div class="header-menu__item">
+				<div class="header-menu__item" onclick="openSearch()">
 					<i class="bx bx-search"></i>
 				</div>
 				<div class="header-menu__item cart__icon">
 					<a href="/cart">
 						<i class="bx bx-shopping-bag"></i>
 					</a>
-					<a href="/cart" class="cart-num">2</a>
+					<% if(cartNum != null){ %>
+						<a href="/cart" class="cart-num">
+							<%= cartNum.products.length %> 
+						</a>
+					<% } %>	
 				</div>
 				<div class="header-menu__item header-menu__item-user">
 					<a href="/auth/login">

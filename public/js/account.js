@@ -84,6 +84,16 @@ function changePassActive() {
     $('#showChangePass:checked ~ .form-control').css('display', 'none')
   }
 }
+
+//show/hide password
+$('.show-pass').mousedown(function(){
+  $(this).siblings().attr('type','text');
+})
+$('.show-pass').mouseup(function(){
+  $(this).siblings().attr('type','password');
+})
+
+
 // change active account_action item
 var accountActionItems = document.querySelectorAll('.account-action__item')
 var acountRights = document.querySelectorAll('.account-right')

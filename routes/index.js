@@ -4,6 +4,8 @@ const {checkUser} = require('../middlewares/checkUser')
 // gán req.user
 router.use(checkUser)
 
+const {getCart} = require('../middlewares/getNum');
+router.use(getCart)
 // home page
 const indexRoute = require('./indexRoute')
 router.use('/', indexRoute)
@@ -20,7 +22,6 @@ router.use('/products', productRoute)
 const catalogsRoute = require("./catalogsRoute");
 router.use("/products", catalogsRoute);
 
-
 // account
 const accountRoute = require('./accountRoute')
 router.use('/account', accountRoute)
@@ -29,7 +30,6 @@ router.use('/account', accountRoute)
 // cart
 const cartRoute = require('./cartRoute')
 router.use('/cart', cartRoute)
-
 
 // checkout
 const checkoutRoute = require('./checkoutRoute')
