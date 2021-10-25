@@ -224,7 +224,10 @@ module.exports.getDetail_Product = async (req, res) => {
 	}
 }
 
-module.exports.getAllProduct = async (req, res) => {
+module.exports.getDetailProductCode = async (req, res) => {
+	// get id of product
+	const idProductCode = req.params.id
+
 	try {
 		// find product code
 		const productCode = await ProductCode.findById(idProductCode).lean()

@@ -35,7 +35,8 @@ $(document).ready(function(){
 var idProductCode = (window.location.pathname).slice(17)
 // console.log(productCodeId.slice(17))
 console.log(idProductCode)
-var userId = '61729596ef7161e2df06bf0d'
+// // var userId = '61729596ef7161e2df06bf0d'
+// req.user._id
 // var userId = '616e853bb6fb7c71eb50d'
 var products = []
 var sl = 4
@@ -98,7 +99,7 @@ async function addCart() {
         const newData = await $.ajax({
             url: '/cart/',
             type: 'POST',
-            data: { userId, products, _productId: data.product._id, _quantity: quantity, _sl: sl }
+            data: { products, _productId: data.product._id, _quantity: quantity, _sl: sl }
         })
         console.log(newData)
 
