@@ -139,7 +139,7 @@ form.addEventListener('submit', async (e) => {
   if ($('.changePass').is(':checked')) {
     const res1 = await $.ajax(
       {
-        url: `/user/account/edit-info`,
+        url: `/account/edit-info`,
         type: 'put',
         data: { name, phone, email }
       })
@@ -154,7 +154,7 @@ form.addEventListener('submit', async (e) => {
     if (newPass == confirmPass) {
       const res2 = await $.ajax(
         {
-          url: `/user/account/edit-pass`,
+          url: `/account/edit-pass`,
           type: 'PUT',
           data: { oldPass, newPass, confirmPass }
         })
@@ -170,7 +170,7 @@ form.addEventListener('submit', async (e) => {
   } else {
     const res = await $.ajax(
       {
-        url: `/user/account/edit-info`,
+        url: `/account/edit-info`,
         type: 'put',
         data: { name, phone, email }
       })

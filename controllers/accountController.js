@@ -48,8 +48,10 @@ module.exports.getAccount = async (req, res) => {
 
 //edit info account
 module.exports.editInfoAccount = async (req, res) => {
-    try {
+    // try {
         const user = { ...req.body }
+        console.log(user)
+    
         var decoded = jwt.verify(req.cookies.tokenId, process.env.TOKEN_KEY);
         const accountId = decoded.userId;
         const account = await User.findByIdAndUpdate(accountId, { name: user.name, phoneNumber: user.phone, email: user.email })
@@ -60,12 +62,12 @@ module.exports.editInfoAccount = async (req, res) => {
             })
         }
 
-    } catch (error) {
-        res.status(500).json({
-            status: 'fail',
-            message: 'Lỗi server',
-        })
-    }
+    // } catch (error) {
+    //     res.status(500).json({
+    //         status: 'fail',
+    //         message: 'Lỗi server',
+    //     })
+    // }
 }
 
 //edit password account

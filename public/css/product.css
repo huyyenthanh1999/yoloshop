@@ -59,7 +59,7 @@
 /* product_filter css */
 .del-filter {
     display: block!important;
-    text-align: center;
+    /* text-align: center; */
 }
 
 .product-filter__close{
