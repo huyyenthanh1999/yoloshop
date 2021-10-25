@@ -18,7 +18,7 @@ router.delete('/api/:id', controller.deleteProduct)
 router.delete('/code/api/:id', controller.deleteProductCode)
 
 
-// get all product
+// get all product, it can search and filter
 router.get('/api', controller.getAllProduct)
 
 // get one detail product
