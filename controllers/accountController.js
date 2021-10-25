@@ -8,7 +8,7 @@ const bcrypt = require('bcrypt')
 // get account
 
 module.exports.getAccount = async (req, res) => {
-    // try {
+    try {
         // console.log('vaof account')
         //giai ma token
         var decoded = jwt.verify(req.cookies.tokenId, process.env.TOKEN_KEY);
@@ -22,27 +22,28 @@ module.exports.getAccount = async (req, res) => {
            for(let product of order.products){
                // find productCode -> name
                 const productCode = await ProductCode.findById(product.productId);
-                console.log(productCode)
                 product.name = productCode.name
            }
         }
 
-        if (!account)
-            return res.status(400).json({
-                status: 'fail',
-                message: 'Không tìm thấy trang',
-            })
+        if (!account){
+        res.redirect('/auth/login')
+        }
+            // return res.status(400).json({
+            //     status: 'fail',
+            //     message: 'Không tìm thấy trang',
+            // })
         res.render('pages/account', {
              user: account,
              orders 
             })
-    // } catch (error) {
-    //     // res.status(500).json({
-    //     //     status: 'fail',
-    //     //     message: 'Lỗi server',
-    //     // }) 
-    //     res.redirect('/auth/login')
-    // }
+    } catch (error) {
+        // res.status(500).json({
+        //     status: 'fail',
+        //     message: 'Lỗi server',
+        // }) 
+        res.redirect('/auth/login')
+    }
 }
 
 //edit info account

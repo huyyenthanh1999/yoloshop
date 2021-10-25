@@ -150,6 +150,12 @@
     opacity: 1;
 }
 
+.show-pass {
+    font-size: 20px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
 /* css for account order detail */
 table {
     width: 100%;

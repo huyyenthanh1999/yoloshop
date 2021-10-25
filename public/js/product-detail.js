@@ -12,6 +12,7 @@ $(document).ready(function(){
 //change main image
     $('.product-images-list__item img').click(function(){
         $('.product-images__main img').attr("src", $(this).attr("src"))
+        $('.product-images__main figure').attr("style",`background-image:url("${$(this).attr('src')}")`)
     })
 //set color 
     $('.product-info-item-list__item').each(function(){
@@ -33,6 +34,7 @@ $(document).ready(function(){
 
 function addCart() {
     //required to select variant
+    const idProductCode = window.location.pathname.slice(17)
     var size, color;
         $('.product-info-item-list__item input[name="size"]').each(function(){
             if($(this).is(':checked')){
@@ -52,7 +54,38 @@ function addCart() {
         }
 
         if(size != undefined && color != undefined){
-            console.log(size, color)
+            $.ajax({
+                url:`/products/detail?color=${color}&size=${size}&idProductCode=${idProductCode}`,
+                type: "POST"
+            })
+            .then(data => {
+                let total = data.total;
+                if(parseInt($('.product-info-item-quantity__input').text()) > total){
+                    if(total > 0){
+                        quantity= total
+                        alert(`Vui lòng chọn lại số lượng!Sản phẩm này còn ${total} sản phẩm`)
+                    }else{
+                        quantity = 1;
+                        alert('Vui lòng chọn sản phẩm khác vì đã hết hàng!')
+                    }
+                    $('.product-info-item-quantity__input').text(quantity)
+                }else{
+                    alert(`Còn ${total} sản phẩm`)
+                }
+            })
+            .catch(err => {
+                console.log(err);
+            })
         }
 }
  
+
+// pure image zoom
+function zoom(e){
+    var zoomer = e.currentTarget;
+    e.offsetX ? offsetX = e.offsetX : offsetX = e.touches[0].pageX
+    e.offsetY ? offsetY = e.offsetY : offsetX = e.touches[0].pageX
+    x = offsetX/zoomer.offsetWidth*100
+    y = offsetY/zoomer.offsetHeight*100
+    zoomer.style.backgroundPosition = x + '% ' + y + '%';
+  }

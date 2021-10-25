@@ -211,3 +211,27 @@ module.exports.getAllCatalog = async (req, res) => {
     });
   }
 };
+
+//get total quantity
+module.exports.getTotalQuantity = async (req, res) => {
+  try {
+    const color = req.query.color;
+    const size = req.query.size;
+    const idProductCode = req.query.idProductCode;
+    const currProduct = await Product.findOne({idProductCode,color,size})
+    if (currProduct){
+      res.send({
+        total: currProduct.total
+      })
+    }else{
+      res.send({
+        total: 0
+      })
+    }
+  } catch (error) {
+    res.status(500).json({
+      status: "fail",
+      message: "Lỗi server",
+    });
+  }
+}

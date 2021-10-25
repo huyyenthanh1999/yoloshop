@@ -12,4 +12,6 @@ router.get("/", controller.getAllCatalog);
 router.get("/:page", controller.getAllCatalog);
 // router.get("/", controller.getProductPerPage);
 
+router.post('/detail',controller.getTotalQuantity);
+
 module.exports = router;

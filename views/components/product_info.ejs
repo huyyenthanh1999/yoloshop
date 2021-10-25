@@ -55,6 +55,7 @@
         Chi tiết sản phẩm
     </div>
     <div class="product-description__content">
+        
     </div>
     <div class="product-description__toggle">
         <button class="btn btn-primary btn-small">
@@ -69,4 +70,5 @@
 <script>
     let description = JSON.parse('<%- JSON.stringify(product.description) %>')
     document.querySelector('.product-description__content').innerHTML = description
+    document.querySelector('.mobile .product-description__content').innerHTML = description
 </script>

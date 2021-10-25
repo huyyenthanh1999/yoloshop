@@ -7,7 +7,9 @@
         <% } %> 
     </div>
     <div class="product-images__main">
+    <figure class = "zoom" onmousemove = "zoom (event)" style = "background-image: url('<%= product.images[0] %>')">
         <img src="<%= product.images[0] %>" alt="">
+    </figure>
     </div>
     <div class="product-description">
         <div class="product-description__title">
