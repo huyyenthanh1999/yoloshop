@@ -1,5 +1,7 @@
 let tempPrice = 0
 let totalPrice = 0
+let _userId = '617293e8c63873b6c360c0ac'
+let _products = []
 
 const btn_pay = $('.btn-pay')
 
@@ -18,33 +20,29 @@ let addDetailOrder = (product, index, _listData) => {
     if (i == _listData.length) {
         totalPrice = tempPrice + 30000
 
-        $('.temp__bill').html(`
-            <span>Tạm tính</span>
-            <span>${tempPrice} VNĐ</span>
-        `)
-        $('.total__bill').html(`
-            <span>Tổng tiền</span>
-            <span>${totalPrice} VNĐ</span>
-        `)
+        $('.temp__price').html(`${tempPrice} VNĐ`)
+        $('.total__price').html(`${totalPrice} VNĐ`)
         i = 0
-    } 
+    }
 }
 
 async function render() {
     try {
         const data = await $.ajax({
-            url: '/checkout/detailOrder',
-            type:'GET',
+            url: '/cart/detailCart',
+            type: 'PUT',
+            data: { _userId: _userId}
         })
+        _products = data.cart.products
         
         $('.products__info').html('')
-        data.order.products.map(async (item, index) => {
+        data.cart.products.map(async (item, index) => {
             const result = await $.ajax({
                 url: `/products/api/${item.productId}`,
                 type: 'GET',
             })
             
-            addDetailOrder(result.data.product, index, data.order.products)
+            addDetailOrder(result.data.product, index, data.cart.products)
         })
     } catch (error) {
         console.log(error)
@@ -52,3 +50,47 @@ async function render() {
 }
 
 render()
+
+let _receiverName = 'Hoang Nam'
+let _phoneNumber = '034455334'
+let _email = 'sksksh@gmail.com'
+let _message = 'None'
+let _address = '234 Nam Đồng'
+let _totalCost = 2345000
+let _status = 'Done'
+let _payment = 'cod'
+let _productId = '617113c991ad297ed0056355'
+let _quantity = 4
+$(btn_pay).on('click', async () => {
+    // Check input first
+
+    try {
+        const data = await $.ajax({
+            url: '/cart/detailCart',
+            type: 'PUT',
+            data: { _userId: _userId}
+        })
+        _products = data.cart.products
+
+        const newData = $.ajax({
+            url: '/checkout/',
+            type: 'POST',
+            data: { _userId, _receiverName, _phoneNumber, _email, _message, _address, _products, _totalCost, _status, _payment },
+        })
+        console.log(newData);
+
+        _products.map(async (item) => {
+            const _data = await $.ajax({
+                url: '/checkout/create',
+                type: 'PUT',
+                data: { _userId: _userId, _productId: item.productId, _quantity: item.quantity }
+            })
+            console.log(_data)
+        })
+        
+    } catch (error) {
+        console.log(error)
+    }
+
+    // window.location.href = 'success' page order success
+})

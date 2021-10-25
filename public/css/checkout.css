@@ -75,6 +75,7 @@ h3::after {
     padding-bottom: 8px;
 }
 
+.message textarea,
 .detail__address textarea {
     height: 108px;
 }

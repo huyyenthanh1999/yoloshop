@@ -3,6 +3,11 @@
     color: #4267b2;
 }
 
+.header-menu__item.active {
+    font-weight: 400;
+    color: black;
+}
+
 .cart {
     display: flex;
     align-items: flex-start;

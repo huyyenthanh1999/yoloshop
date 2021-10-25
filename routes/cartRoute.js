@@ -5,10 +5,11 @@ const cartController = require('../controllers/cartController')
 cartRouter.get('/', cartController.renderCart)
 
 // get detail cart
-cartRouter.get('/detailCart', cartController.detailCart)
+cartRouter.put('/detailCart', cartController.detailCart)
 
 // create cart
 cartRouter.post('/', cartController.createCart)
+// cartRouter.put('/create', cartController.create_Cart)
 
 // update cart
 cartRouter.put('/', cartController.updateCart)
