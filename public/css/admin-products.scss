@@ -34,14 +34,21 @@ a {
 }
 
 .admin-products table .stt-product {
-	width: 2%;
+	width: 1%;
 	text-align: center;
 }
 
 .admin-products table .id-product {
-	width: 2%;
+	// width: 1%;
+	// max-width: 10px;
+	// padding-left:0;
+	padding-right:0;
 	a {
 		text-decoration: none;
+		// white-space: nowrap;
+		// width: 10px;
+		// overflow: hidden;
+		// text-overflow: ellipsis;
 	}
 }
 
@@ -79,7 +86,7 @@ a {
 .admin-products .products-action .action-search {
 	border-bottom: 2px solid black;
 	i {
-		color: rgba(0,0,0,0.8);
+		color: rgba(0, 0, 0, 0.8);
 	}
 }
 
@@ -143,9 +150,25 @@ a {
 		table {
 			background: rgba(221, 221, 221, 0.7);
 			// background: rgba(221, 221, 221, 0.2);
-			th, td {
+			th,
+			td {
 				width: 20px;
 			}
 		}
 	}
+}
+
+
+.pagination {
+	display: flex;
+	justify-content: center;
+
+	a {
+		display: inline-block;
+		padding: 4px 10px;
+		border: 1px solid #333;
+		margin: 5px;
+		color: black;
+	}
+
 }

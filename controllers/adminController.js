@@ -30,38 +30,38 @@ module.exports.adminDashboard = async (req, res) => {
 // render products
 module.exports.adminProducts = async (req, res) => {
 	try {
-		// tổng tất cả sản phẩm
-		let totalProducts = 0
-		// const products = await Product.find().populate('idProductCode')
+		// // tổng tất cả sản phẩm
+		// let totalProducts = 0
+		// // const products = await Product.find().populate('idProductCode')
 
-		const productCodes = await ProductCode.find().lean()
+		// const productCodes = await ProductCode.find().lean()
 
-		// đếm số lượng sản phẩm trong productCodes
-		for(let item of productCodes){
-			const products = await Product.find(
-				{ idProductCode: item._id },
-				{ total: 1, color: 1, size: 1 }
-			).lean()
-			// console.log(products)
-			let totalProductsOfCode = 0
-			products.forEach((item) => {
-				totalProductsOfCode += item.total
-			})
+		// // đếm số lượng sản phẩm trong productCodes
+		// for(let item of productCodes){
+		// 	const products = await Product.find(
+		// 		{ idProductCode: item._id },
+		// 		{ total: 1, color: 1, size: 1 }
+		// 	).lean()
+		// 	// console.log(products)
+		// 	let totalProductsOfCode = 0
+		// 	products.forEach((item) => {
+		// 		totalProductsOfCode += item.total
+		// 	})
 
-			item.total = totalProductsOfCode
-			item.products = products
-			// console.log(item)
-			totalProducts += totalProductsOfCode
-		}
+		// 	item.total = totalProductsOfCode
+		// 	item.products = products
+		// 	// console.log(item)
+		// 	totalProducts += totalProductsOfCode
+		// }
 
-		// console.log(productCodes)
-		// console.log(totalProducts)
+		// // console.log(productCodes)
+		// // console.log(totalProducts)
 
 		res.render('components/admin/admin-base', {
 			content: 'products',
 			data: {
-				productCodes,
-				total: totalProducts,
+				// productCodes,
+				// total: totalProducts,
 			},
 		})
 	} catch (error) {
