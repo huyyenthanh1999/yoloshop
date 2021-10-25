@@ -2,18 +2,9 @@ require('dotenv').config()
 const express = require('express')
 const cookieParser = require('cookie-parser')
 const session = require('express-session')
-const mongoose = require('mongoose')
 const path = require('path')
 
 const app = express()
-
-// connect to database
-async function connectDB() {
-  await mongoose.connect(
-    `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0.k7qck.mongodb.net/k14shop?retryWrites=true&w=majority`
-  );
-}
-connectDB();
 
 // add middleware
 app.use(express.urlencoded({ extended: false }))
@@ -30,14 +21,9 @@ app.set('views', 'views')
 // setup public folder
 app.use('/public', express.static(path.join(__dirname, 'public')))
 
-// connect to database
-async function connectDB() {
-	await mongoose.connect(
-		`mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0.k7qck.mongodb.net/k14shop?retryWrites=true&w=majority`
-	)
-}
 
-connectDB()
+require('./config/connectDB')
+
 
 const router = require("./routes/index")
 app.use(router)

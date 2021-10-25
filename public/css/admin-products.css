@@ -40,16 +40,20 @@ a {
   text-align: center;
 }
 
+.admin-products table .id-product {
+  width: 2%;
+}
+
 .admin-products table .id-product a {
   text-decoration: none;
 }
 
 .admin-products table .cover-product {
-  width: 10%;
+  width: 5%;
 }
 
 .admin-products table .name-product {
-  width: 25%;
+  width: 15%;
 }
 
 .admin-products table .sold-product {
@@ -75,12 +79,22 @@ a {
   margin-bottom: 30px;
 }
 
+.admin-products .products-action .action-search {
+  border-bottom: 2px solid black;
+}
+
+.admin-products .products-action .action-search i {
+  color: rgba(0, 0, 0, 0.8);
+}
+
 .admin-products .products-action .action-search input {
   border: none;
   outline: none;
   padding: 4px 0;
   background-color: transparent;
-  border-bottom: 2px solid #333;
+  border: none;
+  margin-left: 3px;
+  font-size: 16px;
 }
 
 .admin-products .products-action .action-filter {

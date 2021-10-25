@@ -10,7 +10,7 @@ module.exports.register = async (req, res) => {
 		const { email, phoneNumber } = req.body
 		const user = await User.findOne({ $or: [{ email }, { phoneNumber }] })
 
-		console.log(user)
+		// console.log(user)
 
 		if (user)
 			return res
@@ -64,7 +64,7 @@ module.exports.login = async (req, res) => {
 			message: 'User khong ton tai'
 		})
 
-	console.log(user)
+	// console.log(user)
 
 	// user => check password
 	const isPassword = await bcrypt.compare(password, user.password)

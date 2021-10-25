@@ -161,6 +161,8 @@ module.exports.adminOrder = async (req, res) => {
 	// console.log(orders)
 	res.render('components/admin/admin-base', {
 		content: 'orders',
-		data: {},
+		data: {
+			orders
+		},
 	})
 }

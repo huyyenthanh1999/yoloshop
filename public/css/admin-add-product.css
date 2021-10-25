@@ -36,6 +36,7 @@ input:focus {
 	width: 43px;
 	height: 43px;
 	background-color: rgb(92, 82, 82);
+	border: 1px solid rgb(92, 82, 82);
 }
 
 .wrap-color input {
@@ -78,6 +79,17 @@ select {
 	padding: 12px;
 	position: relative;
 	top: 4px;
+}
+
+.product-size {
+	position: relative;
+	top: 0;
+	/* height: 180%; */
+}
+
+.product-total {
+	/* padding: 0; */
+	margin: 0;
 }
 
 /* add images */
