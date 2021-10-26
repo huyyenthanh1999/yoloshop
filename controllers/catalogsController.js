@@ -1,5 +1,6 @@
 const Product = require("../models/productModel");
 const ProductCode = require("../models/productCodeModel");
+const Cart = require("../models/cartModel");
 const { render } = require("ejs");
 module.exports.getProductDetail = async (req, res) => {
   const idProductCode = req.params.id;
@@ -213,7 +214,7 @@ module.exports.getAllCatalog = async (req, res) => {
 };
 
 //get total quantity
-module.exports.getTotalQuantity = async (req, res) => {
+module.exports.getVariantTotal = async (req, res) => {
   try {
     const color = req.query.color;
     const size = req.query.size;
@@ -226,6 +227,71 @@ module.exports.getTotalQuantity = async (req, res) => {
     }else{
       res.send({
         total: 0
+      })
+    }
+  } catch (error) {
+    res.status(500).json({
+      status: "fail",
+      message: "Lỗi server",
+    });
+  }
+}
+
+module.exports.getAllInfoProduct = async (req, res) => {
+  try {
+    const idProductCode = req.query.productCodeId;
+    const listVariants = await Product.find({idProductCode});
+    res.send({
+      listVariants
+    })
+  } catch (error) {
+    res.status(500).json({
+      status: "fail",
+      message: "Lỗi server",
+    });
+  }
+}
+
+module.exports.addToCart = async (req, res) => {
+  try {
+    const userId = req.user._id;
+    const productId = req.body.idVariant;
+    const quantity = req.body.quantity;
+    const hasCart = await Cart.findOne({userId});
+    if(hasCart){
+      const listProductId = hasCart.products.map(product => product.productId);
+      const hasVariant = listProductId.indexOf(productId)
+      if(hasVariant !== -1){
+        const cart = await Cart.findOneAndUpdate(
+          {userId,'products.productId': productId},
+          // {products: {$elemMatch: {productId: productId}}}
+          {$inc: {'products.$.quantity': quantity}}
+        )
+        res.status(200).json({
+          message:'thêm vào giỏ hàng thành công',
+          data: cart,
+          status: 'success'
+        })
+      }else{
+        const cart = await Cart.findOneAndUpdate(
+          {userId},
+          { $push: { products: { productId, quantity}}}
+        )
+          res.status(200).json({
+            message:'thêm vào giỏ hàng thành công',
+            data: cart,
+            status: 'success'
+          })
+      }
+    }else{
+      const cart = await Cart.create({
+				userId,
+				products: [{productId, quantity}],
+			})
+      res.status(200).json({
+        message:'thêm vào giỏ hàng thành công',
+        data: cart,
+        status: 'success'
       })
     }
   } catch (error) {

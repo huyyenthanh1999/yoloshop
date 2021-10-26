@@ -96,10 +96,10 @@ module.exports.adminAddProduct = (req, res) => {
 }
 
 // render customers admin page
-module.exports.adminCustomer = async (req, res) => {
+module.exports.adminCustomers = async (req, res) => {
 	// try {
-		const total = await User.countDocuments()
-		let customers = await User.find()
+		// const total = await User.countDocuments()
+		// let customers = await User.find()
 
 		// const orders = await Order.find()
 
@@ -124,8 +124,8 @@ module.exports.adminCustomer = async (req, res) => {
 		res.render('components/admin/admin-base', {
 			content: 'customers',
 			data: {
-				customers,
-				total,
+				// customers,
+				// total,
 			},
 		})
 	// } catch (error) {
@@ -157,12 +157,33 @@ module.exports.adminEditCustomer = async (req, res) => {
 
 // admin render order page
 module.exports.adminOrder = async (req, res) => {
-	const orders = await Order.find()
+	// const orders = await Order.find()
 	// console.log(orders)
 	res.render('components/admin/admin-base', {
 		content: 'orders',
 		data: {
-			orders
+			// orders
 		},
 	})
+}
+
+
+
+// admin account render
+module.exports.adminAccount = async (req, res) => {
+	try {
+		const user = await User.findById(req.params.id)
+
+		res.render('components/admin/admin-base', {
+			content: 'edit-customer',
+			data: {
+				user,
+			},
+		})
+	} catch (error) {
+		res.status(400).json({
+			status: 'fail',
+			message: 'Lỗi server',
+		})
+	}
 }

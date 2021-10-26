@@ -44,14 +44,6 @@ a {
   text-decoration: none;
 }
 
-.admin-customers table .cover-customer {
-  width: 10%;
-}
-
-.admin-customers table .name-customer {
-  width: 25%;
-}
-
 .admin-customers table .sold-customer,
 .admin-customers table .last-customer {
   padding-left: 30px;
@@ -120,5 +112,22 @@ a {
 .admin-customers .customers-action .total-customers:hover {
   background-color: var(--main-color);
   color: white;
+}
+
+.pagination {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.pagination a {
+  display: inline-block;
+  padding: 4px 10px;
+  border: 1px solid #333;
+  margin: 5px;
+  color: black;
 }
 /*# sourceMappingURL=admin-customers.css.map */

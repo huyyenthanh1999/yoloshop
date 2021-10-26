@@ -40,8 +40,13 @@ router.use('/checkout', checkoutRoute)
 const adminRoute = require("./adminRoute");
 router.use("/admin", adminRoute);
 
+// users
 const userRoute = require('./userRoute')
 router.use("/users", userRoute)
+
+// orders
+const orderRoute = require('./orderRoute')
+router.use("/orders", orderRoute)
 
 
 // Not found page

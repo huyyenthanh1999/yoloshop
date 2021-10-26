@@ -45,11 +45,11 @@ a {
 }
 
 .admin-customers table .cover-customer {
-	width: 10%;
+	// width: 10%;
 }
 
 .admin-customers table .name-customer {
-	width: 25%;
+	// width: 25%;
 }
 
 .admin-customers table .sold-customer,
@@ -120,4 +120,19 @@ a {
 .admin-customers .customers-action .total-customers:hover {
 	background-color: var(--main-color);
 	color: white;
+}
+
+
+.pagination {
+	display: flex;
+	justify-content: center;
+
+	a {
+		display: inline-block;
+		padding: 4px 10px;
+		border: 1px solid #333;
+		margin: 5px;
+		color: black;
+	}
+
 }

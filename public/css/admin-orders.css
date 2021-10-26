@@ -163,4 +163,21 @@ button {
 td:last-child {
   padding-right: 0 !important;
 }
+
+.pagination {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.pagination a {
+  display: inline-block;
+  padding: 4px 10px;
+  border: 1px solid #333;
+  margin: 5px;
+  color: black;
+}
 /*# sourceMappingURL=admin-orders.css.map */

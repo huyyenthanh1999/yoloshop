@@ -271,89 +271,54 @@ module.exports.getDetailProductCode = async (req, res) => {
 // example:
 // /products/api?search=""&filter=""
 module.exports.getAllProduct = async (req, res) => {
-	// console.log(query)
-	// try {
-	// tổng tất cả sản phẩm
-	// let totalProducts = 0
-	// const products = await Product.find().populate('idProductCode')
+	try {
+		const perPage = 10
+		const currentPage = +req.query.page || 1
 
-	const perPage = 10
-	const currentPage = req.query.page
-	console.log(currentPage)
-	const skip = perPage * (currentPage -1) || 1
-	// console.log(skip)
-	let productCodes = await ProductCode.find().skip(skip).limit(perPage).lean()
+		let skip = perPage * (currentPage - 1) || 1
 
-
-	let totalPages = await ProductCode.countDocuments()
-	totalPages = Math.ceil(totalPages/perPage)
-	// console.log(productCodes.length)
-
-	// // đếm số lượng sản phẩm trong productCodes
-	// for (let item of productCodes) {
-	// 	const products = await Product.find(
-	// 		{ idProductCode: item._id },
-	// 		{ total: 1, color: 1, size: 1 }
-	// 	).lean()
-	// 	// console.log(products)
-	// 	let totalProductsOfCode = 0
-	// 	products.forEach((item) => {
-	// 		totalProductsOfCode += item.total
-	// 	})
-
-	// 	item.total = totalProductsOfCode
-	// 	item.products = products
-	// 	// console.log(item)
-	// 	// totalProducts += totalProductsOfCode
-	// }
-	// tổng tất cả sản phẩm
-	let totalProducts = 0
-	// const products = await Product.find().populate('idProductCode')
-
-	// const productCodes = await ProductCode.find().lean()
-
-	// đếm số lượng sản phẩm trong productCodes
-	for(let item of productCodes){
-		const products = await Product.find(
-			{ idProductCode: item._id },
-			{ total: 1, color: 1, size: 1 }
-		).lean()
-		// console.log(products)
-		let totalProductsOfCode = 0
-		products.forEach((item) => {
-			totalProductsOfCode += item.total
+		// filter follow search
+		const option = { replaceSpecialCharacters: false }
+		const search = removeVI(req.query.search, option)
+		let productCodes = await ProductCode.find().lean()
+		productCodes = productCodes.filter((item) => {
+			return removeVI(item.name, option).includes(search)
 		})
 
-		item.total = totalProductsOfCode
-		item.products = products
-		// console.log(item)
-		totalProducts += totalProductsOfCode
+		let begin = (currentPage - 1) * perPage
+		let end = currentPage * perPage
+		console.log(begin, end)
+		productCodes = productCodes.slice(begin, end)
+
+		let totalProducts = await ProductCode.countDocuments()
+		let totalPages = Math.ceil(totalProducts / perPage)
+
+		// đếm số lượng sản phẩm trong productCodes và gán products vào productCodes
+		for (let item of productCodes) {
+			const products = await Product.find(
+				{ idProductCode: item._id },
+				{ total: 1, color: 1, size: 1 }
+			).lean()
+			let totalProductsOfCode = 0
+			products.forEach((item) => {
+				totalProductsOfCode += item.total
+			})
+
+			item.total = totalProductsOfCode
+			item.products = products
+		}
+
+		res.status(200).json({
+			productCodes,
+			total: totalProducts,
+			totalPages,
+		})
+	} catch (error) {
+		res.status(500).json({
+			status: 'fail',
+			message: 'Lỗi server',
+		})
 	}
-
-	// console.log(productCodes)
-	// console.log(totalProducts)
-
-	// filter follow search
-	const option = { replaceSpecialCharacters: false }
-	const search = removeVI(req.query.search, option)
-	productCodes = productCodes.filter((item) => {
-		return removeVI(item.name, option).includes(search)
-	})
-
-	// console.log(productCodes)
-	// console.log(totalProducts)
-
-	res.status(200).json({
-		productCodes,
-		total: totalProducts,
-		totalPages
-	})
-	// } catch (error) {
-	// 	res.status(500).json({
-	// 		status: 'fail',
-	// 		message: 'Lỗi server',
-	// 	})
-	// }
 }
 
 // add product to cart

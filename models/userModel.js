@@ -34,10 +34,18 @@ const UserSchema = mongoose.Schema(
 			type: String,
 			default: 'user',
 		},
+		active: {
+			type: Boolean,
+			default: true
+		}
 	},
 	{
 		timestamps: true,
 	}
 )
+
+UserSchema.pre('find', () => {
+	
+})
 
 module.exports = mongoose.model('User', UserSchema)
