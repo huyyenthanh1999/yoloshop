@@ -1,6 +1,6 @@
 let tempPrice = 0
 let totalPrice = 0
-let _userId = '617293e8c63873b6c360c0ac'
+let _userId = req.user
 let _products = []
 
 const btn_pay = $('.btn-pay')
@@ -31,7 +31,7 @@ async function render() {
         const data = await $.ajax({
             url: '/cart/detailCart',
             type: 'PUT',
-            data: { _userId: _userId}
+            // data: { _userId: _userId}
         })
         _products = data.cart.products
         

@@ -231,10 +231,6 @@ module.exports.getDetail_Product = async (req, res) => {
 	}
 }
 
-<<<<<<< HEAD
-// module.exports.getAllProduct = async (req, res) => {
-=======
->>>>>>> 8ca6ee61592ccaadc731da11b8f2da3ef225b547
 module.exports.getDetailProductCode = async (req, res) => {
 	// get id of product
 	const idProductCode = req.params.id
@@ -274,12 +270,8 @@ module.exports.getDetailProductCode = async (req, res) => {
 
 // example:
 // /products/api?search=""&filter=""
-<<<<<<< HEAD
-// module.exports.getAllProduct = async (req, res) => {
-=======
 module.exports.getAllProduct = async (req, res) => {
 	// console.log(query)
->>>>>>> 8ca6ee61592ccaadc731da11b8f2da3ef225b547
 	// try {
 	// tổng tất cả sản phẩm
 	// let totalProducts = 0

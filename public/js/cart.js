@@ -1,7 +1,7 @@
 let totalProduct = 0
 let totalPrice = 0
 let total = []
-let _userId = '616e853bb6f54eb7c71eb50d'  // Ham check dang nhap -> neu da dang nhap tra ve userId
+// let _userId = req.user  // Ham check dang nhap -> neu da dang nhap tra ve userId
 
 const btn_order = $('.btn-order')
 const btn_cart = $('.btn-cart')
@@ -58,9 +58,9 @@ let addCartList = (product, index, _listData) => {
     productName = $('.cart__item__info__name')[index].innerHTML
     let _productId = productName.slice(22, 46)
     const temp = $.ajax({
-      url: '/cart/',
+      url: '/cart',
       type: 'DELETE',
-      data: { _userId: _userId, _productId: _productId }
+      data: { _productId: _productId }
     })
     renderCart()
   })
@@ -86,9 +86,9 @@ let addCartList = (product, index, _listData) => {
     addCartInfo()
 
     const temp = $.ajax({
-      url: '/cart/',
+      url: '/cart',
       type: 'PUT',
-      data: { _userId: _userId, _productId: _productId, _quantity: _quantity }
+      data: { _productId: _productId, _quantity: _quantity }
     })
   })
 
@@ -113,9 +113,9 @@ let addCartList = (product, index, _listData) => {
     addCartInfo()
 
     const temp = $.ajax({
-      url: '/cart/',
+      url: '/cart',
       type: 'PUT',
-      data: { _userId: _userId, _productId: _productId, _quantity: _quantity }
+      data: { _productId: _productId, _quantity: _quantity }
     })
   })
 }
@@ -125,9 +125,10 @@ async function renderCart() {
     cart_list.html('');
     const data = await $.ajax({
       url: '/cart/detailCart',
-      type: 'PUT',
-      data: { _userId: _userId },
+      type: 'GET',
+      // data: { _userId: _userId },
     })
+    console.log(data);
 
     if (data.length == 0) {
       $('.cart__info').setAttribute('style', 'display:none')
@@ -155,6 +156,7 @@ async function renderCart() {
         url: `/products/api/${item.productId}`,
         type: 'GET',
       })
+      console.log(result);
       total[index] = result.data.product.total
       addCartList(result.data.product, index, data.cart.products)
     })
