@@ -9,6 +9,38 @@ function formatDate(time) {
 	return date.toLocaleDateString()
 }
 
+function showPagination(totalPages) {
+	const containerPagination = document.querySelector('.pagination')
+
+	// console.log(totalPages)
+	let html = ''
+	for (let i = 1; i <= totalPages; i++) {
+		// console.log(i)
+		html += `
+			<a href="/admin/customers?page=${i}" onclick="handlePagination(event)">
+				${i}
+			</a>
+		`
+		// if page  active thi them color
+	}
+	// console.log(html)
+	containerPagination.innerHTML = html
+}
+
+function handlePagination(e) {
+	e.preventDefault()
+	// console.log(e)
+	const page = e.target.innerHTML
+	// console.log(page)
+	// console.log(query.search)
+	// const urlSearchParams = new URLSearchParams(window.location.search)
+	// const query = Object.fromEntries(urlSearchParams.entries())
+	// console.log(query)
+	inputSearch.val('')
+	getUsers(page)
+}
+
+
 // render list of customers
 function renderListOfCustomers(customers) {
 	let html = ''
@@ -76,20 +108,40 @@ function renderListOfCustomers(customers) {
 	document.querySelector('.total-customers span').innerHTML = total
 }
 
-async function getData(){
+// filter
+function changeURL(page = 1, search = '') {
+	if (!page) page = 1
+	const state = {}
+	// console.log(search)
+
+	// const urlSearchParams = new URLSearchParams(window.location.search)
+	// const query = Object.fromEntries(urlSearchParams.entries())
+
+	// inputSearch.val('')
+	const newURL = `/admin/customers?page=${page}&search=${search}`
+
+	history.pushState(state, '', newURL)
+}
+
+
+async function getUsers(page){
+	if(!page) page = 1
+	console.log(page)
     const result = await $.ajax({
-		url: `/users`,
+		url: `/users?page=${page}`,
 		type: 'GET',
 	})
 
 	// console.log(result.productCodes)
     customers = result.users
-	// changeURL(page = '', inputSearch.val())
+	total = result.total
+	changeURL(page, inputSearch.val())
 	renderListOfCustomers(customers)
-    console.log(customers)
+	showPagination(result.totalPages)
+    // console.log(customers)
 }
 
-getData()
+getUsers()
 
 async function deleteCustomer(event) {
 	event.preventDefault()

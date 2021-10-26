@@ -5,7 +5,7 @@
 			<input type="text" placeholder="Tìm đơn hàng" />
 		</div>
 		<div class="action-filter">
-			<i class="fas fa-filter"></i>
+			<!-- <i class="fas fa-filter"></i>
 			Add filter
             <ul>
                 <li>
@@ -14,7 +14,10 @@
                 <li>
                     <span>Đã giao</span>
                 </li>
-            </ul>
+            </ul> -->
+			<select name="" id="" class="select-filter">
+				
+			</select>
 		</div>
 		<div class="total-orders">
 			<i class="fas fa-box"></i>
@@ -27,6 +30,7 @@
 			<tr>
 				<th>STT</th>
 				<th>Người nhận</th>
+				<th>Số điện thoại</th>
 				<th>Sản phẩm</th>
                 <th>Ngày đặt</th>
 				<th>Tổng tiền</th>
@@ -35,38 +39,6 @@
 				<th>Hành động</th>
 			</tr>
 		</thead>
-        <tbody>
-            <% for (var i = 0; i < orders.length; i++) { %>
-                <tr>
-                    <td> <%= i+1 %> </td>
-                    <td>
-                        <span> <%= orders[i].receiverName %> </span>
-                        -
-                        <span> <%= orders[i].phoneNumber %> </span>
-                    </td>
-                    <td>
-                        <%= orders[i].products.length %> sản phẩm
-                    </td>
-                    <td> <%= orders[i].createdAt.toLocaleDateString() %> </td>
-                    <td> <%= orders[i].totalCost %> </td>
-                    <td> <%= orders[i].payment == 'cod'? 'Ship cod' : 'Chuyển khoản'%> </td>
-                    <td> <%= orders[i].status %> </td>
-                    <td>
-                        <button class="detail-order">
-                            <a href="/admin/orders/<%= orders[i]._id %>">
-                                Chi tiết
-                            </a>
-                        </button>
-                        <button class="delivery-order ">
-                            Giao hàng
-                        </button>
-                        <button class="delete-order">
-                            Hủy đơn hàng
-                        </button>
-                    </td>
-                </tr>
-            <% } %>
-        </tbody>
 	</table>
 	<div class="pagination">
 	</div>

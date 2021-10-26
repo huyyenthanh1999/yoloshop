@@ -38,6 +38,7 @@ router.get('/orders', controller.adminOrder)
 
 
 // account
+router.get('/account', controller.adminAccount)
 
 
 

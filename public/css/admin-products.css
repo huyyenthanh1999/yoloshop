@@ -24,8 +24,10 @@ a {
 .admin-products table td img {
   width: 60px;
   height: 60px;
-  object-fit: cover;
-  object-position: center;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -o-object-position: center;
+     object-position: center;
 }
 
 .admin-products table thead {
@@ -151,8 +153,12 @@ a {
 }
 
 .pagination {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 
 .pagination a {
@@ -162,3 +168,4 @@ a {
   margin: 5px;
   color: black;
 }
+/*# sourceMappingURL=admin-products.css.map */

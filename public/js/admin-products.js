@@ -260,15 +260,21 @@ async function deleteProductCode(event) {
 // search products
 let inputSearch = $('.products-action .action-search input')
 async function searchProduct() {
+	const lazy = document.querySelector('.lazy-loading')
+	lazy.classList.toggle('hide')
+
 	const result = await $.ajax({
 		url: `/products/api?search=${inputSearch.val()}`,
 		type: 'GET',
 	})
-
+	
+	console.log(result)
 	// console.log(result.productCodes)
 	productCodes = result.productCodes
 	changeURL(page = '', inputSearch.val())
 	renderListOfProducts(productCodes)
+
+	lazy.classList.toggle('hide')
 }
 
 $('.products-action .action-search input').on('keyup', processChange)

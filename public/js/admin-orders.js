@@ -1,53 +1,65 @@
 activeNavItem('orders')
 // console.log(orders)
+let orders = []
+let total = 0
+
+function formatDate(time) {
+	const date = new Date(time)
+	return date.toLocaleDateString()
+}
+
+function showPagination(totalPages) {
+	const containerPagination = document.querySelector('.pagination')
+
+	// console.log(totalPages)
+	let html = ''
+	for (let i = 1; i <= totalPages; i++) {
+		// console.log(i)
+		html += `
+			<a href="/admin/products?page=${i}" onclick="handlePagination(event)">
+				${i}
+			</a>
+		`
+		// if page  active thi them color
+	}
+	// console.log(html)
+	containerPagination.innerHTML = html
+}
 
 // render list of orders
-function renderListOfOrders() {
+function renderListOfOrders(orders) {
 	let html = ''
-	orders.forEach((order, index) => {
+	orders.forEach((order, i) => {
 		html += `
         <tr>
-        <td class="stt-order">${index + 1}</td>
-        <td class="id-order">
-            <a href="/users/${order._id}">${order._id}</a>
-        </td>
-        <td class="cover-order">
-            <img
-                src="${order.avatar}"
-                alt=""
-            />
-        </td>
-        <td class="name-order">${order.name}</td>
-        <td class="sold-order">10</td>
-        <td>
-            <div class="form-check form-switch">
-                <input
-                    class="form-check-input"
-                    type="checkbox"
-                    id="flexSwitchCheckDefault"
-                    checked
-                />
-            </div>
-        </td>
-        <td class="action-order">
-            <a href="/admin/orders/${order._id}">
-                <button>
-                    <i class="far fa-eye"></i>
-                </button>
-            </a>
-            <a href="/admin/orders/${order._id}">
-                <button>
-                    <i class="fas fa-edit"></i>
-                </button>
-            </a>
-            <a href="#" onclick="deleteOrder(event)">
-                <button>
-                    <i class="far fa-trash-alt"></i>
-                </button>
-            </a>
-            
-        </td>
-    </tr>
+                    <td> ${i+1} </td>
+                    <td>
+                        ${ order.receiverName}
+                    </td>
+                    <td>
+                        ${ order.phoneNumber}
+                    </td>
+                    <td>
+                        ${order.products.length} sản phẩm
+                    </td>
+                    <td> ${formatDate(order.createdAt)}</td>
+                    <td> ${order.totalCost} </td>
+                    <td> ${order.payment == 'cod'? 'Ship cod' : 'Chuyển khoản'} </td>
+                    <td> ${order.status} </td>
+                    <td>
+                        <button class="detail-order">
+                            <a href="/admin/orders/${order._id}">
+                                Chi tiết
+                            </a>
+                        </button>
+                        <button class="delivery-order ">
+                            Giao hàng
+                        </button>
+                        <button class="delete-order">
+                            Hủy đơn hàng
+                        </button>
+                    </td>
+                </tr>
         
         `
 	})
@@ -56,13 +68,51 @@ function renderListOfOrders() {
 	const tbody = document.createElement('tbody')
 	tbody.innerHTML = html
 
-	document.querySelector('.admin-orders table').appendChild(tbody)
+	const table = document.querySelector('.admin-orders table')
+
+	const oldTableBody = table.querySelector('tbody')
+	oldTableBody && oldTableBody.remove()
+
+	table.appendChild(tbody)
+
+	if (orders.length === 0) {
+		table.querySelector('tbody').innerHTML =
+			'<h2 style="margin-top: 10px;">Không tìm thấy đơn hàng</h2>'
+	}
 
 	document.querySelector('.total-orders span').innerHTML = total
 }
 
-// renderListOfOrders()
+// debounce
+function debounce(func, timeout = 300) {
+	let timer
+	return (...args) => {
+		clearTimeout(timer)
+		timer = setTimeout(() => {
+			func.apply(this, args)
+		}, timeout)
+	}
+}
+const processChange = debounce(() => searchProduct())
 
+async function getOrders(page = 1, search = '') {
+	const result = await $.ajax({
+		url: `/orders/api?page=${page}&search=${search}`,
+		method: 'GET',
+	})
+
+	// console.log(result)
+	orders = result.orders
+	total = result.total
+	console.log(orders)
+	// changeURL(page)
+	renderListOfOrders(orders)
+	showPagination(result.totalPages)
+}
+
+getOrders()
+
+// renderListOfOrders()
 
 // async function deleteOrder(event) {
 // 	event.preventDefault()
