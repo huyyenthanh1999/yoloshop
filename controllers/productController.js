@@ -224,7 +224,7 @@ module.exports.getDetail_Product = async (req, res) => {
 	}
 }
 
-module.exports.getAllProduct = async (req, res) => {
+// module.exports.getAllProduct = async (req, res) => {
 module.exports.getDetailProductCode = async (req, res) => {
 	// get id of product
 	const idProductCode = req.params.id
@@ -264,7 +264,7 @@ module.exports.getDetailProductCode = async (req, res) => {
 
 // example:
 // /products/api?search=""&filter=""
-module.exports.getAllProduct = async (req, res) => {
+// module.exports.getAllProduct = async (req, res) => {
 	// try {
 	// 	const products = await Product.find().populate('idProductCode')
 	// 	res.status(200).json({
@@ -282,50 +282,50 @@ module.exports.getAllProduct = async (req, res) => {
 
 	// get query
 	// console.log(req.query)
-	const search = req.query.search.toLowerCase()
+	// const search = req.query.search.toLowerCase()
 	// console.log(query)
 	// try {
 		// tổng tất cả sản phẩm
 		// let totalProducts = 0
 		// const products = await Product.find().populate('idProductCode')
 
-		let productCodes = await ProductCode.find().lean()
+// 		let productCodes = await ProductCode.find().lean()
 
-		// đếm số lượng sản phẩm trong productCodes
-		for (let item of productCodes) {
-			const products = await Product.find(
-				{ idProductCode: item._id },
-				{ total: 1, color: 1, size: 1 }
-			).lean()
-			// console.log(products)
-			let totalProductsOfCode = 0
-			products.forEach((item) => {
-				totalProductsOfCode += item.total
-			})
+// 		// đếm số lượng sản phẩm trong productCodes
+// 		for (let item of productCodes) {
+// 			const products = await Product.find(
+// 				{ idProductCode: item._id },
+// 				{ total: 1, color: 1, size: 1 }
+// 			).lean()
+// 			// console.log(products)
+// 			let totalProductsOfCode = 0
+// 			products.forEach((item) => {
+// 				totalProductsOfCode += item.total
+// 			})
 
-			item.total = totalProductsOfCode
-			item.products = products
-			// console.log(item)
-			// totalProducts += totalProductsOfCode
-		}
+// 			item.total = totalProductsOfCode
+// 			item.products = products
+// 			// console.log(item)
+// 			// totalProducts += totalProductsOfCode
+// 		}
 
-		productCodes = productCodes.filter(item => {
-			return item.name.toLowerCase().includes(search)
-		})
+// 		productCodes = productCodes.filter(item => {
+// 			return item.name.toLowerCase().includes(search)
+// 		})
 
-		// console.log(productCodes)
-		// console.log(totalProducts)
+// 		// console.log(productCodes)
+// 		// console.log(totalProducts)
 
-		res.status(200).json({
-			productCodes
-		})
-	// } catch (error) {
-	// 	res.status(500).json({
-	// 		status: 'fail',
-	// 		message: 'Lỗi server',
-	// 	})
-	// }
-}
+// 		res.status(200).json({
+// 			productCodes
+// 		})
+// 	// } catch (error) {
+// 	// 	res.status(500).json({
+// 	// 		status: 'fail',
+// 	// 		message: 'Lỗi server',
+// 	// 	})
+// 	// }
+// }
 
 // add product to cart
 module.exports.userAddProduct = async (req, res) => {
