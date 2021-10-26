@@ -231,6 +231,35 @@ module.exports.getDetail_Product = async (req, res) => {
 	}
 }
 
+module.exports.getDetailProduct = async (req, res) => {
+	// get id of product
+	const idProduct = req.params.id
+
+	try {
+		// find product
+		const product = await Product.findById(idProduct).populate('idProductCode')
+
+		if (product) {
+			return res.status(200).json({
+				status: 'success',
+				data: {
+					product,
+				},
+			})
+		}
+		
+		return res.status(400).json({
+			status: 'fail',
+			message: 'Không tìm thấy sản phẩm',
+		})
+	} catch (error) {
+		res.status(500).json({
+			status: 'fail',
+			message: 'Lỗi server',
+		})
+	}
+}
+
 module.exports.getDetailProductCode = async (req, res) => {
 	// get id of product
 	const idProductCode = req.params.id

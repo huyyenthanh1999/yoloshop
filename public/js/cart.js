@@ -22,7 +22,7 @@ let addCartList = (product, index, _listData) => {
             <img src='${product.idProductCode.images[0]}' alt=''>
           </td>
           <td class='td1 cart__item__info__name'>
-            <a href='${product._id}'>${product.idProductCode.name} - ${product.color} - ${product.size}</a>
+            <a href='/products/detail/${product.idProductCode._id}'>${product.idProductCode.name} - ${product.color} - ${product.size}</a>
           </td>
           <td class='td1 cart__item__info__price'>
             ${product.idProductCode.cost * _listData[index].quantity}
@@ -153,10 +153,11 @@ async function renderCart() {
     cart_list.html('')
     data.cart.products.map(async (item, index) => {
       const result = await $.ajax({
-        url: `/products/api/${item.productId}`,
+        url: `products/api/detail/${item.productId}`,
         type: 'GET',
       })
       console.log(result);
+      console.log(result.data.product.total);
       total[index] = result.data.product.total
       addCartList(result.data.product, index, data.cart.products)
     })

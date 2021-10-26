@@ -6,7 +6,8 @@ module.exports.renderOrder = (req, res) => {
 
 module.exports.detailOrder = async (req, res) => {
 	try {
-		const order = await Order.findOne({ _id: '616ef5ae3d08ca59797ca8f9' })
+		const userId = req.user._id
+		const order = await Order.findOne({ userId })
 
 		if (!order)
 			return res.status(400).json({
@@ -29,7 +30,7 @@ module.exports.detailOrder = async (req, res) => {
 module.exports.createOrder = async (req, res) => {
 	try {
 		const order = await Order.create({
-			userId: req.body._userId,
+			userId,
 			receiverName: req.body._receiverName,
 			phoneNumber: req.body._phoneNumber,
 			email: req.body._email,
@@ -62,7 +63,7 @@ module.exports.createOrder = async (req, res) => {
 module.exports.create_Order = async (req, res) => {
 	try {
 		const order = await Order.findOneAndUpdate(
-			{ userId: req.body._userId }, 
+			{ userId }, 
 			{ $push: { products: { productId: req.body._productId, quantity: req.body._quantity }}},
 			// { safe: true, upsert: true },
 		)

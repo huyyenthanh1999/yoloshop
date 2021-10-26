@@ -23,7 +23,7 @@ router.delete('/code/api/:id', controller.deleteProductCode)
 
 // get one detail product
 router.get('/api/:id', controller.getDetailProductCode)
-// router.get('/api/:id', controller.getDetailProduct)
+router.get('/api/detail/:id', controller.getDetailProduct)
 
 // get product from productCodeId+size+color
 router.put('/detail', controller.getDetail_Product)
