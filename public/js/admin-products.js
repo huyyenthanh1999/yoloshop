@@ -268,7 +268,7 @@ async function searchProduct() {
 		type: 'GET',
 	})
 	
-	console.log(result)
+	// console.log(result)
 	// console.log(result.productCodes)
 	productCodes = result.productCodes
 	changeURL(page = '', inputSearch.val())
