@@ -28,6 +28,8 @@
     flex-grow: 1;
     padding-top: 100%;
     position: relative;
+    display: flex;
+    justify-content: center;
 }
 
 .product-images__main img{
@@ -208,7 +210,26 @@
 }
 
 /* end produt info css */
+/* pure image zoome */
+figure.zoom {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 80%;
+    overflow: hidden;
+    cursor: zoom-in;
+  }
 
+  figure.zoom img {
+    transition: opacity 0.5s;
+    display: block;
+    width: 100%;
+  }
+  
+  figure.zoom img:hover {
+    opacity: 0;
+  }
+/* end pure image zoome */
 @media only screen and (max-width: 64em) {
     .main {
         margin-top: 70px;

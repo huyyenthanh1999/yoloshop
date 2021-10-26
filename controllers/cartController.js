@@ -28,11 +28,13 @@ module.exports.detailCart = async (req, res) => {
 }
 
 module.exports.createCart = async (req, res) => {
-	try {
-		const cart = await Cart.findOne({ userId: req.body.userId }) // req.body._userId '616e853bb6f54eb7c71eb50d'
+	// try {
+		// console.log(req.user)
+		const userId = req.user._id
+		const cart = await Cart.findOne({ userId }) // req.body._userId '616e853bb6f54eb7c71eb50d'
 		if (!cart) {
 			const cart = await Cart.create({
-				userId: req.body.userId,
+				userId,
 				products: req.body.products,
 			})
 			if (!cart)
@@ -43,14 +45,15 @@ module.exports.createCart = async (req, res) => {
 		}
 
 		const _cart = await Cart.findOne(
-			{ $and: [{userId: req.body._userId}, {'products.productId': req.body._productId} ]}, 
+			{ $and: [{userId}, {'products.productId': req.body._productId} ]}, 
 			// { $set: { 'products.$.quantity': req.body._quantity }},
 			// { safe: true, upsert: true },
 		)
+		console.log(_cart)
 		if (_cart) {
 			console.log('test')
 			const cart_ = await Cart.findOneAndUpdate(
-				{ userId: req.body.userId }, 
+				{ userId}, 
 				{ $push: { products: { productId: req.body._productId, quantity: req.body._quantity }}},
 				// { safe: true, upsert: true },
 			)
@@ -62,7 +65,7 @@ module.exports.createCart = async (req, res) => {
 		} else {
 			console.log('abc');
 			const cart_ = await Cart.findOneAndUpdate(
-				{ userId: req.body.userId, 'products.productId': req.body._productId }, 
+				{ userId, 'products.productId': req.body._productId }, 
 				{ $set: { 'products.$.quantity': req.body._sl }},
 				// { safe: true, upsert: true },
 			)
@@ -79,12 +82,12 @@ module.exports.createCart = async (req, res) => {
 			cart,
 		})
 
-	} catch (error) {
-		res.status(500).json({
-			status: 'fail',
-			message: 'Lỗi server',
-		})
-	}
+	// } catch (error) {
+	// 	res.status(500).json({
+	// 		status: 'fail',
+	// 		message: 'Lỗi server',
+	// 	})
+	// }
 }
 
 // module.exports.createCart = async (req, res) => {

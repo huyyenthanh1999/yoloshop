@@ -1,5 +1,48 @@
 activeNavItem('products')
 
+let productCodes = [];
+let total = 0
+
+const urlSearchParams = new URLSearchParams(window.location.search);
+const query = Object.fromEntries(urlSearchParams.entries());
+
+function showPagination(totalPages) {
+	const containerPagination = document.querySelector('.pagination')
+
+	// console.log(totalPages)
+	let html = ''
+	for(let i = 1; i <= totalPages; i++) {
+		// console.log(i)
+		html += `
+			<a href="/admin/products?page=${i}">
+				${i}
+			</a>
+		`
+		// if page  active thi them color
+	}
+	console.log(html)
+	containerPagination.innerHTML = html
+}
+
+// firstly, call api list of products
+async function getProducts(){
+	const result = await $.ajax({
+		url: `/products/api?page=${query.page}`,
+		method: 'GET',
+	})
+	
+	console.log(result)
+	productCodes = result.productCodes
+	total = result.total
+	renderListOfProducts(productCodes)
+	showPagination(result.totalPages)
+}
+
+getProducts()
+
+
+
+
 // click add product button
 document.querySelector('.action-add').addEventListener('click', (e) => {
 	window.location.href = '/admin/add-product'
@@ -13,6 +56,7 @@ function formatDate(time) {
 // render list of products
 function renderListOfProducts(productCodes) {
 	let html = ''
+	// console.log('ok')
 	productCodes.forEach((productCode, index) => {
 		let productHTML = ''
 		productCode.products.forEach((item) => {
@@ -100,11 +144,32 @@ function renderListOfProducts(productCodes) {
 
 	table.appendChild(tbody)
 
+	if (productCodes.length === 0) {
+		table.querySelector('tbody').innerHTML =
+			'<h2 style="margin-top: 10px;">Không tìm thấy sản phẩm</h2>'
+	}
+
 	document.querySelector('.total-products span').innerHTML = total
 }
 
-renderListOfProducts(productCodes)
+// renderListOfProducts(productCodes)
 
+// debounce
+function debounce(func, timeout = 300) {
+	let timer
+	return (...args) => {
+		clearTimeout(timer)
+		timer = setTimeout(() => {
+			func.apply(this, args)
+		}, timeout)
+	}
+}
+const processChange = debounce(() => searchProduct())
+
+
+
+
+// show more product
 function showMoreProduct(event) {
 	const moreProduct = event.currentTarget.closest('tr').nextElementSibling
 	// console.log(moreProduct)
@@ -138,7 +203,17 @@ async function deleteProductCode(event) {
 		alert('Xóa sản phẩm thành công')
 		tr.remove()
 
-		document.querySelector('.total-products span').innerHTML--
+		// update products
+		productCodes = productCodes.filter((item) => {
+			return item._id !== idProduct
+		})
+
+		let totalProducts = 0
+		productCodes.forEach((item) => {
+			item.products.forEach((i) => (totalProducts += i.total))
+		})
+
+		document.querySelector('.total-products span').innerHTML = totalProducts
 	} else {
 		alert('Xóa sản phẩm thất bại')
 	}
@@ -154,23 +229,21 @@ function changeURL(search = '', sortCost = '') {
 }
 
 // search products
-const inputSearch = document.querySelector('.products-action .action-search')
+let inputSearch = $('.products-action .action-search input')
+async function searchProduct() {
+	const result = await $.ajax({
+		url: `/products/api?search=${inputSearch.val()}`,
+		type: 'GET',
+	})
 
-$(inputSearch).on('keyup', async function (e) {
-	if (e.key === 'Enter' || e.keyCode === 13) {
-		// call api and change the list of products
+	// console.log(result.productCodes)
+	productCodes = result.productCodes
+	changeURL(inputSearch.val())
+	renderListOfProducts(productCodes)
+}
 
-		const result = await $.ajax({
-			url: `/products/api?search=${e.target.value}`,
-			type: 'GET',
-		})
-
-		// console.log(result.productCodes)
-		productCodes = result.productCodes
-		changeURL(e.target.value)
-		renderListOfProducts(productCodes)
-	}
-})
+$('.products-action .action-search input').on('keyup', processChange)
+$('.products-action .action-search i').on('click', processChange)
 
 // filter follow cost
 let statusCost = 'down'
@@ -202,7 +275,7 @@ actionDate.addEventListener('click', (e) => {
 		})
 		statusDate = 'up'
 		actionDate.querySelector('span').innerHTML =
-			'<i class="fas fa-sort-amount-up"></i>'
+			'<i class="fas fa-sort-amount-down-alt"></i>'
 	} else {
 		productCodes = productCodes.sort(function (a, b) {
 			return new Date(b.createdAt) - new Date(a.createdAt)
@@ -211,7 +284,7 @@ actionDate.addEventListener('click', (e) => {
 		statusDate = 'down'
 
 		actionDate.querySelector('span').innerHTML =
-			"<i class='fas fa-sort-amount-down-alt'></i>"
+			'<i class="fas fa-sort-amount-up"></i>'
 	}
 
 	renderListOfProducts(productCodes)
@@ -222,14 +295,14 @@ let statusLeft = 'down'
 const actionLeft = document.querySelector('.action-left')
 actionLeft.addEventListener('click', (e) => {
 	if (statusLeft == 'down') {
-		productCodes = productCodes.sort((a, b) => a.cost - b.cost)
+		productCodes.sort((a, b) => a.total - b.total)
 
 		statusLeft = 'up'
 
 		actionLeft.querySelector('span').innerHTML =
 			"<i class='fas fa-sort-amount-down-alt'></i>"
 	} else {
-		productCodes = productCodes.sort((a, b) => b.cost - a.cost)
+		productCodes.sort((a, b) => b.total - a.total)
 		statusLeft = 'down'
 		actionLeft.querySelector('span').innerHTML =
 			'<i class="fas fa-sort-amount-up"></i>'

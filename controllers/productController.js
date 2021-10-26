@@ -1,6 +1,7 @@
 const Product = require('../models/productModel')
 const ProductCode = require('../models/productCodeModel')
 const imgbbUploader = require('imgbb-uploader')
+const { removeVI } = require('jsrmvi')
 
 module.exports.addProductCode = async (req, res) => {
 	try {
@@ -204,7 +205,13 @@ module.exports.deleteProduct = async (req, res) => {
 module.exports.getDetail_Product = async (req, res) => {
 	try {
 		// find product
-		const product = await Product.findOne({ $and: [ { idProductCode: req.body.idProductCode }, { size: req.body.size }, { color: req.body.color } ] }).populate('idProductCode')
+		const product = await Product.findOne({
+			$and: [
+				{ idProductCode: req.body.idProductCode },
+				{ size: req.body.size },
+				{ color: req.body.color },
+			],
+		}).populate('idProductCode')
 
 		// respond
 		if (product)
@@ -224,7 +231,10 @@ module.exports.getDetail_Product = async (req, res) => {
 	}
 }
 
+<<<<<<< HEAD
 // module.exports.getAllProduct = async (req, res) => {
+=======
+>>>>>>> 8ca6ee61592ccaadc731da11b8f2da3ef225b547
 module.exports.getDetailProductCode = async (req, res) => {
 	// get id of product
 	const idProductCode = req.params.id
@@ -264,68 +274,95 @@ module.exports.getDetailProductCode = async (req, res) => {
 
 // example:
 // /products/api?search=""&filter=""
+<<<<<<< HEAD
 // module.exports.getAllProduct = async (req, res) => {
+=======
+module.exports.getAllProduct = async (req, res) => {
+	// console.log(query)
+>>>>>>> 8ca6ee61592ccaadc731da11b8f2da3ef225b547
 	// try {
-	// 	const products = await Product.find().populate('idProductCode')
-	// 	res.status(200).json({
-	// 		status: 'success',
-	// 		data: {
-	// 			products,
-	// 		},
+	// tổng tất cả sản phẩm
+	// let totalProducts = 0
+	// const products = await Product.find().populate('idProductCode')
+
+	const perPage = 10
+	const currentPage = req.query.page
+	console.log(currentPage)
+	const skip = perPage * (currentPage -1) || 1
+	// console.log(skip)
+	let productCodes = await ProductCode.find().skip(skip).limit(perPage).lean()
+
+
+	let totalPages = await ProductCode.countDocuments()
+	totalPages = Math.ceil(totalPages/perPage)
+	// console.log(productCodes.length)
+
+	// // đếm số lượng sản phẩm trong productCodes
+	// for (let item of productCodes) {
+	// 	const products = await Product.find(
+	// 		{ idProductCode: item._id },
+	// 		{ total: 1, color: 1, size: 1 }
+	// 	).lean()
+	// 	// console.log(products)
+	// 	let totalProductsOfCode = 0
+	// 	products.forEach((item) => {
+	// 		totalProductsOfCode += item.total
 	// 	})
+
+	// 	item.total = totalProductsOfCode
+	// 	item.products = products
+	// 	// console.log(item)
+	// 	// totalProducts += totalProductsOfCode
+	// }
+	// tổng tất cả sản phẩm
+	let totalProducts = 0
+	// const products = await Product.find().populate('idProductCode')
+
+	// const productCodes = await ProductCode.find().lean()
+
+	// đếm số lượng sản phẩm trong productCodes
+	for(let item of productCodes){
+		const products = await Product.find(
+			{ idProductCode: item._id },
+			{ total: 1, color: 1, size: 1 }
+		).lean()
+		// console.log(products)
+		let totalProductsOfCode = 0
+		products.forEach((item) => {
+			totalProductsOfCode += item.total
+		})
+
+		item.total = totalProductsOfCode
+		item.products = products
+		// console.log(item)
+		totalProducts += totalProductsOfCode
+	}
+
+	// console.log(productCodes)
+	// console.log(totalProducts)
+
+	// filter follow search
+	const option = { replaceSpecialCharacters: false }
+	const search = removeVI(req.query.search, option)
+	productCodes = productCodes.filter((item) => {
+		return removeVI(item.name, option).includes(search)
+	})
+
+	// console.log(productCodes)
+	// console.log(totalProducts)
+
+	res.status(200).json({
+		productCodes,
+		total: totalProducts,
+		totalPages
+	})
 	// } catch (error) {
 	// 	res.status(500).json({
 	// 		status: 'fail',
 	// 		message: 'Lỗi server',
 	// 	})
 	// }
-
-	// get query
-	// console.log(req.query)
-	// const search = req.query.search.toLowerCase()
-	// console.log(query)
-	// try {
-		// tổng tất cả sản phẩm
-		// let totalProducts = 0
-		// const products = await Product.find().populate('idProductCode')
-
-// 		let productCodes = await ProductCode.find().lean()
-
-// 		// đếm số lượng sản phẩm trong productCodes
-// 		for (let item of productCodes) {
-// 			const products = await Product.find(
-// 				{ idProductCode: item._id },
-// 				{ total: 1, color: 1, size: 1 }
-// 			).lean()
-// 			// console.log(products)
-// 			let totalProductsOfCode = 0
-// 			products.forEach((item) => {
-// 				totalProductsOfCode += item.total
-// 			})
-
-// 			item.total = totalProductsOfCode
-// 			item.products = products
-// 			// console.log(item)
-// 			// totalProducts += totalProductsOfCode
-// 		}
-
-// 		productCodes = productCodes.filter(item => {
-// 			return item.name.toLowerCase().includes(search)
-// 		})
-
-// 		// console.log(productCodes)
-// 		// console.log(totalProducts)
-
-// 		res.status(200).json({
-// 			productCodes
-// 		})
-// 	// } catch (error) {
-// 	// 	res.status(500).json({
-// 	// 		status: 'fail',
-// 	// 		message: 'Lỗi server',
-// 	// 	})
-// 	// }
-// }
+}
 
 // add product to cart
 module.exports.userAddProduct = async (req, res) => {

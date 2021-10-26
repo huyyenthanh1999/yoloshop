@@ -1,4 +1,5 @@
 const User = require('../models/userModel')
+const jwt = require('jsonwebtoken')
 
 module.exports.checkUser = async (req, res, next) => {
 	try {
@@ -10,6 +11,7 @@ module.exports.checkUser = async (req, res, next) => {
 		const user = await User.findById(result.userId)
 
         req.user = user
+		
 		next()
 	} catch (error) {
 		// invalid token -> redirect to login page

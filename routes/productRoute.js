@@ -22,13 +22,13 @@ router.delete('/code/api/:id', controller.deleteProductCode)
 // router.get('/api', controller.getAllProduct)
 
 // get one detail product
+router.get('/api/:id', controller.getDetailProductCode)
 // router.get('/api/:id', controller.getDetailProduct)
 
 // get product from productCodeId+size+color
 router.put('/detail', controller.getDetail_Product)
 
 
-router.get('/api/:id', controller.getDetailProductCode)
 
 router.get('/add/:id', controller.userAddProduct)
 

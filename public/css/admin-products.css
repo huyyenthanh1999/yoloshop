@@ -36,12 +36,12 @@ a {
 }
 
 .admin-products table .stt-product {
-  width: 2%;
+  width: 1%;
   text-align: center;
 }
 
 .admin-products table .id-product {
-  width: 2%;
+  padding-right: 0;
 }
 
 .admin-products table .id-product a {
@@ -147,7 +147,25 @@ a {
   background: rgba(221, 221, 221, 0.7);
 }
 
-.admin-products > table tr.more-product-table table th, .admin-products > table tr.more-product-table table td {
+.admin-products > table tr.more-product-table table th,
+.admin-products > table tr.more-product-table table td {
   width: 20px;
+}
+
+.pagination {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.pagination a {
+  display: inline-block;
+  padding: 4px 10px;
+  border: 1px solid #333;
+  margin: 5px;
+  color: black;
 }
 /*# sourceMappingURL=admin-products.css.map */
