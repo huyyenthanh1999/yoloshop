@@ -278,15 +278,36 @@ module.exports.getAllProduct = async (req, res) => {
 	// const products = await Product.find().populate('idProductCode')
 
 	const perPage = 10
-	const currentPage = req.query.page
-	console.log(currentPage)
-	const skip = perPage * (currentPage -1) || 1
-	// console.log(skip)
-	let productCodes = await ProductCode.find().skip(skip).limit(perPage).lean()
+	const currentPage = +req.query.page || 1
+	
+	let skip = perPage * (currentPage -1) || 1
+
+	
+	// filter follow search
+	const option = { replaceSpecialCharacters: false }
+	const search = removeVI(req.query.search, option)
+	let productCodes = await ProductCode.find().lean()
+	productCodes = productCodes.filter((item) => {
+		return removeVI(item.name, option).includes(search)
+	})
+	console.log(productCodes.length)
+	// console.log(productCodes)
+
+	// productCodes = productCodes.skip(skip).limit(perPage)
+
+	let begin = (currentPage -1 )* perPage
+	let end = currentPage * perPage
+	console.log(begin, end)
+	productCodes = productCodes.slice(begin, end)
+
+	console.log(productCodes.length)
+	
+	// productCodes = await ProductCode.find().skip(skip).limit(perPage).lean()
 
 
-	let totalPages = await ProductCode.countDocuments()
-	totalPages = Math.ceil(totalPages/perPage)
+
+	let totalProducts = await ProductCode.countDocuments()
+	let totalPages = Math.ceil(totalProducts/perPage)
 	// console.log(productCodes.length)
 
 	// // đếm số lượng sản phẩm trong productCodes
@@ -307,12 +328,12 @@ module.exports.getAllProduct = async (req, res) => {
 	// 	// totalProducts += totalProductsOfCode
 	// }
 	// tổng tất cả sản phẩm
-	let totalProducts = 0
+	// let totalProducts = 0
 	// const products = await Product.find().populate('idProductCode')
 
 	// const productCodes = await ProductCode.find().lean()
 
-	// đếm số lượng sản phẩm trong productCodes
+	// đếm số lượng sản phẩm trong productCodes và gán products vào productCodes
 	for(let item of productCodes){
 		const products = await Product.find(
 			{ idProductCode: item._id },
@@ -327,18 +348,11 @@ module.exports.getAllProduct = async (req, res) => {
 		item.total = totalProductsOfCode
 		item.products = products
 		// console.log(item)
-		totalProducts += totalProductsOfCode
+		// totalProducts += totalProductsOfCode
 	}
 
 	// console.log(productCodes)
 	// console.log(totalProducts)
-
-	// filter follow search
-	const option = { replaceSpecialCharacters: false }
-	const search = removeVI(req.query.search, option)
-	productCodes = productCodes.filter((item) => {
-		return removeVI(item.name, option).includes(search)
-	})
 
 	// console.log(productCodes)
 	// console.log(totalProducts)

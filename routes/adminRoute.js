@@ -20,7 +20,7 @@ router.get('/products/:id', controller.adminEditProduct)
 // router.get('/products/:id', controller.adminEditProductCode)
 
 // customers
-router.get('/customers', controller.adminCustomer)
+router.get('/customers', controller.adminCustomers)
 
 
 // see and edit product

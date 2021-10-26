@@ -96,10 +96,10 @@ module.exports.adminAddProduct = (req, res) => {
 }
 
 // render customers admin page
-module.exports.adminCustomer = async (req, res) => {
+module.exports.adminCustomers = async (req, res) => {
 	// try {
-		const total = await User.countDocuments()
-		let customers = await User.find()
+		// const total = await User.countDocuments()
+		// let customers = await User.find()
 
 		// const orders = await Order.find()
 
@@ -124,8 +124,8 @@ module.exports.adminCustomer = async (req, res) => {
 		res.render('components/admin/admin-base', {
 			content: 'customers',
 			data: {
-				customers,
-				total,
+				// customers,
+				// total,
 			},
 		})
 	// } catch (error) {

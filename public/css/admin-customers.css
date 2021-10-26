@@ -24,10 +24,8 @@ a {
 .admin-customers table td img {
   width: 60px;
   height: 60px;
-  -o-object-fit: cover;
-     object-fit: cover;
-  -o-object-position: center;
-     object-position: center;
+  object-fit: cover;
+  object-position: center;
 }
 
 .admin-customers table thead {
@@ -42,14 +40,6 @@ a {
 
 .admin-customers table .id-customer a {
   text-decoration: none;
-}
-
-.admin-customers table .cover-customer {
-  width: 10%;
-}
-
-.admin-customers table .name-customer {
-  width: 25%;
 }
 
 .admin-customers table .sold-customer,
@@ -121,4 +111,3 @@ a {
   background-color: var(--main-color);
   color: white;
 }
-/*# sourceMappingURL=admin-customers.css.map */

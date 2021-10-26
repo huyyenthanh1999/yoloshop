@@ -1,47 +1,88 @@
 activeNavItem('products')
 
-let productCodes = [];
+let productCodes = []
 let total = 0
 
-const urlSearchParams = new URLSearchParams(window.location.search);
-const query = Object.fromEntries(urlSearchParams.entries());
+// get query
+// page=1&search=jean&date=up&cost=down&left=down
+const urlSearchParams = new URLSearchParams(window.location.search)
+const query = Object.fromEntries(urlSearchParams.entries())
 
 function showPagination(totalPages) {
 	const containerPagination = document.querySelector('.pagination')
 
 	// console.log(totalPages)
 	let html = ''
-	for(let i = 1; i <= totalPages; i++) {
+	for (let i = 1; i <= totalPages; i++) {
 		// console.log(i)
 		html += `
-			<a href="/admin/products?page=${i}">
+			<a href="/admin/products?page=${i}" onclick="handlePagination(event)">
 				${i}
 			</a>
 		`
 		// if page  active thi them color
 	}
-	console.log(html)
+	// console.log(html)
 	containerPagination.innerHTML = html
 }
 
+function handlePagination(e) {
+	e.preventDefault()
+	// console.log(e)
+	const page = e.target.innerHTML
+	// console.log(page)
+	// console.log(query.search)
+	// const urlSearchParams = new URLSearchParams(window.location.search)
+	// const query = Object.fromEntries(urlSearchParams.entries())
+	// console.log(query)
+	inputSearch.val('')
+	getProducts(page)
+}
+
+// filter
+function changeURL(page = 1, search = '') {
+	if (!page) page = 1
+	const state = {}
+	// console.log(search)
+
+	// const urlSearchParams = new URLSearchParams(window.location.search)
+	// const query = Object.fromEntries(urlSearchParams.entries())
+
+	// inputSearch.val('')
+	const newURL = `/admin/products?page=${page}&search=${search}`
+
+	history.pushState(state, '', newURL)
+}
+
 // firstly, call api list of products
-async function getProducts(){
+async function getProducts(page, search = '') {
+	// const urlSearchParams = new URLSearchParams(window.location.search)
+	// const query = Object.fromEntries(urlSearchParams.entries())
+
+	// if(query.search == 'undefined')
+	// {
+	// 	console.log('hello')
+	// 	query.search = ''
+	// }
+
+	// console.log(query.search)
 	const result = await $.ajax({
-		url: `/products/api?page=${query.page}`,
+		url: `/products/api?page=${page}&search=${search}`,
 		method: 'GET',
 	})
-	
-	console.log(result)
+
+	// console.log(result)
 	productCodes = result.productCodes
 	total = result.total
+	changeURL(page)
 	renderListOfProducts(productCodes)
 	showPagination(result.totalPages)
 }
 
-getProducts()
-
-
-
+if (query.page == '') {
+	query.page = 1
+}
+getProducts(query.page)
 
 // click add product button
 document.querySelector('.action-add').addEventListener('click', (e) => {
@@ -166,9 +207,6 @@ function debounce(func, timeout = 300) {
 }
 const processChange = debounce(() => searchProduct())
 
-
-
-
 // show more product
 function showMoreProduct(event) {
 	const moreProduct = event.currentTarget.closest('tr').nextElementSibling
@@ -219,15 +257,6 @@ async function deleteProductCode(event) {
 	}
 }
 
-// filter
-
-function changeURL(search = '', sortCost = '') {
-	const state = {}
-	const newURL = `/admin/products?search=${search}&cost=${sortCost}`
-
-	history.pushState(state, '', newURL)
-}
-
 // search products
 let inputSearch = $('.products-action .action-search input')
 async function searchProduct() {
@@ -238,7 +267,7 @@ async function searchProduct() {
 
 	// console.log(result.productCodes)
 	productCodes = result.productCodes
-	changeURL(inputSearch.val())
+	changeURL(page = '', inputSearch.val())
 	renderListOfProducts(productCodes)
 }
 
@@ -246,16 +275,17 @@ $('.products-action .action-search input').on('keyup', processChange)
 $('.products-action .action-search i').on('click', processChange)
 
 // filter follow cost
-let statusCost = 'down'
+let statusCost = ''
 const actionCost = document.querySelector('.action-cost')
-actionCost.addEventListener('click', (e) => {
-	if (statusCost == 'down') {
+actionCost.addEventListener('click', handleActionCost)
+function handleActionCost() {
+	if (statusCost == 'down' || statusCost == '') {
 		productCodes = productCodes.sort((a, b) => a.cost - b.cost)
 		statusCost = 'up'
 
 		actionCost.querySelector('span').innerHTML =
 			"<i class='fas fa-sort-amount-down-alt'></i>"
-	} else {
+	} else if (statusCost == 'up') {
 		productCodes = productCodes.sort((a, b) => b.cost - a.cost)
 		statusCost = 'down'
 		actionCost.querySelector('span').innerHTML =
@@ -263,20 +293,21 @@ actionCost.addEventListener('click', (e) => {
 	}
 
 	renderListOfProducts(productCodes)
-})
+}
 
 // filter follow date
-let statusDate = 'down'
+let statusDate = ''
 const actionDate = document.querySelector('.action-date')
-actionDate.addEventListener('click', (e) => {
-	if (statusDate == 'down') {
+actionDate.addEventListener('click', handleActionDate)
+function handleActionDate() {
+	if (statusDate == 'down' || statusDate == '') {
 		productCodes = productCodes.sort(function (a, b) {
 			return new Date(a.createdAt) - new Date(b.createdAt)
 		})
 		statusDate = 'up'
 		actionDate.querySelector('span').innerHTML =
 			'<i class="fas fa-sort-amount-down-alt"></i>'
-	} else {
+	} else if (statusDate == 'up') {
 		productCodes = productCodes.sort(function (a, b) {
 			return new Date(b.createdAt) - new Date(a.createdAt)
 		})
@@ -288,20 +319,21 @@ actionDate.addEventListener('click', (e) => {
 	}
 
 	renderListOfProducts(productCodes)
-})
+}
 
 // filter follow left
-let statusLeft = 'down'
+let statusLeft = ''
 const actionLeft = document.querySelector('.action-left')
-actionLeft.addEventListener('click', (e) => {
-	if (statusLeft == 'down') {
+actionLeft.addEventListener('click', handleActionLeft)
+function handleActionLeft() {
+	if (statusLeft == 'down' || statusLeft == '') {
 		productCodes.sort((a, b) => a.total - b.total)
 
 		statusLeft = 'up'
 
 		actionLeft.querySelector('span').innerHTML =
 			"<i class='fas fa-sort-amount-down-alt'></i>"
-	} else {
+	} else if (statusLeft == 'up') {
 		productCodes.sort((a, b) => b.total - a.total)
 		statusLeft = 'down'
 		actionLeft.querySelector('span').innerHTML =
@@ -309,4 +341,4 @@ actionLeft.addEventListener('click', (e) => {
 	}
 
 	renderListOfProducts(productCodes)
-})
+}

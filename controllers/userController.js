@@ -2,12 +2,12 @@ const bcrypt = require('bcrypt')
 const User = require('../models/userModel')
 const jwt = require('jsonwebtoken')
 const imgbbUploader = require('imgbb-uploader')
+const path = require('path')
 
 // edit user
 module.exports.editUser = async (req, res) => {
 	const idUser = req.params.id
 	try {
-
 		const user = await User.findById(idUser)
 		if (!user)
 			return res.status(400).json({
@@ -16,11 +16,13 @@ module.exports.editUser = async (req, res) => {
 			})
 
 		// update user
-		const upload = await imgbbUploader(process.env.IMGBB_KEY, req.file.path)
+		if (req.file) {
+			const upload = await imgbbUploader(process.env.IMGBB_KEY, req.file.path)
 
-		req.body.avatar = upload.url
+			req.body.avatar = upload.url
+		}
 
-		await User.updateOne({_id: idUser}, req.body)
+		await User.updateOne({ _id: idUser }, req.body)
 
 		res.status(200).json({
 			status: 'success',
@@ -78,6 +80,7 @@ module.exports.getDetailUser = async (req, res) => {
 	}
 }
 
+// co ca search
 module.exports.getAllUser = async (req, res) => {
 	try {
 		const users = await User.find()

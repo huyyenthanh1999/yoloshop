@@ -45,5 +45,8 @@ form.addEventListener('submit', async (e) => {
 		lazy.classList.toggle('hide')
 		alert('Sửa thông tin khách hàng thành công')
         // window.location.href = '/admin/products'
+	} else {
+		lazy.classList.toggle('hide')
+		alert('Sửa thông tin khách hàng thất bại')
 	}
 })
