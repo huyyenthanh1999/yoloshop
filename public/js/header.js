@@ -51,10 +51,16 @@ window.addEventListener('scroll', () => {
 
 
 //open modal with search
-var currentUrl = window.location.pathname + window.location.search
-function openSearch() {
+var currentUrl = window.location.pathname + window.location.search;
+var products=[];
+async function openSearch() {
     $('.modal').addClass('active')
     $('body').css({ 'margin': '0', 'height': '100%', 'overflow': 'hidden' });
+    const res = await $.ajax({
+        url: `/`,
+        type: 'POST'
+    })
+    products = res.products;
 }
 
 function closeSearch() {
@@ -68,33 +74,31 @@ $('.modal-inner').on('click', (e) => {
     e.stopPropagation()
 })
 
+const { removeVI, DefaultOption } = jsrmvi;
+
 $('.search-input input').keyup(async (e) => {
     history.pushState(null,null,`?search=${e.target.value}`)
     if(e.target.value === ''){
         $('.search-result').html('');
     }else{
-        const res = await $.ajax({
-            url: `/?name=${e.target.value}`,
-            type: 'POST'
-        })
-    
-        const products = res.products
         $('.search-result').html('');
         if (products.length > 0) {
             products.forEach((product) => {
-                $('.search-result').append(`
-                <a href="/products/detail/${product._id}" class="search-result__item">
-                    <div class="search-result-item__icon">
-                        <i class='bx bx-search-alt-2'></i>
-                    </div>
-                    <div class="search-result-item__name">
-                        ${product.name}
-                    </div>
-                    <div class="search-result-item__price">
-                        ${product.cost}
-                    </div>
-                </a>
-                `)
+                if(removeVI(product.name, { ignoreCase: false, replaceSpecialCharacters: false}).toLowerCase().includes(e.target.value)){
+                    $('.search-result').append(`
+                    <a href="/products/detail/${product._id}" class="search-result__item">
+                        <div class="search-result-item__icon">
+                            <i class='bx bx-search-alt-2'></i>
+                        </div>
+                        <div class="search-result-item__name">
+                            ${product.name}
+                        </div>
+                        <div class="search-result-item__price">
+                            ${product.cost}
+                        </div>
+                    </a>
+                    `)
+                }
             })
         } else {
             $('.search-result').append(`

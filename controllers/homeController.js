@@ -48,10 +48,11 @@ module.exports.getAllData = async (req, res) => {
 module.exports.getSearchData = async (req, res) => {
 	try {
 		const name = req.query.name;
-		const products = await ProductCode.find({ name: { $regex: name, $options: 'i'} })
+		// const products = await ProductCode.find({ name: { $regex: name, $options: 'i'} })
+		const products = await ProductCode.find()
 		res.status(200).json(
 			{
-				products: products,
+				products
 			});
 	} catch (error) {
 		res.status(500).json({

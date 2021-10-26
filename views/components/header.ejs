@@ -65,11 +65,13 @@
 					<a href="/cart">
 						<i class="bx bx-shopping-bag"></i>
 					</a>
-					<% if(cartNum != null){ %>
-						<a href="/cart" class="cart-num">
-							<%= cartNum.products.length %> 
-						</a>
-					<% } %>	
+					<% if(cartNum != 0){ %> 
+						<% if(cartNum.cartNum != null ){ %>
+							<a href="/cart" class="cart-num">
+								<%= cartNum.cartNum.products.length %> 
+							</a>
+						<% } %>	
+					<% } %> 
 				</div>
 				<div class="header-menu__item header-menu__item-user">
 					<a href="/auth/login">
@@ -96,3 +98,4 @@
 		</div>
 	</div>
 </div>
+<script src="https://unpkg.com/jsrmvi/dist/jsrmvi.min.js"></script>

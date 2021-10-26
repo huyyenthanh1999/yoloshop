@@ -12,6 +12,10 @@ router.get("/", controller.getAllCatalog);
 router.get("/:page", controller.getAllCatalog);
 // router.get("/", controller.getProductPerPage);
 
-router.post('/detail',controller.getTotalQuantity);
+router.post('/detail/:id',controller.getVariantTotal);
+router.post('/detail',controller.getAllInfoProduct)
+
+//add cart
+router.put('/add',controller.addToCart)
 
 module.exports = router;

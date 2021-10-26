@@ -221,26 +221,11 @@ a.cart-num {
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url('http://www.nicdarkthemes.com/themes/travel/wp/demo/travel/wp-content/uploads/sites/2/2018/04/p-17.jpg');
+  background-color: rgba(0, 0, 0, 0.5) ;
   z-index: -1;
-  background-position: center;
-  -webkit-animation: zoomin 20s ease-in;
-  animation: zoomin 20s ease-in;
   transition: all .5s ease-in-out;
   overflow: hidden;
 }
-
-/* Zoom in Keyframes */
-@-webkit-keyframes zoomin {
-  0% {transform: scale(1);}
-  50% {transform: scale(1.5);}
-  100% {transform: scale(1);}
-}
-@keyframes zoomin {
-  0% {transform: scale(1);}
-  50% {transform: scale(1.5);}
-  100% {transform: scale(1);}
-} /*End of Zoom in Keyframes */
 
 .modal-inner {
   max-width: 600px;
@@ -248,10 +233,16 @@ a.cart-num {
   background-color: #f7f7f7;
   border-radius: 5px;
   padding:16px 20px;
+  animation: fadeInTop 1.5s ease;
 }
 
-.search-group {
-  
+@keyframes fadeInTop {
+  from {
+    transform: translateY(-100%);
+  }
+  to { 
+    transform: translateY(0)
+  }
 }
 
 .modal-inner__head {

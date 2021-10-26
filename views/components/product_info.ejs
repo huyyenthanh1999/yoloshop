@@ -35,7 +35,9 @@
             <div class="product-info-item-quantity__btn" onclick="plusQuantity(-1)">
                 <i class="bx bx-minus"></i>
             </div>
-            <div class="product-info-item-quantity__input" total="<%= product.total %>"></div>
+            <div class="product-info-item-quantity__input">
+                <input type="number" id="quantity" min="1" max="1"> 
+            </div>
             <div class="product-info-item-quantity__btn" onclick="plusQuantity(1)">
                 <i class="bx bx-plus"></i>
             </div>
