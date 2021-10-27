@@ -5,7 +5,7 @@ const cartController = require('../controllers/cartController')
 cartRouter.get('/', cartController.renderCart)
 
 // get detail cart
-cartRouter.put('/detailCart', cartController.detailCart)
+cartRouter.get('/detailCart', cartController.detailCart)
 
 // create cart
 cartRouter.post('/', cartController.createCart)
