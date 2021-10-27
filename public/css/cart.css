@@ -139,6 +139,10 @@ html {
     flex-grow: 1;
 }
 
+._productName {
+    display: none;
+}
+
 .cart__item__info__name,
 .cart__item__info__price {
     font-size: 16.25px;

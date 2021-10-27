@@ -23,6 +23,7 @@ let addCartList = (product, index, _listData) => {
           </td>
           <td class='td1 cart__item__info__name'>
             <a href='/products/detail/${product.idProductCode._id}'>${product.idProductCode.name} - ${product.color} - ${product.size}</a>
+            <p class='_productName'>${product._id}</p>
           </td>
           <td class='td1 cart__item__info__price'>
             ${product.idProductCode.cost * _listData[index].quantity}
@@ -55,20 +56,19 @@ let addCartList = (product, index, _listData) => {
 
   // Delete button
   $($('.cart__item__del')[index]).on('click', () => {
-    productName = $('.cart__item__info__name')[index].innerHTML
-    let _productId = productName.slice(22, 46)
+    let _productId = $('._productName')[index].innerHTML
+    console.log(_productId)
     const temp = $.ajax({
       url: '/cart',
       type: 'DELETE',
-      data: { _productId: _productId }
+      data: { _productId }
     })
     renderCart()
   })
 
   // Decrease button
   $($('.dec__btn')[index]).on('click', () => {
-    let productName = $('.cart__item__info__name')[index].innerHTML
-    let _productId = productName.slice(22, 46)
+    let _productId = $('._productName')[index].innerHTML
     let _quantity = $('.product__info__item__quantity__input')[index].innerHTML
     let _price = parseInt($('.cart__item__info__price')[index].innerHTML)
     let _cost = parseInt(_price)/parseInt(_quantity)
@@ -88,14 +88,13 @@ let addCartList = (product, index, _listData) => {
     const temp = $.ajax({
       url: '/cart',
       type: 'PUT',
-      data: { _productId: _productId, _quantity: _quantity }
+      data: { _productId, _quantity }
     })
   })
 
   // Increase button
   $($('.inc__btn')[index]).on('click', () => {
-    let productName = $('.cart__item__info__name')[index].innerHTML
-    let _productId = productName.slice(22, 46)
+    let _productId = $('._productName')[index].innerHTML
     let _quantity = $('.product__info__item__quantity__input')[index].innerHTML
     let _price = parseInt($('.cart__item__info__price')[index].innerHTML)
     let _cost = parseInt(_price)/parseInt(_quantity)
@@ -115,7 +114,7 @@ let addCartList = (product, index, _listData) => {
     const temp = $.ajax({
       url: '/cart',
       type: 'PUT',
-      data: { _productId: _productId, _quantity: _quantity }
+      data: { _productId, _quantity }
     })
   })
 }
@@ -155,8 +154,7 @@ async function renderCart() {
         url: `products/api/detail/${item.productId}`,
         type: 'GET',
       })
-      console.log(result);
-      console.log(result.data.product.total);
+
       total[index] = result.data.product.total
       addCartList(result.data.product, index, data.cart.products)
     })
