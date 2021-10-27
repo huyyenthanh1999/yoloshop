@@ -172,12 +172,13 @@ module.exports.adminOrder = async (req, res) => {
 // admin account render
 module.exports.adminAccount = async (req, res) => {
 	try {
-		const user = await User.findById(req.params.id)
+		// const user = await User.findById(req.params.id)
+		// const user = await User.find
 
 		res.render('components/admin/admin-base', {
 			content: 'edit-customer',
 			data: {
-				user,
+				user: req.user,
 			},
 		})
 	} catch (error) {
