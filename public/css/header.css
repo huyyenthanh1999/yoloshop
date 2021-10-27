@@ -426,4 +426,9 @@ a.cart-num {
       outline: 2px solid #fff;
       font-size: 13px;
     }
+
+    .user-action ul a {
+      padding: 10px;
+      font-size: 1rem;
+    }
 }

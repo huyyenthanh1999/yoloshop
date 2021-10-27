@@ -105,6 +105,8 @@ async function addCart() {
             })
             if(data.status == 'success'){
                 alert('Thêm vào giỏ hàng thành công!!')
+            }
+            if(data.isNew){
                 let numCart = $('.cart-num').text()
                 $('.cart-num').text(parseInt(numCart) + 1)
             }

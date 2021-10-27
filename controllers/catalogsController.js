@@ -291,7 +291,8 @@ module.exports.addToCart = async (req, res) => {
       res.status(200).json({
         message:'thêm vào giỏ hàng thành công',
         data: cart,
-        status: 'success'
+        status: 'success',
+        isNew: true
       })
     }
   } catch (error) {
