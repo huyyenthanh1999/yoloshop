@@ -287,7 +287,7 @@ module.exports.getAllProduct = async (req, res) => {
 
 		let begin = (currentPage - 1) * perPage
 		let end = currentPage * perPage
-		console.log(begin, end)
+		// console.log(begin, end)
 		productCodes = productCodes.slice(begin, end)
 
 		let totalProducts = await ProductCode.countDocuments()
