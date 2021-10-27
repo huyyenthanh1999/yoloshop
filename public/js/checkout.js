@@ -1,6 +1,5 @@
 let tempPrice = 0
 let totalPrice = 0
-let _userId = '617293e8c63873b6c360c0ac'
 let _products = []
 
 const btn_pay = $('.btn-pay')
@@ -30,15 +29,16 @@ async function render() {
     try {
         const data = await $.ajax({
             url: '/cart/detailCart',
-            type: 'PUT',
-            data: { _userId: _userId}
+            type: 'GET',
+            // data: { _userId: _userId}
         })
+        console.log(data)
         _products = data.cart.products
         
         $('.products__info').html('')
         data.cart.products.map(async (item, index) => {
             const result = await $.ajax({
-                url: `/products/api/${item.productId}`,
+                url: `/products/api/detail/${item.productId}`,
                 type: 'GET',
             })
             
@@ -68,14 +68,14 @@ $(btn_pay).on('click', async () => {
         const data = await $.ajax({
             url: '/cart/detailCart',
             type: 'PUT',
-            data: { _userId: _userId}
+            // data: { _userId: _userId}
         })
         _products = data.cart.products
 
         const newData = $.ajax({
             url: '/checkout/',
             type: 'POST',
-            data: { _userId, _receiverName, _phoneNumber, _email, _message, _address, _products, _totalCost, _status, _payment },
+            data: { _receiverName, _phoneNumber, _email, _message, _address, _products, _totalCost, _status, _payment },
         })
         console.log(newData);
 
@@ -83,7 +83,7 @@ $(btn_pay).on('click', async () => {
             const _data = await $.ajax({
                 url: '/checkout/create',
                 type: 'PUT',
-                data: { _userId: _userId, _productId: item.productId, _quantity: item.quantity }
+                data: { _productId: item.productId, _quantity: item.quantity }
             })
             console.log(_data)
         })
