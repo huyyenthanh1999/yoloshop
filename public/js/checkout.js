@@ -68,7 +68,6 @@ $(btn_pay).on('click', async () => {
         const data = await $.ajax({
             url: '/cart/detailCart',
             type: 'PUT',
-            // data: { _userId: _userId}
         })
         _products = data.cart.products
 

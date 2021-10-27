@@ -9,7 +9,6 @@ cartRouter.get('/detailCart', cartController.detailCart)
 
 // create cart
 cartRouter.post('/', cartController.createCart)
-// cartRouter.put('/create', cartController.create_Cart)
 
 // update cart
 cartRouter.put('/', cartController.updateCart)

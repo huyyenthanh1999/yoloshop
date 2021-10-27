@@ -6,9 +6,8 @@ module.exports.renderCart = (req, res) => {
 
 module.exports.detailCart = async (req, res) => {
 	try {
-		// console.log(req.body)
 		const userId = req.user._id
-		const cart = await Cart.findOne({ userId }) // req.body._userId '616e853bb6f54eb7c71eb50d'
+		const cart = await Cart.findOne({ userId })
 
 		if (!cart)
 			return res.status(400).json({

@@ -126,7 +126,6 @@ async function renderCart() {
     const data = await $.ajax({
       url: '/cart/detailCart',
       type: 'GET',
-      // data: { _userId: _userId },
     })
     console.log(data);
 
