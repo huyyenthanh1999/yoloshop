@@ -84,7 +84,7 @@ $(document).ready(function(){
      if(quantity > $('#quantity').attr('max')){
          quantity = $('#quantity').attr('max')
      }
-
+    console.log(quantity)
     $('#quantity').val(quantity)
  }
 
