@@ -2,6 +2,100 @@ const Product = require('../models/productModel')
 const ProductCode = require('../models/productCodeModel')
 const imgbbUploader = require('imgbb-uploader')
 const { removeVI } = require('jsrmvi')
+const dateFormat = require('date-and-time')
+
+// example:
+// /products/api?search=""&filter=""
+module.exports.getAllProduct = async (req, res) => {
+	// try {
+	const perPage = 5
+	const option = { replaceSpecialCharacters: false }
+	// get query
+	let { page, search, date, cost, left } = req.query
+	// console.log(req.query)
+
+	// setup
+	page = !page ? 1 : page
+	search = removeVI(search, option)
+
+	// filter follow search
+	let productCodes = await ProductCode.find().lean()
+	productCodes = productCodes.filter((item) => {
+		return (
+			removeVI(item.name, option).includes(search) ||
+			dateFormat.format(item.createdAt, 'DD/MM/YYYY').includes(search) ||
+			item.cost.toString().includes(search) ||
+			item.type.includes(search) 
+		)
+	})
+
+	// đếm số lượng sản phẩm trong productCodes và gán products vào productCodes
+	for (let item of productCodes) {
+		const products = await Product.find(
+			{ idProductCode: item._id },
+			{ total: 1, color: 1, size: 1 }
+		).lean()
+		let totalProductsOfCode = 0
+		products.forEach((item) => {
+			totalProductsOfCode += item.total
+		})
+
+		item.total = totalProductsOfCode
+		item.products = products
+	}
+
+	// filter sort: date, cost, left
+	if (date && !cost && !left) {
+		console.log('date')
+		if (date == 'down')
+			productCodes = productCodes.sort(function (a, b) {
+				return new Date(a.createdAt) - new Date(b.createdAt)
+			})
+		else
+			productCodes = productCodes.sort(function (a, b) {
+				return new Date(b.createdAt) - new Date(a.createdAt)
+			})
+	}
+	if (!date && cost && !left) {
+		if (cost == 'down')
+			productCodes = productCodes.sort(function (a, b) {
+				return a.cost - b.cost
+			})
+		else productCodes = productCodes.sort((a, b) => b.cost - a.cost)
+	}
+	if (!date && !cost && left) {
+		if (left == 'down')
+			productCodes = productCodes.sort((a, b) => a.total - b.total)
+		else productCodes = productCodes.sort((a, b) => b.total - a.total)
+	}
+
+	// productCodes = productCodes.sort(function (a, b){
+	// 	return a.cost - b.cost
+	// })
+
+	let totalProducts = await ProductCode.countDocuments()
+	let totalPages = Math.ceil(productCodes.length / perPage)
+
+	// pagination
+	let begin = (page - 1) * perPage
+	let end = page * perPage
+	// console.log(begin, end)
+	productCodes = productCodes.slice(begin, end)
+
+	// let totalProducts = await ProductCode.countDocuments()
+
+	res.status(200).json({
+		productCodes,
+		total: totalProducts,
+		totalPages,
+	})
+	// } catch (error) {
+	// 	res.status(500).json({
+	// 		status: 'fail',
+	// 		message: 'Lỗi server',
+	// 	})
+	// }
+}
 
 module.exports.addProductCode = async (req, res) => {
 	try {
@@ -247,7 +341,7 @@ module.exports.getDetailProduct = async (req, res) => {
 				},
 			})
 		}
-		
+
 		return res.status(400).json({
 			status: 'fail',
 			message: 'Không tìm thấy sản phẩm',
@@ -288,59 +382,6 @@ module.exports.getDetailProductCode = async (req, res) => {
 			data: {
 				productCode,
 			},
-		})
-	} catch (error) {
-		res.status(500).json({
-			status: 'fail',
-			message: 'Lỗi server',
-		})
-	}
-}
-
-// example:
-// /products/api?search=""&filter=""
-module.exports.getAllProduct = async (req, res) => {
-	try {
-		const perPage = 10
-		const currentPage = +req.query.page || 1
-
-		let skip = perPage * (currentPage - 1) || 1
-
-		// filter follow search
-		const option = { replaceSpecialCharacters: false }
-		const search = removeVI(req.query.search, option)
-		let productCodes = await ProductCode.find().lean()
-		productCodes = productCodes.filter((item) => {
-			return removeVI(item.name, option).includes(search)
-		})
-
-		let begin = (currentPage - 1) * perPage
-		let end = currentPage * perPage
-		// console.log(begin, end)
-		productCodes = productCodes.slice(begin, end)
-
-		let totalProducts = await ProductCode.countDocuments()
-		let totalPages = Math.ceil(totalProducts / perPage)
-
-		// đếm số lượng sản phẩm trong productCodes và gán products vào productCodes
-		for (let item of productCodes) {
-			const products = await Product.find(
-				{ idProductCode: item._id },
-				{ total: 1, color: 1, size: 1 }
-			).lean()
-			let totalProductsOfCode = 0
-			products.forEach((item) => {
-				totalProductsOfCode += item.total
-			})
-
-			item.total = totalProductsOfCode
-			item.products = products
-		}
-
-		res.status(200).json({
-			productCodes,
-			total: totalProducts,
-			totalPages,
 		})
 	} catch (error) {
 		res.status(500).json({

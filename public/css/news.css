@@ -1,0 +1,141 @@
+.main {
+    margin-top: 170px;
+    font-size: 1.6rem;
+    color: #6b7177;
+}
+
+/* section css */
+.section-title {
+    letter-spacing: 2px;
+    position: relative;
+}
+
+.section-title::after {
+    content: "";
+    position: absolute;
+    width: 50px;
+    height: 5px;
+    background-color: #4267b2;
+    top: calc(100% + 15px);
+    left: 50%;
+    transform: translateX(-50%);
+    -webkit-transform: translateX(-50%);
+    animation: width .3s linear;
+}
+
+@keyframes width {
+    from {
+        width: 0;
+    }
+    to {
+        width: 50px;
+    }
+}
+/* end section css */
+/* news-card */
+.news-card{
+    position: relative;
+    margin-bottom: 30px;
+}
+.news-banner{
+
+}
+
+.news-banner img {
+    height: 430px;
+    object-fit: cover;
+    width: 100%;
+}
+.news-description{
+    width: 90%;
+    position: relative;
+    margin: -70px auto 0;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 24px;
+}
+
+.news-title{
+    padding-right: 100px;
+    margin-bottom: 6px;
+}
+.news-description__content{
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+    line-height: 1.8;
+}
+
+.news-description_time{
+    position: absolute;
+    padding: 6px 18px;
+    background-color: #4267b2;
+    color: #fff;
+    min-width: 90px;
+    text-align: center;
+    top: 12px;
+    right: -6px;
+}
+/* end news-card */
+
+/* news-detail css */
+.news-content {
+    background: #fff;
+    max-width: 980px;
+    text-align: justify;
+    margin: -70px auto 0;
+    padding: 50px 36px 18px;
+    position: relative;
+}
+
+.news-content p {
+    margin-bottom: 15px;
+    line-height: 1.8;
+}
+
+.change-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.change-page a {
+    padding:10px 12px;
+    background-color: #4267b2;
+    border-radius: 50%;
+    color: #fff;
+    margin: 5px;
+}
+
+/* news-detail css */
+@media only screen and (max-width: 64em){
+    .main {
+        margin-top: 70px;
+    }
+
+    .news-banner img {
+        height: 300px;
+    }
+
+    .news-description {
+        padding: 15px;
+    }
+
+    .news-content{
+        margin-top: 0;
+    }
+}
+
+@media only screen and (max-width: 37.5em){
+    .main {
+        margin-top: 40px;
+        font-size: 1rem;
+    }
+
+    .news-banner img {
+        height: 250px;
+    }
+}

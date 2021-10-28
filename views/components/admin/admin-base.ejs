@@ -51,6 +51,9 @@
             <% if (content == 'orders') { %>
                 <link rel="stylesheet" href="/public/css/admin-orders.css" />
             <% } %>
+            <% if (content == 'detail-order') { %>
+                <link rel="stylesheet" href="/public/css/admin-detail-order.css" />
+            <% } %>
         </head>
         
 	</head>
@@ -120,6 +123,9 @@
                     <% if (content == 'orders') { %>
                         <%- include ('admin-orders'); -%>
                     <% } %>
+                    <% if (content == 'detail-order') { %>
+                        <%- include ('admin-detail-order'); -%>
+                    <% } %>
 				</div>
 			</div>
 		</div>
@@ -140,18 +146,23 @@
 
 
         <script src="/public/js/admin.js"></script>
+        <script src="/public/js/base.js"></script>
 
         <% if (content == 'dashboard') { %>
             <script src="/public/js/admin-dashboard.js"></script>
         <% } %>
         <% if (content == 'products') { %>
             <script src="/public/js/admin-products.js"></script>
+            <!-- <script src="/public/js/admin-products-test.js"></script> -->
         <% } %>
         <% if (content == 'customers') { %>
             <script src="/public/js/admin-customers.js"></script>
         <% } %>
         <% if (content == 'orders') { %>
             <script src="/public/js/admin-orders.js"></script>
+        <% } %>
+        <% if (content == 'detail-order') { %>
+            <script src="/public/js/admin-detail-order.js"></script>
         <% } %>
 
         <!-- Only add product -->

@@ -173,6 +173,10 @@ body {
 .admin-products table thead {
   background-color: var(--main-color);
   color: white;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
 .admin-products table .stt-product {
@@ -225,7 +229,8 @@ body {
 }
 
 .admin-products .products-action .action-filter,
-.admin-products .products-action .action-add, .admin-products .products-action .total-products {
+.admin-products .products-action .action-add,
+.admin-products .products-action .total-products {
   font-size: 17px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -238,13 +243,15 @@ body {
 }
 
 .admin-products .products-action .action-filter span,
-.admin-products .products-action .action-add span, .admin-products .products-action .total-products span {
+.admin-products .products-action .action-add span,
+.admin-products .products-action .total-products span {
   color: red;
   font-size: 18px;
 }
 
 .admin-products .products-action .action-filter i,
-.admin-products .products-action .action-add i, .admin-products .products-action .total-products i {
+.admin-products .products-action .action-add i,
+.admin-products .products-action .total-products i {
   margin-right: 6px;
   font-size: 17px;
   position: relative;
@@ -253,7 +260,8 @@ body {
 }
 
 .admin-products .products-action .action-filter:hover,
-.admin-products .products-action .action-add:hover, .admin-products .products-action .total-products:hover {
+.admin-products .products-action .action-add:hover,
+.admin-products .products-action .total-products:hover {
   background-color: var(--main-color);
   color: white;
 }
@@ -321,5 +329,40 @@ body {
     right: 0;
     left: 100%;
   }
+}
+
+.action-search {
+  border-bottom: 2px solid black;
+}
+
+.action-search i {
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.action-search input {
+  border: none;
+  outline: none;
+  padding: 4px 0;
+  background-color: transparent;
+  border: none;
+  margin-left: 3px;
+  font-size: 16px;
+}
+
+.pagination {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.pagination a {
+  display: inline-block;
+  padding: 4px 10px;
+  border: 1px solid #333;
+  margin: 5px;
+  color: black;
 }
 /*# sourceMappingURL=admin.css.map */

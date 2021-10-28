@@ -42,7 +42,7 @@ a {
 	// width: 1%;
 	// max-width: 10px;
 	// padding-left:0;
-	padding-right:0;
+	padding-right: 0;
 	a {
 		text-decoration: none;
 		// white-space: nowrap;
@@ -105,7 +105,6 @@ a {
 	margin-left: auto;
 }
 
-.admin-products .products-action .action-filter,
 .admin-products .products-action .action-add,
 .admin-products .products-action .total-products {
 	font-size: 17px;
@@ -119,14 +118,14 @@ a {
 	border-radius: 5px;
 }
 
-.admin-products .products-action .action-filter span,
+// .admin-products .products-action .action-filter span,
 .admin-products .products-action .action-add span,
 .admin-products .products-action .total-products span {
 	color: red;
 	font-size: 18px;
 }
 
-.admin-products .products-action .action-filter i,
+// .admin-products .products-action .action-filter i,
 .admin-products .products-action .action-add i,
 .admin-products .products-action .total-products i {
 	margin-right: 6px;
@@ -136,7 +135,6 @@ a {
 	margin-top: 1px;
 }
 
-.admin-products .products-action .action-filter:hover,
 .admin-products .products-action .action-add:hover,
 .admin-products .products-action .total-products:hover {
 	background-color: var(--main-color);
@@ -158,7 +156,6 @@ a {
 	}
 }
 
-
 .pagination {
 	display: flex;
 	justify-content: center;
@@ -170,5 +167,35 @@ a {
 		margin: 5px;
 		color: black;
 	}
+}
 
+.admin-products .products-action .action-filter {
+	padding: 0;
+	border: 0;
+	select {
+		width: 100%;
+		height: 100%;
+		border: none;
+		outline: none;
+		border-radius: 10px;
+		padding: 10px 20px;
+		border-radius: 5px;
+		cursor: pointer;
+		background-color: transparent;
+		color: var(--main-color);
+
+		option {
+			// display: inline-block;
+			// padding: 100px;
+			// color: red;
+			
+			// margin: 10px;
+			// font-size: 20px;
+		}
+	}
+
+	&:hover select {
+		color: white;
+		background-color: var(--main-color);
+	}
 }

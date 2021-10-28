@@ -2,26 +2,24 @@
 <div class="admin-orders">
 	<div class="orders-action">
 		<div class="action-search">
+			<i class="fas fa-search"></i>
 			<input type="text" placeholder="Tìm đơn hàng" />
 		</div>
 		<div class="action-filter">
-			<!-- <i class="fas fa-filter"></i>
-			Add filter
-            <ul>
-                <li>
-                    <span>Đang chờ</span>
-                </li>
-                <li>
-                    <span>Đã giao</span>
-                </li>
-            </ul> -->
-			<select name="" id="" class="select-filter">
-				
+			<select name="select-filter" onchange="handleFilter(this)" >
+				<option value="">Add filter</option>
+				<option value="status-waiting">Đang chờ</option>
+				<option value="status-done">Đã giao</option>
+				<option value="status-cancelled">Đã hủy</option>
+				<option value="payment-cod">Ship cod</option>
+				<option value="payment-transfer">Chuyển khoản</option>
+				<option value="date-down">Ngày giảm dần</option>
+				<option value="date-up">Ngày tăng dần</option>
 			</select>
 		</div>
 		<div class="total-orders">
 			<i class="fas fa-box"></i>
-			Tổng đơn hàng:&nbsp;
+			Đơn chưa giao:&nbsp;
 			<span>0</span>
 		</div>
 	</div>
@@ -32,7 +30,11 @@
 				<th>Người nhận</th>
 				<th>Số điện thoại</th>
 				<th>Sản phẩm</th>
-                <th>Ngày đặt</th>
+                <th class="action-date" style="cursor: pointer;">Ngày đặt
+					<span>
+						<i class="fas fa-sort"></i>
+					</span>
+				</th>
 				<th>Tổng tiền</th>
 				<th>Phương thức</th>
 				<th>Trạng thái</th>

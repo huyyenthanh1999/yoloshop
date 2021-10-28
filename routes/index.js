@@ -48,6 +48,13 @@ router.use("/users", userRoute)
 const orderRoute = require('./orderRoute')
 router.use("/orders", orderRoute)
 
+// contact
+const contactRoute = require('./contactRoute')
+router.use('/contact', contactRoute)
+
+//news
+const newsRoute = require('./newsRoute.js')
+router.use("/news", newsRoute)
 
 // Not found page
 router.use((req, res) => res.render('pages/notfound'))

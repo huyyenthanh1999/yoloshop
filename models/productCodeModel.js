@@ -19,7 +19,11 @@ const ProductCodeSchema = mongoose.Schema(
         images: {
             type: Array,
             required: true,
-        }
+        },
+		active : {
+			type: Boolean,
+			default: true,
+		}
 	},
 	{
 		timestamps: true,
