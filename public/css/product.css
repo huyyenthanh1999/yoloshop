@@ -44,6 +44,12 @@
     line-height: 40px;
     border-radius: 50%;
     border: 1px solid var(--blue-color);
+    margin: 10px;
+}
+
+.pagination a.active {
+    background: var(--blue-color);
+    color: white;
 }
 
 .pagination li.active a {

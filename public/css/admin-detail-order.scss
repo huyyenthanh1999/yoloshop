@@ -1,0 +1,110 @@
+thead {
+	background-color: var(--main-color);
+	color: white;
+}
+
+h4 {
+	color: rgb(78, 85, 225);
+}
+
+.orderer {
+	margin-bottom: 50px;
+	table {
+		border-radius: 6px;
+        overflow: hidden;
+	}
+
+	.orderer-cover img {
+		width: 50px;
+		height: 50px;
+		object-fit: cover;
+		object-position: center;
+	}
+
+	a {
+		text-decoration: none;
+	}
+}
+
+.info-order {
+	margin-bottom: 40px;
+	.basic-info {
+		display: flex;
+        
+		align-items: center;
+
+		div {
+			margin-right: 80px;
+			font-size: 18px;
+			margin-bottom: 20px;
+
+			&.status {
+				span {
+					font-size: 16px;
+					margin-left: 10px;
+					padding: 8px 15px;
+					background-color: #fa3a3a;
+					border-radius: 5px;
+					color: white;
+				}
+			}
+		}
+	}
+
+	table {
+		border-radius: 6px;
+        overflow: hidden;
+		.cover-product img {
+			width: 50px;
+			height: 50px;
+			object-fit: cover;
+			object-position: center;
+		}
+
+		a {
+			text-decoration: none;
+		}
+
+        tfoot {
+            // text-align: end;
+        }
+	}
+}
+
+.receiver {
+	table {
+        border-radius: 6px;
+        overflow: hidden;
+    }
+}
+
+.order-action {
+    margin-top: 60px;
+    margin-bottom: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-left: -20px;
+    button {
+        display: inline-block;
+        flex: 1;
+        padding: 10px;
+        font-size: 19px;
+        margin-left: 20px;
+        background-color:#0ca90c;
+        color: white;
+        border-radius: 6px;
+
+        &:hover {
+            opacity: 0.8;
+        }
+    }
+
+    .bill-order {
+        background-color: #3838e1;
+    }
+
+    .cancel-order {
+        background-color: #fa3a3a;
+    }
+}

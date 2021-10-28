@@ -26,19 +26,19 @@ a {
 	width: 60px;
 	height: 60px;
 	object-fit: cover;
-	object-position:center;
+	object-position: center;
 }
 
 .admin-orders table thead {
 	background-color: var(--main-color);
 	color: white;
+	user-select: none;
 }
 
 .admin-orders table .stt-order {
 	width: 2%;
 	text-align: center;
 }
-
 
 .admin-orders table .action-order button {
 	font-size: 18px;
@@ -55,19 +55,19 @@ a {
 	margin-bottom: 30px;
 }
 
-.admin-orders .orders-action .action-search input {
-	border: none;
-	outline: none;
-	padding: 4px 0;
-	background-color: transparent;
-	border-bottom: 2px solid #333;
-}
+// .admin-orders .orders-action .action-search input {
+// 	border: none;
+// 	outline: none;
+// 	padding: 4px 0;
+// 	background-color: transparent;
+// 	border-bottom: 2px solid #333;
+// }
 
 .admin-orders .orders-action .action-filter {
 	margin-left: auto;
 	position: relative;
 
-	&:hover ul{
+	&:hover ul {
 		display: block;
 	}
 
@@ -81,7 +81,7 @@ a {
 		border-radius: 5px;
 		display: none;
 		overflow: hidden;
-		
+
 		li {
 			list-style: none;
 			padding: 8px 20px;
@@ -92,7 +92,6 @@ a {
 
 			&:hover {
 				background: rgb(192, 192, 180);
-				
 			}
 		}
 	}
@@ -129,24 +128,32 @@ a {
 	margin-top: 1px;
 }
 
-// .admin-orders .orders-action .action-filter:hover,
-// .admin-orders .orders-action .action-add:hover,
-// .admin-orders .orders-action .total-orders:hover {
-// 	background-color: var(--main-color);
-// 	color: white;
-// }
+.admin-products .products-action {
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-align: center;
+	-ms-flex-align: center;
+	align-items: center;
+	margin-bottom: 30px;
+}
 
+.total-orders:hover {
+	background-color: var(--main-color);
+	color: white;
+}
 
 button {
 	display: inline-block;
 	padding: 5px 10px;
 	outline: none;
 	border: none;
-	background: red;
+	background: rgb(250, 58, 58);
 	color: white;
 	border-radius: 5px;
 	margin: 0 2px;
 	font-size: 14px;
+	user-select: none;
 }
 
 .detail-order {
@@ -163,24 +170,64 @@ button {
 }
 
 .delivery-order {
-	background-color: #11cf8d;
+	background-color: rgb(12, 169, 12);
+}
+
+.bill-order {
+	background-color: rgb(56, 56, 225);
 }
 
 td:last-child {
 	padding-right: 0 !important;
 }
 
-
-.pagination {
-	display: flex;
-	justify-content: center;
-
-	a {
-		display: inline-block;
-		padding: 4px 10px;
-		border: 1px solid #333;
-		margin: 5px;
-		color: black;
+.action-filter {
+	padding: 0;
+	border: 0;
+	select {
+		width: 100%;
+		height: 100%;
+		border: none;
+		outline: none;
+		border-radius: 10px;
+		padding: 10px 20px;
+		border-radius: 5px;
+		cursor: pointer;
+		background-color: transparent;
+		color: var(--main-color);
 	}
 
+	&:hover select {
+		color: white;
+		background-color: var(--main-color);
+	}
+}
+
+
+.admin-orders table td.order-status {
+	font-weight: 700;
+	text-transform: uppercase;
+
+	&.waiting {
+		color: rgb(231, 224, 10);
+	}
+
+	&.done {
+		color: rgb(12, 169, 12);
+	}
+
+	&.cancelled {
+		color: rgb(250, 58, 58);
+	}
+}
+
+.button-action {
+	&.done, &.cancelled {
+		button.delivery-order, button.cancel-order {
+			cursor: default;
+			pointer-events: none;
+			opacity: 0.6;
+			box-shadow: 0 0 2px black;
+		}
+	}
 }

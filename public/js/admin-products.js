@@ -1,103 +1,56 @@
 activeNavItem('products')
 
-let productCodes = []
-let total = 0
-
-// get query
-// page=1&search=jean&date=up&cost=down&left=down
-const urlSearchParams = new URLSearchParams(window.location.search)
-const query = Object.fromEntries(urlSearchParams.entries())
-
-function showPagination(totalPages) {
-	const containerPagination = document.querySelector('.pagination')
-
-	// console.log(totalPages)
-	let html = ''
-	for (let i = 1; i <= totalPages; i++) {
-		// console.log(i)
-		html += `
-			<a href="/admin/products?page=${i}" onclick="handlePagination(event)">
-				${i}
-			</a>
-		`
-		// if page  active thi them color
-	}
-	// console.log(html)
-	containerPagination.innerHTML = html
-}
+let productCodes = [],
+	total = 0,
+	totalPages = 0,
+	search = '',
+	page = 1,
+	// filter
+	date = '',
+	cost = '',
+	left = ''
 
 function handlePagination(e) {
 	e.preventDefault()
-	// console.log(e)
-	const page = e.target.innerHTML
-	// console.log(page)
-	// console.log(query.search)
-	// const urlSearchParams = new URLSearchParams(window.location.search)
-	// const query = Object.fromEntries(urlSearchParams.entries())
-	// console.log(query)
-	inputSearch.val('')
-	getProducts(page)
-}
-
-// filter
-function changeURL(page = 1, search = '') {
-	if (!page) page = 1
-	const state = {}
-	// console.log(search)
-
-	// const urlSearchParams = new URLSearchParams(window.location.search)
-	// const query = Object.fromEntries(urlSearchParams.entries())
-
-	// inputSearch.val('')
-	const newURL = `/admin/products?page=${page}&search=${search}`
-
-	history.pushState(state, '', newURL)
+	page = +e.target.innerHTML
+	getProducts()
 }
 
 // firstly, call api list of products
-async function getProducts(page, search = '') {
-	// const urlSearchParams = new URLSearchParams(window.location.search)
-	// const query = Object.fromEntries(urlSearchParams.entries())
+async function getProducts() {
+	if(!checkOnline()){
+		alert('Không có kết nối internet')
+		return
+	}
 
-	// if(query.search == 'undefined')
-	// {
-	// 	console.log('hello')
-	// 	query.search = ''
-	// }
+	showLazy()
 
-	// console.log(query.search)
 	const result = await $.ajax({
-		url: `/products/api?page=${page}&search=${search}`,
+		url: `/products/api?page=${page}&search=${search}&date=${date}&cost=${cost}&left=${left}`,
 		method: 'GET',
 	})
 
-	// console.log(result)
 	productCodes = result.productCodes
 	total = result.total
-	changeURL(page)
+	totalPages = result.totalPages
+
 	renderListOfProducts(productCodes)
-	showPagination(result.totalPages)
+	showPagination(totalPages, 'products')
+	document.querySelector('.total-products span').innerHTML = total
+
+	hideLazy()
 }
 
-if (query.page == '') {
-	query.page = 1
-}
-getProducts(query.page)
+getProducts()
 
 // click add product button
 document.querySelector('.action-add').addEventListener('click', (e) => {
 	window.location.href = '/admin/add-product'
 })
 
-function formatDate(time) {
-	const date = new Date(time)
-	return date.toLocaleDateString()
-}
-
 // render list of products
 function renderListOfProducts(productCodes) {
 	let html = ''
-	// console.log('ok')
 	productCodes.forEach((productCode, index) => {
 		let productHTML = ''
 		productCode.products.forEach((item) => {
@@ -129,12 +82,14 @@ function renderListOfProducts(productCodes) {
         <td class="last-product">${productCode.total}</td>
         <td>
             <div class="form-check form-switch">
+				<label class="active">
                 <input
                     class="form-check-input"
                     type="checkbox"
                     id="flexSwitchCheckDefault"
-                    checked
+					checked="0"
                 />
+				</label>
             </div>
         </td>
         <td class="action-product">
@@ -173,39 +128,8 @@ function renderListOfProducts(productCodes) {
     </tr>
     `
 	})
-
-	// create tbody
-	const tbody = document.createElement('tbody')
-	tbody.innerHTML = html
-
-	const table = document.querySelector('.admin-products table')
-
-	const oldTableBody = table.querySelector('tbody')
-	oldTableBody && oldTableBody.remove()
-
-	table.appendChild(tbody)
-
-	if (productCodes.length === 0) {
-		table.querySelector('tbody').innerHTML =
-			'<h2 style="margin-top: 10px;">Không tìm thấy sản phẩm</h2>'
-	}
-
-	document.querySelector('.total-products span').innerHTML = total
+	createTable('admin-products', html, productCodes.length)
 }
-
-// renderListOfProducts(productCodes)
-
-// debounce
-function debounce(func, timeout = 300) {
-	let timer
-	return (...args) => {
-		clearTimeout(timer)
-		timer = setTimeout(() => {
-			func.apply(this, args)
-		}, timeout)
-	}
-}
-const processChange = debounce(() => searchProduct())
 
 // show more product
 function showMoreProduct(event) {
@@ -227,17 +151,17 @@ async function deleteProductCode(event) {
 	if (!conf) return
 
 	// add lazing add product
-	const lazy = document.querySelector('.lazy-loading')
-	lazy.classList.toggle('hide')
+	showLazy()
 
 	const res = await $.ajax({
 		url: `/products/code/api/${idProduct}`,
 		type: 'delete',
 	})
 
+	hideLazy()
 	// console.log(res.status == 'success')
 	if (res.status == 'success') {
-		lazy.classList.toggle('hide')
+		// lazy.classList.toggle('hide')
 		alert('Xóa sản phẩm thành công')
 		tr.remove()
 
@@ -246,39 +170,29 @@ async function deleteProductCode(event) {
 			return item._id !== idProduct
 		})
 
-		let totalProducts = 0
-		productCodes.forEach((item) => {
-			item.products.forEach((i) => (totalProducts += i.total))
-		})
+		// let totalProducts = 0
+		// productCodes.forEach((item) => {
+		// 	item.products.forEach((i) => (totalProducts += i.total))
+		// })
 
-		document.querySelector('.total-products span').innerHTML = totalProducts
+		document.querySelector('.total-products span').innerHTML--
 	} else {
 		alert('Xóa sản phẩm thất bại')
 	}
 }
 
+const processChange = debounce(() => searchProduct())
+
 // search products
 let inputSearch = $('.products-action .action-search input')
-async function searchProduct() {
-	const lazy = document.querySelector('.lazy-loading')
-	lazy.classList.toggle('hide')
-
-	const result = await $.ajax({
-		url: `/products/api?search=${inputSearch.val()}`,
-		type: 'GET',
-	})
-	
-	// console.log(result)
-	// console.log(result.productCodes)
-	productCodes = result.productCodes
-	changeURL(page = '', inputSearch.val())
-	renderListOfProducts(productCodes)
-
-	lazy.classList.toggle('hide')
+function searchProduct() {
+	search = inputSearch.val()
+	page = 1
+	getProducts()
 }
 
 $('.products-action .action-search input').on('keyup', processChange)
-$('.products-action .action-search i').on('click', processChange)
+// $('.products-action .action-search i').on('click', processChange)
 
 // filter follow cost
 let statusCost = ''
@@ -347,4 +261,22 @@ function handleActionLeft() {
 	}
 
 	renderListOfProducts(productCodes)
+}
+
+// handle filter select
+function handleFilter(obj) {
+	// console.log(obj.value)
+	const [filter, value] = obj.value.split('-')
+	date = cost = left = ''
+	// console.log(filter, value)
+	if (filter == 'left') left = value
+	if (filter == 'cost') cost = value
+	if (filter == 'date') date = value
+	// console.log(date)
+	// console.log(cost)
+	// console.log(left)
+
+	// call api
+	page = 1
+	getProducts()
 }

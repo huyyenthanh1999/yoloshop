@@ -4,6 +4,50 @@ const jwt = require('jsonwebtoken')
 const imgbbUploader = require('imgbb-uploader')
 const path = require('path')
 const { removeVI } = require('jsrmvi')
+const dateFormat = require('date-and-time')
+
+module.exports.getAllUser = async (req, res) => {
+	// try {
+	const perPage = 5
+	const option = { replaceSpecialCharacters: false }
+
+	let { page, search, date } = req.query
+
+	page = !page ? 1 : page
+	search = removeVI(search, option)
+
+	// filter follow search
+	let users = await User.find().lean()
+	users = users.filter((item) => {
+
+		return (
+			removeVI(item.name, option).includes(search) ||
+			dateFormat.format(item.createdAt,'DD/MM/YYYY').includes(search) ||
+			item.phoneNumber.includes(search)
+		)
+	})
+
+	let totalUsers = await User.countDocuments()
+	let totalPages = Math.ceil(users.length / perPage)
+
+	// pagination
+	let begin = (page - 1) * perPage
+	let end = page * perPage
+	// console.log(begin, end)
+	users = users.slice(begin, end)
+
+	res.status(200).json({
+		users,
+		total: totalUsers,
+		totalPages,
+	})
+	// } catch (error) {
+	// 	res.status(500).json({
+	// 		status: 'fail',
+	// 		message: 'Lỗi server',
+	// 	})
+	// }
+}
 
 // edit user
 module.exports.editUser = async (req, res) => {
@@ -82,58 +126,3 @@ module.exports.getDetailUser = async (req, res) => {
 }
 
 // include search
-module.exports.getAllUser = async (req, res) => {
-	// try {
-		const perPage = 10
-		const currentPage = +req.query.page || 1
-		
-		// let skip = perPage * (currentPage -1) || 1
-	
-		
-		// filter follow search
-		const option = { replaceSpecialCharacters: false }
-		const search = removeVI(req.query.search, option)
-		let users = await User.find().lean()
-		users = users.filter((item) => {
-			return removeVI(item.name, option).includes(search)
-		})
-	
-		let begin = (currentPage -1 )* perPage
-		let end = currentPage * perPage
-		// console.log(begin, end)
-		users = users.slice(begin, end)
-		console.log(users)
-	
-	
-		let totalUsers = await User.countDocuments()
-		let totalPages = Math.ceil(totalUsers/perPage)
-		
-	
-		// đếm số lượng sản phẩm trong users và gán products vào users
-		// for(let item of users){
-		// 	const products = await Product.find(
-		// 		{ idUser: item._id },
-		// 		{ total: 1, color: 1, size: 1 }
-		// 	).lean()
-		// 	let totalProductsOfCode = 0
-		// 	products.forEach((item) => {
-		// 		totalProductsOfCode += item.total
-		// 	})
-	
-		// 	item.total = totalProductsOfCode
-		// 	item.products = products
-	
-		// }
-	
-		res.status(200).json({
-			users,
-			total: totalUsers,
-			totalPages
-		})
-		// } catch (error) {
-		// 	res.status(500).json({
-		// 		status: 'fail',
-		// 		message: 'Lỗi server',
-		// 	})
-		// }
-}

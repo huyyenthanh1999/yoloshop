@@ -31,6 +31,7 @@ a {
 .admin-customers table thead {
 	background-color: var(--main-color);
 	color: white;
+	user-select: none;
 }
 
 .admin-customers table .stt-customer {
@@ -72,13 +73,13 @@ a {
 	margin-bottom: 30px;
 }
 
-.admin-customers .customers-action .action-search input {
-	border: none;
-	outline: none;
-	padding: 4px 0;
-	background-color: transparent;
-	border-bottom: 2px solid #333;
-}
+// .admin-customers .customers-action .action-search input {
+// 	border: none;
+// 	outline: none;
+// 	padding: 4px 0;
+// 	background-color: transparent;
+// 	border-bottom: 2px solid #333;
+// }
 
 .admin-customers .customers-action .action-filter {
 	margin-left: auto;
