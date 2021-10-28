@@ -3,6 +3,7 @@ let totalPrice = 0
 let _products = []
 
 const btn_pay = $('.btn-pay')
+const btn_back = $('.btn-back')
 
 let i = 0
 let addDetailOrder = (product, index, _listData) => {
@@ -53,7 +54,6 @@ render()
 
 let _receiverName = 'Hoang Nam'
 let _phoneNumber = '034455334'
-let _email = 'sksksh@gmail.com'
 let _message = 'None'
 let _address = '234 Nam Đồng'
 let _totalCost = 2345000
@@ -61,35 +61,44 @@ let _status = 'Done'
 let _payment = 'cod'
 let _productId = '617113c991ad297ed0056355'
 let _quantity = 4
-$(btn_pay).on('click', async () => {
+$(btn_pay).on('click', () => {
+    // e.preventDefault()
     // Check input first
+    let _receiverName = $('.receiver__name').val()
+    console.log(_receiverName)
 
-    try {
-        const data = await $.ajax({
-            url: '/cart/detailCart',
-            type: 'PUT',
-        })
-        _products = data.cart.products
+    // try {
+    //     const data = await $.ajax({
+    //         url: '/cart/detailCart',
+    //         type: 'PUT',
+    //     })
+    //     console.log(data)
+    //     _products = data.cart.products
 
-        const newData = $.ajax({
-            url: '/checkout/',
-            type: 'POST',
-            data: { _receiverName, _phoneNumber, _email, _message, _address, _products, _totalCost, _status, _payment },
-        })
-        console.log(newData);
+    //     const newData = $.ajax({
+    //         url: '/checkout/',
+    //         type: 'POST',
+    //         data: { _receiverName, _phoneNumber, _email, _message, _address, _products, _totalCost, _status, _payment },
+    //     })
+    //     console.log(newData);
 
-        _products.map(async (item) => {
-            const _data = await $.ajax({
-                url: '/checkout/create',
-                type: 'PUT',
-                data: { _productId: item.productId, _quantity: item.quantity }
-            })
-            console.log(_data)
-        })
+    //     _products.map(async (item) => {
+    //         const _data = await $.ajax({
+    //             url: '/checkout/create',
+    //             type: 'PUT',
+    //             data: { _productId: item.productId, _quantity: item.quantity }
+    //         })
+    //         console.log(_data)
+    //     })
         
-    } catch (error) {
-        console.log(error)
-    }
+    // } catch (error) {
+    //     console.log(error)
+    // }
 
     // window.location.href = 'success' page order success
 })
+
+$(btn_back).on('click', (e) => {
+    e.preventDefault()
+    window.location.href = '/cart'
+  })
