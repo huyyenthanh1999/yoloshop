@@ -59,3 +59,8 @@ function createTable(nameTable, html, length) {
 function checkOnline() {
 	return navigator.onLine
 }
+
+
+function formatMoney(money){
+	return money.toLocaleString()
+}
