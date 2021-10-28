@@ -194,7 +194,7 @@ module.exports.adminDetailOrder = async (req, res) => {
 	res.render('components/admin/admin-base', {
 		content: 'detail-order',
 		data: {
-			orders
+			order
 		},
 	})
 }

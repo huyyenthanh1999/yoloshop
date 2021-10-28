@@ -1,7 +1,3 @@
-- trang products:
-    phân trang
-    filter
-
 - trang cart chưa có j
 
 - trang checkout
@@ -15,5 +11,6 @@
 - sau khi đăng kí thì client chưa lưu token người dùng
 
 - trang admin:
-    sửa lại chức năng cập nhật sản phẩm -> không xóa product
-    trang order lỗi
+    sửa lại chức năng cập nhật sản phẩm -> không được xóa product rồi tạo lại
+
+- cập nhật lại order sau khi giao hoặc hủy

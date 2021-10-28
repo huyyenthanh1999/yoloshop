@@ -33,7 +33,7 @@ h3 {
         border: none;
         outline: none;
         box-shadow: none;
-        border: 1px solid rgba(83, 78, 78, 0.5);
+        border: 1px solid rgba(83, 78, 78, 0.7);
     }
 
 	input {
@@ -54,7 +54,7 @@ h3 {
 
     input:focus, textarea:focus {
         border: 1px solid var(--blue-color);
-        box-shadow: 0 0 1px var(--blue-color);
+        box-shadow: 0 0 2px var(--blue-color);
     }
 
     button {
