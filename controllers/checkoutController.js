@@ -29,11 +29,13 @@ module.exports.detailOrder = async (req, res) => {
 
 module.exports.createOrder = async (req, res) => {
 	try {
+		const userId = req.user._id
+		console.log(userId)
+
 		const order = await Order.create({
-			userId,
+			userId: userId,
 			receiverName: req.body._receiverName,
 			phoneNumber: req.body._phoneNumber,
-			email: req.body._email,
 			message: req.body._message,
 			address: req.body._address,
 			products: req.body._products,
@@ -62,6 +64,8 @@ module.exports.createOrder = async (req, res) => {
 
 module.exports.create_Order = async (req, res) => {
 	try {
+		const userId = req.user._id
+
 		const order = await Order.findOneAndUpdate(
 			{ userId }, 
 			{ $push: { products: { productId: req.body._productId, quantity: req.body._quantity }}},
