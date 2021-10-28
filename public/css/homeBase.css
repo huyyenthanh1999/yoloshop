@@ -59,6 +59,11 @@ img {
     padding: 0 10px;
 }
 
+.grid-col-half {
+    width: 50%;
+    padding: 0 10px;
+}
+
 .main {
     margin-bottom: 2rem;
     min-height: 100vh;
@@ -168,7 +173,8 @@ img {
     }
     
     .grid-col-4,
-    .grid-col-3 {
+    .grid-col-3,
+    .grid-col-half {
         width: 100%;
     }
 

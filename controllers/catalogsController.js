@@ -288,11 +288,17 @@ module.exports.addToCart = async (req, res) => {
 				data: cart,
 				status: 'success',
 			})
-		}
-	} catch (error) {
-		res.status(500).json({
-			status: 'fail',
-			message: 'Lỗi server',
-		})
-	}
+      res.status(200).json({
+        message:'thêm vào giỏ hàng thành công',
+        data: cart,
+        status: 'success',
+        isNew: true
+      })
+    }
+  } catch (error) {
+    res.status(500).json({
+      status: "fail",
+      message: "Lỗi server",
+    });
+  }
 }
