@@ -1,5 +1,5 @@
 let totalProduct = 0
-let totalPrice = 0
+let totalCost = 0
 let total = []
 // let _userId = req.user  // Ham check dang nhap -> neu da dang nhap tra ve userId
 
@@ -9,7 +9,7 @@ let cart_list = $('.cart__list')
 
 let addCartInfo = () => {
   $('.total__product').html(`${totalProduct}`)
-  $('.total__price').html(`${totalPrice} VNĐ`)
+  $('.total__price').html(`${totalCost} VNĐ`)
 }
 
 let i = 0
@@ -23,7 +23,7 @@ let addCartList = (product, index, _listData) => {
           </td>
           <td class='td1 cart__item__info__name'>
             <a href='/products/detail/${product.idProductCode._id}'>${product.idProductCode.name} - ${product.color} - ${product.size}</a>
-            <p class='_productName'>${product._id}</p>
+            <p class='product__id'>${product._id}</p>
           </td>
           <td class='td1 cart__item__info__price'>
             ${product.idProductCode.cost * _listData[index].quantity}
@@ -48,7 +48,7 @@ let addCartList = (product, index, _listData) => {
     </table>
   `
   cart_list.append(div)
-  totalPrice += product.idProductCode.cost * _listData[index].quantity
+  totalCost += product.idProductCode.cost * _listData[index].quantity
   if (i == _listData.length) {
     addCartInfo()
     i = 0
@@ -56,7 +56,7 @@ let addCartList = (product, index, _listData) => {
 
   // Delete button
   $($('.cart__item__del')[index]).on('click', () => {
-    let _productId = $('._productName')[index].innerHTML
+    let _productId = $('.product__id')[index].innerHTML
     console.log(_productId)
     const temp = $.ajax({
       url: '/cart',
@@ -64,11 +64,12 @@ let addCartList = (product, index, _listData) => {
       data: { _productId }
     })
     renderCart()
+    console.log('123')
   })
 
   // Decrease button
   $($('.dec__btn')[index]).on('click', () => {
-    let _productId = $('._productName')[index].innerHTML
+    let _productId = $('.product__id')[index].innerHTML
     let _quantity = $('.product__info__item__quantity__input')[index].innerHTML
     let _price = parseInt($('.cart__item__info__price')[index].innerHTML)
     let _cost = parseInt(_price)/parseInt(_quantity)
@@ -76,7 +77,7 @@ let addCartList = (product, index, _listData) => {
       _quantity--
       _price -= _cost
       totalProduct--
-      totalPrice -= _cost
+      totalCost -= _cost
     }
     else {
       alert('Không thể chọn số lượng nhỏ hơn!')
@@ -94,7 +95,7 @@ let addCartList = (product, index, _listData) => {
 
   // Increase button
   $($('.inc__btn')[index]).on('click', () => {
-    let _productId = $('._productName')[index].innerHTML
+    let _productId = $('.product__id')[index].innerHTML
     let _quantity = $('.product__info__item__quantity__input')[index].innerHTML
     let _price = parseInt($('.cart__item__info__price')[index].innerHTML)
     let _cost = parseInt(_price)/parseInt(_quantity)
@@ -102,7 +103,7 @@ let addCartList = (product, index, _listData) => {
       _quantity++
       _price += _cost
       totalProduct++
-      totalPrice += _cost
+      totalCost += _cost
     }
     else {
       alert('Số lượng là tối đa!')
@@ -121,26 +122,31 @@ let addCartList = (product, index, _listData) => {
 
 async function renderCart() {
 	try {
-    cart_list.html('');
+    cart_list.html('')
+    totalProduct = 0
+    totalCost = 0
     const data = await $.ajax({
       url: '/cart/detailCart',
       type: 'GET',
     })
-    console.log(data);
+    console.log(data)
 
-    if (data.length == 0) {
-      $('.cart__info').setAttribute('style', 'display:none')
-      $('.cart__list').innerHTML = `
-      <div class='empty__cart'>  
-        <img src='../../public/images/EmptyCart.png' alt='EmptyCart'>
-        <h2>Giỏ hàng của bạn còn trống!</h2>
-        <a href='/'>
+    if (data.cart.products.length == 0) {
+      $('.cart__info').attr('style', 'display:none')
+      cart_list.html(`
+        <div class='empty__cart'>  
+          <img src='../../public/images/EmptyCart.png' alt='EmptyCart'>
+          <h2>
+            Giỏ hàng của bạn còn trống!
+          </h2>
+          <a href='/products'>
             <button class='btn btn-small'>
-                <span class='btn-txt-cart'>MUA NGAY</span>
+              <span class='btn-txt-cart'>MUA NGAY</span>
             </button>
-        </a>
-      </div>
-      `
+          </a>
+        </div>
+      `)
+      $('.empty__cart').attr('style', 'width:150%')
       return
     }
 
