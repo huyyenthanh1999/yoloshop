@@ -22,7 +22,7 @@ let addDetailOrder = (product, index, _listData) => {
 
         $('.temp__price').html(`${tempPrice.toLocaleString()} VNĐ`)
         $('.total__price').html(`${totalPrice.toLocaleString()} VNĐ`)
-        $('.abc').html(`${totalPrice}`)
+        $('.price').html(`${totalPrice}`)
         i = 0
     }
 }
@@ -53,13 +53,8 @@ async function render() {
 
 render()
 
-let _receiverName = 'Hoang Nam'
-let _phoneNumber = '034455334'
-let _message = 'None'
-let _address = '234 Nam Đồng'
-let _totalCost = 2345000
 let _status = 'done'
-let _payment = 'cod'
+// let _payment = 'cod'
 let _productId = '617113c991ad297ed0056355'
 let _quantity = 4
 $(btn_pay).on('click', async () => {
@@ -70,14 +65,8 @@ $(btn_pay).on('click', async () => {
     let _message = $('.message__input').val()
     let _address = $('.detail__address__input').val()
     let _payment = $('input[name="pay__type"]:checked').val()
-    let _totalCost = parseInt($('.abc').html())
-    console.log(_receiverName)
-    console.log(_phoneNumber)
-    console.log(_message)
-    console.log(_address)
-    console.log(_totalCost)
-    console.log(_payment)
-
+    let _totalCost = parseInt($('.price').html())
+   
     try {
         const data = await $.ajax({
             url: '/cart/detailCart',
