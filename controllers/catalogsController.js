@@ -139,13 +139,12 @@ module.exports.getCustomProduct = async (req, res) => {
 
 		// phan trang
 		const perPage = 9
-    const totalPages = Math.ceil(productCodes.length / perPage)
+		const totalPages = Math.ceil(productCodes.length / perPage)
 		// pagination
 		let begin = (page - 1) * perPage
 		let end = page * perPage
 		// console.log(begin, end)
 		productCodes = productCodes.slice(begin, end)
-
 
 		res.status(200).json({
 			status: 'success',
@@ -288,17 +287,17 @@ module.exports.addToCart = async (req, res) => {
 				data: cart,
 				status: 'success',
 			})
-      res.status(200).json({
-        message:'thêm vào giỏ hàng thành công',
-        data: cart,
-        status: 'success',
-        isNew: true
-      })
-    }
-  } catch (error) {
-    res.status(500).json({
-      status: "fail",
-      message: "Lỗi server",
-    });
-  }
+			res.status(200).json({
+				message: 'thêm vào giỏ hàng thành công',
+				data: cart,
+				status: 'success',
+				isNew: true,
+			})
+		}
+	} catch (error) {
+		res.status(500).json({
+			status: 'fail',
+			message: 'Lỗi server',
+		})
+	}
 }
