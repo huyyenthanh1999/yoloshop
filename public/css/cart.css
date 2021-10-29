@@ -43,7 +43,7 @@ html {
     font-size: 16.25px;
 }
 
-.cart__info__txt__price {
+.cart__info__txt__cost {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -52,7 +52,7 @@ html {
     font-size: 16.25px;
 }
 
-.cart__info__txt__price span:nth-child(2) {
+.cart__info__txt__cost span:nth-child(2) {
     font-size: 26px;
     color: #4267B2;
     font-weight: 600;
@@ -149,7 +149,7 @@ html {
 }
 
 .cart__item__info__name,
-.cart__item__info__price {
+.cart__item__info__cost {
     font-size: 16.25px;
 }
 
@@ -157,7 +157,7 @@ html {
     width: 40%;
 }
 
-.cart__item__info__price {
+.cart__item__info__cost {
     width: 10%;
 }
 

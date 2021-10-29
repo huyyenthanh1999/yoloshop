@@ -11,7 +11,7 @@ let addDetailOrder = (product, index, _listData) => {
     let div = `
         <div class="order__text product__info">
             <span>${product.idProductCode.name} - ${product.color} - ${product.size} (${_listData[index].quantity})</span>
-            <span>${product.idProductCode.cost * _listData[index].quantity} VNĐ</span>
+            <span>${(product.idProductCode.cost * _listData[index].quantity).toLocaleString()} VNĐ</span>
         </div>
     `
     $('.products__info').append(div)
@@ -20,8 +20,9 @@ let addDetailOrder = (product, index, _listData) => {
     if (i == _listData.length) {
         totalPrice = tempPrice + 30000
 
-        $('.temp__price').html(`${tempPrice} VNĐ`)
-        $('.total__price').html(`${totalPrice} VNĐ`)
+        $('.temp__price').html(`${tempPrice.toLocaleString()} VNĐ`)
+        $('.total__price').html(`${totalPrice.toLocaleString()} VNĐ`)
+        $('.price').html(`${totalPrice}`)
         i = 0
     }
 }
@@ -34,7 +35,7 @@ async function render() {
             // data: { _userId: _userId}
         })
         console.log(data)
-        _products = data.cart.products
+        // _products = data.cart.products
         
         $('.products__info').html('')
         data.cart.products.map(async (item, index) => {
@@ -52,48 +53,47 @@ async function render() {
 
 render()
 
-let _receiverName = 'Hoang Nam'
-let _phoneNumber = '034455334'
-let _message = 'None'
-let _address = '234 Nam Đồng'
-let _totalCost = 2345000
-let _status = 'Done'
-let _payment = 'cod'
+let _status = 'done'
+// let _payment = 'cod'
 let _productId = '617113c991ad297ed0056355'
 let _quantity = 4
-$(btn_pay).on('click', () => {
+$(btn_pay).on('click', async () => {
     // e.preventDefault()
     // Check input first
-    let _receiverName = $('.receiver__name').val()
-    console.log(_receiverName)
+    let _receiverName = $('.receiver__name__input').val()
+    let _phoneNumber = $('.phone__number__input').val()
+    let _message = $('.message__input').val()
+    let _address = $('.detail__address__input').val()
+    let _payment = $('input[name="pay__type"]:checked').val()
+    let _totalCost = parseInt($('.price').html())
+   
+    try {
+        const data = await $.ajax({
+            url: '/cart/detailCart',
+            type: 'GET',
+        })
+        console.log(data)
+        _products = data.cart.products
 
-    // try {
-    //     const data = await $.ajax({
-    //         url: '/cart/detailCart',
-    //         type: 'PUT',
-    //     })
-    //     console.log(data)
-    //     _products = data.cart.products
+        const newData = await $.ajax({
+            url: '/checkout',
+            type: 'POST',
+            data: { _receiverName, _phoneNumber, _message, _address, _products, _totalCost, _status, _payment },
+        })
+        console.log(newData);
 
-    //     const newData = $.ajax({
-    //         url: '/checkout/',
-    //         type: 'POST',
-    //         data: { _receiverName, _phoneNumber, _email, _message, _address, _products, _totalCost, _status, _payment },
-    //     })
-    //     console.log(newData);
-
-    //     _products.map(async (item) => {
-    //         const _data = await $.ajax({
-    //             url: '/checkout/create',
-    //             type: 'PUT',
-    //             data: { _productId: item.productId, _quantity: item.quantity }
-    //         })
-    //         console.log(_data)
-    //     })
+        data.cart.products.map(async (item) => {
+            const _data = await $.ajax({
+                url: '/checkout/create',
+                type: 'PUT',
+                data: { _productId: item.productId, _quantity: item.quantity }
+            })
+            console.log(_data)
+        })
         
-    // } catch (error) {
-    //     console.log(error)
-    // }
+    } catch (error) {
+        console.log(error)
+    }
 
     // window.location.href = 'success' page order success
 })
