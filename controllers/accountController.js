@@ -11,22 +11,25 @@ module.exports.getAccount = async (req, res) => {
     try {
         // console.log('vaof account')
         //giai ma token
-        var decoded = jwt.verify(req.cookies.tokenId, process.env.TOKEN_KEY);
+        // var decoded = jwt.verify(req.cookies.tokenId, process.env.TOKEN_KEY);
         //doc id
-        const accountId = decoded.userId;
+        // const accountId = decoded.userId;
         //tim id trong db
-        var account = await User.findById(accountId);
-        var orders = await Order.find({userId: accountId}).lean();
+        // var account = await User.findById(req.user._id);
+        var orders = await Order.find({userId: req.user._id}).lean();
 
         for(let order of orders) {
+            // console.log(order.products)
            for(let product of order.products){
                // find productCode -> name
-                const productCode = await ProductCode.findById(product.productId);
-                product.name = productCode.name
+            //    console.log(product)
+                const pro = await Product.findById(product.productId).lean()
+                const productCode = await ProductCode.findById(pro.idProductCode);
+                product.name = `${productCode.name} - ${pro.color} - ${pro.size}`
            }
         }
 
-        if (!account){
+        if (!req.user){
         res.redirect('/auth/login')
         }
             // return res.status(400).json({
@@ -34,7 +37,7 @@ module.exports.getAccount = async (req, res) => {
             //     message: 'Không tìm thấy trang',
             // })
         res.render('pages/account', {
-             user: account,
+             user: req.user,
              orders 
             })
     } catch (error) {

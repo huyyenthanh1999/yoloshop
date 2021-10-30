@@ -394,7 +394,7 @@ module.exports.getDetailProductCode = async (req, res) => {
 // add product to cart
 module.exports.userAddProduct = async (req, res) => {
 	// console.log('hello')
-	try {
+	// try {
 		const _id = req.params.id
 		const product = await Product.findById(_id).populate('idProductCode')
 
@@ -442,10 +442,10 @@ module.exports.userAddProduct = async (req, res) => {
 			status: 'success',
 			message: 'Đã thêm sản phẩm vào giỏ hàng',
 		})
-	} catch (error) {
-		res.status(400).json({
-			status: 'fail',
-			message: 'Không tìm thấy id sản phẩm',
-		})
-	}
+	// } catch (error) {
+	// 	res.status(400).json({
+	// 		status: 'fail',
+	// 		message: 'Không tìm thấy id sản phẩm',
+	// 	})
+	// }
 }

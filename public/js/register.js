@@ -1,3 +1,13 @@
+function createCookie(name, value, days = 15) {
+    if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        var expires = "; expires=" + date.toGMTString();
+    }
+    else var expires = "";
+    document.cookie = name + "=" + value + expires + "; path=/";
+}
+
 const form = document.querySelector('#form-register')
 // console.log(form)
 form.addEventListener('submit', (e) => {
@@ -15,6 +25,7 @@ form.addEventListener('submit', (e) => {
 			console.log('Success:', result)
 			if ((result.status == 'fail')) alert('User đã tồn tại')
 			else {
+				createCookie('tokenId', result.data.token)
 				alert('Đăng kí thành công')
 				window.location.href = '/'
 				// window.location.href = '/auth/login'

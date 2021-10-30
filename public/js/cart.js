@@ -15,7 +15,7 @@ let i = 0
 let addCartList = (product, index, _listData) => {
 	i++
   let div = `
-    <table class='tb1'>
+    <table class='tb1' data-id="${product._id}">
       <tr>
           <td class='td1 cart__item__image'>
             <img src='${product.idProductCode.images[0]}' alt=''>
@@ -63,7 +63,7 @@ let addCartList = (product, index, _listData) => {
       data: { _productId }
     })
     renderCart()
-    console.log('123')
+    // console.log('123')
   })
 
   // Decrease button
@@ -132,9 +132,11 @@ async function renderCart() {
       url: '/cart/detailCart',
       type: 'GET',
     })
-    console.log(data)
 
-    if (data.cart.products.length == 0) {
+    // if(data.status == 'fail') {}
+    
+
+    if (data.status == 'fail') {
       $('.cart__info').attr('style', 'display:none')
       cart_list.html(`
         <div class='empty__cart'>  

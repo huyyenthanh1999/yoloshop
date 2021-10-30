@@ -4,7 +4,7 @@ const Cart = require('../models/cartModel')
 const { render } = require('ejs')
 module.exports.getProductDetail = async (req, res) => {
 	const idProductCode = req.params.id
-	try {
+	// try {
 		const productCode = await ProductCode.findById(idProductCode)
 		const products = await Product.find({
 			idProductCode: idProductCode,
@@ -35,12 +35,12 @@ module.exports.getProductDetail = async (req, res) => {
 			sizes: [...new Set(sizes)],
 			colors: [...new Set(colors)],
 		})
-	} catch (error) {
-		res.status(500).json({
-			status: 'fail',
-			message: 'Lỗi server',
-		})
-	}
+	// } catch (error) {
+	// 	res.status(500).json({
+	// 		status: 'fail',
+	// 		message: 'Lỗi server',
+	// 	})
+	// }
 }
 // module.exports.getsp = async (req, res) => {
 //   console.log(req.query);
@@ -247,7 +247,8 @@ module.exports.getAllInfoProduct = async (req, res) => {
 }
 
 module.exports.addToCart = async (req, res) => {
-	try {
+	// try {
+		console.log(req.user)
 		const userId = req.user._id
 		const productId = req.body.idVariant
 		const quantity = req.body.quantity
@@ -282,11 +283,11 @@ module.exports.addToCart = async (req, res) => {
 				userId,
 				products: [{ productId, quantity }],
 			})
-			res.status(200).json({
-				message: 'thêm vào giỏ hàng thành công',
-				data: cart,
-				status: 'success',
-			})
+			// res.status(200).json({
+			// 	message: 'thêm vào giỏ hàng thành công',
+			// 	data: cart,
+			// 	status: 'success',
+			// })
 			res.status(200).json({
 				message: 'thêm vào giỏ hàng thành công',
 				data: cart,
@@ -294,10 +295,10 @@ module.exports.addToCart = async (req, res) => {
 				isNew: true,
 			})
 		}
-	} catch (error) {
-		res.status(500).json({
-			status: 'fail',
-			message: 'Lỗi server',
-		})
-	}
+	// } catch (error) {
+	// 	res.status(500).json({
+	// 		status: 'fail',
+	// 		message: 'Lỗi server',
+	// 	})
+	// }
 }
