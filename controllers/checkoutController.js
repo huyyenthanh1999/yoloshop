@@ -43,6 +43,7 @@ module.exports.createOrder = async (req, res) => {
 		// handle totalCost
 		let totalCost = 0
 		for(let item of cart.products) {
+			console.log(item)
 			// let productCode = await ProductCode.findById()
 			let product = await Product.findById(item.productId).lean()
 			let productCode = await ProductCode.findById(product.idProductCode).lean()
@@ -51,7 +52,7 @@ module.exports.createOrder = async (req, res) => {
 
 		// phi ship
 		totalCost += 30000
-		
+		// console.log(54, cart.products)
 
 		const order = await Order.create({
 			userId: userId,

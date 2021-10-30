@@ -77,9 +77,11 @@ function renderListOfOrders(orders) {
                         <button class="delivery-order" onclick="deliveryOrder(event)" data-id="${order._id}">
                             Giao hàng
                         </button>
-                        <button class="bill-order">
-                            Hóa đơn
-                        </button>
+                        <a href="/invoices/${order._id}" target="_blank">
+							<button class="bill-order">
+								Hóa đơn
+							</button>
+						</a>
                         <button class="cancel-order" onclick="cancelOrder(event)" data-id="${order._id}">
                             Hủy đơn
                         </button>

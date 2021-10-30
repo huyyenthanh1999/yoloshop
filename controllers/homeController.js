@@ -4,6 +4,7 @@ const Cart = require('../models/cartModel');
 const slides = require('../public/data/sliderData')
 const cards = require('../public/data/cardData')
 const Order = require('../models/orderModel')
+const Product = require('../models/productModel')
 
 module.exports.getAllData = async (req, res) => {
 	try {
@@ -64,18 +65,19 @@ module.exports.getSearchData = async (req, res) => {
 }
 
 module.exports.getDetailBill = async (req, res) => {
-    try {
+    // try {
         var order = await Order.findById(req.params.id).lean();
         for(let product of order.products){
-             const productCode = await ProductCode.findById(product.productId);
-             product.name = productCode.name;
+			 const pro = await Product.findById(product.productId)
+             const productCode = await ProductCode.findById(pro.idProductCode);
+             product.name = `${productCode.name} - ${pro.color} - ${pro.size}`;
              product.price = productCode.cost;
         }
         res.render('pages/bill',{order})
-    } catch (error) {
-        res.status(500).json({
-            status: 'fail',
-            message: 'Lỗi server',
-        })
-    }
+    // } catch (error) {
+    //     res.status(500).json({
+    //         status: 'fail',
+    //         message: 'Lỗi server',
+    //     })
+    // }
 }
