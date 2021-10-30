@@ -210,6 +210,17 @@ $('.avatar-modal__inner').click(function(e){
 
 //change avatar
 $('#FileUploadAvatar').change(function(){
-  var fileName = $(this).val().split('\\')[$(this).val().split('\\').length - 1];
-  console.log(fileName);
+  let file = this.files
+	// if (file) {
+	// 	// clear preview img area
+	// 	previewImage.empty()
+	// 	$('<img />', {
+	// 		src: URL.createObjectURL(file),
+	// 	}).appendTo(previewImage)
+
+	// 	// append img to formData
+	// 	formData.set('avatar', file)
+	// }
+  
+  console.log(file);
 })
