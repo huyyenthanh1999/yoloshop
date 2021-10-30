@@ -4,43 +4,43 @@ const Cart = require('../models/cartModel')
 const { render } = require('ejs')
 module.exports.getProductDetail = async (req, res) => {
 	const idProductCode = req.params.id
-	try {
-		const productCode = await ProductCode.findById(idProductCode)
-		const products = await Product.find({
-			idProductCode: idProductCode,
-		})
-		var sizes = products.map((e) => e.size)
-		var colors = products.map((e) => e.color)
-		//get all product
-		const allProductCodes = await ProductCode.find()
-		const arr = Array.from(Array(allProductCodes.length).keys())
-		var moreIndexes = getRandom(arr, 8)
-		function getRandom(arr, n) {
-			var result = new Array(n),
-				len = arr.length,
-				taken = new Array(len)
-			if (n > len)
-				throw new RangeError('getRandom: more elements taken than available')
-			while (n--) {
-				var x = Math.floor(Math.random() * len)
-				result[n] = arr[x in taken ? taken[x] : x]
-				taken[x] = --len in taken ? taken[len] : len
-			}
-			return result
+	// try {
+	const productCode = await ProductCode.findById(idProductCode)
+	const products = await Product.find({
+		idProductCode: idProductCode,
+	})
+	var sizes = products.map((e) => e.size)
+	var colors = products.map((e) => e.color)
+	//get all product
+	const allProductCodes = await ProductCode.find()
+	const arr = Array.from(Array(allProductCodes.length).keys())
+	var moreIndexes = getRandom(arr, 8)
+	function getRandom(arr, n) {
+		var result = new Array(n),
+			len = arr.length,
+			taken = new Array(len)
+		if (n > len)
+			throw new RangeError('getRandom: more elements taken than available')
+		while (n--) {
+			var x = Math.floor(Math.random() * len)
+			result[n] = arr[x in taken ? taken[x] : x]
+			taken[x] = --len in taken ? taken[len] : len
 		}
-		res.render('pages/product_detail', {
-			moreIndexes,
-			products: allProductCodes,
-			product: productCode,
-			sizes: [...new Set(sizes)],
-			colors: [...new Set(colors)],
-		})
-	} catch (error) {
-		res.status(500).json({
-			status: 'fail',
-			message: 'Lỗi server',
-		})
+		return result
 	}
+	res.render('pages/product_detail', {
+		moreIndexes,
+		products: allProductCodes,
+		product: productCode,
+		sizes: [...new Set(sizes)],
+		colors: [...new Set(colors)],
+	})
+	// } catch (error) {
+	// 	res.status(500).json({
+	// 		status: 'fail',
+	// 		message: 'Lỗi server',
+	// 	})
+	// }
 }
 // module.exports.getsp = async (req, res) => {
 //   console.log(req.query);
@@ -139,13 +139,12 @@ module.exports.getCustomProduct = async (req, res) => {
 
 		// phan trang
 		const perPage = 9
-    const totalPages = Math.ceil(productCodes.length / perPage)
+		const totalPages = Math.ceil(productCodes.length / perPage)
 		// pagination
 		let begin = (page - 1) * perPage
 		let end = page * perPage
 		console.log(begin, end)
 		productCodes = productCodes.slice(begin, end)
-
 
 		res.status(200).json({
 			status: 'success',
@@ -249,6 +248,7 @@ module.exports.getAllInfoProduct = async (req, res) => {
 
 module.exports.addToCart = async (req, res) => {
 	try {
+		// console.log(req.user)
 		const userId = req.user._id
 		const productId = req.body.idVariant
 		const quantity = req.body.quantity
@@ -266,7 +266,7 @@ module.exports.addToCart = async (req, res) => {
 					message: 'thêm vào giỏ hàng thành công',
 					data: cart,
 					status: 'success',
-					isNew: false
+					isNew: false,
 				})
 			} else {
 				const cart = await Cart.findOneAndUpdate(
@@ -277,7 +277,7 @@ module.exports.addToCart = async (req, res) => {
 					message: 'thêm vào giỏ hàng thành công',
 					data: cart,
 					status: 'success',
-					isNew: true
+					isNew: true,
 				})
 			}
 		} else {
@@ -285,25 +285,20 @@ module.exports.addToCart = async (req, res) => {
 				userId,
 				products: [{ productId, quantity }],
 			})
+
 			res.status(200).json({
 				message: 'thêm vào giỏ hàng thành công',
 				data: cart,
 				status: 'success',
-				isNew: true
+				isNew: true,
 			})
-    //   res.status(200).json({
-    //     message:'thêm vào giỏ hàng thành công',
-    //     data: cart,
-    //     status: 'success',
-    //     isNew: true
-    //   })
-    }
-  } catch (error) {
-    res.status(500).json({
-      status: "fail",
-      message: "Lỗi server",
-    });
-  }
+		}
+	} catch (error) {
+		res.status(500).json({
+			status: 'fail',
+			message: 'Lỗi server',
+		})
+	}
 }
 
 module.exports.getFilter = async (req, res) => {
@@ -329,9 +324,9 @@ module.exports.getFilter = async (req, res) => {
 		})
 	} catch (error) {
 		res.status(500).json({
-			status: "fail",
-			message: "Lỗi server",
-		  });
+			status: 'fail',
+			message: 'Lỗi server',
+		})
 	}
 }
 
@@ -374,22 +369,22 @@ module.exports.renderProduct = async (req, res) => {
 				if (products[i].idProductCode == code._id) return true
 		})
 		// pagination
-		let perPage = 2; // số lượng sản phẩm xuất hiện trên 1 page
+		let perPage = 2 // số lượng sản phẩm xuất hiện trên 1 page
 		let totalPages = Math.ceil(productCodes.length / perPage)
 		let begin = (page - 1) * perPage
 		let end = page * perPage
 		productCodes = productCodes.slice(begin, end)
-		
+
 		res.status(200).json({
 			status: 'success',
 			products: productCodes, //sản phẩm trên một page
 			current: page, //page hiện tại
-			pages: totalPages // tổng số các page
+			pages: totalPages, // tổng số các page
 		})
 	} catch (error) {
 		res.status(500).json({
-			status: "fail",
-			message: "Lỗi server",
-		  });
+			status: 'fail',
+			message: 'Lỗi server',
+		})
 	}
 }

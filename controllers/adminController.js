@@ -9,13 +9,15 @@ module.exports.adminDashboard = async (req, res) => {
 		const productsCount = await Product.countDocuments()
 		const usersCount = await User.countDocuments()
 
+		const ordersCount = await Order.countDocuments()
+
 		// response
 		res.render('components/admin/admin-base', {
 			content: 'dashboard',
 			data: {
 				productsCount,
 				usersCount,
-				ordersCount: 20,
+				ordersCount,
 				salesCount: 12,
 			},
 		})

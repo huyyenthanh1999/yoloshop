@@ -1,7 +1,6 @@
 let totalProduct = 0
 let totalCost = 0
 let total = []
-// let _userId = req.user  // Ham check dang nhap -> neu da dang nhap tra ve userId
 
 const btn_order = $('.btn-order')
 const btn_cart = $('.btn-cart')
@@ -9,14 +8,14 @@ let cart_list = $('.cart__list')
 
 let addCartInfo = () => {
   $('.total__product').html(`${totalProduct}`)
-  $('.total__price').html(`${totalCost} VNĐ`)
+  $('.total__cost').html(`${totalCost.toLocaleString()} VNĐ`)
 }
 
 let i = 0
 let addCartList = (product, index, _listData) => {
 	i++
   let div = `
-    <table class='tb1'>
+    <table class='tb1' data-id="${product._id}">
       <tr>
           <td class='td1 cart__item__image'>
             <img src='${product.idProductCode.images[0]}' alt=''>
@@ -25,8 +24,8 @@ let addCartList = (product, index, _listData) => {
             <a href='/products/detail/${product.idProductCode._id}'>${product.idProductCode.name} - ${product.color} - ${product.size}</a>
             <p class='product__id'>${product._id}</p>
           </td>
-          <td class='td1 cart__item__info__price'>
-            ${product.idProductCode.cost * _listData[index].quantity}
+          <td class='td1 cart__item__info__cost'>
+            ${(product.idProductCode.cost * _listData[index].quantity).toLocaleString()}
           </td>
           <td class='td1 product_quantity'>
             <div class='product__info__item__quantity'>
@@ -64,14 +63,16 @@ let addCartList = (product, index, _listData) => {
       data: { _productId }
     })
     renderCart()
-    console.log('123')
+    // console.log('123')
   })
 
   // Decrease button
   $($('.dec__btn')[index]).on('click', () => {
     let _productId = $('.product__id')[index].innerHTML
     let _quantity = $('.product__info__item__quantity__input')[index].innerHTML
-    let _price = parseInt($('.cart__item__info__price')[index].innerHTML)
+    let _temp = $('.cart__item__info__cost')[index].innerHTML
+    let _str = _temp.replace(/,/g, '')
+    let _price = parseInt(_str)
     let _cost = parseInt(_price)/parseInt(_quantity)
     if (_quantity > 1) {
       _quantity--
@@ -83,7 +84,7 @@ let addCartList = (product, index, _listData) => {
       alert('Không thể chọn số lượng nhỏ hơn!')
     }
     $('.product__info__item__quantity__input')[index].innerHTML = _quantity
-    $('.cart__item__info__price')[index].innerHTML = _price
+    $('.cart__item__info__cost')[index].innerHTML = _price.toLocaleString()
     addCartInfo()
 
     const temp = $.ajax({
@@ -97,7 +98,9 @@ let addCartList = (product, index, _listData) => {
   $($('.inc__btn')[index]).on('click', () => {
     let _productId = $('.product__id')[index].innerHTML
     let _quantity = $('.product__info__item__quantity__input')[index].innerHTML
-    let _price = parseInt($('.cart__item__info__price')[index].innerHTML)
+    let _temp = $('.cart__item__info__cost')[index].innerHTML
+    let _str = _temp.replace(/,/g, '')
+    let _price = parseInt(_str)
     let _cost = parseInt(_price)/parseInt(_quantity)
     if (_quantity < total[index]) {
       _quantity++
@@ -109,7 +112,7 @@ let addCartList = (product, index, _listData) => {
       alert('Số lượng là tối đa!')
     }
     $('.product__info__item__quantity__input')[index].innerHTML = _quantity
-    $('.cart__item__info__price')[index].innerHTML = _price
+    $('.cart__item__info__cost')[index].innerHTML = _price.toLocaleString()
     addCartInfo()
 
     const temp = $.ajax({
@@ -129,9 +132,11 @@ async function renderCart() {
       url: '/cart/detailCart',
       type: 'GET',
     })
-    console.log(data)
 
-    if (data.cart.products.length == 0) {
+    // if(data.status == 'fail') {}
+    
+
+    if (data.status == 'fail') {
       $('.cart__info').attr('style', 'display:none')
       cart_list.html(`
         <div class='empty__cart'>  
