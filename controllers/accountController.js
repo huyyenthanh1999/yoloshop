@@ -9,7 +9,6 @@ const bcrypt = require('bcrypt')
 
 module.exports.getAccount = async (req, res) => {
     try {
-        // console.log('vaof account')
         //giai ma token
         var decoded = jwt.verify(req.cookies.tokenId, process.env.TOKEN_KEY);
         //doc id
@@ -29,19 +28,11 @@ module.exports.getAccount = async (req, res) => {
         if (!account){
         res.redirect('/auth/login')
         }
-            // return res.status(400).json({
-            //     status: 'fail',
-            //     message: 'Không tìm thấy trang',
-            // })
         res.render('pages/account', {
              user: account,
              orders 
             })
     } catch (error) {
-        // res.status(500).json({
-        //     status: 'fail',
-        //     message: 'Lỗi server',
-        // }) 
         res.redirect('/auth/login')
     }
 }
@@ -61,13 +52,6 @@ module.exports.editInfoAccount = async (req, res) => {
                 message: "Đã update"
             })
         }
-
-    // } catch (error) {
-    //     res.status(500).json({
-    //         status: 'fail',
-    //         message: 'Lỗi server',
-    //     })
-    // }
 }
 
 //edit password account
@@ -94,7 +78,6 @@ module.exports.editPasswordAccount = async (req, res) => {
                 })
             
             } else {
-                // console.log('pass ko đung')
                 res.json({
                     status: 'fail',
                     message: "Mat khẩu cũ không đúng"
