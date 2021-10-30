@@ -115,4 +115,20 @@
             <%- include('../components/account_order'); -%> 
         </div>
     </div>
+    <div class="avatar-modal">
+        <div class="avatar-modal__inner">
+            <div class="avatar-modal-inner__head">
+                <img src="<%= user.avatar %>" alt="avatar error">
+                <h2>Avatar Profile</h2>
+            </div>
+            <div class="avatar-modal-inner__body">
+                <input type="file" id="FileUploadAvatar" style="display: none" />
+                <ul>
+                    <li id="uploadavatar" style="color: #4267b2; font-weight: 600;">Upload Photo</li>
+                    <li id="removeavatar" style="color: red; font-weight: 600;">Remove Current Photo</li>
+                    <li id="cancelavatar">Cancel</li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </div>
