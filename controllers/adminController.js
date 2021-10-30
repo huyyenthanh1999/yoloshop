@@ -170,31 +170,31 @@ module.exports.adminOrder = async (req, res) => {
 
 // admin render order detail page
 module.exports.adminDetailOrder = async (req, res) => {
-	const idOrder = req.params.id
-	const order = await Order.findById(idOrder).lean()
+	// const idOrder = req.params.id
+	// const order = await Order.findById(idOrder).lean()
 
-	// find người đặt
-	const user = await User.findById(order.userId).lean()
-	order.userId = user
+	// // find người đặt
+	// const user = await User.findById(order.userId).lean()
+	// order.userId = user
 
-	// find products
-	const products = []
-	for(let item of order.products){
-		let product = await Product.findById(item.productId, {color: 1, size: 1, _id: 0, idProductCode: 1}).lean()
-		let productCode = await ProductCode.findById(product.idProductCode, {description: 0}).lean()
-		// console.log(product)
-		// console.log(productCode)
-		products.push({...product, ...productCode})
-	}
+	// // find products
+	// const products = []
+	// for(let item of order.products){
+	// 	let product = await Product.findById(item.productId, {color: 1, size: 1, _id: 0, idProductCode: 1}).lean()
+	// 	let productCode = await ProductCode.findById(product.idProductCode, {description: 0}).lean()
+	// 	// console.log(product)
+	// 	// console.log(productCode)
+	// 	products.push({...product, ...productCode})
+	// }
 
-	// console.log(products)
-	order.products = products
+	// // console.log(products)
+	// order.products = products
 
 	// get order, thông tin người đặt và người nhận
 	res.render('components/admin/admin-base', {
 		content: 'detail-order',
 		data: {
-			order
+			// order
 		},
 	})
 }
