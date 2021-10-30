@@ -109,19 +109,3 @@ module.exports.editPasswordAccount = async (req, res) => {
     }
 }
 
-module.exports.getDetailBill = async (req, res) => {
-    try {
-        var order = await Order.findById(req.params.id).lean();
-        for(let product of order.products){
-             const productCode = await ProductCode.findById(product.productId);
-             product.name = productCode.name;
-             product.price = productCode.cost;
-        }
-        res.render('pages/bill',{order})
-    } catch (error) {
-        res.status(500).json({
-            status: 'fail',
-            message: 'Lỗi server',
-        })
-    }
-}

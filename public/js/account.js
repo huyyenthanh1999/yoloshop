@@ -184,3 +184,32 @@ form.addEventListener('submit', async (e) => {
   }
   // console.log(name, phone, email, oldPass, newPass, confirmPass)
 })
+
+//upload avatar
+$('#uploadavatar').click(function(){
+  $('#FileUploadAvatar').click()
+})
+
+//open avatar modal
+$('.account-avatar img').click(function(){
+  $('.avatar-modal').css('display','flex')
+})
+
+//hide avatar modal
+$('.avatar-modal').click(function(){
+  $(this).css('display','none')
+})
+
+$('#cancelavatar').click(function(){
+  $('.avatar-modal').css('display','none')
+})
+
+$('.avatar-modal__inner').click(function(e){
+  e.stopPropagation();
+})
+
+//change avatar
+$('#FileUploadAvatar').change(function(){
+  var fileName = $(this).val().split('\\')[$(this).val().split('\\').length - 1];
+  console.log(fileName);
+})

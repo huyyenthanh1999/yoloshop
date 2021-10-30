@@ -10,7 +10,11 @@ module.exports.getCart = async (req, res, next) => {
                 cartNum:cartNum
             }
         }else{
-            res.locals.cartNum = 0;
+            res.locals.cartNum = {
+                cartNum: {
+                    products:[]
+                }
+            };
         }
         next()
     } catch (error) {

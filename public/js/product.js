@@ -1,9 +1,20 @@
-//display filter box
+const urlSearchParams = new URLSearchParams(window.location.search)
+const params = Object.fromEntries(urlSearchParams.entries())
+var products, current, pages;
+let type = [],
+	color = [],
+	size = [],
+	page = 1
+	
+if (params.type){ type = params.type.split(',')}
+if (params.color){ color = params.color.split(',')}
+if (params.size){ size = params.size.split(',')}
+// //display filter box
 $('.product-filter__toggle button').click(() => {
 	$('.product-filter').addClass('active')
 	$('.filter-overlay').addClass('active')
 })
-//hide filter box
+// // //hide filter box
 $('.product-filter__close').click(() => {
 	$('.filter-overlay').removeClass('active')
 	$('.product-filter').removeClass('active')
@@ -13,7 +24,7 @@ $('.filter-overlay').click(() => {
 	$('.product-filter').removeClass('active')
 	$('.filter-overlay').removeClass('active')
 })
-//display filter icon when scroll
+// //display filter icon when scroll
 window.addEventListener('scroll', () => {
 	if (document.body.scrollTop > 75 || document.documentElement.scrollTop > 75) {
 		$('.product-filter__toggle').addClass('sticky')
@@ -22,108 +33,187 @@ window.addEventListener('scroll', () => {
 	}
 })
 
-//delete all filter
+// //delete all filter
 $('.del-filter button').click(function () {
-	$('.custom-checkbox input').prop('checked', false)
+	// $('.custom-checkbox input').prop('checked', false)
 	window.location.href = '/products'
 })
 
-// render()
+// render follow page
 
+function render(page) {
+	$('.render-products').html('')
+	$('.render-products').append('<div class="grid-rows"></div>')
 
-// //custom filter
-// $('.custom-checkbox input').change(async (e) => {
-// 	render()
-// })
+    if(products.length == 0){
+    	$('.product-content .grid-rows').append('<p style="font-size: 30px;">Không tìm thấy sản phẩm</p>')
+		$('.pagination').html('');
+	}else{
+	products.forEach(product => {
+		$('.product-content .grid-rows').append(`
+            <div class="grid-col-3 md-grid-col-2">
+                <div class="product-card pb-2">
+                    <a href="/products/detail/${product._id}">
+                        <div class="product-card__image">
+                            <img src="${product.images[0]}" alt="" />
+                            <img src="${product.images[1]}" alt="" />
+                        </div>
+                        <h3 class="product-card__name">${product.name}</h3>
+                        <div class="product-card__price">${formatMoney(product.cost)}</div>
+                    </a>
+                    <div class="product-card__btn">
+                        <a href="/products/detail/${product._id}">
+							<button class="btn btn-primary btn-small">
+								<span class="btn-txt">Chọn mua</span>
+								<span class="btn-icon">
+									<i class="bx bx-cart bx-tada"></i>
+								</span>
+							</button>
+						</a>
+                    </div>
+                </div>
+            </div>
+        `)
+	})
+		
+	//pagination
+	$('.pagination').html('');
+	if(pages > 0){
+		$('.pagination').append('<ul class="list-number__pages"></ul>');
+		//first item
+		if(current == 1){
+			$('.list-number__pages').append(`
+				<li class="disabled">
+					<a>First</a>
+		  		</li>
+			`)
+		}else{
+			$('.list-number__pages').append(`
+				<li>
+					<a onclick="getProducts(${1})">First</a>
+		  		</li>
+			`)
+		}
 
-// function render() {
-// 	// get query of url
-// 	const urlParams = new URLSearchParams(window.location.search)
-// 	let type = urlParams.get('type')
-// 	let size = urlParams.get('size')
-// 	let color = urlParams.get('color')
+		//item
+		var i = (Number(current) > 3 ? Number(current) - 2 : 1);
+		if(i !== 1) {
+			$('.list-number__pages').append(`
+				<li class="disabled">
+					<a>...</a>
+				</li>
+			`)
+        }
+		for(; i <= (Number(current) + 2) && i <= pages; i++) {
+			if(i == current) {
+				$('.list-number__pages').append(`
+					<li class="active">
+						<a onclick="getProducts(${i})">
+						${i}
+						</a>
+					</li>`
+				)
+			} else {
+				$('.list-number__pages').append(`
+					<li>
+						<a onclick="getProducts(${i})">
+							${i}
+						</a>
+					</li>
+				`)
+			}
+			if (i == Number(current) + 2 && i < pages) { 
+				$('.list-number__pages').append(`
+					<li class="disabled">
+						<a>...</a>
+					</li>
+				`)
+			}
+		}
 
-// 	// $('.checkbox').prop('checked', true);
+		//last item
+		if(current == pages){
+			$('.list-number__pages').append(`
+				<li class="disabled">
+					<a>Last</a>
+		  		</li>
+			`)
+		}else{
+			$('.list-number__pages').append(`
+				<li>
+					<a onclick="getProducts(${pages})">Last</a>
+		  		</li>
+			`)
+		}
+	}
 
-// 	type = !type ? [] : [type]
-// 	size = !size ? [] : [size]
-// 	color = !color ? [] : [color]
+	}
+	autoCheckInput()
+}
 
-// 	// console.log(type)
-// 	var data = {
-// 		type,
-// 		color,
-// 		size,
-// 	}
-// 	console.log(91,data.type[0])
+$('.custom-checkbox input').change(async (e) => {
+	// type
+	type = []
+	document
+		.querySelectorAll('.product-filter-section__content.type input:checked')
+		.forEach((item) => type.push(item.value))
 
-// 	$('.custom-checkbox input').each(function () {
-// 		if ($(this).is(':checked')) {
-// 			var name = $(this).attr('name')
-// 			switch (name) {
-// 				case 'type':
-// 					// data.type.push($(this).val())
-// 					data.type = [...data.type,$(this).val()]
-// 					// data.type += ',' + $(this).val()
-// 					break
-// 				case 'color':
-// 					// data.color.push($(this).val())
-// 					data.color = [...data.color,$(this).val()]
-// 					// data.color += ',' + $(this).val()
-// 					break
-// 				case 'size':
-// 					data.size = [...data.size,$(this).val()]
-// 					// data.size.push($(this).val())
-// 					// data.size += ',' + $(this).val()
-// 					break
-// 				default:
-// 					break
-// 			}
-// 		}
-// 	})
-	
-// 	data.type = [...new Set(data.type)]
-// 	data.color = [...new Set(data.color)]
-// 	data.size = [...new Set(data.size)]
+	// color
+	color = []
+	document
+		.querySelectorAll('.product-filter-section__content.color input:checked')
+		.forEach((item) => color.push(item.value))
 
-// 	console.log(118,data)
+	// size
+	size = []
+	document
+		.querySelectorAll('.product-filter-section__content.size input:checked')
+		.forEach((item) => size.push(item.value))
+	getProducts(page)
+})
 
-//     $.ajax({
-// 		url: `/products/filter?type=${data.type}&color=${data.color}&size=${data.size}`,
-// 		type: 'GET',
-// 	})
-// 		.then((res) => {
-// 			const url = `/products?type=${data.type}&color=${data.color}&size=${data.size}`
-// 			history.pushState(null, null, url)
-// 			const products = res.data
-// 			$('.product-content').html('')
-// 			$('.product-content').append('<div class="grid-rows"></div>')
-// 			for (var i = 0; i <= products.length - 1; i++) {
-// 				$('.product-content .grid-rows').append(`
-//                     <div class="grid-col-3 md-grid-col-2">
-//                         <div class="product-card pb-2">
-//                             <a href="/products/detail/${products[i]._id}">
-//                                 <div class="product-card__image">
-//                                     <img src="${products[i].images[0]}" alt="" />
-//                                     <img src="${products[i].images[1]}" alt="" />
-//                                 </div>
-//                                 <h3 class="product-card__name">${products[i].name}</h3>
-//                                 <div class="product-card__price">${products[i].cost}</div>
-//                             </a>
-//                             <div class="product-card__btn">
-//                                 <a href="/products/detail/${products[i]._id}">
-// 									<button class="btn btn-primary btn-small">
-// 										<span class="btn-txt">Chọn mua</span>
-// 										<span class="btn-icon">
-// 											<i class="bx bx-cart bx-tada"></i>
-// 										</span>
-// 									</button>
-// 								</a>
-//                             </div>
-//                         </div>
-//                     </div>
-//                 `)
-// 			}
-// 		})
-// 		.catch((err) => console.log(err))
-// }
+function changeURL(url) {
+	history.pushState(null, null, url)
+}
+
+function autoCheckInput() {
+	// type
+	type.forEach((item) => {
+		$(`.product-filter-section__content.type input[value=${item}]`).prop(
+			'checked',
+			true
+		)
+	})
+	// color
+	color.forEach((item) => {
+		$(`.product-filter-section__content.color input[value=${item}]`).prop(
+			'checked',
+			true
+		)
+	})
+	// size
+	size.forEach((item) => {
+		$(`.product-filter-section__content.size input[value=${item}]`).prop(
+			'checked',
+			true
+		)
+	})
+}
+
+// // call api
+async function getProducts(page) {
+    showLazy()
+	const url = `/products?page=${page}&type=${type}&color=${color}&size=${size}`
+	const result = await $.ajax({
+		url,
+		type: 'POST',
+	})
+	products = result.products;
+	current = result.current;
+	pages= result.pages;
+    hideLazy()
+	changeURL(`/products?page=${page}&type=${type}&color=${color}&size=${size}`)
+	render(page)
+}
+
+getProducts(page)
