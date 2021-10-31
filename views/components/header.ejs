@@ -45,7 +45,7 @@
 						<span>Sản phẩm</span>
 					</a>
 				</div>
-				<div class="header-menu__item left">
+				<div class="header-menu__item left" id="news">
 					<a href="/news" data-link>
 						<span>Tin tức</span>
 					</a>
@@ -65,13 +65,13 @@
 					<a href="/cart">
 						<i class="bx bx-shopping-bag"></i>
 					</a>
-					<% if(cartNum != 0){ %> 
-						<% if(cartNum.cartNum != null ){ %>
-							<a href="/cart" class="cart-num">
+					<span class="cover-num">
+					<% if(cartNum.cartNum != null ){ %>
+						<a href="/cart" class="cart-num">
 								<%= cartNum.cartNum.products.length %> 
-							</a>
+						</a>
 						<% } %>	
-					<% } %> 
+					</span>
 				</div>
 				<div class="header-menu__item header-menu__item-user">
 					<a href="/auth/login">
@@ -99,3 +99,4 @@
 	</div>
 </div>
 <script src="https://unpkg.com/jsrmvi/dist/jsrmvi.min.js"></script>
+<script src="/public/js/logout.js"></script>

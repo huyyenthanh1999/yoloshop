@@ -53,47 +53,57 @@ async function render() {
 
 render()
 
-let _status = 'done'
+// let _status = 'done'
 // let _payment = 'cod'
 let _productId = '617113c991ad297ed0056355'
 let _quantity = 4
-$(btn_pay).on('click', async () => {
-    // e.preventDefault()
+document.querySelector('.btn-pay').addEventListener('click', async (e) => {
+    e.preventDefault()
     // Check input first
     let _receiverName = $('.receiver__name__input').val()
     let _phoneNumber = $('.phone__number__input').val()
     let _message = $('.message__input').val()
     let _address = $('.detail__address__input').val()
     let _payment = $('input[name="pay__type"]:checked').val()
-    let _totalCost = parseInt($('.price').html())
+    // let _totalCost = parseInt($('.price').html())
    
-    try {
-        const data = await $.ajax({
-            url: '/cart/detailCart',
-            type: 'GET',
-        })
-        console.log(data)
-        _products = data.cart.products
+    // check input
+    if(!_receiverName && !_phoneNumber && !_address)
+    {
+        alert("Vui lòng điền thông tin giao hàng")
+        return
+    }
+
+
+    // try {
+        // const data = await $.ajax({
+        //     url: '/cart/detailCart',
+        //     type: 'GET',
+        // })
+        // // console.log(data)
+        // _products = data.cart.products
 
         const newData = await $.ajax({
             url: '/checkout',
             type: 'POST',
-            data: { _receiverName, _phoneNumber, _message, _address, _products, _totalCost, _status, _payment },
+            data: { _receiverName, _phoneNumber, _message, _address, _payment },
         })
-        console.log(newData);
+        // console.log(newData);
+        if(newData.status == 'success')
+        { 
+            alert('Tạo order thành công')
+            window.location.href = '/products'
+        }
 
-        data.cart.products.map(async (item) => {
-            const _data = await $.ajax({
-                url: '/checkout/create',
-                type: 'PUT',
-                data: { _productId: item.productId, _quantity: item.quantity }
-            })
-            console.log(_data)
-        })
+        // const _data = await $.ajax({
+        //     url: '/checkout/create',
+        //     type: 'PUT',
+        //     data: { _productId: item.productId, _quantity: item.quantity }
+        // })
         
-    } catch (error) {
-        console.log(error)
-    }
+    // } catch (error) {
+    //     console.log(error)
+    // }
 
     // window.location.href = 'success' page order success
 })

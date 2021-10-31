@@ -105,10 +105,14 @@ async function addCart() {
             })
             if(data.status == 'success'){
                 alert('Thêm vào giỏ hàng thành công!!')
-            }
-            if(data.isNew){
-                let numCart = $('.cart-num').text()
-                $('.cart-num').text(parseInt(numCart) + 1)
+                if(data.isNew == true){
+                    let numCart = $('.cart-num').text()
+                    if(numCart == ''){
+                        $('.cover-num').append('<a href="/cart" class="cart-num">1</a>')
+                    }else{
+                        $('.cart-num').text(parseInt(numCart) + 1)
+                    }
+                }
             }
         }
 }

@@ -5,6 +5,9 @@ switch (pathName) {
     case "products":
         $(".header-menu #product").addClass('active');
         break;
+    case "news":
+        $(".header-menu #news").addClass('active');
+        break;
     case "":
         $(".header-menu #home").addClass('active');
         break;
@@ -78,13 +81,14 @@ const { removeVI, DefaultOption } = jsrmvi;
 
 $('.search-input input').keyup(async (e) => {
     history.pushState(null, null, `?search=${e.target.value}`)
-    if (e.target.value === '') {
+    const inputValue = removeVI(e.target.value, { ignoreCase: false, replaceSpecialCharacters: false }).toLowerCase();
+    if (inputValue === '') {
         $('.search-result').html('');
     } else {
         $('.search-result').html('');
         var flag = 0;
         products.forEach((product) => {
-            if (removeVI(product.name, { ignoreCase: false, replaceSpecialCharacters: false }).toLowerCase().includes(e.target.value)) {
+            if (removeVI(product.name, { ignoreCase: false, replaceSpecialCharacters: false }).toLowerCase().includes(inputValue)) {
                 $('.search-result').append(`
                     <a href="/products/detail/${product._id}" class="search-result__item">
                         <div class="search-result-item__icon">
