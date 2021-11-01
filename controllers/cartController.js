@@ -1,4 +1,6 @@
 const Cart = require('../models/cartModel')
+const Product = require('../models/productModel')
+const ProductCode = require('../models/productCodeModel')
 
 module.exports.renderCart = (req, res) => {
 	res.render('pages/cart')
@@ -34,6 +36,7 @@ module.exports.createCart = async (req, res) => {
 	// console.log(req.user)
 	const userId = req.user._id
 	const cart = await Cart.findOne({ userId }) // req.body._userId '616e853bb6f54eb7c71eb50d'
+	console.log(123)
 	if (!cart) {
 		const cart1 = await Cart.create({
 			userId,
@@ -72,7 +75,7 @@ module.exports.createCart = async (req, res) => {
 		// 		message: 'Không tìm thấy cart',
 		// 	})
 	} else {
-		console.log('abc')
+		// console.log('abc')
 		const cart_ = await Cart.findOneAndUpdate(
 			{ userId, 'products.productId': req.body._productId },
 			{ $set: { 'products.$.quantity': req.body._sl } }
@@ -99,75 +102,31 @@ module.exports.createCart = async (req, res) => {
 	// }
 }
 
-// module.exports.createCart = async (req, res) => {
-// 	try {
-// 		const cart = await Cart.create({
-// 			userId: req.body.userId,
-// 			products: req.body.products,
-// 		})
-// 		if (!cart)
-// 			return res.status(400).json({
-// 				status: 'fail',
-// 				message: 'Không tạo được cart',
-// 			})
-
-// 		res.status(200).json({
-// 			status: 'success',
-// 			message: 'Create new cart thành công',
-// 			cart,
-// 		})
-// 	} catch (error) {
-// 		res.status(500).json({
-// 			status: 'fail',
-// 			message: 'Lỗi server',
-// 		})
-// 	}
-// }
-
-// module.exports.create_Cart = async (req, res) => {
-// 	try {
-// 		const cart = await Cart.findOneAndUpdate(
-// 			{ userId: req.body._userId },
-// 			{ $push: { products: { productId: req.body._productId, quantity: req.body._quantity }}},
-// 			// { safe: true, upsert: true },
-// 		)
-// 		if (!cart)
-// 			return res.status(400).json({
-// 				status: 'fail',
-// 				message: 'Không tìm thấy cart',
-// 			})
-
-// 		res.status(200).json({
-// 			status: 'success',
-// 			message: 'Create cart thành công',
-// 			cart,
-// 		})
-// 	} catch (error) {
-// 		res.status(500).json({
-// 			status: 'fail',
-// 			message: 'Lỗi server',
-// 		})
-// 	}
-// }
-
 module.exports.updateCart = async (req, res) => {
 	try {
 		const userId = req.user._id
-		const cart = await Cart.findOneAndUpdate(
-			{ userId, 'products.productId': req.body._productId },
-			{ $set: { 'products.$.quantity': req.body._quantity } }
-			// { safe: true, upsert: true },
-		)
+		const idProduct = req.params.id
+
+		const cart = await Cart.findOne({ userId: userId })
+
 		if (!cart)
 			return res.status(400).json({
 				status: 'fail',
 				message: 'Không tìm thấy cart',
 			})
 
+		const quantity = req.body.quantity
+		for (let product of cart.products) {
+			if (product.productId == idProduct) {
+				product.quantity = quantity
+
+				await cart.save()
+				break
+			}
+		}
+
 		res.status(200).json({
 			status: 'success',
-			message: 'Update cart thành công',
-			cart,
 		})
 	} catch (error) {
 		res.status(500).json({
@@ -178,12 +137,13 @@ module.exports.updateCart = async (req, res) => {
 }
 
 module.exports.deleteCart = async (req, res) => {
-	try {
+	// try {
 		const userId = req.user._id
+		const idProduct = req.params.id
+
 		const cart = await Cart.findOneAndUpdate(
 			{ userId },
-			{ $pull: { products: { productId: req.body._productId } } }
-			// { safe: true, upsert: true },
+			{ $pull: { products: { productId: idProduct } } }
 		)
 		if (!cart)
 			return res.status(400).json({
@@ -196,10 +156,42 @@ module.exports.deleteCart = async (req, res) => {
 			message: 'Delete cart thành công',
 			cart,
 		})
-	} catch (error) {
-		res.status(500).json({
+	// } catch (error) {
+	// 	res.status(500).json({
+	// 		status: 'fail',
+	// 		message: 'Lỗi server',
+	// 	})
+	// }
+}
+
+module.exports.getAllCart = async (req, res) => {
+	const cart = await Cart.findOne({ userId: req.user._id }).lean()
+
+	// console.log(cart)
+	if(!cart)
+	{
+		return res.status(200).json({
 			status: 'fail',
-			message: 'Lỗi server',
+			message: 'Bạn chưa có cart'
 		})
 	}
+
+	const products = []
+	for (let product of cart.products) {
+		const pro = await Product.findById(product.productId).lean()
+		const productCode = await ProductCode.findById(pro.idProductCode).lean()
+
+		pro.idProductCode = productCode
+
+		products.push({ ...pro, quantity: product.quantity })
+	}
+
+	cart.products = products
+
+	res.status(200).json({
+		status: 'success',
+		data: {
+			cart,
+		},
+	})
 }

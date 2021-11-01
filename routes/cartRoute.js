@@ -11,11 +11,20 @@ cartRouter.get('/detailCart', cartController.detailCart)
 cartRouter.post('/', cartController.createCart)
 
 // update cart
-cartRouter.put('/', cartController.updateCart)
+// cartRouter.put('/', cartController.updateCart)
 
 // delete cart
-cartRouter.delete('/', cartController.deleteCart)
+// cartRouter.delete('/', cartController.deleteCart)
 
-// chuyen tu localStorage to cart
+
+
+// get cart
+cartRouter.get('/api', cartController.getAllCart)
+
+// put cart
+cartRouter.put('/api/:id', cartController.updateCart)
+
+cartRouter.delete('/api/:id', cartController.deleteCart)
+
 
 module.exports = cartRouter
