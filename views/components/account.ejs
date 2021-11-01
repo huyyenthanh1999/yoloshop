@@ -22,7 +22,7 @@
         <div class="grid-col-3_4 account-right ms-grid-col-full">
             <h3>Thông tin tài khoản</h3>
             <div class="account-info" style="background-color: #EBEBF0;">
-                <form action="/user/account/edit-account" method="PUT">
+                <form class="info" action="/user/account/edit-account" method="PUT">
                     <div class="form-control">
                         <label for="">Họ tên</label>
                         <div>
@@ -118,11 +118,16 @@
     <div class="avatar-modal">
         <div class="avatar-modal__inner">
             <div class="avatar-modal-inner__head">
-                <img src="<%= user.avatar %>" alt="avatar error">
+                <div class="avatar-preview">
+                    <img src="<%= user.avatar %>" alt="avatar error">
+                    <div class="circle-loading hide"></div>
+                </div>
                 <h2>Avatar Profile</h2>
             </div>
             <div class="avatar-modal-inner__body">
-                <input type="file" id="FileUploadAvatar" style="display: none" />
+                <form class="avatar" action="/account/edit-avatar" method="PUT" enctype="multipart/form-data">
+                    <input type="file" id="FileUploadAvatar" name="avatar" style="display: none" />
+                </form>
                 <ul>
                     <li id="uploadavatar" style="color: #4267b2; font-weight: 600;">Upload Photo</li>
                     <li id="removeavatar" style="color: red; font-weight: 600;">Remove Current Photo</li>

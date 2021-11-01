@@ -272,6 +272,10 @@ td a {
     border-radius: 50%;
 }
 
+.avatar-preview {
+    position: relative;
+}
+
 .avatar-modal-inner__head {
     display: flex;
     flex-direction: column;
@@ -294,6 +298,41 @@ td a {
 
 .avatar-modal-inner__body li:hover {
     background-color: #ddd;
+}
+
+/* circle loading */
+.circle-loading {
+    width: 80px;
+    height: 80px;
+    border-radius: 15rem;
+    position: absolute;
+    margin: 0 auto;
+    left: 0;
+    top: 0;
+}
+
+.circle-loading.hide{
+    display: none;
+}
+
+.circle-loading:before {
+    content: "";
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.5);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    border: 1rem solid white;
+    border-right-color: #13D2B8;
+    border-bottom-color: #13D2B8;
+    animation: circleLoading 1s forwards infinite linear;
+}
+@keyframes circleLoading {
+    to {
+        transform: rotate(360deg);
+    }
 }
 @media only screen and (max-width: 67.5em){
     .ms-grid-col-full {

@@ -4,12 +4,14 @@ const Product = require('../models/productModel')
 const ProductCode = require('../models/productCodeModel')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
+const imgbbUploader = require('imgbb-uploader')
+const path = require('path')
+
 
 // get account
 
 module.exports.getAccount = async (req, res) => {
     try {
-        // console.log('vaof account')
         //giai ma token
         // var decoded = jwt.verify(req.cookies.tokenId, process.env.TOKEN_KEY);
         //doc id
@@ -32,19 +34,11 @@ module.exports.getAccount = async (req, res) => {
         if (!req.user){
         res.redirect('/auth/login')
         }
-            // return res.status(400).json({
-            //     status: 'fail',
-            //     message: 'Không tìm thấy trang',
-            // })
         res.render('pages/account', {
              user: req.user,
              orders 
             })
     } catch (error) {
-        // res.status(500).json({
-        //     status: 'fail',
-        //     message: 'Lỗi server',
-        // }) 
         res.redirect('/auth/login')
     }
 }
@@ -64,13 +58,6 @@ module.exports.editInfoAccount = async (req, res) => {
                 message: "Đã update"
             })
         }
-
-    // } catch (error) {
-    //     res.status(500).json({
-    //         status: 'fail',
-    //         message: 'Lỗi server',
-    //     })
-    // }
 }
 
 //edit password account
@@ -97,7 +84,6 @@ module.exports.editPasswordAccount = async (req, res) => {
                 })
             
             } else {
-                // console.log('pass ko đung')
                 res.json({
                     status: 'fail',
                     message: "Mat khẩu cũ không đúng"
@@ -112,3 +98,23 @@ module.exports.editPasswordAccount = async (req, res) => {
     }
 }
 
+// edit avatar
+module.exports.editAvatar = async (req, res, next) => {
+	try {
+		// update avatar
+		if (req.file) {
+			const upload = await imgbbUploader(process.env.IMGBB_KEY, req.file.path)
+			req.body.avatar = upload.url
+		}
+        await User.updateOne({ _id: req.user._id }, req.body)
+        
+		res.status(200).json({
+			status: 'success'
+		})
+	} catch (error) {
+		res.status(500).json({
+			status: 'fail',
+			message: 'Lỗi server',
+		})
+	}
+}

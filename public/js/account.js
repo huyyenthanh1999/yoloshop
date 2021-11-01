@@ -128,7 +128,7 @@ if (url == 'orders') {
 // 
 
 const formData = new FormData()
-const form = document.querySelector('form')
+const form = document.querySelector('form.info')
 
 form.addEventListener('submit', async (e) => {
   e.preventDefault()
@@ -182,7 +182,6 @@ form.addEventListener('submit', async (e) => {
       alert('Cập nhật thông tin thất bại')
     }
   }
-  // console.log(name, phone, email, oldPass, newPass, confirmPass)
 })
 
 //upload avatar
@@ -209,7 +208,64 @@ $('.avatar-modal__inner').click(function(e){
 })
 
 //change avatar
-$('#FileUploadAvatar').change(function(){
-  var fileName = $(this).val().split('\\')[$(this).val().split('\\').length - 1];
-  console.log(fileName);
+const lazy = document.querySelector('.circle-loading')
+$('#FileUploadAvatar').change(async function(){
+  let [file] = this.files
+	if (file) {
+		// upload preview avatar
+    $('.avatar-preview img').attr('src', URL.createObjectURL(file))
+	}
+
+  const formData = new FormData()
+  formData.set('avatar', file)
+
+  // add lazing avatar
+	lazy.classList.toggle('hide')
+
+  let response = await fetch('/account/edit-avatar', {
+		method: 'PUT',
+    body: formData
+	})
+
+	if (response.status == 200) {
+		lazy.classList.toggle('hide')
+		alert('Sửa avatar thành công')
+    //change avatar
+    $('.account-avatar img').attr('src', URL.createObjectURL(file))
+	} else {
+		lazy.classList.toggle('hide')
+		alert('Sửa avatar thất bại')
+	}
+})
+
+//remove avatar
+$('#removeavatar').click(async function () {
+  if (confirm('Are you sure you want to delete current avatar?')) {
+    var src='/public/images/userImg/default-avatar.png';
+    $('.avatar-preview img').attr('src', src)
+
+    const formData = new FormData()
+    formData.set('avatar', src)
+	  lazy.classList.toggle('hide')
+
+    let response = await fetch('/account/edit-avatar', {
+      method: 'PUT',
+      body: formData
+    })
+  
+    if (response.status == 200) {
+      lazy.classList.toggle('hide')
+      alert('Xóa avatar thành công')
+      //change avatar
+      $('.account-avatar img').attr('src', src)
+    } else {
+      lazy.classList.toggle('hide')
+      alert('Xóa avatar thất bại')
+    }
+  }
+})
+
+//cancel update avatar 
+$('#cancelavatar').click(function () {
+  $('.avatar-modal').css('display','none')
 })
