@@ -2,17 +2,13 @@ const mongoose = require('mongoose')
 
 const NewsSchema = mongoose.Schema(
 	{
-		title: {
-			type: String,
-			required: true
-		},
 		banner: {
 			type: String,
 			required: true
 		},
-		content: {
+		title: {
 			type: String,
-            required: true
+			required: true
 		},
 		description: {
 			type: String,

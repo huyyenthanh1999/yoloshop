@@ -27,60 +27,18 @@
             <div class="main">
                 <div>
                     <div class="news-container">
-                        <div class="news-banner">
-                            <img src="https://cdn.shopify.com/s/files/1/2090/4191/articles/Fall16_18_1400x_17056119-4223-4b7a-904d-78c567516a18_1296x.jpg?v=1497262881"
-                                alt="">
-                        </div>
-                        <div class="news-content">
-                            <div class="section-title">Into the woods</div>
-                            <div class="section-body">
-                                <p>
-                                    A café racer is a lightweight, lightly powered motorcycle optimized for speed and
-                                    handling rather than comfort – and for quick rides over short distances. With
-                                    bodywork
-                                    and control layout recalling early-1960s Grand Prix road racing motorcycles, café
-                                    racers
-                                    are noted for their visual minimalism, featuring low-mounted handlebars, prominent
-                                    seat
-                                    cowling and elongated fuel tank – and frequently knee-grips indented in the fuel
-                                    tank.
-                                </p>
-                                <br>
-                                <br>
-                                <p>
-                                    In 2014, journalist Ben Stewart described the café racer as a "look made popular
-                                    when
-                                    European kids stripped down their small-displacement bikes to zip from one café
-                                    hangout
-                                    to another." In 1973, American freelance writer Wallace Wyss, contributing to
-                                    Popular
-                                    Mechanics magazine, wrote that the term café racer was originally used derogatorily
-                                    in
-                                    Europe to describe a "motorcyclist who played at being an Isle of Man road racer"
-                                    and
-                                    was, in fact, "someone who owned a racy machine but merely parked it near his table
-                                    at
-                                    the local outdoor cafe."
-                                </p>
-                                <br>
-                                <br>
-                                <p>
-                                    The term developed among British motorcycle enthusiasts of the early 1960s from
-                                    Watford,
-                                    and London, specifically the Rocker or "Ton-Up Boys" subculture, where the bikes
-                                    were
-                                    used for short, quick rides between cafés, in Watford at the Busy Bee café and the
-                                    Ace
-                                    Café in London. In post-war Britain, car ownership was still uncommon, but by the
-                                    late
-                                    1950s the average Briton could now afford a car.So by the early 1960s the café
-                                    racer's
-                                    significance was that a bike had come to represent speed, status and rebellion,
-                                    rather
-                                    than mere inability to afford a car.
-                                </p>
+                        <% news.forEach(n => { %>
+                            <div class="news-banner">
+                                <img src="<%= n.banner %>"
+                                    alt="">
                             </div>
-                        </div>
+                            <div class="news-content">
+                                <div class="section-title"><%= n.title %></div>
+                                <div class="section-body">
+                                    <%= n.description %>
+                                </div>
+                            </div>
+                        <% }) %>
                         <div class="change-page">
                             <a href="/news/"><i class='bx bx-chevron-left'></i></a>
                             <a href="/news/"><i class='bx bx-chevron-right'></i></a>
@@ -89,10 +47,10 @@
                             <div class="newsletter-form__inner">
                                 <div class="section-title">Newsletter</div>
                                 <p>Sign up to stay in the loop. Receive updates, access to exclusive deals, and more.</p>
-                                <form class="send-mail" action="">
+                                <form class="send-mail" action="news/send-mail" method="post">
                                     <div class="form-send">
-                                        <input type="email" placeholder="email@example.com">
-                                        <button>Subscribe  ></button>
+                                        <input type="email" required name="email" placeholder="email@example.com">
+                                        <button type="submit">Subscribe  ></button>
                                     </div>
                                 </form>
                             </div>
@@ -105,6 +63,10 @@
             <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
             <script src="../../public/js/header.js"></script>
             <script src="/public/js/logout.js"></script>
+            <script src="/public/js/news-detail.js"></script>
+            <script>
+                $('.section-body').html($('.section-body').text())
+            </script>
 </body>
 
 </html>

@@ -4,6 +4,9 @@ const Product = require('../models/productModel')
 const ProductCode = require('../models/productCodeModel')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
+const imgbbUploader = require('imgbb-uploader')
+const path = require('path')
+
 
 // get account
 
@@ -95,3 +98,23 @@ module.exports.editPasswordAccount = async (req, res) => {
     }
 }
 
+// edit avatar
+module.exports.editAvatar = async (req, res, next) => {
+	try {
+		// update avatar
+		if (req.file) {
+			const upload = await imgbbUploader(process.env.IMGBB_KEY, req.file.path)
+			req.body.avatar = upload.url
+		}
+        await User.updateOne({ _id: req.user._id }, req.body)
+        
+		res.status(200).json({
+			status: 'success'
+		})
+	} catch (error) {
+		res.status(500).json({
+			status: 'fail',
+			message: 'Lỗi server',
+		})
+	}
+}

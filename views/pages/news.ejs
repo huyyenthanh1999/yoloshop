@@ -34,94 +34,29 @@
 						<div class="section-title">News</div>
 						<div class="section-body">
 							<div class="grid-rows">
-								<div class="grid-col-half" data-aos="fade-right">
-									<div class="news-card">
-										<a href="/news/1">
-											<div class="news-banner">
-												<img src="https://cdn.shopify.com/s/files/1/2090/4191/articles/Fall16_18_1400x_17056119-4223-4b7a-904d-78c567516a18_900x.jpg"
-													alt="">
-											</div>
-										</a>
-										<div class="news-description">
-											<h4 class="news-title">
-												Into the woods
-											</h4>
-											<p class="news-description__content">
-												A café racer is a lightweight, lightly powered motorcycle optimized for
-												speed and handling rather than comfort – and...
-											</p>
-											<div class="news-description_time">
-												JUN 12, 2017
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="grid-col-half" data-aos="fade-left">
-									<div class="news-card">
-										<a href="/news/1">
-											<div class="news-banner">
-												<img src="https://cdn.shopify.com/s/files/1/2090/4191/articles/DesertTempest_13_1400x_76e3bbc3-f4a1-4e1d-a5c7-82e88b063343_900x500_crop_center.jpg"
-													alt="">
-											</div>
-										</a>
-										<div class="news-description">
-											<h4 class="news-title">
-												Into the woods
-											</h4>
-											<p class="news-description__content">
-												A café racer is a lightweight, lightly powered motorcycle optimized for
-												speed and handling rather than comfort – and...
-											</p>
-											<div class="news-description_time">
-												JUN 12, 2017
+								<% news.forEach(n => { %>
+									<div class="grid-col-half" data-aos="fade-down">
+										<div class="news-card">
+											<a href="/news/<%= n._id %>">
+												<div class="news-banner">
+													<img src="<%= n.banner %>" alt="banner image error">
+												</div>
+											</a>
+											<div class="news-description">
+												<h4 class="news-title">
+													<%= n.title %>
+												</h4>
+												<p class="news-description__content">
+													<%= n.description.replace(/<[^>]+>/g, '') %>
+												</p>
+												<div class="news-description_time">
+													<% var date = new Date(n.updatedAt); %>
+													<%= date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate(); %> 
+												</div>
 											</div>
 										</div>
 									</div>
-								</div>
-								<div class="grid-col-half" data-aos="fade-left">
-									<div class="news-card">
-										<a href="/news/1">
-											<div class="news-banner">
-												<img src="https://cdn.shopify.com/s/files/1/2090/4191/articles/Fall16_18_1400x_17056119-4223-4b7a-904d-78c567516a18_900x.jpg"
-													alt="">
-											</div>
-										</a>
-										<div class="news-description">
-											<h4 class="news-title">
-												Into the woods
-											</h4>
-											<p class="news-description__content">
-												A café racer is a lightweight, lightly powered motorcycle optimized for
-												speed and handling rather than comfort – and...
-											</p>
-											<div class="news-description_time">
-												JUN 12, 2017
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="grid-col-half" data-aos="fade-right">
-									<div class="news-card">
-										<a href="/news/1">
-											<div class="news-banner">
-												<img src="https://cdn.shopify.com/s/files/1/2090/4191/articles/Fall16_18_1400x_17056119-4223-4b7a-904d-78c567516a18_900x.jpg"
-													alt="">
-											</div>
-										</a>
-										<div class="news-description">
-											<h4 class="news-title">
-												Into the woods
-											</h4>
-											<p class="news-description__content">
-												A café racer is a lightweight, lightly powered motorcycle optimized for
-												speed and handling rather than comfort – and...
-											</p>
-											<div class="news-description_time">
-												JUN 12, 2017
-											</div>
-										</div>
-									</div>
-								</div>
+								<% }) %> 
 							</div>
 						</div>
 					</div>
