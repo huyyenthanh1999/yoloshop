@@ -53,7 +53,8 @@ function renderListOfCustomers(customers) {
         <tr>
         <td class="stt-customer">${index + 1}</td>
         <td class="id-customer">
-            <a href="/users/${customer._id}">${customer._id}</a>
+            <a href="/admin/customers/${customer._id}">${customer._id}</a>
+			
         </td>
         <td class="cover-customer">
             <img

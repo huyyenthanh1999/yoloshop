@@ -17,18 +17,18 @@
 			<tbody>
 				<tr>
 					<td>
-						<a href="">617675a5c65c4c0d3c88231e</a>
+						<a href="/admin/customers/<%= order.user._id %>"><%= order.user._id %></a>
 					</td>
 					<td class="orderer-cover">
 						<img
-							src="https://images.unsplash.com/photo-1633113090286-3318ea2d24ae?ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1170&q=80"
+							src="<%= order.user.avatar %>"
 							alt=""
 						/>
 					</td>
-					<td>CườngNv</td>
-					<td>123456789</td>
-					<td>nguyencuongnv123@gmail.com</td>
-					<td>user</td>
+					<td><%= order.user.name %></td>
+					<td><%= order.user.phoneNumber %></td>
+					<td><%= order.user.email %></td>
+					<td><%= order.user.role %></td>
 				</tr>
 			</tbody>
 		</table>
@@ -38,15 +38,15 @@
 		<div class="basic-info">
 			<div>
 				Ngày đặt:
-				<span>12/10/2021</span>
+				<span><%= (order.createdAt.toLocaleString()) %></span>
 			</div>
 			<div>
 				Hình thức:
-				<span>Ship cod</span>
+				<span><%= order.payment  %></span>
 			</div>
 			<div class="status">
 				Trạng thái:
-				<span>Đã giao</span>
+				<span class="<%= order.status %>"><%= order.status  %></span>
 			</div>
 		</div>
 		<table class="table table-hover">
@@ -64,52 +64,41 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr></tr>
+				<%
+                    for (let i = 0; i < order.products.length; i++) {
+                        let product = order.products[i]
+                %>
 				<tr>
-					<td class="stt-product">1</td>
+					<td class="stt-product"><%= i + 1 %></td>
 					<td class="id-product">
-						<a href="/admin/products/6171150791ad297ed00563b7	"
-							>6171150791ad297ed00563b7</a
+						<a href="/admin/products/<%= product.idProductCode %>"
+							><%= product.idProductCode %></a
 						>
 					</td>
 					<td class="cover-product">
-						<img src="https://i.ibb.co/VvYGQVv/da37d101fd0b.jpg" alt="" />
+						<img src="<%= product.images[0] %>" alt="" />
 					</td>
-					<td class="name-product">Áo thun Dinosaur 01</td>
-					<td>Áo thun</td>
-					<td>red</td>
-					<td>M</td>
-					<td class="last-product">10</td>
-					<td>100.000</td>
+					<td class="name-product"><%= product.name %></td>
+					<td><%= product.type %></td>
+					<td><%= product.color %></td>
+					<td><%= product.size %></td>
+					<td class="last-product"><%= product.quantity %></td>
+					<td><%= product.quantity * product.cost %></td>
 				</tr>
-				<tr>
-					<td class="stt-product">1</td>
-					<td class="id-product">
-						<a href="/admin/products/6171150791ad297ed00563b7	"
-							>6171150791ad297ed00563b7</a
-						>
-					</td>
-					<td class="cover-product">
-						<img src="https://i.ibb.co/VvYGQVv/da37d101fd0b.jpg" alt="" />
-					</td>
-					<td class="name-product">Áo thun Dinosaur 01</td>
-					<td>Áo thun</td>
-					<td>red</td>
-					<td>M</td>
-					<td class="last-product">10</td>
-					<td>100.000</td>
-				</tr>
+				<%        
+                    }
+                %>
 			</tbody>
 			<tfoot>
 				<tr>
 					<th colspan="7"></th>
 					<th>Phí ship</th>
-					<th>10000</th>
+					<th>30,000</th>
 				</tr>
 				<tr>
 					<th colspan="7"></th>
 					<th>Tổng tiền</th>
-					<th>10000</th>
+					<th><%= order.totalCost.toLocaleString() %></th>
 				</tr>
 			</tfoot>
 		</table>
@@ -127,17 +116,19 @@
 			</thead>
 			<tbody>
 				<tr>
-					<td>Nguyễn Văn Cường</td>
-					<td>012345688</td>
-					<td>214 Nguyễn Xiển, Hà Nội, Việt Nam</td>
-					<td>Giao trong giờ hành chính</td>
+					<td><%= order.receiverName %></td>
+					<td><%= order.phoneNumber %></td>
+					<td><%= order.address %></td>
+					<td><%= order.message %></td>
 				</tr>
 			</tbody>
 		</table>
 	</div>
-	<div class="order-action">
-		<button class="delivery-order">Giao hàng</button>
-		<button class="bill-order">Hóa đơn</button>
-		<button class="cancel-order">Hủy đơn hàng</button>
+	<div class="order-action <%= order.status %>" data-id="<%= order._id %>">
+		<button class="delivery-order" onclick="deliveryOrder(event)">Giao hàng</button>
+		<a href="/invoices/<%= order._id %>" target="_blank" class="bill-order">
+			Hóa đơn
+		</a>
+		<button class="cancel-order" onclick="cancelOrder(event)">Hủy đơn hàng</button>
 	</div>
 </form>
