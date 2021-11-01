@@ -40,9 +40,10 @@ module.exports.getAllNews = async (req, res) => {
 
 module.exports.getDetailNews = async (req, res) => {
     try {
-        const news = await News.find();
+		const newId = req.params.id;
+        const newsElement = await News.findById(newId);
         res.render('pages/news-detail',{
-            news
+            newsElement
         })
     } catch (error) {
         res.status(500).json({

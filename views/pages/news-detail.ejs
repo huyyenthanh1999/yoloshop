@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Yolo - Trang chủ</title>
+    <title>Yolo - <%= newsElement.title %></title>
     <link rel="stylesheet" href="../../public/css/header.css" />
     <link rel="stylesheet" href="../../public/css/footer.css" />
     <link rel="stylesheet" href="../../public/css/homeBase.css" />
@@ -27,18 +27,16 @@
             <div class="main">
                 <div>
                     <div class="news-container">
-                        <% news.forEach(n => { %>
                             <div class="news-banner">
-                                <img src="<%= n.banner %>"
+                                <img src="<%= newsElement.banner %>"
                                     alt="">
                             </div>
                             <div class="news-content">
-                                <div class="section-title"><%= n.title %></div>
+                                <div class="section-title"><%= newsElement.title %></div>
                                 <div class="section-body">
-                                    <%= n.description %>
+                                    <%= newsElement.description %>
                                 </div>
                             </div>
-                        <% }) %>
                         <div class="change-page">
                             <a href="/news/"><i class='bx bx-chevron-left'></i></a>
                             <a href="/news/"><i class='bx bx-chevron-right'></i></a>
