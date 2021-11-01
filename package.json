@@ -21,6 +21,7 @@
   "homepage": "https://github.com/CuongNvcqht3012002/K14-project-shop#readme",
   "dependencies": {
     "bcrypt": "^5.0.1",
+    "compression": "^1.7.4",
     "cookie-parser": "^1.4.5",
     "date-and-time": "^2.0.1",
     "dotenv": "^10.0.0",
