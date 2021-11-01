@@ -45,23 +45,22 @@ function renderCart(products) {
             <a href='/products/detail/${product.idProductCode._id}'>${
 			product.idProductCode.name
 		} - ${product.color} - ${product.size}</a>
-            <p class='product__id'>${product._id}</p>
-          </td>
-          <td class='td1 cart__item__info__cost'>
-            ${(product.idProductCode.cost * product.quantity).toLocaleString()}
           </td>
           <td class='td1 product_quantity'>
             <div class='product__info__item__quantity'>
-              <button class='product__info__item__quantity__btn dec__btn' onclick='decrementProduct(event)'>
-                  <i class='bx bx-minus'></i>
-              </button>
-              <div class='product__info__item__quantity__input'>${
-								product.quantity
-							}</div>
-              <button class='product__info__item__quantity__btn inc__btn' onclick="incrementProduct(event)">
-                  <i class='bx bx-plus'></i>
-              </button>
+              	<button class='product__info__item__quantity__btn dec__btn' onclick='decrementProduct(event)'>
+					<i class='bx bx-minus'></i>
+              	</button>
+              	<div class='product__info__item__quantity__input'>
+			  		${product.quantity}
+				</div>
+              	<button class='product__info__item__quantity__btn inc__btn' onclick="incrementProduct(event)">
+                  	<i class='bx bx-plus'></i>
+              	</button>
             </div>
+          </td>
+		  <td class='td1 cart__item__info__cost'>
+            ${(product.idProductCode.cost * product.quantity).toLocaleString()}
           </td>
           <td class='td1'>
             <button class='cart__item__del' onclick="deleteProduct(event)">
@@ -82,7 +81,7 @@ function renderCart(products) {
 }
 
 function setReview() {
-	$('.total__product').html(totalProduct)
+	$('.total__product').html(formatTotalProduct(totalProduct))
 	$('.total__cost').html(`${totalCost.toLocaleString()} VNĐ`)
 }
 
@@ -207,3 +206,10 @@ async function getCart() {
 getCart()
 
 function changeCart() {}
+
+function formatTotalProduct(quantity) {
+	if (quantity < 10)
+		return '0' + quantity
+	else
+		return quantity
+}
