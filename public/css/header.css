@@ -291,7 +291,7 @@ a.cart-num {
 }
 
 .search-result {
-  max-height: 500px;
+  max-height: 400px;
   overflow-y: auto;
 }
 
@@ -328,6 +328,13 @@ a.cart-num {
 
 .search-result-item__icon {
   margin-right: 8px;
+}
+
+.search-result-item__icon img {
+  width: 50px;
+  height: 50px;
+  object-fit:cover;
+  object-position: center top;
 }
 
 .search-result-item__price {

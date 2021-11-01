@@ -8,7 +8,7 @@ const dateFormat = require('date-and-time')
 // /products/api?search=""&filter=""
 module.exports.getAllProduct = async (req, res) => {
 	// try {
-	const perPage = 5
+	const perPage = 9
 	const option = { replaceSpecialCharacters: false }
 	// get query
 	let { page, search, date, cost, left } = req.query
@@ -25,9 +25,11 @@ module.exports.getAllProduct = async (req, res) => {
 			removeVI(item.name, option).includes(search) ||
 			dateFormat.format(item.createdAt, 'DD/MM/YYYY').includes(search) ||
 			item.cost.toString().includes(search) ||
-			item.type.includes(search) 
+			item.type.includes(search)
 		)
 	})
+
+	// console.log(productCodes)
 
 	// đếm số lượng sản phẩm trong productCodes và gán products vào productCodes
 	for (let item of productCodes) {
@@ -44,9 +46,9 @@ module.exports.getAllProduct = async (req, res) => {
 		item.products = products
 	}
 
+
 	// filter sort: date, cost, left
 	if (date && !cost && !left) {
-		console.log('date')
 		if (date == 'down')
 			productCodes = productCodes.sort(function (a, b) {
 				return new Date(a.createdAt) - new Date(b.createdAt)
@@ -77,13 +79,16 @@ module.exports.getAllProduct = async (req, res) => {
 	let totalPages = Math.ceil(productCodes.length / perPage)
 
 	// pagination
-	let begin = (page - 1) * perPage
-	let end = page * perPage
-	// console.log(begin, end)
-	productCodes = productCodes.slice(begin, end)
+	if (!req.query.input) {
+		let begin = (page - 1) * perPage
+		let end = page * perPage
+		// console.log(begin, end)
+		productCodes = productCodes.slice(begin, end)
+	}
 
 	// let totalProducts = await ProductCode.countDocuments()
 
+	// console.log(90, productCodes.length)
 	res.status(200).json({
 		productCodes,
 		total: totalProducts,
@@ -395,53 +400,53 @@ module.exports.getDetailProductCode = async (req, res) => {
 module.exports.userAddProduct = async (req, res) => {
 	// console.log('hello')
 	// try {
-		const _id = req.params.id
-		const product = await Product.findById(_id).populate('idProductCode')
+	const _id = req.params.id
+	const product = await Product.findById(_id).populate('idProductCode')
 
-		const cartItem = {
-			_id,
-			color: req.query.color,
-			size: req.query.size,
-			quantity: +req.query.quantity,
-			image: product.idProductCode.images[0],
-			name: product.idProductCode.name,
-		}
+	const cartItem = {
+		_id,
+		color: req.query.color,
+		size: req.query.size,
+		quantity: +req.query.quantity,
+		image: product.idProductCode.images[0],
+		name: product.idProductCode.name,
+	}
 
-		const cart = req.session.cart || []
-		let totalMoney = +req.session.totalMoney || 0
+	const cart = req.session.cart || []
+	let totalMoney = +req.session.totalMoney || 0
 
-		// kiểm tra xem sản phẩm đã được thêm vào trước đó không
-		// nếu đã được thêm thì chỉ cần tăng số lượng product
-		// nếu chưa thêm thì thêm
-		let newProduct = true
-		for (let i = 0; i < cart.length; i++) {
-			if (
-				cart[i]._id == cartItem._id &&
-				cart[i].size == cartItem.size &&
-				cart[i].color == cartItem.color
-			) {
-				// them so luong san pham va them tien
-				cart[i].quantity += cartItem.quantity
-				totalMoney += cartItem.quantity * product.idProductCode.cost
-
-				newProduct = false
-				break
-			}
-		}
-
-		if (newProduct) {
-			cart.push(cartItem)
+	// kiểm tra xem sản phẩm đã được thêm vào trước đó không
+	// nếu đã được thêm thì chỉ cần tăng số lượng product
+	// nếu chưa thêm thì thêm
+	let newProduct = true
+	for (let i = 0; i < cart.length; i++) {
+		if (
+			cart[i]._id == cartItem._id &&
+			cart[i].size == cartItem.size &&
+			cart[i].color == cartItem.color
+		) {
+			// them so luong san pham va them tien
+			cart[i].quantity += cartItem.quantity
 			totalMoney += cartItem.quantity * product.idProductCode.cost
-		}
 
-		req.session.cart = cart
-		req.session.totalMoney = totalMoney
-		// console.log(req.session.cart)
-		// console.log(req.session.totalMoney)
-		res.status(200).json({
-			status: 'success',
-			message: 'Đã thêm sản phẩm vào giỏ hàng',
-		})
+			newProduct = false
+			break
+		}
+	}
+
+	if (newProduct) {
+		cart.push(cartItem)
+		totalMoney += cartItem.quantity * product.idProductCode.cost
+	}
+
+	req.session.cart = cart
+	req.session.totalMoney = totalMoney
+	// console.log(req.session.cart)
+	// console.log(req.session.totalMoney)
+	res.status(200).json({
+		status: 'success',
+		message: 'Đã thêm sản phẩm vào giỏ hàng',
+	})
 	// } catch (error) {
 	// 	res.status(400).json({
 	// 		status: 'fail',

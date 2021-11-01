@@ -9,7 +9,7 @@
                             <%- include ('./product-card', {
                                 id: products[newIndexes[j]]._id,
                                 name: products[newIndexes[j]].name,
-                                price: products[newIndexes[j]].price,
+                                price: products[newIndexes[j]].cost.toLocaleString(),
                                 imgFront: products[newIndexes[j]].images[0],
                                 imgBack: products[newIndexes[j]].images[1]
                             }) -%>

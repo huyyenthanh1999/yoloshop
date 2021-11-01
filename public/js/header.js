@@ -1,117 +1,135 @@
 //active css nav-item
-var pathName = window.location.pathname;
+var pathName = window.location.pathname
 pathName = pathName.slice(1, pathName.length)
 switch (pathName) {
-    case "products":
-        $(".header-menu #product").addClass('active');
-        break;
-    case "news":
-        $(".header-menu #news").addClass('active');
-        break;
-    case "":
-        $(".header-menu #home").addClass('active');
-        break;
-    default:
-        break;
+	case 'products':
+		$('.header-menu #product').addClass('active')
+		break
+	case 'news':
+		$('.header-menu #news').addClass('active')
+		break
+	case '':
+		$('.header-menu #home').addClass('active')
+		break
+	default:
+		break
 }
 
 //go top button
-const menuLeft = $('.header-menu__left');
-const goTop = $('.go-top');
-
+const menuLeft = $('.header-menu__left')
+const goTop = $('.go-top')
 
 function menuToggle() {
-    menuLeft.toggleClass('active')
-    disableScroll();
+	menuLeft.toggleClass('active')
+	disableScroll()
 }
 //disable scroll event
 function disableScroll() {
-    if (menuLeft.hasClass('active')) {
-        goTop.removeClass('show');
-        $('body').css({ 'margin': '0', 'height': '100%', 'overflow': 'hidden' });
-    } else {
-        goTop.addClass('show');
-        $('body').css({ 'margin': '', 'height': '%', 'overflow': '' });
-    }
+	if (menuLeft.hasClass('active')) {
+		goTop.removeClass('show')
+		$('body').css({ margin: '0', height: '100%', overflow: 'hidden' })
+	} else {
+		goTop.addClass('show')
+		$('body').css({ margin: '', height: '%', overflow: '' })
+	}
 }
 
-disableScroll();
+disableScroll()
 
 //scroll event
-const header = $('#header');
+const header = $('#header')
 
 window.addEventListener('scroll', () => {
-    if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
-        header.addClass('shrink');
-        header.css('background-color', '#fff')
-        goTop.addClass('show');
-    } else {
-        header.removeClass('shrink');
-        goTop.removeClass('show');
-        header.css('background-color', '')
-    }
+	if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
+		header.addClass('shrink')
+		header.css('background-color', '#fff')
+		goTop.addClass('show')
+	} else {
+		header.removeClass('shrink')
+		goTop.removeClass('show')
+		header.css('background-color', '')
+	}
 })
 
-
 //open modal with search
-var currentUrl = window.location.pathname + window.location.search;
-var products = [];
-async function openSearch() {
-    $('.modal').addClass('active')
-    $('body').css({ 'margin': '0', 'height': '100%', 'overflow': 'hidden' });
-    const res = await $.ajax({
-        url: `/`,
-        type: 'POST'
-    })
-    products = res.products;
+// var currentUrl = window.location.pathname + window.location.search
+var products = []
+function openSearch() {
+	$('.modal').addClass('active')
+	$('body').css({ margin: '0', height: '100%', overflow: 'hidden' })
+    inputSearch.focus()
 }
 
 function closeSearch() {
-    history.replaceState(null, null, currentUrl)
-    $('.modal').removeClass('active')
-    $('body').css({ 'margin': '', 'height': '', 'overflow': '' });
+	// history.replaceState(null, null, currentUrl)
+	$('.modal').removeClass('active')
+	$('body').css({ margin: '', height: '', overflow: '' })
+    $('.search-result').html('')
+    inputSearch.val('')
 }
 
-$('.overlay').on('click', closeSearch);
+$('.overlay').on('click', closeSearch)
 $('.modal-inner').on('click', (e) => {
-    e.stopPropagation()
+	e.stopPropagation()
 })
 
-const { removeVI, DefaultOption } = jsrmvi;
+// debounce
+function debounce(func, timeout = 300) {
+	let timer
+	return (...args) => {
+		clearTimeout(timer)
+		timer = setTimeout(() => {
+			func.apply(this, args)
+		}, timeout)
+	}
+}
 
-$('.search-input input').keyup(async (e) => {
-    history.pushState(null, null, `?search=${e.target.value}`)
-    const inputValue = removeVI(e.target.value, { ignoreCase: false, replaceSpecialCharacters: false }).toLowerCase();
-    if (inputValue === '') {
-        $('.search-result').html('');
-    } else {
-        $('.search-result').html('');
-        var flag = 0;
-        products.forEach((product) => {
-            if (removeVI(product.name, { ignoreCase: false, replaceSpecialCharacters: false }).toLowerCase().includes(inputValue)) {
-                $('.search-result').append(`
-                    <a href="/products/detail/${product._id}" class="search-result__item">
-                        <div class="search-result-item__icon">
-                            <i class='bx bx-search-alt-2'></i>
-                        </div>
-                        <div class="search-result-item__name">
-                            ${product.name}
-                        </div>
-                        <div class="search-result-item__price">
-                            ${product.cost}
-                        </div>
-                    </a>
-                    `)
-                flag = 1;
-            }
-        })
-        if (flag == 0) {
-            $('.search-result').append(`
-            <a href="/products" class="search-result__item">
-                Không tìm thấy sản phẩm
+const processChange = debounce(() => searchProduct())
+
+$('.search-input input').on('keyup', (e) => {
+    if(e.keyCode === 13)
+        return window.location.href = `/products?search=${e.target.value}`
+    
+    processChange()
+})
+
+let inputSearch = $('.search-input input')
+let oldInputSearch = ''
+async function searchProduct() {
+
+    const search = inputSearch.val()
+	if (search != '' && oldInputSearch != search) {
+		const res = await $.ajax({
+			url: `/products/api?search=${search}&input=true`,
+			type: 'GET',
+		})
+		products = res.productCodes
+        oldInputSearch = search
+        $('.search-result').html('')
+        
+		if (products.length > 0) {
+            console.log(products.length)
+			for (let product of products) {
+				$('.search-result').append(`
+            <a href="/products/detail/${product._id}" class="search-result__item">
+                <div class="search-result-item__icon">
+                    <img src="${product.images[0]}" />
+                </div>
+                <div class="search-result-item__name">
+                    ${product.name}
+                </div>
+                <div class="search-result-item__price">
+                    ${product.cost.toLocaleString()}
+                </div>
             </a>
             `)
-        }
-    }
-
-})
+			}
+		} else {
+			$('.search-result').append(`
+                    <a href="/products" class="search-result__item">
+                     Không tìm thấy sản phẩm
+                    </a>
+            `)
+		}
+	}
+}

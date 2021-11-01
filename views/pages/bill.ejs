@@ -42,16 +42,16 @@
                         <% order.products.forEach(product => { %>
                             <tr style="border-top: 1px solid #4647b2">
                                 <td><%= product.name %>(<%= product.quantity %>)</td>
-                                <td><%= product.price %></td>
+                                <td><%= product.price.toLocaleString() %></td>
                             </tr>
                             <tr>
                                 <td></td>
-                                <td><%= parseInt(product.quantity) * parseInt(product.price) %></td>
+                                <td><%= (product.quantity * product.price).toLocaleString() %></td>
                             </tr>
                         <% }) %> 
                         <tr class="price-total">
                             <td><strong>Total</strong></td>
-                            <td><strong><%= order.totalCost %> VNĐ</strong></td>
+                            <td><strong><%= order.totalCost.toLocaleString() %> VNĐ</strong></td>
                         </tr>
                         <tr>
                             <td><strong>Delivery Address</strong></td>

@@ -2,6 +2,8 @@ const Product = require('../models/productModel')
 const ProductCode = require('../models/productCodeModel')
 const Cart = require('../models/cartModel')
 const { render } = require('ejs')
+const { removeVI } = require('jsrmvi')
+
 module.exports.getProductDetail = async (req, res) => {
 	const idProductCode = req.params.id
 	// try {
@@ -110,8 +112,21 @@ module.exports.getCustomProduct = async (req, res) => {
 		color = color[0] == '' ? [] : color
 		size = size[0] == '' ? [] : size
 
-		// find follow type
+		// setup
+		page = !page ? 1 : page
+		search = removeVI(search, option)
+
+		// filter follow search
 		let productCodes = await ProductCode.find().lean()
+		productCodes = productCodes.filter((item) => {
+			return (
+				removeVI(item.name, option).includes(search) ||
+				item.type.includes(search)
+			)
+		})
+
+		// find follow type
+		// let productCodes = await ProductCode.find().lean()
 		if (type.length > 0)
 			productCodes = productCodes.filter((item) => type.includes(item.type))
 
@@ -138,7 +153,6 @@ module.exports.getCustomProduct = async (req, res) => {
 		})
 
 		// phan trang
-		const perPage = 9
 		const totalPages = Math.ceil(productCodes.length / perPage)
 		// pagination
 		let begin = (page - 1) * perPage
@@ -162,7 +176,7 @@ module.exports.getCustomProduct = async (req, res) => {
 
 module.exports.getAllCatalog = async (req, res) => {
 	try {
-		let perPage = 5
+		let perPage = 9
 		let page = req.params.page || 1
 
 		//get all type
@@ -331,8 +345,9 @@ module.exports.getFilter = async (req, res) => {
 }
 
 module.exports.renderProduct = async (req, res) => {
-	try {
-		let { page, size, color, type } = req.query
+	// try {
+		let { page, size, color, type, search } = req.query
+		const option = { replaceSpecialCharacters: false }
 
 		type = type.split(',')
 		size = size.split(',')
@@ -342,8 +357,21 @@ module.exports.renderProduct = async (req, res) => {
 		color = color[0] == '' ? [] : color
 		size = size[0] == '' ? [] : size
 
-		// find follow type
+		search = removeVI(search, option)
+
+		// filter follow search
 		let productCodes = await ProductCode.find().lean()
+		productCodes = productCodes.filter((item) => {
+			return (
+				removeVI(item.name, option).includes(search) ||
+				
+				item.type.includes(search)
+			)
+		})
+
+		// find follow type
+		// let productCodes = await ProductCode.find().lean()
+		// console.log(productCodes)
 		if (type.length > 0)
 			productCodes = productCodes.filter((item) => type.includes(item.type))
 
@@ -369,22 +397,23 @@ module.exports.renderProduct = async (req, res) => {
 				if (products[i].idProductCode == code._id) return true
 		})
 		// pagination
-		let perPage = 2 // số lượng sản phẩm xuất hiện trên 1 page
+		let perPage = 9 // số lượng sản phẩm xuất hiện trên 1 page
 		let totalPages = Math.ceil(productCodes.length / perPage)
 		let begin = (page - 1) * perPage
 		let end = page * perPage
 		productCodes = productCodes.slice(begin, end)
 
+		// console.log(378, productCodes.length)
 		res.status(200).json({
 			status: 'success',
 			products: productCodes, //sản phẩm trên một page
 			current: page, //page hiện tại
 			pages: totalPages, // tổng số các page
 		})
-	} catch (error) {
-		res.status(500).json({
-			status: 'fail',
-			message: 'Lỗi server',
-		})
-	}
+	// } catch (error) {
+	// 	res.status(500).json({
+	// 		status: 'fail',
+	// 		message: 'Lỗi server',
+	// 	})
+	// }
 }

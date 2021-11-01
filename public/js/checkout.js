@@ -34,7 +34,7 @@ async function render() {
             type: 'GET',
             // data: { _userId: _userId}
         })
-        console.log(data)
+        // console.log(data)
         // _products = data.cart.products
         
         $('.products__info').html('')

@@ -6,7 +6,7 @@
             <div class="grid-col-4">
                 <%- include ('./product-card', {
                     name: products[hotIndex].name,
-                    price: products[hotIndex].price,
+                    price: products[hotIndex].cost.toLocaleString(),
                     id: products[hotIndex]._id,
                     imgFront: products[hotIndex].images[0],
                     imgBack: products[hotIndex].images[1]

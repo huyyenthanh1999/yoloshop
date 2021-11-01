@@ -3,6 +3,7 @@ const express = require('express')
 const cookieParser = require('cookie-parser')
 const session = require('express-session')
 const path = require('path')
+// const morgan = require('morgan')
 
 const app = express()
 
@@ -10,6 +11,7 @@ const app = express()
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
 app.use(cookieParser())
+// app.use(morgan('dev'))
 
 // session middleware
 app.use(require('./config/session'))

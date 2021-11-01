@@ -5,11 +5,14 @@ let type = [],
 	color = [],
 	size = [],
 	page = 1,
-    totalPages = 0
+	totalPages = 0,
+	search = ''
 
 if (params.type) type = params.type.split(',')
 if (params.color) color = params.color.split(',')
 if (params.size) size = params.size.split(',')
+if (params.page) page = params.page
+if (params.search) search = params.search
 
 // console.log(type, color, size)
 
@@ -17,8 +20,10 @@ function render(products) {
 	$('.product-content').html('')
 	$('.product-content').append('<div class="grid-rows"></div>')
 
-    if(products.length == 0)
-    $('.product-content .grid-rows').append('<p style="font-size: 30px;">Không tìm thấy sản phẩm</p>')
+	if (products.length == 0)
+		$('.product-content .grid-rows').append(
+			'<p style="font-size: 30px;">Không tìm thấy sản phẩm</p>'
+		)
 
 	for (var i = 0; i <= products.length - 1; i++) {
 		$('.product-content .grid-rows').append(`
@@ -30,7 +35,7 @@ function render(products) {
                                     <img src="${products[i].images[1]}" alt="" />
                                 </div>
                                 <h3 class="product-card__name">${products[i].name}</h3>
-                                <div class="product-card__price">${products[i].cost}</div>
+                                <div class="product-card__price">${products[i].cost.toLocaleString()}</div>
                             </a>
                             <div class="product-card__btn">
                                 <a href="/products/detail/${products[i]._id}">
@@ -48,7 +53,7 @@ function render(products) {
 	}
 
 	$('.product-content').append('<div class="pagination"></div>')
-    showPaginationForProductsPage()
+	showPaginationForProductsPage()
 	autoCheckInput()
 }
 
@@ -58,6 +63,9 @@ $('.custom-checkbox input').change(async (e) => {
 	document
 		.querySelectorAll('.product-filter-section__content.type input:checked')
 		.forEach((item) => type.push(item.value))
+
+	if(type.length > 0)
+		search = ''
 
 	// color
 	color = []
@@ -101,13 +109,14 @@ function autoCheckInput() {
 	})
 }
 
-
 function showPaginationForProductsPage() {
 	const containerPagination = document.querySelector('.pagination')
 	let html = ''
 	for (let i = 1; i <= totalPages; i++) {
 		html += `
-			<a href="/products?page=${page}&type=${type}&color=${color}&size=${size}" onclick="handlePagination(event)" class="${page == i? 'active': ''}">
+			<a href="/products?page=${page}&type=${type}&color=${color}&size=${size}" onclick="handlePagination(event)" class="${
+			page == i ? 'active' : ''
+		}">
 				${i}
 			</a>
 		`
@@ -115,26 +124,29 @@ function showPaginationForProductsPage() {
 	containerPagination.innerHTML = html
 }
 
-function handlePagination(e){
-    e.preventDefault()
+function handlePagination(e) {
+	e.preventDefault()
 	page = +e.target.innerHTML
 	getProducts()
-}   
+}
 
 // call api
 async function getProducts() {
-    showLazy()
-	const url = `/products/filter?page=${page}&type=${type}&color=${color}&size=${size}`
+	showLazy()
+	const url = `/products?search=${search}&page=${page}&type=${type}&color=${color}&size=${size}`
 	const result = await $.ajax({
 		url,
-		type: 'GET',
+		type: 'post',
 	})
 
-    hideLazy()
-    totalPages = result.totalPages
+	hideLazy()
+	totalPages = result.pages
+	// console.log(result)
+	products = result.products
 
-	changeURL(`/products?page=${page}&type=${type}&color=${color}&size=${size}`)
-	render(result.data)
+	// console.log(products)
+	changeURL(`/products?search=${search}&page=${page}&type=${type}&color=${color}&size=${size}`)
+	render(products)
 }
 
 getProducts()

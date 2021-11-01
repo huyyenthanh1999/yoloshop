@@ -44,7 +44,7 @@
 										<%- include ('../components/product-card', {
 											id: products[moreIndexes[j]]._id,
 											name: products[moreIndexes[j]].name,
-											price: products[moreIndexes[j]].price,
+											price: products[moreIndexes[j]].cost.toLocaleString(),
 											imgFront: products[moreIndexes[j]].images[0],
 											imgBack: products[moreIndexes[j]].images[1]
 										}) -%>
