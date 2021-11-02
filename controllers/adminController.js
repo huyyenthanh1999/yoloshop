@@ -32,39 +32,9 @@ module.exports.adminDashboard = async (req, res) => {
 // render products
 module.exports.adminProducts = async (req, res) => {
 	try {
-		// // tổng tất cả sản phẩm
-		// let totalProducts = 0
-		// // const products = await Product.find().populate('idProductCode')
-
-		// const productCodes = await ProductCode.find().lean()
-
-		// // đếm số lượng sản phẩm trong productCodes
-		// for(let item of productCodes){
-		// 	const products = await Product.find(
-		// 		{ idProductCode: item._id },
-		// 		{ total: 1, color: 1, size: 1 }
-		// 	).lean()
-		// 	// console.log(products)
-		// 	let totalProductsOfCode = 0
-		// 	products.forEach((item) => {
-		// 		totalProductsOfCode += item.total
-		// 	})
-
-		// 	item.total = totalProductsOfCode
-		// 	item.products = products
-		// 	// console.log(item)
-		// 	totalProducts += totalProductsOfCode
-		// }
-
-		// // console.log(productCodes)
-		// // console.log(totalProducts)
-
 		res.render('components/admin/admin-base', {
 			content: 'products',
-			data: {
-				// productCodes,
-				// total: totalProducts,
-			},
+			data: {},
 		})
 	} catch (error) {
 		res.status(400).json({
@@ -81,15 +51,6 @@ module.exports.adminEditProduct = async (req, res) => {
 	})
 }
 
-// module.exports.adminEditProductCode = async (req, res) => {
-// 	const products = await Product.find({idProductCode: req.params.id})
-	
-// 	res.render('components/admin/admin-base', {
-// 		content: 'product',
-// 		products: products
-// 	})
-// }
-
 // render add product page
 module.exports.adminAddProduct = (req, res) => {
 	res.render('components/admin/admin-base', {
@@ -99,43 +60,10 @@ module.exports.adminAddProduct = (req, res) => {
 
 // render customers admin page
 module.exports.adminCustomers = async (req, res) => {
-	// try {
-		// const total = await User.countDocuments()
-		// let customers = await User.find()
-
-		// const orders = await Order.find()
-
-		// customers = await customers.map(async customer => {
-		// 	const orders = await Order.find({userId: customer._id}).count()
-
-		// 	customer.orders = orders
-		// 	return customer
-		// })
-
-		// orders.forEach(order => {
-		// 	customers = customers.map(customer => {
-		// 		if(order.userId === customer._id)
-		// 			customer.orders = order.length
-
-		// 		return customer
-		// 	})
-		// })
-
-		// console.log(customers)
-		
-		res.render('components/admin/admin-base', {
-			content: 'customers',
-			data: {
-				// customers,
-				// total,
-			},
-		})
-	// } catch (error) {
-	// 	res.status(400).json({
-	// 		status: 'fail',
-	// 		message: 'Lỗi server',
-	// 	})
-	// }
+	res.render('components/admin/admin-base', {
+		content: 'customers',
+		data: {},
+	})
 }
 
 // see and edit the product
@@ -169,7 +97,6 @@ module.exports.adminOrder = async (req, res) => {
 	})
 }
 
-
 // admin render order detail page
 module.exports.adminDetailOrder = async (req, res) => {
 	const idOrder = req.params.id
@@ -181,10 +108,17 @@ module.exports.adminDetailOrder = async (req, res) => {
 
 	// find products
 	const products = []
-	for(let item of order.products){
-		let product = await Product.findById(item.productId, {color: 1, size: 1, _id: 0, idProductCode: 1}).lean()
-		let productCode = await ProductCode.findById(product.idProductCode, {description: 0}).lean()
-		products.push({...product, ...productCode, quantity: item.quantity})
+	for (let item of order.products) {
+		let product = await Product.findById(item.productId, {
+			color: 1,
+			size: 1,
+			_id: 0,
+			idProductCode: 1,
+		}).lean()
+		let productCode = await ProductCode.findById(product.idProductCode, {
+			description: 0,
+		}).lean()
+		products.push({ ...product, ...productCode, quantity: item.quantity })
 	}
 
 	// console.log(products)
@@ -194,11 +128,9 @@ module.exports.adminDetailOrder = async (req, res) => {
 	// get order, thông tin người đặt và người nhận
 	res.render('components/admin/admin-base', {
 		content: 'detail-order',
-		order: order
+		order: order,
 	})
 }
-
-
 
 // admin account render
 module.exports.adminAccount = async (req, res) => {

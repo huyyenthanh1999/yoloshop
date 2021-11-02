@@ -3,7 +3,13 @@ const Cart = require('../models/cartModel')
 const Product = require('../models/productModel')
 const ProductCode = require('../models/productCodeModel')
 
-module.exports.renderOrder = (req, res) => {
+module.exports.renderOrder = async (req, res) => {
+	// nếu chưa đăng nhập, không cho vào
+	if (!req.user) return res.redirect('/')
+
+	// nếu cart không có gì, không cho checkout
+	const cart = await Cart.findOne({ userId: req.user._id })
+	if (!cart || cart.products.length === 0) return res.redirect('/')
 	res.render('pages/checkout')
 }
 
@@ -17,7 +23,7 @@ module.exports.detailOrder = async (req, res) => {
 				status: 'fail',
 				message: 'Không tìm thấy order',
 			})
-		
+
 		res.status(200).json({
 			status: 'success',
 			order,
@@ -31,19 +37,18 @@ module.exports.detailOrder = async (req, res) => {
 }
 
 module.exports.createOrder = async (req, res) => {
-	// try {
+	try {
 		const userId = req.user._id
 		// console.log(userId)
 		// console.log(req.body)
 
 		// get order
-		const cart = await Cart.findOne({userId})
+		const cart = await Cart.findOne({ userId })
 
 		// console.log(cart)
 		// handle totalCost
 		let totalCost = 0
-		for(let item of cart.products) {
-			console.log(item)
+		for (let item of cart.products) {
 			// let productCode = await ProductCode.findById()
 			let product = await Product.findById(item.productId).lean()
 			let productCode = await ProductCode.findById(product.idProductCode).lean()
@@ -71,12 +76,11 @@ module.exports.createOrder = async (req, res) => {
 			})
 
 		// tru so luong san pham
-		for(let product of cart.products)
-		{
+		for (let product of cart.products) {
 			const pro = await Product.findById(product.productId)
 			pro.total = pro.total - product.quantity
 			// await pro.update()
-			await Product.updateOne({_id: pro._id}, {total: pro.total})
+			await Product.updateOne({ _id: pro._id }, { total: pro.total })
 		}
 
 		await cart.remove()
@@ -86,12 +90,12 @@ module.exports.createOrder = async (req, res) => {
 			message: 'Create new order thành công',
 			order,
 		})
-	// } catch (error) {
-	// 	res.status(500).json({
-	// 		status: 'fail',
-	// 		message: 'Lỗi server',
-	// 	})
-	// }
+	} catch (error) {
+		res.status(500).json({
+			status: 'fail',
+			message: 'Lỗi server',
+		})
+	}
 }
 
 module.exports.create_Order = async (req, res) => {
@@ -99,8 +103,15 @@ module.exports.create_Order = async (req, res) => {
 		const userId = req.user._id
 
 		const order = await Order.findOneAndUpdate(
-			{ userId }, 
-			{ $push: { products: { productId: req.body._productId, quantity: req.body._quantity }}},
+			{ userId },
+			{
+				$push: {
+					products: {
+						productId: req.body._productId,
+						quantity: req.body._quantity,
+					},
+				},
+			}
 			// { safe: true, upsert: true },
 		)
 		if (!order)

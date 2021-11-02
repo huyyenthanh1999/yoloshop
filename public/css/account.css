@@ -354,3 +354,7 @@ td a {
         height: 30px;
     }
 }
+
+a {
+    cursor: pointer;
+}

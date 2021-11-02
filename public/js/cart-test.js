@@ -39,7 +39,10 @@ function renderCart(products) {
         <table class='tb1' data-id="${product._id}">
       <tr>
           <td class='td1 cart__item__image'>
-            <img src='${product.idProductCode.images[0]}' alt=''>
+		  <a href='/products/detail/${product.idProductCode._id}'>
+		  <img src='${product.idProductCode.images[0]}' alt=''>
+		  </a>
+           
           </td>
           <td class='td1 cart__item__info__name'>
             <a href='/products/detail/${product.idProductCode._id}'>${

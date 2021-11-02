@@ -74,7 +74,7 @@ $('.modal-inner').on('click', (e) => {
 })
 
 // debounce
-function debounce(func, timeout = 300) {
+function debounce(func, timeout = 200) {
 	let timer
 	return (...args) => {
 		clearTimeout(timer)

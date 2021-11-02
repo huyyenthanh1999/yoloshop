@@ -1,83 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="/public/css/bill.css" />
+		<link
+			href="https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css"
+			rel="stylesheet"
+		/>
+		<title>Yolo-Invoices</title>
+	</head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/public/css/bill.css">
-    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
-    <title>Yolo-Invoices</title>
-</head>
-
-<body>
-    <div class="bill-container">
-        <div class="bill-head">
-            <div class="bill-header__left">YoloShop</div>
-            <div class="bill-header__right">
+	<body>
+		<div class="bill-container">
+			<div class="bill-head">
+				<div class="bill-header__left">YoloShop</div>
+				<!-- <div class="bill-header__right">
                 <a href="/products">
                     <span>Shop</span>
                     <span>
                         <i class='bx bx-spreadsheet'></i>
                     </span>
                 </a>
-            </div>
-        </div>
-        <div class="bill-body">
-            <div class="bill-body__status">
-                <div class="bill-body-status__logo">
-                    <i class='bx bx-check-square'></i>
-                </div>
-                <h2>Thank You For Your Order!</h2>
-                <p>Thank you for ordering at <a href="/"><span>YoloShop</span></a>. Please check your order information.
-                    Any questions please contact 199931112 for support. Thanks!</p>
-            </div>
-            <div class="bill-body__info">
-                <table>
-                    <thead>
-                        <th>Order Confirmation #</th>
-                        <th><%= order._id %></th>
-                    </thead>
-                    <tbody>
-                        <% order.products.forEach(product => { %>
-                            <tr style="border-top: 1px solid #4647b2">
-                                <td><%= product.name %>(<%= product.quantity %>)</td>
-                                <td><%= product.price.toLocaleString() %></td>
-                            </tr>
+            </div> -->
+			</div>
+			<div class="bill-body">
+				<div class="bill-body__status">
+					<div class="bill-body-status__logo">
+						<i class="bx bx-check-square"></i>
+					</div>
+					<h2>Cảm ơn vì đơn hàng của bạn</h2>
+					<p>
+						Cảm ơn bạn đã đặt hàng tại <a href="/"><span>YoloShop</span></a
+						>. Vui lòng kiểm tra thông tin đặt hàng của bạn. Mọi thắc mắc vui
+						lòng liên hệ 199931112 để được hỗ trợ. Cảm ơn!
+					</p>
+				</div>
+				<div class="bill-body__info">
+					<table>
+						<thead>
+							<th>Mã đơn hàng #</th>
+							<th><%= order._id %></th>
+						</thead>
+						<tbody>
+							<% order.products.forEach(product => { %>
+							<tr style="border-top: 1px solid #4647b2">
+								<td><%= product.name %>(<%= product.quantity %>)</td>
+								<td><%= product.price.toLocaleString() %></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td>
+									<%= (product.quantity * product.price).toLocaleString() %>
+								</td>
+							</tr>
+							<% }) %>
                             <tr>
-                                <td></td>
-                                <td><%= (product.quantity * product.price).toLocaleString() %></td>
+                                <td>Tiền ship</td>
+                                <td>30,000</td>
                             </tr>
-                        <% }) %> 
-                        <tr class="price-total">
-                            <td><strong>Total</strong></td>
-                            <td><strong><%= order.totalCost.toLocaleString() %> VNĐ</strong></td>
-                        </tr>
-                        <tr>
-                            <td><strong>Delivery Address</strong></td>
-                            <td><strong>Estimated Delivery Date</strong></td>
-                        </tr>
-                        <tr>
-                            <td><%= order.address %> </td>
-                            <td>14 days from order</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="bill-banner">
-            <h4>Back to your information</h4>
-            <a href="/account?orders">Shop Again</a>
-        </div>
-        <div class="bill-footer">
+							<tr class="price-total">
+								<td><strong>Thành tiền</strong></td>
+								<td>
+									<strong><%= order.totalCost.toLocaleString() %> VNĐ</strong>
+								</td>
+							</tr>
+							<tr>
+								<td><strong>Địa chỉ giao hàng</strong></td>
+								<td><strong>Thời gian giao dự kiến</strong></td>
+							</tr>
+							<tr>
+								<td><%= order.address %></td>
+								<td>3 ngày kể từ khi đặt hàng</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="bill-banner">
+				<!-- <h4>Back to your information</h4> -->
+				<a href="/products">Tiếp tục mua sắm</a>
+			</div>
+			<!-- <div class="bill-footer">
             <div class="bill-footer__address">
                 <strong>778/81 Nguyen Kiem, P.4, Q. Phu Nhuan, Ho Chi Minh city</strong>
             </div>
             <div class="bill-footer__message">
                 If you didn't create an account using this email address, please ignore this email or unsubscribe
             </div>
-        </div>
-    </div>
-</body>
-
+        </div> -->
+		</div>
+	</body>
 </html>

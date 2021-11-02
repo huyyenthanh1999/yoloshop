@@ -12,4 +12,6 @@ router.put('/edit-pass', controller.editPasswordAccount)
 
 router.put('/edit-avatar', upload.single('avatar'), controller.editAvatar)
 
+router.delete('/cancel-order/:id', controller.cancelOrder)
+
 module.exports = router

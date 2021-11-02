@@ -3,7 +3,7 @@
         <thead>
             <th>Mã đơn hàng</th>
             <th>Sản phẩm</th>
-            <th>Ghi chú</th>
+            <th>Ngày mua</th>
             <th>Tổng tiền</th>
             <th>Trạng thái</th>
             <th>Hoạt động</th>
@@ -17,12 +17,12 @@
                             <div> <%= product.name %></div>
                         <% }) %> 
                     </td>
-                    <td><%= order.message %></td>
-                    <td><%= order.totalCost %></td>
+                    <td><%= order.createdAt.toLocaleDateString("en-GB") %></td>
+                    <td><%= order.totalCost.toLocaleString() %></td>
                     <td><%= order.status %></td>
                     <td>
                         <a href="/invoices/<%= order._id %>" target="_blank">Hoa don</a>
-                        <a href="">
+                        <a onclick="cancelOrder('<%= order._id %>')">
                             Hủy đơn
                         </a>
                     </td>

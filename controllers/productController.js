@@ -7,99 +7,97 @@ const dateFormat = require('date-and-time')
 // example:
 // /products/api?search=""&filter=""
 module.exports.getAllProduct = async (req, res) => {
-	// try {
-	const perPage = 9
-	const option = { replaceSpecialCharacters: false }
-	// get query
-	let { page, search, date, cost, left } = req.query
-	// console.log(req.query)
+	try {
+		let perPage = 5
+		const option = { replaceSpecialCharacters: false }
+		// get query
+		let { page, search, date, cost, left } = req.query
+		// console.log(req.query)
 
-	// setup
-	page = !page ? 1 : page
-	search = removeVI(search, option)
+		// setup
+		page = !page ? 1 : page
+		search = removeVI(search, option)
 
-	// filter follow search
-	let productCodes = await ProductCode.find().lean()
-	productCodes = productCodes.filter((item) => {
-		return (
-			removeVI(item.name, option).includes(search) ||
-			dateFormat.format(item.createdAt, 'DD/MM/YYYY').includes(search) ||
-			item.cost.toString().includes(search) ||
-			item.type.includes(search)
-		)
-	})
-
-	// console.log(productCodes)
-
-	// đếm số lượng sản phẩm trong productCodes và gán products vào productCodes
-	for (let item of productCodes) {
-		const products = await Product.find(
-			{ idProductCode: item._id },
-			{ total: 1, color: 1, size: 1 }
-		).lean()
-		let totalProductsOfCode = 0
-		products.forEach((item) => {
-			totalProductsOfCode += item.total
+		// filter follow search
+		let productCodes = await ProductCode.find().lean()
+		productCodes = productCodes.filter((item) => {
+			return (
+				removeVI(item.name, option).includes(search) ||
+				dateFormat.format(item.createdAt, 'DD/MM/YYYY').includes(search) ||
+				item.cost.toString().includes(search) ||
+				item.type.includes(search)
+			)
 		})
 
-		item.total = totalProductsOfCode
-		item.products = products
-	}
+		// console.log(productCodes)
 
-
-	// filter sort: date, cost, left
-	if (date && !cost && !left) {
-		if (date == 'down')
-			productCodes = productCodes.sort(function (a, b) {
-				return new Date(a.createdAt) - new Date(b.createdAt)
+		// đếm số lượng sản phẩm trong productCodes và gán products vào productCodes
+		for (let item of productCodes) {
+			const products = await Product.find(
+				{ idProductCode: item._id },
+				{ total: 1, color: 1, size: 1 }
+			).lean()
+			let totalProductsOfCode = 0
+			products.forEach((item) => {
+				totalProductsOfCode += item.total
 			})
-		else
-			productCodes = productCodes.sort(function (a, b) {
-				return new Date(b.createdAt) - new Date(a.createdAt)
-			})
+
+			item.total = totalProductsOfCode
+			item.products = products
+		}
+
+		// filter sort: date, cost, left
+		if (date && !cost && !left) {
+			if (date == 'down')
+				productCodes = productCodes.sort(function (a, b) {
+					return new Date(a.createdAt) - new Date(b.createdAt)
+				})
+			else
+				productCodes = productCodes.sort(function (a, b) {
+					return new Date(b.createdAt) - new Date(a.createdAt)
+				})
+		}
+		if (!date && cost && !left) {
+			if (cost == 'down')
+				productCodes = productCodes.sort(function (a, b) {
+					return a.cost - b.cost
+				})
+			else productCodes = productCodes.sort((a, b) => b.cost - a.cost)
+		}
+		if (!date && !cost && left) {
+			if (left == 'down')
+				productCodes = productCodes.sort((a, b) => a.total - b.total)
+			else productCodes = productCodes.sort((a, b) => b.total - a.total)
+		}
+
+		// productCodes = productCodes.sort(function (a, b){
+		// 	return a.cost - b.cost
+		// })
+
+		let totalProducts = await ProductCode.countDocuments()
+		let totalPages = Math.ceil(productCodes.length / perPage)
+
+		// pagination
+		if (!req.query.input) {
+			let begin = (page - 1) * perPage
+			let end = page * perPage
+			productCodes = productCodes.slice(begin, end)
+		}
+
+		// let totalProducts = await ProductCode.countDocuments()
+
+		// console.log(90, productCodes.length)
+		res.status(200).json({
+			productCodes,
+			total: totalProducts,
+			totalPages,
+		})
+	} catch (error) {
+		res.status(500).json({
+			status: 'fail',
+			message: 'Lỗi server',
+		})
 	}
-	if (!date && cost && !left) {
-		if (cost == 'down')
-			productCodes = productCodes.sort(function (a, b) {
-				return a.cost - b.cost
-			})
-		else productCodes = productCodes.sort((a, b) => b.cost - a.cost)
-	}
-	if (!date && !cost && left) {
-		if (left == 'down')
-			productCodes = productCodes.sort((a, b) => a.total - b.total)
-		else productCodes = productCodes.sort((a, b) => b.total - a.total)
-	}
-
-	// productCodes = productCodes.sort(function (a, b){
-	// 	return a.cost - b.cost
-	// })
-
-	let totalProducts = await ProductCode.countDocuments()
-	let totalPages = Math.ceil(productCodes.length / perPage)
-
-	// pagination
-	if (!req.query.input) {
-		let begin = (page - 1) * perPage
-		let end = page * perPage
-		// console.log(begin, end)
-		productCodes = productCodes.slice(begin, end)
-	}
-
-	// let totalProducts = await ProductCode.countDocuments()
-
-	// console.log(90, productCodes.length)
-	res.status(200).json({
-		productCodes,
-		total: totalProducts,
-		totalPages,
-	})
-	// } catch (error) {
-	// 	res.status(500).json({
-	// 		status: 'fail',
-	// 		message: 'Lỗi server',
-	// 	})
-	// }
 }
 
 module.exports.addProductCode = async (req, res) => {
@@ -197,68 +195,68 @@ module.exports.editProductCode = async (req, res) => {
 	// get id of product
 	const idProductCode = req.params.id
 
-	// try {
-	// find product
-	let productCode = await ProductCode.findById(idProductCode)
+	try {
+		// find product
+		let productCode = await ProductCode.findById(idProductCode)
 
-	// console.log(productCode)
+		// console.log(productCode)
 
-	if (!productCode) {
-		return res.status(400).json({
+		if (!productCode) {
+			return res.status(400).json({
+				status: 'fail',
+				message: 'Không tìm thấy sản phẩm',
+			})
+		}
+
+		// find if of product code
+		// let productCode = await ProductCode.findById(product.idProductCode)
+
+		// get images if admin changes images
+		let images = req.files.map((file) => {
+			return file.path
+		})
+
+		if (images.length > 0) {
+			// images = images.map((file) => file.filename)
+			// console.log('vao doi')
+			// upload img to host
+			images = await Promise.all(
+				images.map(async (file) => {
+					// console.log(file)
+					const upload = await imgbbUploader(process.env.IMGBB_KEY, file)
+					return upload.url
+				})
+			)
+			productCode.images = images
+			// console.log(productCode)
+			// await productCode.save()
+		}
+
+		// merge product code object
+		for (let item in req.body) {
+			// if (product[item]) product[item] = req.body[item]
+			if (productCode[item]) productCode[item] = req.body[item]
+		}
+
+		// await product.save()
+		await productCode.save()
+
+		// xóa toàn bộ products thuộc productCode
+		await Product.deleteMany({ idProductCode: productCode._id })
+
+		// respond
+		res.status(200).json({
+			status: 'success',
+			data: {
+				productCode,
+			},
+		})
+	} catch (error) {
+		res.status(500).json({
 			status: 'fail',
-			message: 'Không tìm thấy sản phẩm',
+			message: 'Lỗi server',
 		})
 	}
-
-	// find if of product code
-	// let productCode = await ProductCode.findById(product.idProductCode)
-
-	// get images if admin changes images
-	let images = req.files.map((file) => {
-		return file.path
-	})
-
-	if (images.length > 0) {
-		// images = images.map((file) => file.filename)
-		// console.log('vao doi')
-		// upload img to host
-		images = await Promise.all(
-			images.map(async (file) => {
-				// console.log(file)
-				const upload = await imgbbUploader(process.env.IMGBB_KEY, file)
-				return upload.url
-			})
-		)
-		productCode.images = images
-		// console.log(productCode)
-		// await productCode.save()
-	}
-
-	// merge product code object
-	for (let item in req.body) {
-		// if (product[item]) product[item] = req.body[item]
-		if (productCode[item]) productCode[item] = req.body[item]
-	}
-
-	// await product.save()
-	await productCode.save()
-
-	// xóa toàn bộ products thuộc productCode
-	await Product.deleteMany({ idProductCode: productCode._id })
-
-	// respond
-	res.status(200).json({
-		status: 'success',
-		data: {
-			productCode,
-		},
-	})
-	// } catch (error) {
-	// 	res.status(500).json({
-	// 		status: 'fail',
-	// 		message: 'Lỗi server',
-	// 	})
-	// }
 }
 
 module.exports.deleteProductCode = async (req, res) => {
@@ -399,58 +397,58 @@ module.exports.getDetailProductCode = async (req, res) => {
 // add product to cart
 module.exports.userAddProduct = async (req, res) => {
 	// console.log('hello')
-	// try {
-	const _id = req.params.id
-	const product = await Product.findById(_id).populate('idProductCode')
+	try {
+		const _id = req.params.id
+		const product = await Product.findById(_id).populate('idProductCode')
 
-	const cartItem = {
-		_id,
-		color: req.query.color,
-		size: req.query.size,
-		quantity: +req.query.quantity,
-		image: product.idProductCode.images[0],
-		name: product.idProductCode.name,
-	}
-
-	const cart = req.session.cart || []
-	let totalMoney = +req.session.totalMoney || 0
-
-	// kiểm tra xem sản phẩm đã được thêm vào trước đó không
-	// nếu đã được thêm thì chỉ cần tăng số lượng product
-	// nếu chưa thêm thì thêm
-	let newProduct = true
-	for (let i = 0; i < cart.length; i++) {
-		if (
-			cart[i]._id == cartItem._id &&
-			cart[i].size == cartItem.size &&
-			cart[i].color == cartItem.color
-		) {
-			// them so luong san pham va them tien
-			cart[i].quantity += cartItem.quantity
-			totalMoney += cartItem.quantity * product.idProductCode.cost
-
-			newProduct = false
-			break
+		const cartItem = {
+			_id,
+			color: req.query.color,
+			size: req.query.size,
+			quantity: +req.query.quantity,
+			image: product.idProductCode.images[0],
+			name: product.idProductCode.name,
 		}
-	}
 
-	if (newProduct) {
-		cart.push(cartItem)
-		totalMoney += cartItem.quantity * product.idProductCode.cost
-	}
+		const cart = req.session.cart || []
+		let totalMoney = +req.session.totalMoney || 0
 
-	req.session.cart = cart
-	req.session.totalMoney = totalMoney
-	// console.log(req.session.cart)
-	// console.log(req.session.totalMoney)
-	res.status(200).json({
-		status: 'success',
-		message: 'Đã thêm sản phẩm vào giỏ hàng',
-	})
-	// } catch (error) {
-	// 	res.status(400).json({
-	// 		status: 'fail',
-	// 		message: 'Không tìm thấy id sản phẩm',
-	// 	})
-	// }
+		// kiểm tra xem sản phẩm đã được thêm vào trước đó không
+		// nếu đã được thêm thì chỉ cần tăng số lượng product
+		// nếu chưa thêm thì thêm
+		let newProduct = true
+		for (let i = 0; i < cart.length; i++) {
+			if (
+				cart[i]._id == cartItem._id &&
+				cart[i].size == cartItem.size &&
+				cart[i].color == cartItem.color
+			) {
+				// them so luong san pham va them tien
+				cart[i].quantity += cartItem.quantity
+				totalMoney += cartItem.quantity * product.idProductCode.cost
+
+				newProduct = false
+				break
+			}
+		}
+
+		if (newProduct) {
+			cart.push(cartItem)
+			totalMoney += cartItem.quantity * product.idProductCode.cost
+		}
+
+		req.session.cart = cart
+		req.session.totalMoney = totalMoney
+		// console.log(req.session.cart)
+		// console.log(req.session.totalMoney)
+		res.status(200).json({
+			status: 'success',
+			message: 'Đã thêm sản phẩm vào giỏ hàng',
+		})
+	} catch (error) {
+		res.status(400).json({
+			status: 'fail',
+			message: 'Không tìm thấy id sản phẩm',
+		})
+	}
 }

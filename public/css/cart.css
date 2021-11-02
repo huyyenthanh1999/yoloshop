@@ -135,6 +135,8 @@ html {
 .cart__item__image img {
     height: 150px;
     width: 150px;
+    object-fit: cover;
+    object-position: center top;
 }
 
 .cart__item__info {
@@ -194,8 +196,8 @@ html {
 }
 
 .cart__item__info__name a:hover {
-    opacity: 0.6;
-    color:lightseagreen;
+    /* opacity: 0.6; */
+    color:#4267b2;
 }
 
 .cart__item__del {

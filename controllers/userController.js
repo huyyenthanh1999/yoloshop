@@ -7,46 +7,45 @@ const { removeVI } = require('jsrmvi')
 const dateFormat = require('date-and-time')
 
 module.exports.getAllUser = async (req, res) => {
-	// try {
-	const perPage = 5
-	const option = { replaceSpecialCharacters: false }
+	try {
+		const perPage = 5
+		const option = { replaceSpecialCharacters: false }
 
-	let { page, search, date } = req.query
+		let { page, search, date } = req.query
 
-	page = !page ? 1 : page
-	search = removeVI(search, option)
+		page = !page ? 1 : page
+		search = removeVI(search, option)
 
-	// filter follow search
-	let users = await User.find().lean()
-	users = users.filter((item) => {
+		// filter follow search
+		let users = await User.find().lean()
+		users = users.filter((item) => {
+			return (
+				removeVI(item.name, option).includes(search) ||
+				dateFormat.format(item.createdAt, 'DD/MM/YYYY').includes(search) ||
+				item.phoneNumber.includes(search)
+			)
+		})
 
-		return (
-			removeVI(item.name, option).includes(search) ||
-			dateFormat.format(item.createdAt,'DD/MM/YYYY').includes(search) ||
-			item.phoneNumber.includes(search)
-		)
-	})
+		let totalUsers = await User.countDocuments()
+		let totalPages = Math.ceil(users.length / perPage)
 
-	let totalUsers = await User.countDocuments()
-	let totalPages = Math.ceil(users.length / perPage)
+		// pagination
+		let begin = (page - 1) * perPage
+		let end = page * perPage
+		// console.log(begin, end)
+		users = users.slice(begin, end)
 
-	// pagination
-	let begin = (page - 1) * perPage
-	let end = page * perPage
-	// console.log(begin, end)
-	users = users.slice(begin, end)
-
-	res.status(200).json({
-		users,
-		total: totalUsers,
-		totalPages,
-	})
-	// } catch (error) {
-	// 	res.status(500).json({
-	// 		status: 'fail',
-	// 		message: 'Lỗi server',
-	// 	})
-	// }
+		res.status(200).json({
+			users,
+			total: totalUsers,
+			totalPages,
+		})
+	} catch (error) {
+		res.status(500).json({
+			status: 'fail',
+			message: 'Lỗi server',
+		})
+	}
 }
 
 // edit user

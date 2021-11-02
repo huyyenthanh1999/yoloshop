@@ -6,47 +6,45 @@ const { removeVI } = require('jsrmvi')
 
 module.exports.getProductDetail = async (req, res) => {
 	const idProductCode = req.params.id
-	// try {
-	const productCode = await ProductCode.findById(idProductCode)
-	const products = await Product.find({
-		idProductCode: idProductCode,
-	})
-	var sizes = products.map((e) => e.size)
-	var colors = products.map((e) => e.color)
-	//get all product
-	const allProductCodes = await ProductCode.find()
-	const arr = Array.from(Array(allProductCodes.length).keys())
-	var moreIndexes = getRandom(arr, 8)
-	function getRandom(arr, n) {
-		var result = new Array(n),
-			len = arr.length,
-			taken = new Array(len)
-		if (n > len)
-			throw new RangeError('getRandom: more elements taken than available')
-		while (n--) {
-			var x = Math.floor(Math.random() * len)
-			result[n] = arr[x in taken ? taken[x] : x]
-			taken[x] = --len in taken ? taken[len] : len
+	try {
+		const productCode = await ProductCode.findById(idProductCode)
+		const products = await Product.find({
+			idProductCode: idProductCode,
+		})
+		var sizes = products.map((e) => e.size)
+		var colors = products.map((e) => e.color)
+		//get all product
+		const allProductCodes = await ProductCode.find()
+		const arr = Array.from(Array(allProductCodes.length).keys())
+		var moreIndexes = getRandom(arr, 8)
+		function getRandom(arr, n) {
+			var result = new Array(n),
+				len = arr.length,
+				taken = new Array(len)
+			if (n > len)
+				throw new RangeError('getRandom: more elements taken than available')
+			while (n--) {
+				var x = Math.floor(Math.random() * len)
+				result[n] = arr[x in taken ? taken[x] : x]
+				taken[x] = --len in taken ? taken[len] : len
+			}
+			return result
 		}
-		return result
+		res.render('pages/product_detail', {
+			moreIndexes,
+			products: allProductCodes,
+			product: productCode,
+			sizes: [...new Set(sizes)],
+			colors: [...new Set(colors)],
+		})
+	} catch (error) {
+		res.status(500).json({
+			status: 'fail',
+			message: 'Lỗi server',
+		})
 	}
-	res.render('pages/product_detail', {
-		moreIndexes,
-		products: allProductCodes,
-		product: productCode,
-		sizes: [...new Set(sizes)],
-		colors: [...new Set(colors)],
-	})
-	// } catch (error) {
-	// 	res.status(500).json({
-	// 		status: 'fail',
-	// 		message: 'Lỗi server',
-	// 	})
-	// }
 }
-// module.exports.getsp = async (req, res) => {
-//   console.log(req.query);
-// };
+
 module.exports.getCatalogs = async (req, res) => {
 	// var arrType = req.query.type;
 	// var arrColor = req.query.color;
@@ -317,6 +315,7 @@ module.exports.addToCart = async (req, res) => {
 
 module.exports.getFilter = async (req, res) => {
 	try {
+		// console.log('filter')
 		//get all type
 		const productCodes = await ProductCode.find()
 		const types = productCodes.map((productCode) => productCode.type)
@@ -345,7 +344,7 @@ module.exports.getFilter = async (req, res) => {
 }
 
 module.exports.renderProduct = async (req, res) => {
-	// try {
+	try {
 		let { page, size, color, type, search } = req.query
 		const option = { replaceSpecialCharacters: false }
 
@@ -364,7 +363,6 @@ module.exports.renderProduct = async (req, res) => {
 		productCodes = productCodes.filter((item) => {
 			return (
 				removeVI(item.name, option).includes(search) ||
-				
 				item.type.includes(search)
 			)
 		})
@@ -410,10 +408,10 @@ module.exports.renderProduct = async (req, res) => {
 			current: page, //page hiện tại
 			pages: totalPages, // tổng số các page
 		})
-	// } catch (error) {
-	// 	res.status(500).json({
-	// 		status: 'fail',
-	// 		message: 'Lỗi server',
-	// 	})
-	// }
+	} catch (error) {
+		res.status(500).json({
+			status: 'fail',
+			message: 'Lỗi server',
+		})
+	}
 }

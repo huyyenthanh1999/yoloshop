@@ -1,6 +1,6 @@
-const ProductCode = require('../models/productCodeModel');
+const ProductCode = require('../models/productCodeModel')
 const jwt = require('jsonwebtoken')
-const Cart = require('../models/cartModel');
+const Cart = require('../models/cartModel')
 const slides = require('../public/data/sliderData')
 const cards = require('../public/data/cardData')
 const Order = require('../models/orderModel')
@@ -35,9 +35,8 @@ module.exports.getAllData = async (req, res) => {
 			hotIndexes,
 			newIndexes,
 			popularIndexes,
-			products
+			products,
 		})
-
 	} catch (error) {
 		res.status(500).json({
 			status: 'fail',
@@ -46,16 +45,14 @@ module.exports.getAllData = async (req, res) => {
 	}
 }
 
-
 module.exports.getSearchData = async (req, res) => {
 	try {
-		const name = req.query.name;
+		const name = req.query.name
 		// const products = await ProductCode.find({ name: { $regex: name, $options: 'i'} })
 		const products = await ProductCode.find()
-		res.status(200).json(
-			{
-				products
-			});
+		res.status(200).json({
+			products,
+		})
 	} catch (error) {
 		res.status(500).json({
 			status: 'fail',
@@ -65,19 +62,19 @@ module.exports.getSearchData = async (req, res) => {
 }
 
 module.exports.getDetailBill = async (req, res) => {
-    // try {
-        var order = await Order.findById(req.params.id).lean();
-        for(let product of order.products){
-			 const pro = await Product.findById(product.productId)
-             const productCode = await ProductCode.findById(pro.idProductCode);
-             product.name = `${productCode.name} - ${pro.color} - ${pro.size}`;
-             product.price = productCode.cost;
-        }
-        res.render('pages/bill',{order})
-    // } catch (error) {
-    //     res.status(500).json({
-    //         status: 'fail',
-    //         message: 'Lỗi server',
-    //     })
-    // }
+	try {
+		var order = await Order.findById(req.params.id).lean()
+		for (let product of order.products) {
+			const pro = await Product.findById(product.productId)
+			const productCode = await ProductCode.findById(pro.idProductCode)
+			product.name = `${productCode.name} - ${pro.color} - ${pro.size}`
+			product.price = productCode.cost
+		}
+		res.render('pages/bill', { order })
+	} catch (error) {
+		res.status(500).json({
+			status: 'fail',
+			message: 'Lỗi server',
+		})
+	}
 }

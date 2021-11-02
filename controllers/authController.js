@@ -5,8 +5,8 @@ const imgbbUploader = require('imgbb-uploader')
 
 module.exports.register = async (req, res) => {
 	// check if user is exists
-	// try {
-		console.log('register', req.body)
+	try {
+		// console.log('register', req.body)
 		const { email, phoneNumber } = req.body
 		const user = await User.findOne({ $or: [{ email }, { phoneNumber }] })
 
@@ -35,12 +35,12 @@ module.exports.register = async (req, res) => {
 			status: 'success',
 			data: { newUser, token },
 		})
-	// } catch (error) {
-	// 	res.status(500).json({
-	// 		status: 'fail',
-	// 		message: 'Lỗi server',
-	// 	})
-	// }
+	} catch (error) {
+		res.status(500).json({
+			status: 'fail',
+			message: 'Lỗi server',
+		})
+	}
 }
 
 // login
