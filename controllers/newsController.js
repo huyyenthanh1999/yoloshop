@@ -206,6 +206,7 @@ module.exports.getEditNews = async (req, res) => {
 
 module.exports.editNews = async (req, res) => {
 	try {
+		const id = req.params.id;
 		// update banner
 		if(req.body.isNew === 'true') {
 			if (req.file) {
@@ -217,8 +218,8 @@ module.exports.editNews = async (req, res) => {
 		const slug = req.body.slug;
 		const title = req.body.title;
 		const description = req.body.description;
-		await News.findOneAndUpdate({slug},{title, description, slug, banner});
-		console.log('ok')
+		const result = await News.findByIdAndUpdate({_id: id},{title, description, slug, banner});
+		
 		res.status(200).json({
 			status: 'success'
 		})

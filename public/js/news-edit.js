@@ -24,21 +24,22 @@ $('#banner').change(function(){
 //call api to add news
 form.addEventListener('submit', async function(e){
     e.preventDefault();
+    const id = $('.news-container').attr('id');
     //append title to formdata
     formData.set('title', $('#input-title').val());
     var slug = $('#input-title').val().replace(/\s+/g,"-").toLowerCase();
     formData.set('slug', slug)
     //append description to formdata
     formData.set('description', CKEDITOR.instances.editor.getData());
-    for (let i of formData.entries()) console.log(i)
-    const res = await fetch(`/news/admin/edit-news/`, {
+    // for (let i of formData.entries()) console.log(i)
+    const res = await fetch(`/news/admin/edit-news/${id}`, {
         method: 'PUT',
         body: formData
     })
 
-
     if(res.status == 200){
         alert('Sửa tin tức thành công')
+        window.location.href = '/news/admin/news'
     }else {
         alert('Sửa tin tức thất bại')
     }

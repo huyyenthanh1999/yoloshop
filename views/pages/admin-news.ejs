@@ -30,7 +30,10 @@
 					<div class="section">
 						<div class="section-title">All News</div>
 						<div class="section-body">
-                            <h2>Quantity: <%= totalNews %> </h2>
+							<div>
+								<h2 style="margin-bottom: 15px">Quantity: <%= totalNews %> </h2>
+								<a href="/news/admin/add-news" class="btn btn-large btn-txt btn-primary">Thêm tin tức</a>
+							</div>
 							<table>
                                 <thead>
                                     <th>No</th>
@@ -55,12 +58,13 @@
 											</td>
 											<td>
 												<a href="/news/admin/edit-news/<%= n.slug %>">Edit</a>
-												<a onclick="deleteNews('<%=n._id %>')">Delete</a> 
+												<a href="#" onclick="deleteNews('<%=n._id %>')">Delete</a> 
 											</td>
                                         </tr>
                                     <% }) %>       
                                 </tbody>
                             </table>
+							
 							<!-- pagination -->
 							<div class="pagination">
 								<% if(pages> 0) { %>

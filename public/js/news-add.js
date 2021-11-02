@@ -37,6 +37,7 @@ form.addEventListener('submit', async function(e){
 
     if(res.status == 200){
         alert('Thêm tin tức thành công')
+        window.location.href ='/news/admin/news'
     }else {
         alert('Thêm tin tức thất bại')
     }

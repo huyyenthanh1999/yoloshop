@@ -27,7 +27,7 @@
         <div class="container">
             <div class="main">
                 <div>
-                    <div class="news-container">
+                    <div class="news-container" id="<%= newsElement._id %>">
                         <h2 style="text-align:center; margin-bottom: 30px;">News's Banner</h2>
                         <div class="news-banner">
                             <img src="<%= newsElement.banner %>" alt="">
@@ -48,6 +48,7 @@
                         <form action="/news/admin/edit-news" method="PUT" enctype="multipart/form-data">
                             <input type="file" name="banner" id="banner" style="display: none;">
                             <button id="add-news" class="btn btn-primary btn-large btn-txt" type="submit">Lưu</button>
+                            <a href="/news/admin/news" class="btn btn-txt btn-primary btn-large">Trở lại</a>
                         </form>
 
                     </div>

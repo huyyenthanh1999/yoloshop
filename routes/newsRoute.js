@@ -15,7 +15,7 @@ router.get('/admin/all-news/:page', controller.getAllNews);
 router.post('/admin/add-news', upload.single('banner'), controller.addNews);
 
 router.get('/admin/edit-news/:slug', controller.getEditNews);
-router.put('/admin/edit-news/', upload.single('banner'), controller.editNews)
+router.put('/admin/edit-news/:id', upload.single('banner'), controller.editNews)
 
 router.delete('/admin/delete-news/:id', controller.deleteNews)
 
