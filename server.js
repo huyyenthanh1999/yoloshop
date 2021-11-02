@@ -12,7 +12,7 @@ app.use(express.json())
 app.use(cookieParser())
 
 // session middleware
-app.use(require('./config/session'))
+// app.use(require('./config/session'))
 
 // setup view
 app.set('view engine', 'ejs')
