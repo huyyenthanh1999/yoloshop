@@ -61,7 +61,7 @@ function renderListOfOrders(orders) {
                         ${order.products.length} sản phẩm
                     </td>
                     <td> ${formatDate(order.createdAt)}</td>
-                    <td> ${order.totalCost} </td>
+                    <td> ${order.totalCost.toLocaleString()} </td>
                     <td> ${
 											order.payment == 'cod' ? 'Ship cod' : 'Chuyển khoản'
 										} </td>

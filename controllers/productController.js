@@ -261,6 +261,10 @@ module.exports.editProductCode = async (req, res) => {
 
 module.exports.deleteProductCode = async (req, res) => {
 	try {
+		// check có đơn nào không
+		
+
+
 		const productCode = await ProductCode.findById(req.params.id)
 
 		// tìm và xóa tất cả các product thuộc productCode đó

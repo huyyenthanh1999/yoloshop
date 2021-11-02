@@ -77,7 +77,7 @@ function renderListOfProducts(productCodes) {
         </td>
         <td class="name-product">${productCode.name}</td>
         <td>${formatDate(productCode.createdAt)}</td>
-        <td class="cost-product">${productCode.cost}</td>
+        <td class="cost-product">${productCode.cost.toLocaleString()}</td>
         <td class="sold-product">${productCode.type}</td>
         <td class="last-product">${productCode.total}</td>
         <td>

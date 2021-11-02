@@ -2,6 +2,7 @@ const Product = require('../models/productModel')
 const ProductCode = require('../models/productCodeModel')
 const User = require('../models/userModel')
 const Order = require('../models/orderModel')
+const News = require('../models/newsModel')
 
 // render dashboard
 module.exports.adminDashboard = async (req, res) => {
@@ -11,6 +12,8 @@ module.exports.adminDashboard = async (req, res) => {
 
 		const ordersCount = await Order.countDocuments()
 
+		const newsCount = await News.countDocuments()
+
 		// response
 		res.render('components/admin/admin-base', {
 			content: 'dashboard',
@@ -18,7 +21,7 @@ module.exports.adminDashboard = async (req, res) => {
 				productsCount,
 				usersCount,
 				ordersCount,
-				salesCount: 12,
+				newsCount,
 			},
 		})
 	} catch (error) {

@@ -16,18 +16,23 @@ const ProductCodeSchema = mongoose.Schema(
 		type: {
 			type: String,
 		},
-        images: {
-            type: Array,
-            required: true,
-        },
-		active : {
+		images: {
+			type: Array,
+			required: true,
+		},
+		active: {
 			type: Boolean,
 			default: true,
-		}
+		},
 	},
 	{
 		timestamps: true,
 	}
 )
+
+ProductCodeSchema.pre(/^find/, function (next) {
+	this.find({ active: true })
+	next()
+})
 
 module.exports = mongoose.model('ProductCode', ProductCodeSchema)
