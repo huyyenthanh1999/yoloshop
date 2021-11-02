@@ -1,6 +1,9 @@
 const formData = new FormData();
 const form = document.querySelector('form');
 
+CKEDITOR.instances['editor'].setData($('#editor').text())
+formData.set('isNew', false);
+formData.set('banner',$('.news-banner img').attr('src'))
 //upload image
 $('.upload-icon').click(function(){
     $('#banner').click();
@@ -11,11 +14,10 @@ $('#banner').change(function(){
       if (file) {
           // preview banner
       $('.news-banner img').attr('src', URL.createObjectURL(file));
-      $('.news-banner img').css('display','block');
-      $('.news-banner svg').css('display','none');
       //append file to formdata
       formData.set('banner',file)
     }
+    formData.set('isNew', true)
 })
 
 
@@ -24,20 +26,20 @@ form.addEventListener('submit', async function(e){
     e.preventDefault();
     //append title to formdata
     formData.set('title', $('#input-title').val());
-
-    formData.set('slug', $('#input-title').val().replace(/\s+/g,"-").toLowerCase())
+    var slug = $('#input-title').val().replace(/\s+/g,"-").toLowerCase();
+    formData.set('slug', slug)
     //append description to formdata
     formData.set('description', CKEDITOR.instances.editor.getData());
-    // for (let i of formData.entries()) console.log(i)
-    const res = await fetch('/news/admin/add-news', {
-        method: 'POST',
+    for (let i of formData.entries()) console.log(i)
+    const res = await fetch(`/news/admin/edit-news/`, {
+        method: 'PUT',
         body: formData
     })
 
 
     if(res.status == 200){
-        alert('Thêm tin tức thành công')
+        alert('Sửa tin tức thành công')
     }else {
-        alert('Thêm tin tức thất bại')
+        alert('Sửa tin tức thất bại')
     }
 })

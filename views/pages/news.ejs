@@ -13,7 +13,8 @@
 	<link rel="stylesheet" href="../../public/css/product-card.css" />
 	<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+	<link rel="stylesheet"
+		href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
 	<link href="https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css" rel="stylesheet" />
 </head>
 <style>
@@ -34,10 +35,10 @@
 						<div class="section-title">News</div>
 						<div class="section-body">
 							<div class="grid-rows">
-								<% news.forEach(n => { %>
+								<% news.forEach(n=> { %>
 									<div class="grid-col-half" data-aos="fade-down">
 										<div class="news-card">
-											<a href="/news/<%= n._id %>">
+											<a href="/news/detail/<%= n.slug %>">
 												<div class="news-banner">
 													<img src="<%= n.banner %>" alt="banner image error">
 												</div>
@@ -50,34 +51,77 @@
 													<%= n.description.replace(/<[^>]+>/g, '') %>
 												</p>
 												<div class="news-description_time">
-													<% var date = new Date(n.updatedAt); %>
-													<%= date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate(); %> 
+													<% var date=new Date(n.updatedAt); %>
+														<%= date.getFullYear()+'-' + (date.getMonth()+1) + '-' +date.getDate(); %>
 												</div>
 											</div>
 										</div>
 									</div>
-								<% }) %> 
-							</div>
-						</div>
-					</div>
-					<div class="section">
-						<div class="section-title">Featured Collection</div>
-						<div class="section-body" data-aos="fade-up">
-							<div id="featured-product" class="owl-carousel">
-								<% featuredIndex.forEach(i => { %>
-									<%- include ('../components/product-card',{
-										id:products[i]._id,
-										imgFront: products[i].images[0],
-										imgBack: products[i].images[1],
-										name: products[i].name,
-										price: products[i].cost
-									}) -%>
 								<% }) %>
 							</div>
+							<!-- pagination -->
+							<div class="pagination">
+								<% if(pages> 0) { %>
+										<ul class="pagination" style="margin-top: 2rem;">
+
+											<!-- FIRST ITEM -->
+											<% if(current != 1) { %>
+												<li>
+													<a class="page-link" href="/news/">First</a>
+												</li>
+											<% } %>
+
+											<!-- ITEMS  -->
+											<% var i=(Number(current)> 2 ? Number(current) - 1 : 1) %>
+											<% if(i !==1) { %>
+												<li class="disabled">
+													<a href="#">...</a>
+												</li>
+											<% } %>
+											<% for(; i <=(Number(current) + 1) && i <=pages; i++) { %>
+												<% if(i==current) { %>
+												<li class="active">
+													<a href="/news/<%= i %>/"><%= i %></a>
+												</li>
+												<% } else { %>
+													<li>
+														<a href="/news/<%= i %>/"><%= i %></a>
+													</li>
+												<% } %>
+												<% if (i==Number(current) + 1 && i < pages) { %>
+													<li class="disabled">
+														<a href="#">...</a>
+													</li>
+												<% } %>
+											<% } %>
+
+											<!-- LAST ITEM -->
+											<% if(current != pages){ %>
+												<li>
+													<a href="/news/<%= pages %>/">Last</a>
+												</li>
+											<% } %>
+										</ul>
+									<% } %>
+							</div>
+						</div>
+
+					</div>
+				</div>
+				<div class="section">
+					<div class="section-title">Featured Collection</div>
+					<div class="section-body" data-aos="fade-up">
+						<div id="featured-product" class="owl-carousel">
+							<% featuredIndex.forEach(i=> { %>
+								<%- include ('../components/product-card',{ id:products[i]._id, imgFront:
+									products[i].images[0], imgBack: products[i].images[1], name: products[i].name,
+									price: products[i].cost }) -%>
+									<% }) %>
 						</div>
 					</div>
 				</div>
 			</div>
+		</div>
 		</div>
 		<%- include ('../components/footer'); -%>
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
