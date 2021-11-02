@@ -28,12 +28,6 @@ app.use('/public', express.static(path.join(__dirname, 'public')))
 
 require('./config/connectDB')
 
-// const ProductCode = require('./models/productCodeModel')
-// app.get('/test', async (req, res) => {
-// 	let productCodes = await ProductCode.updateMany({},  { active: true } )
-// 	res.json(productCodes)
-// })
-
 const router = require("./routes/index")
 app.use(router)
 
