@@ -83,7 +83,7 @@
 					<td><%= product.color %></td>
 					<td><%= product.size %></td>
 					<td class="last-product"><%= product.quantity %></td>
-					<td><%= product.quantity * product.cost %></td>
+					<td><%= (product.quantity * product.cost).toLocaleString() %></td>
 				</tr>
 				<%        
                     }
