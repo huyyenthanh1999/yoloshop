@@ -1,7 +1,7 @@
 const Cart = require('../models/cartModel');
 const jwt = require('jsonwebtoken')
 
-module.exports.getCart = async (req, res, next) => {
+module.exports.getLog = async (req, res, next) => {
     try {
         const user = req.user;
         if(user){
@@ -9,12 +9,14 @@ module.exports.getCart = async (req, res, next) => {
             res.locals.cartNum = {
                 cartNum:cartNum
             }
+            res.locals.logging = true;
         }else{
             res.locals.cartNum = {
                 cartNum: {
                     products:[]
                 }
             };
+            res.locals.logging = false;
         }
         next()
     } catch (error) {

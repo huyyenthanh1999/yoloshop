@@ -45,7 +45,11 @@
     </div>
     <div class="product-info__item">
         <button class="btn btn-primary btn-large">
-            <span class="btn-txt" onclick="addCart()">Thêm vào giỏ</span>
+            <% if(logging){ %>
+                <span class="btn-txt" onclick="addCart()">Thêm vào giỏ</span>
+            <% } else { %>
+                <a href="/auth/login" class="btn-txt">Đăng nhập</a>
+            <% } %> 
         </button>
         <button class="btn btn-primary btn-large">
             <span class="btn-txt" onclick="buyNow()">Mua ngay</span>
