@@ -66,7 +66,7 @@
 						<i class="bx bx-shopping-bag"></i>
 					</a>
 					<span class="cover-num">
-					<% if(cartNum.cartNum != null ){ %>
+					<% if(cartNum.cartNum != null && cartNum.cartNum.products.length > 0){ %>
 						<a href="/cart" class="cart-num">
 								<%= cartNum.cartNum.products.length %> 
 						</a>
@@ -87,10 +87,17 @@
 								<i class="bx bx-bookmark-alt"></i>
 								<span>Đơn mua</span>
 							</a>
-							<a href="" onclick="logout()">
-								<i class="bx bx-log-out-circle"></i>
-								<span>Đăng xuất</span>
-							</a>
+							<% if(logging){ %>
+								<a href="" onclick="logout()">
+									<i class="bx bx-log-out-circle"></i>
+									<span>Đăng xuất</span>
+								</a>
+							<% } else { %>
+								<a href="/auth/login">
+									<i class="bx bx-log-in-circle"></i>
+									<span>Đăng nhập</span>
+								</a>
+							<% } %> 
 						</ul>
 					</div>
 				</div>

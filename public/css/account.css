@@ -56,8 +56,18 @@
     border-bottom-left-radius: 20px;
 }
 
-.account-action li.active::before,
-.account-action li:hover ::before {
+.account-action li.active::after {
+    content: "";
+    position: absolute;
+    bottom: -20px;
+    width: 20px;
+    height: 20px;
+    background-color: transparent;
+    right: 0;
+    border-radius: 50%;
+    box-shadow: 10px -10px 0 0 #fff;
+}
+.account-action li.active:before {
     content: "";
     position: absolute;
     top: -20px;
@@ -69,8 +79,21 @@
     box-shadow: 10px 10px 0 0 #fff;
 }
 
-.account-action li.active::after,
-.account-action li:hover ::after {
+.account-action li.active:hover:before,
+.account-action li:hover::before {
+    content: "";
+    position: absolute;
+    top: -20px;
+    width: 20px;
+    height: 20px;
+    background-color: transparent;
+    right: 0;
+    border-radius: 50%;
+    box-shadow: 10px 10px 0 0 #fff;
+}
+
+.account-action li.active:hover::after,
+.account-action li:hover::after {
     content: "";
     position: absolute;
     bottom: -20px;
@@ -208,6 +231,10 @@ table {
     width: 100%;
 }
 
+thead {
+    position: sticky;
+}
+
 th {
     background-color: #4267b2;
     padding: 20px 15px;
@@ -226,6 +253,8 @@ td a {
     padding: 4px;
     border: 1px solid #4267b2;
     border-radius: 2px;
+    display: inline-block;
+    text-align: center;
 }
 
 .account-order__list {
@@ -342,10 +371,22 @@ td a {
     .account-menu {
         min-height: 250px;
     }
+
+    td a:not(:first-child) {
+        margin-top: 5px;
+    }
+    .container {
+        margin-top: auto !important;
+    }
 }
 
 @media only screen and (max-width: 37.5em){
     th {
+        font-size: 1rem;
+        padding: 0 15px;
+    }
+
+    form {
         font-size: 1rem;
     }
 
@@ -353,8 +394,14 @@ td a {
         width: 30px;
         height: 30px;
     }
-}
 
-a {
-    cursor: pointer;
+    td {
+        font-size: 1rem;
+        padding: 4px 10px;
+    }
+
+    .account-action {
+        font-size: 1rem;
+    }
+
 }
