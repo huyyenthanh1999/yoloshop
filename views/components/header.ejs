@@ -79,15 +79,15 @@
 					</a>
 					<div class="user-action">
 						<ul>
-							<a href="/account">
-								<i class="bx bx-user-circle"></i>
-								<span>Tài khoản của tôi</span>
-							</a>
-							<a href="/account?orders">
-								<i class="bx bx-bookmark-alt"></i>
-								<span>Đơn mua</span>
-							</a>
 							<% if(logging){ %>
+								<a href="/account">
+									<i class="bx bx-user-circle"></i>
+									<span>Tài khoản của tôi</span>
+								</a>
+								<a href="/account?orders">
+									<i class="bx bx-bookmark-alt"></i>
+									<span>Đơn mua</span>
+								</a>
 								<a href="" onclick="logout()">
 									<i class="bx bx-log-out-circle"></i>
 									<span>Đăng xuất</span>
@@ -96,6 +96,10 @@
 								<a href="/auth/login">
 									<i class="bx bx-log-in-circle"></i>
 									<span>Đăng nhập</span>
+								</a>
+								<a href="/auth/register">
+									<i class='bx bx-registered'></i>
+									<span>Đăng ký</span>
 								</a>
 							<% } %> 
 						</ul>

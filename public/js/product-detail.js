@@ -98,7 +98,7 @@ function plusQuantity(n) {
 	$('#quantity').val(quantity)
 }
 
-async function addCart() {
+async function addCart(logging) {
 	if (size == undefined) {
 		alert('Vui lòng chọn size!')
 		return
@@ -107,6 +107,7 @@ async function addCart() {
 		alert('Vui lòng chọn color!')
 		return
 	}
+
 	if (size && color) {
 		const data = await $.ajax({
 			url: '/products/add',
@@ -132,7 +133,7 @@ async function addCart() {
 	}
 }
 
-function buyNow() {
+function buyNow(logging) {
 	window.location.href = '/cart'
 }
 

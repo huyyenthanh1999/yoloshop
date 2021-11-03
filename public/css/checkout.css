@@ -8,17 +8,19 @@
 }
 
 html {
-    font-family: sans-serif;
+    font-family: 'Roboto' sans-serif;
     font-size: 12.5px;
 }
 
 .checkout__all {
     display: flex;
+    width: 100%;
+    flex-wrap: wrap;
 }
 
 h3 {
     display: flex;
-    flex-direction: row;
+    /* flex-direction: row; */
 }
 
 h3::after {
@@ -38,7 +40,7 @@ h3::after {
 
 .delivery_address {
     width: 60%;
-    margin: 0 4px;
+    padding: 0 4px;
 }
 
 .order_all {
@@ -61,9 +63,19 @@ h3::after {
     width: 275px;
 }
 
-.address__info__1 {
+.address__info__1,
+.address__info__2 {
     width: 50%;
-    margin-left: 30px;
+    padding: 0 15px;
+}
+
+.address__info input,
+.address__info textarea {
+    padding: 8px 12px;
+    border: 1px solid var(--blue-color);
+    border-radius: 5px;
+    display: inline-block;
+    width: 100%;
 }
 
 .address__info__1 > *,
@@ -81,7 +93,8 @@ h3::after {
 }
 
 .order_all {
-    width: 35%;
+    width: 40%;
+    padding: 0 4px;
 } 
 
 .detail__order {
@@ -91,7 +104,7 @@ h3::after {
 .detail__order__info {
     padding: 10px;
     margin-right: 30px;
-    margin-top: 15px;
+    margin-top: 10px;
     position: sticky;
     top: 100px;
     bottom: 20px;
@@ -125,14 +138,8 @@ h3::after {
     width: 100%;    
 }
 
-.pay__info > * {
-    margin: 5px 30px;
-    padding: 5px;
-}
-
 .btn__pay__info {
     display: flex;
-    flex-direction: row;
 }
 
 .btn__pay__info > * {
@@ -148,14 +155,57 @@ h3::after {
     cursor: pointer;
     overflow: hidden;
     position: relative;
-    padding: 16px 24px;
 }
 
 .btn-pay,
 .btn-back {
-    padding: 8px;
+    padding: 8px 12px;
 }
 
 .price {
     display: none;
 }
+
+
+@media only screen and (max-width: 64em){
+    #box {
+        margin-top: 70px !important;
+    }
+
+    .address__info {
+        flex-direction: column;
+    }
+
+    .address__info__1,
+    .address__info__2 {
+        width: 100%;
+    }
+}
+
+@media only screen and (max-width: 37.5em){
+    #box {
+        margin-top: 40px !important;
+    }
+
+    .checkout__all {
+        flex-direction: column;
+    }
+
+    .delivery_address {
+        width: 100%;
+    }
+
+    .order_all {
+        width: 100%;
+    }
+
+    .address__info {
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+
+    .btn {
+        font-size: 1rem;
+    }
+}
+
