@@ -272,13 +272,13 @@ html {
         padding-top: 20px;
     }
     .product_quantity {
-        margin-left: 60px;
+        margin-left: 50px;
     }
     .cart__item__info__cost {
-        margin-left: 10px;
+        margin-left: 20px;
     }
     .cart__item__del {
-        margin-left: 30px;
+        margin-left: 50px;
     }
     .cart__item__image {
         width: 100%;
