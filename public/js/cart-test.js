@@ -37,11 +37,11 @@ function renderCart(products) {
 	for (let product of products) {
 		html += `
         <table class='tb1' data-id="${product._id}">
-      <tr>
+      <tr class='tr1'>
           <td class='td1 cart__item__image'>
 		  <a href='/products/detail/${product.idProductCode._id}'>
 		  <img src='${product.idProductCode.images[0]}' alt=''>
-		  </a>
+		  </a>	
            
           </td>
           <td class='td1 cart__item__info__name'>

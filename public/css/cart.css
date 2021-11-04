@@ -70,6 +70,7 @@ html {
 .cart__info__btn > * {
     margin-bottom: 20px;
     padding: 12px;
+    /* font-size: 10px; */
 }
 
 .btn-order:hover,
@@ -264,11 +265,27 @@ html {
     .cart__info {
         width: 100%;
     }
+    .tr1 {
+        display: flex;
+        flex-wrap: wrap;
+        text-align: center;
+        padding-top: 20px;
+    }
+    .product_quantity {
+        margin-left: 60px;
+    }
+    .cart__item__info__cost {
+        margin-left: 10px;
+    }
+    .cart__item__del {
+        margin-left: 30px;
+    }
     .cart__item__image {
         width: 100%;
     }
     .cart__item__info__name {
         width: 100%;
+        white-space: nowrap;
     }
     .product__info__item__quantity__input {
         width: 30px;
@@ -286,7 +303,9 @@ html {
         order: 2;
     }
     .btn-txt-cart {
-        font-size: 16px;
+        font-size: 12.25px;
         padding: 12px 0px;
+        min-width: 130px;
+        display: inline-block;
     }
 }

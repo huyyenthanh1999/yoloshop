@@ -184,13 +184,20 @@ h3::after {
         margin-top: 70px !important;
     }
 
+    body {
+        font-size: 0.9rem;
+    }
+
     .address__info {
         flex-direction: column;
     }
 
     .address__info__1,
     .address__info__2 {
-        width: 100%;
+        width: 90%;
+    }
+    .btn {
+        font-size: 0.8rem;
     }
 }
 
