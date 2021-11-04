@@ -3,6 +3,7 @@ const ProductCode = require('../models/productCodeModel')
 const imgbbUploader = require('imgbb-uploader')
 const { removeVI } = require('jsrmvi')
 const dateFormat = require('date-and-time')
+const Order = require('../models/OrderModel')
 
 // example:
 // /products/api?search=""&filter=""
@@ -261,14 +262,12 @@ module.exports.editProductCode = async (req, res) => {
 
 module.exports.deleteProductCode = async (req, res) => {
 	try {
-		// check có đơn nào không
+		const productCode = await ProductCode.findById(req.params.id)
 		
 
-
-		const productCode = await ProductCode.findById(req.params.id)
-
 		// tìm và xóa tất cả các product thuộc productCode đó
-		await Product.deleteMany({ idProductCode: productCode._id })
+		// await Product.deleteMany({ idProductCode: productCode._id })
+		// const orders = await Order.find({'products.productId'})
 
 		await ProductCode.findByIdAndDelete(req.params.id)
 
