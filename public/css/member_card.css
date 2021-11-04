@@ -1,5 +1,5 @@
 .member-card{
-
+    
 }
 .member-card__avatar{
     padding-top: 100%;
@@ -66,17 +66,30 @@
 }
 
 @media only screen and (max-width: 64em){
+    .grid-rows{
+        justify-content: center;
+    }
+
     .grid-col-3 {
-        width: 50%;
+        width: 40%;
+        padding: 0 30px;
     }
 
     .main.flex {
         flex-direction: column;
     }
+
+    .main {
+        margin-top: 70px!important;
+    }
 }
 
 @media only screen and (max-width: 37.5em){
     .grid-col-3 {
-        width: 100%;
+        width: 80%;
+    }
+
+    .main {
+        margin-top: 40px!important;
     }
 }
