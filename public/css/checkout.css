@@ -76,6 +76,7 @@ h3::after {
     border-radius: 5px;
     display: inline-block;
     width: 100%;
+    resize: vertical;
 }
 
 .address__info__1 > *,
@@ -159,7 +160,8 @@ h3::after {
 
 .btn-pay,
 .btn-back {
-    padding: 8px 12px;
+    padding: 12px 24px;
+    font-size: 18px;
 }
 
 .price {

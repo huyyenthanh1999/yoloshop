@@ -59,6 +59,12 @@ document.querySelector('.btn-pay').addEventListener('click', async (e) => {
 	// Check input first
 	let _receiverName = $('.receiver__name__input').val()
 	let _phoneNumber = $('.phone__number__input').val()
+
+	let phoneRegex = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+
+	if (!phoneRegex.test(_phoneNumber))
+		return alert('Vui lòng điền đúng số điện thoại')
+
 	let _message = $('.message__input').val()
 	let _address = $('.detail__address__input').val()
 	let _payment = $('input[name="pay__type"]:checked').val()

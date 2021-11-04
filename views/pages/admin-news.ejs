@@ -32,7 +32,7 @@
 						<div class="section-body">
 							<div>
 								<h2 style="margin-bottom: 15px">Quantity: <%= totalNews %> </h2>
-								<a href="/news/admin/add-news" class="btn btn-large btn-txt btn-primary">Thêm tin tức</a>
+								<a href="/admin/add-news" class="btn btn-large btn-txt btn-primary">Thêm tin tức</a>
 							</div>
 							<table>
                                 <thead>
@@ -57,7 +57,7 @@
 												<%= date.getFullYear()+'-' + (date.getMonth()+1) + '-' +date.getDate(); %>
 											</td>
 											<td>
-												<a href="/news/admin/edit-news/<%= n.slug %>">Edit</a>
+												<a href="/admin/edit-news/<%= n.slug %>">Edit</a>
 												<a href="#" onclick="deleteNews('<%=n._id %>')">Delete</a> 
 											</td>
                                         </tr>
@@ -73,7 +73,7 @@
 											<!-- FIRST ITEM -->
 											<% if(current != 1) { %>
 												<li>
-													<a class="page-link" href="/news/admin/news">First</a>
+													<a class="page-link" href="/admin/news">First</a>
 												</li>
 											<% } %>
 
@@ -87,11 +87,11 @@
 											<% for(; i <=(Number(current) + 1) && i <=pages; i++) { %>
 												<% if(i==current) { %>
 												<li class="active">
-													<a href="/news/admin/news/<%= i %>/"><%= i %></a>
+													<a href="/admin/news/<%= i %>/"><%= i %></a>
 												</li>
 												<% } else { %>
 													<li>
-														<a href="/news/admin/news/<%= i %>/"><%= i %></a>
+														<a href="/admin/news/<%= i %>/"><%= i %></a>
 													</li>
 												<% } %>
 												<% if (i==Number(current) + 1 && i < pages) { %>
@@ -104,7 +104,7 @@
 											<!-- LAST ITEM -->
 											<% if(current != pages){ %>
 												<li>
-													<a href="/news/admin/news/<%= pages %>/">Last</a>
+													<a href="/admin/news/<%= pages %>/">Last</a>
 												</li>
 											<% } %>
 										</ul>

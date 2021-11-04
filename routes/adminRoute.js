@@ -1,6 +1,7 @@
 const router = require('express').Router()
 const controller =  require('../controllers/adminController')
 const {checkAdmin} = require('../middlewares/checkAdmin')
+const upload = require('../middlewares/uploadImgOfUser')
 
 router.use(checkAdmin)
 
@@ -33,7 +34,18 @@ router.get('/orders', controller.adminOrder)
 router.get('/orders/:id', controller.adminDetailOrder)
 
 
-// sales
+// news
+router.get('/news/:page', controller.getNews);
+router.get('/news/', controller.getNews);
+
+router.get('/add-news', controller.getAddNewPage);
+router.get('/all-news/:page', controller.getAllNews);
+router.post('/add-news', upload.single('banner'), controller.addNews);
+
+router.get('/edit-news/:slug', controller.getEditNews);
+router.put('/edit-news/:id', upload.single('banner'), controller.editNews)
+
+router.delete('/delete-news/:id', controller.deleteNews)
 
 
 
