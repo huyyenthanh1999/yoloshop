@@ -1,7 +1,7 @@
 async function deleteNews(id){
     try {
         if (confirm('Are you sure you want to delete this news?')) {
-        const res = await fetch(`/news/admin/delete-news/${id}`,{
+        const res = await fetch(`/admin/delete-news/${id}`,{
             method: 'DELETE'
         })
         console.log(res)

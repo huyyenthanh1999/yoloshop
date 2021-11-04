@@ -29,7 +29,7 @@ form.addEventListener('submit', async function(e){
     //append description to formdata
     formData.set('description', CKEDITOR.instances.editor.getData());
     // for (let i of formData.entries()) console.log(i)
-    const res = await fetch('/news/admin/add-news', {
+    const res = await fetch('/admin/add-news', {
         method: 'POST',
         body: formData
     })
@@ -37,7 +37,7 @@ form.addEventListener('submit', async function(e){
 
     if(res.status == 200){
         alert('Thêm tin tức thành công')
-        window.location.href ='/news/admin/news'
+        window.location.href ='/admin/news'
     }else {
         alert('Thêm tin tức thất bại')
     }

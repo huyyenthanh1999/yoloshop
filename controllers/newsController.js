@@ -2,38 +2,7 @@ const News = require('../models/newsModel');
 const ProductCode = require('../models/productCodeModel');
 const nodemailer = require('nodemailer');
 const imgbbUploader = require('imgbb-uploader')
-const dotenv = require('dotenv');
-dotenv.config();
 
-module.exports.getNews = async (req, res) => {
-	try {
-		let perPage = 10; 
-		let page = req.params.page || 1;
-
-		const totalNews = await News.find();
-
-		News
-			.find()
-			.skip((perPage * page) - perPage)
-			.limit(perPage)
-			.exec((err, news) => {
-				News.countDocuments((err, count) => { 
-					if (err) return next(err);
-					res.render('pages/admin-news', {
-						news,
-						current: page,
-            			pages: Math.ceil(count / perPage),
-						totalNews: totalNews.length
-					})
-				});
-			});
-	} catch (error) {
-		res.status(500).json({
-			status: 'fail',
-			message: 'Lỗi server',
-		})
-	}
-}
 
 module.exports.getAllNews = async (req, res, next) => {
 	try {
