@@ -156,12 +156,22 @@ h3::after {
     cursor: pointer;
     overflow: hidden;
     position: relative;
+    white-space: nowrap;
 }
 
 .btn-pay,
 .btn-back {
     padding: 12px 24px;
     font-size: 18px;
+}
+
+.btn__back,
+.btn__pay {
+    width: 40%;
+}
+
+.btn__pay {
+    margin-left: auto;
 }
 
 .price {
@@ -184,9 +194,13 @@ h3::after {
     }
 }
 
-@media only screen and (max-width: 37.5em){
+@media only screen and (max-width: 37.5em){ 
     #box {
         margin-top: 40px !important;
+    }
+
+    body {
+        font-size: 1.1rem;
     }
 
     .checkout__all {
