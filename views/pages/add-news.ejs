@@ -159,11 +159,13 @@
                                 <textarea id="editor" name="editor"></textarea>
                             </div>
                         </div>
-                        <form action="/news/admin/add-news" method="POST" enctype="multipart/form-data">
-                            <input type="file" name="banner" id="banner" style="display: none;">
-                            <!-- <input type="text" name="title" id="title">
-                            <textarea name="description" id="description" cols="30" rows="10"></textarea> -->
+                        <form action="/admin/add-news" method="POST" enctype="multipart/form-data">
+                            <input type="file" name="banner" id="banner" style="display: none;" required>
                             <button id="add-news" class="btn btn-primary btn-large btn-txt" type="submit">Thêm tin tức</button>
+                            <button class="loading-button btn btn-primary btn-large btn-txt hide">
+                                <i class='bx bx-loader-alt'></i>
+                            </button>
+                            <a href="/admin/news" class="btn btn-primary btn-large btn-txt">Trở lại</a>
                         </form>
 
                     </div>

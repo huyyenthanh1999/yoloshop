@@ -18,10 +18,21 @@ $('#banner').change(function(){
     }
 })
 
+function adding(){
+    $('#add-news').addClass('hide');
+    $('.loading-button').removeClass('hide');
+}
+
+function stopAdd(){
+    $('#add-news').removeClass('hide');
+    $('.loading-button').addClass('hide');
+}
+
 
 //call api to add news
 form.addEventListener('submit', async function(e){
     e.preventDefault();
+    adding()
     //append title to formdata
     formData.set('title', $('#input-title').val());
 
@@ -34,11 +45,11 @@ form.addEventListener('submit', async function(e){
         body: formData
     })
 
-
     if(res.status == 200){
         alert('Thêm tin tức thành công')
         window.location.href ='/admin/news'
     }else {
         alert('Thêm tin tức thất bại')
+        stopAdd()
     }
 })

@@ -10,8 +10,10 @@
 	<link rel="stylesheet" href="../../public/css/header.css" />
 	<link rel="stylesheet" href="../../public/css/footer.css" />
 	<link rel="stylesheet" href="../../public/css/homeBase.css" />
+	<link rel="stylesheet" href="../../public/css/member_card.css" />
 	<!-- <link rel="stylesheet" href="../../public/css/product.css" /> -->
 	<!-- <link rel="stylesheet" href="../../public/css/product-card.css" /> -->
+
     <link href="https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css" rel="stylesheet" />  
     <link rel="stylesheet" href="/public/css/contact.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -22,7 +24,7 @@
 		<div class="container">
 			<div class="main flex">
                 <!-- Write content here -->
-                <div class="form-input">
+                <!-- <div class="form-input">
                     <h3>Gửi liên hệ cho chúng tôi</h3>
                     <div class="flex">
                         <input type="text" placeholder="Họ tên(*)" class="mr">
@@ -36,6 +38,21 @@
                         <textarea placeholder="Nhập nội dung"></textarea>
                     </div>
                     <button>GỬI ĐI</button>
+                </div> -->
+                <div class="team-members">
+                    <div class="grid-rows">
+                        <% membersData.forEach(member => { %>
+                            <div class="grid-col-3">
+                                <%- include('../components/member_card', {
+                                    name: member.name,
+                                    avatar: member.avatar,
+                                    facebook: member.facebook,
+                                    twitter: member.twitter,
+                                    linkedin: member.linkedin
+                                }) -%>
+                            </div>
+                        <% }) %> 
+                    </div>
                 </div>
                 <div class="form-info">
                     <h3>Thông tin liên hệ</h3>
