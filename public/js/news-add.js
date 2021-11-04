@@ -45,7 +45,6 @@ form.addEventListener('submit', async function(e){
         body: formData
     })
 
-
     if(res.status == 200){
         alert('Thêm tin tức thành công')
         window.location.href ='/admin/news'

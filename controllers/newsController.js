@@ -4,6 +4,7 @@ const nodemailer = require('nodemailer');
 const imgbbUploader = require('imgbb-uploader')
 
 
+
 module.exports.getAllNews = async (req, res, next) => {
 	try {
 		const products = await ProductCode.find().lean();
@@ -141,6 +142,7 @@ module.exports.sendMail = async (req, res) => {
 
 module.exports.addNews = async (req, res) => {
 	try {
+		console.log(req.file)
 		// update banner
 		if (req.file) {
 			const upload = await imgbbUploader(process.env.IMGBB_KEY, req.file.path)

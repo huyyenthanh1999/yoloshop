@@ -3,6 +3,8 @@ const ProductCode = require('../models/productCodeModel')
 const User = require('../models/userModel')
 const Order = require('../models/orderModel')
 const News = require('../models/newsModel')
+const imgbbUploader = require('imgbb-uploader')
+
 
 // render dashboard
 module.exports.adminDashboard = async (req, res) => {
@@ -336,22 +338,25 @@ module.exports.sendMail = async (req, res) => {
 }
 
 module.exports.addNews = async (req, res) => {
-	try {
+	// try {
+		console.log(req.body)
 		// update banner
 		if (req.file) {
 			const upload = await imgbbUploader(process.env.IMGBB_KEY, req.file.path)
 			req.body.banner = upload.url
 		}
+
+		console.log(req.body)
 		await News.create(req.body)
 		res.status(200).json({
 			status: 'success'
 		})
-	} catch (error) {
-		res.status(500).json({
-			status: 'fail',
-			message: 'Lỗi server',
-		})
-	}
+	// } catch (error) {
+	// 	res.status(500).json({
+	// 		status: 'fail',
+	// 		message: 'Lỗi server',
+	// 	})
+	// }
 }
 
 module.exports.getEditNews = async (req, res) => {

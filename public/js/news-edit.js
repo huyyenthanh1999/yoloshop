@@ -32,14 +32,14 @@ form.addEventListener('submit', async function(e){
     //append description to formdata
     formData.set('description', CKEDITOR.instances.editor.getData());
     // for (let i of formData.entries()) console.log(i)
-    const res = await fetch(`/news/admin/edit-news/${id}`, {
+    const res = await fetch(`/admin/edit-news/${id}`, {
         method: 'PUT',
         body: formData
     })
 
     if(res.status == 200){
         alert('Sửa tin tức thành công')
-        window.location.href = '/news/admin/news'
+        window.location.href = '/admin/news'
     }else {
         alert('Sửa tin tức thất bại')
     }
