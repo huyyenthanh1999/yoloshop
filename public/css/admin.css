@@ -18,6 +18,7 @@ body {
   top: 0;
   left: 0;
   background-color: #111827;
+  -webkit-transition: 0.5s;
   transition: 0.5s;
 }
 
@@ -62,9 +63,15 @@ body {
 }
 
 .admin-main .admin-header > .right-side {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  align-items: center;
-  justify-content: flex-end;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
   margin-right: 30px;
 }
 
@@ -72,9 +79,11 @@ body {
   width: 30px;
   height: 30px;
   border-radius: 50%;
-  object-fit: cover;
+  -o-object-fit: cover;
+     object-fit: cover;
   cursor: pointer;
-  object-position: center;
+  -o-object-position: center;
+     object-position: center;
 }
 
 .admin-main .admin-header > .right-side i {
@@ -95,18 +104,28 @@ body {
 }
 
 .admin-main .admin-content .admin-statistical {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   margin-left: -14px;
 }
 
 .admin-main .admin-content .admin-statistical .box {
-  flex: 1;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
   background-color: var(--main-color);
   margin-left: 14px;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: space-between;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   padding: 20px 15px;
-  align-items: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   border-radius: 5px;
   cursor: pointer;
 }
@@ -154,7 +173,10 @@ body {
 .admin-products table thead {
   background-color: var(--main-color);
   color: white;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
 .admin-products table .stt-product {
@@ -185,8 +207,12 @@ body {
 }
 
 .admin-products .products-action {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  align-items: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   margin-bottom: 30px;
 }
 
@@ -206,6 +232,8 @@ body {
 .admin-products .products-action .action-add,
 .admin-products .products-action .total-products {
   font-size: 17px;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   cursor: pointer;
   position: relative;
@@ -271,7 +299,22 @@ body {
   left: 0;
   height: 100%;
   background-color: #3b0e89;
-  animation: lineLoading 1s forwards infinite linear;
+  -webkit-animation: lineLoading 1s forwards infinite linear;
+          animation: lineLoading 1s forwards infinite linear;
+}
+
+@-webkit-keyframes lineLoading {
+  0% {
+    right: 100%;
+  }
+  50% {
+    right: 0;
+    left: 0;
+  }
+  100% {
+    right: 0;
+    left: 100%;
+  }
 }
 
 @keyframes lineLoading {
@@ -307,8 +350,12 @@ body {
 }
 
 .pagination {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 
 .pagination a {
@@ -318,3 +365,4 @@ body {
   margin: 5px;
   color: black;
 }
+/*# sourceMappingURL=admin.css.map */

@@ -18,17 +18,28 @@ $('#banner').change(function(){
     }
 })
 
+function adding(){
+    $('#add-news').addClass('hide');
+    $('.loading-button').removeClass('hide');
+}
+
+function stopAdd(){
+    $('#add-news').removeClass('hide');
+    $('.loading-button').addClass('hide');
+}
+
 
 //call api to add news
 form.addEventListener('submit', async function(e){
     e.preventDefault();
+    adding()
     //append title to formdata
     formData.set('title', $('#input-title').val());
 
     formData.set('slug', $('#input-title').val().replace(/\s+/g,"-").toLowerCase())
     //append description to formdata
     formData.set('description', CKEDITOR.instances.editor.getData());
-    // for (let i of formData.entries()) console.log(i)
+    for (let i of formData.entries()) console.log(i)
     const res = await fetch('/news/admin/add-news', {
         method: 'POST',
         body: formData
@@ -40,5 +51,6 @@ form.addEventListener('submit', async function(e){
         window.location.href ='/news/admin/news'
     }else {
         alert('Thêm tin tức thất bại')
+        stopAdd()
     }
 })

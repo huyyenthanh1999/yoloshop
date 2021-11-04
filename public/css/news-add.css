@@ -33,3 +33,42 @@
 form {
     text-align: center;
 }
+
+#add-news.hide {
+    display: none;
+}
+
+.loading-button {
+    font-size: 30px;
+    cursor: not-allowed;
+}
+
+.loading-button.hide {
+    display: none;
+}
+
+.bx-loader-alt {
+    -webkit-animation: fa-spin 2s linear infinite;
+    animation: fa-spin 2s linear infinite;
+}
+
+@-webkit-keyframes fa-spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    to {
+        -webkit-transform: rotate(1turn);
+        transform: rotate(1turn);
+    }
+}
+@keyframes fa-spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    to {
+        -webkit-transform: rotate(1turn);
+        transform: rotate(1turn);
+    }
+}
