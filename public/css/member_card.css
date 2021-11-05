@@ -49,12 +49,12 @@
 }
 
 .social-info a {
-    font-size: 30px;
+    font-size: 50px;
     margin: 0 5px;
 }
 
 .social-info a:hover {
-    color: red;
+    color: #0570e6;
     transition: all 0.3s ease;
 }
 

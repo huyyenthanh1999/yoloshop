@@ -5,7 +5,7 @@ const imgbbUploader = require('imgbb-uploader')
 const path = require('path')
 const { removeVI } = require('jsrmvi')
 const dateFormat = require('date-and-time')
-const Order = require('../models/OrderModel')
+const Order = require('../models/orderModel')
 
 module.exports.getAllUser = async (req, res) => {
 	try {
@@ -93,11 +93,12 @@ module.exports.deleteUser = async (req, res) => {
 
 		// check user, nếu họ đang có order thì không xóa được
 		const orders = await Order.find({ userId: user._id, status: 'waiting' })
+		console.log(orders)
 
 		if (orders.length > 0)
 			return res.status(400).json({
 				status: 'fail',
-				message: 'Không tìm thấy user',
+				message: 'User đang có đơn hàng',
 			})
 
 		res.status(200).json({
