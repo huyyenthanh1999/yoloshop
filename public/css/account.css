@@ -235,12 +235,25 @@ thead {
     position: sticky;
 }
 
+.order-product-list div:not(:first-child) {
+    display: none;
+}
+
+.order-product-list div:first-child {
+    overflow: hidden;
+    display: -webkit-box;
+    text-overflow: ellipsis;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+}
+
 th {
     background-color: #4267b2;
     padding: 20px 15px;
     text-align: left;
     color: #fff;
     font-size: 1.8rem;
+    line-height: 1.2;
 }
 
 td {
@@ -255,12 +268,49 @@ td a {
     border-radius: 2px;
     display: inline-block;
     text-align: center;
+    min-width: 100px;
+    cursor: pointer;
+}
+
+td a:hover {
+    background-color: var(--blue-color);
+    color: #fff;   
 }
 
 .account-order__list {
     max-height: 600px;
     overflow-y: auto;
 }
+
+td a.disabled {
+    cursor: not-allowed;
+}
+/* css for pagination orders */
+select.form-control {
+    max-width: 60px;
+    padding: 4px;
+}
+
+ul.pagination {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    margin-top: 16px;
+}
+
+ul.pagination li {
+    padding: 4px 8px;
+    border: 1px solid #4267b2;
+    margin: 0 5px;
+    cursor: pointer;
+    border-radius: 25px;
+}
+
+ul.pagination li.active {
+    background-color: #4267b2;
+    color: #fff;
+}
+
 /* modal avatar */
 .avatar-modal {
     position: fixed;
@@ -378,6 +428,11 @@ td a {
     .container {
         margin-top: auto !important;
     }
+
+    td {
+        font-size: 1.2rem;
+        padding: 4px 10px;
+    }
 }
 
 @media only screen and (max-width: 37.5em){
@@ -395,13 +450,12 @@ td a {
         height: 30px;
     }
 
-    td {
-        font-size: 1rem;
-        padding: 4px 10px;
-    }
-
     .account-action {
         font-size: 1rem;
+    }
+
+    td {
+        font-size: 0.7rem;
     }
 
 }
