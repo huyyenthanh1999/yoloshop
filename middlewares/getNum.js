@@ -1,4 +1,4 @@
-const Cart = require('../models/cartModel');
+// const Cart = require('../models/cartModel');
 const jwt = require('jsonwebtoken')
 
 module.exports.getLog = async (req, res, next) => {
