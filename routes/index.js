@@ -10,6 +10,7 @@ router.use(getLog)
 const indexRoute = require('./indexRoute')
 router.use('/', indexRoute)
 
+
 // auth
 const authRoute = require('./authRoute')
 router.use('/auth', authRoute)
