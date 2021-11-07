@@ -1,6 +1,6 @@
 const Product = require('../models/productModel')
 const ProductCode = require('../models/productCodeModel')
-const Cart = require('../models/cartModel')
+const Cart = require('../models/CartModel')
 const { render } = require('ejs')
 const { removeVI } = require('jsrmvi')
 
