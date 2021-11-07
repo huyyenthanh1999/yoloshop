@@ -5,7 +5,7 @@ const imgbbUploader = require('imgbb-uploader')
 const path = require('path')
 const { removeVI } = require('jsrmvi')
 const dateFormat = require('date-and-time')
-const Order = require('../models/OrderModel')
+const Order = require('../models/orderModel')
 
 module.exports.getAllUser = async (req, res) => {
 	try {

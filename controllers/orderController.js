@@ -1,4 +1,4 @@
-const Order = require('../models/OrderModel')
+const Order = require('../models/orderModel')
 const { removeVI } = require('jsrmvi')
 const dateFormat = require('date-and-time')
 const Product = require('../models/productModel')

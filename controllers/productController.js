@@ -3,7 +3,7 @@ const ProductCode = require('../models/productCodeModel')
 const imgbbUploader = require('imgbb-uploader')
 const { removeVI } = require('jsrmvi')
 const dateFormat = require('date-and-time')
-const Order = require('../models/OrderModel')
+const Order = require('../models/orderModel')
 
 // example:
 // /products/api?search=""&filter=""
