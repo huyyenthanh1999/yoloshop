@@ -45,16 +45,16 @@ const userRoute = require('./userRoute')
 router.use("/users", userRoute)
 
 // orders
-const orderRoute = require('./orderRoute')
-router.use("/orders", orderRoute)
+// const orderRoute = require('./orderRoute')
+// router.use("/orders", orderRoute)
 
 // contact
-const contactRoute = require('./contactRoute')
-router.use('/contact', contactRoute)
+// const contactRoute = require('./contactRoute')
+// router.use('/contact', contactRoute)
 
 //news
-const newsRoute = require('./newsRoute.js')
-router.use("/news", newsRoute)
+// const newsRoute = require('./newsRoute.js')
+// router.use("/news", newsRoute)
 
 // Not found page
 router.use((req, res) => res.render('pages/notfound'))
