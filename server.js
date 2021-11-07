@@ -28,8 +28,12 @@ app.use('/public', express.static(path.join(__dirname, 'public')))
 
 require('./config/connectDB')
 
-const router = require("./routes/index")
-app.use(router)
+// const router = require("./routes/index")
+// app.use(router)
+
+app.get('/', (req, res) => {
+	res.json('hello')
+})
 
 // listening
 const PORT = process.env.PORT || 3000
