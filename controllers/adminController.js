@@ -1,7 +1,7 @@
 const Product = require('../models/productModel')
 const ProductCode = require('../models/productCodeModel')
 const User = require('../models/userModel')
-const Order = require('../models/orderModel')
+const Order = require('../models/OrderModel')
 const News = require('../models/newsModel')
 const imgbbUploader = require('imgbb-uploader')
 

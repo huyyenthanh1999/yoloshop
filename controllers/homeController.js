@@ -1,9 +1,9 @@
 const ProductCode = require('../models/productCodeModel')
 const jwt = require('jsonwebtoken')
-const Cart = require('../models/cartModel')
+const Cart = require('../models/CartModel')
 const slides = require('../public/data/sliderData')
 const cards = require('../public/data/cardData')
-const Order = require('../models/orderModel')
+const Order = require('../models/OrderModel')
 const Product = require('../models/productModel')
 
 module.exports.getAllData = async (req, res) => {
