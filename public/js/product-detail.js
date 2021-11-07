@@ -13,7 +13,7 @@ $.ajax({
 	.catch((err) => {
 		console.log(err)
 	})
-
+console.log(listVariants)
 $(document).ready(function () {
 	// toggle expand product description
 	$('.product-description__toggle').click(function () {
@@ -66,6 +66,7 @@ $(document).ready(function () {
 			)
 			idVariant = currVariant[0]._id
 			$('#quantity').attr('max', currVariant[0].total)
+			$('.product-info-item__variant').text('Còn ' + currVariant[0].total + ' sản phẩm')
 		}
 	})
 	//change main image
