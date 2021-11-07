@@ -6,10 +6,11 @@ const imgbbUploader = require('imgbb-uploader')
 
 
 module.exports.getAllNews = async (req, res, next) => {
-	try {
+	// try {
 		const products = await ProductCode.find().lean();
 		const arr = Array.from(Array(products.length).keys());
-		var featuredIndex = getRandom(arr, 10)
+		// var featuredIndex = getRandom(arr, 10)
+		var featuredIndex = getRandom(arr, 6)
 
 		function getRandom(arr, n) {
 			var result = new Array(n),
@@ -45,12 +46,12 @@ module.exports.getAllNews = async (req, res, next) => {
 				});
 			});
 		
-	} catch (error) {
-		res.status(500).json({
-			status: 'fail',
-			message: 'Lỗi server',
-		})
-	}
+	// } catch (error) {
+	// 	res.status(500).json({
+	// 		status: 'fail',
+	// 		message: 'Lỗi server',
+	// 	})
+	// }
 }
 
 module.exports.getDetailNews = async (req, res) => {
