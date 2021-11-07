@@ -41,8 +41,14 @@ const router = require('express').Router()
 // router.use("/admin", adminRoute);
 
 // users
-const userRoute = require('./userRoute')
-router.use("/users", userRoute)
+// const userRoute = require('./userRoute')
+// router.use("/users", userRoute)
+
+const User = require('../models/userModel')
+router.get('/users', async (req, res) => {
+    const users = await User.find().lean()
+    res.json(users)
+})
 
 // orders
 // const orderRoute = require('./orderRoute')
