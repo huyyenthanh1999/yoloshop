@@ -53,7 +53,6 @@ var span = document.getElementsByClassName("close")[0];
 btn.addEventListener('click', (e) => {
     e.preventDefault()
     modal.style.display = "block";
-
 })
 
 // When the user clicks on <span> (x), close the modal
