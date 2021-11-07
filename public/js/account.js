@@ -270,7 +270,7 @@ async function cancelOrder(event) {
 	event.preventDefault()
 	const tr = event.target.closest('tr')
 
-	const id = tr.querySelector('td').innerHTML
+	const id = tr.getAttribute('data-id')
 
 	const result = await $.ajax({
 		url: `/orders/api/${id}/cancel`,

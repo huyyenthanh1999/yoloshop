@@ -176,8 +176,9 @@
 
 .product-info-item__quantity{
     display: flex;
-    align-items: flex-start;
+    /* align-items: flex-start; */
     justify-content: flex-start;
+    align-items:center;
 }
 
 .product-info-item-quantity__btn,
@@ -301,4 +302,10 @@ figure.zoom {
     .product-info-item-quantity__input{
         width: 120px;
     }
+}
+
+.product-info-item__variant {
+    /* float: left; */
+    margin-left: 15px;
+    font-size: 15px;
 }
