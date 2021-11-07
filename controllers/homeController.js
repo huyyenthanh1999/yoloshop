@@ -1,6 +1,6 @@
 const ProductCode = require('../models/productCodeModel')
 const jwt = require('jsonwebtoken')
-const Cart = require('../models/CartModel')
+const Cart = require('../models/cartModel')
 const slides = require('../public/data/sliderData')
 const cards = require('../public/data/cardData')
 const Order = require('../models/OrderModel')
