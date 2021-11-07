@@ -248,9 +248,9 @@ thead {
 	position: sticky;
 }
 
-.order-product-list div:not(:first-child) {
+/* .order-product-list div:not(:first-child) {
 	display: none;
-}
+} */
 
 .order-product-list div:first-child {
 	overflow: hidden;
@@ -258,6 +258,7 @@ thead {
 	text-overflow: ellipsis;
 	-webkit-box-orient: vertical;
 	-webkit-line-clamp: 1;
+	width: 250px;
 }
 
 th {

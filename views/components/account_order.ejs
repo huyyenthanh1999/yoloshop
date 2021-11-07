@@ -28,9 +28,11 @@
                     <% var code = String(order._id) %> 
                     <td><%= code.slice(code.length - 6, code.length) %></td>
                     <td class="order-product-list">
+                        <% var html = '' %> 
                         <% order.products.forEach(product => { %>
-                            <div> <%= product.name %></div>
+                            <% html += product.name + '  ' %> 
                         <% }) %>
+                        <div> <%= html %></div>
                     </td>
                     <td><%= order.createdAt.toLocaleDateString("en-GB") %></td>
                     <td><%= order.totalCost.toLocaleString() %></td>
