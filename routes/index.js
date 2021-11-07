@@ -7,8 +7,8 @@ const router = require('express').Router()
 // const {getLog} = require('../middlewares/getNum');
 // router.use(getLog)
 // // home page
-// const indexRoute = require('./indexRoute')
-// router.use('/', indexRoute)
+const indexRoute = require('./indexRoute')
+router.use('/', indexRoute)
 
 // // auth
 // const authRoute = require('./authRoute')
