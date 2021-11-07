@@ -30,9 +30,9 @@ form.addEventListener('submit', async (e) => {
             alert('Đăng nhập thành công')
 
             window.location.href = '/'
-            
+
             // window.history.back()
-            
+
         })
         .catch(error => {
             alert('Mật khẩu hoặc email/phone không đúng')
@@ -41,6 +41,29 @@ form.addEventListener('submit', async (e) => {
 
 })
 
-// khi dang nhap 
-// jwt jsonwebtoken
-// user, token 
+// Get the modal
+var modal = document.getElementById("myModal");
+
+// Get the button that opens the modal
+var btn = document.getElementById("myBtn");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+btn.addEventListener('click', (e) => {
+    e.preventDefault()
+    modal.style.display = "block";
+
+})
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function () {
+    modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function (event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
