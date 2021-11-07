@@ -1,7 +1,18 @@
+<select class  ="form-control" name="state" id="maxRows">
+    <option value="500">All</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+    <option value="6">6</option>
+    <option value="7">7</option>
+    <option value="8">8</option>
+    <option value="9">9</option>
+    <option value="10">10</option>
+</select>
 <div class="account-order__list">
-    <table>
+    <table id="table-id">
         <thead>
-            <th>Mã đơn hàng</th>
+            <th>#</th>
             <th>Sản phẩm</th>
             <th>Ngày mua</th>
             <th>Tổng tiền</th>
@@ -11,23 +22,45 @@
         <tbody>
             <% orders.forEach(order => { %>
                 <tr>
-                    <td><%= order._id %></td>
+                    <% var code = String(order._id) %> 
+                    <td><%= code.slice(code.length - 6, code.length) %></td>
                     <td class="order-product-list">
                         <% order.products.forEach(product => { %>
                             <div> <%= product.name %></div>
-                        <% }) %> 
+                        <% }) %>
                     </td>
                     <td><%= order.createdAt.toLocaleDateString("en-GB") %></td>
                     <td><%= order.totalCost.toLocaleString() %></td>
                     <td class="order-status"><%= order.status %></td>
                     <td>
-                        <a href="/invoices/<%= order._id %>" target="_blank">Hoa don</a>
-                        <a onclick="cancelOrder(event)">
+                        <a href="/invoices/<%= order._id %>" target="_blank">Hóa Đơn</a>
+                        <% if(order.status === 'cancelled' || order.status === 'done'){ %>
+                            <a class="disabled"> 
                             Hủy đơn
-                        </a>
+                            </a>
+                        <% } else { %> 
+                            <a onclick="cancelOrder(event)">
+                                Hủy đơn
+                            </a>
+                        <% } %>
                     </td>
                 </tr>
             <% }) %> 
         </tbody>
     </table>
+</div>
+<!--		Start Pagination -->
+<div class='pagination-container' >
+    <nav>
+      <ul class="pagination">
+        <li data-page="prev" >
+            <span> < <span class="sr-only"></span></span>
+        </li>
+        <li data-page="next" id="prev">
+            <span> > <span class="sr-only"></span></span>
+            </li>
+      </ul>
+    </nav>
+</div>
+
 </div>

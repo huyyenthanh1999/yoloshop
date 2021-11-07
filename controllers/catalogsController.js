@@ -11,6 +11,9 @@ module.exports.getProductDetail = async (req, res) => {
 		const products = await Product.find({
 			idProductCode: idProductCode,
 		})
+		var total = 0; 
+		products.map((product) => total += product.total)
+		// console.log(total)
 		var sizes = products.map((e) => e.size)
 		var colors = products.map((e) => e.color)
 		//get all product
@@ -36,6 +39,7 @@ module.exports.getProductDetail = async (req, res) => {
 			product: productCode,
 			sizes: [...new Set(sizes)],
 			colors: [...new Set(colors)],
+			total
 		})
 	} catch (error) {
 		res.status(500).json({
