@@ -1,14 +1,14 @@
 const router = require('express').Router()
-// const {checkUser} = require('../middlewares/checkUser')
+const {checkUser} = require('../middlewares/checkUser')
 
-// // gán req.user
-// router.use(checkUser)
+// gán req.user
+router.use(checkUser)
 
-// const {getLog} = require('../middlewares/getNum');
-// router.use(getLog)
-// // home page
-const indexRoute = require('./indexRoute')
-router.use('/', indexRoute)
+const {getLog} = require('../middlewares/getNum');
+router.use(getLog)
+// home page
+// const indexRoute = require('./indexRoute')
+// router.use('/', indexRoute)
 
 // // auth
 // const authRoute = require('./authRoute')
@@ -40,17 +40,11 @@ router.use('/', indexRoute)
 // const adminRoute = require("./adminRoute");
 // router.use("/admin", adminRoute);
 
-// users
+// // users
 // const userRoute = require('./userRoute')
 // router.use("/users", userRoute)
 
-const User = require('../models/userModel')
-router.get('/users', async (req, res) => {
-    const users = await User.find().lean()
-    res.json(users)
-})
-
-// orders
+// // orders
 // const orderRoute = require('./orderRoute')
 // router.use("/orders", orderRoute)
 
