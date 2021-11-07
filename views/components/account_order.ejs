@@ -19,10 +19,10 @@
                     </td>
                     <td><%= order.createdAt.toLocaleDateString("en-GB") %></td>
                     <td><%= order.totalCost.toLocaleString() %></td>
-                    <td><%= order.status %></td>
+                    <td class="order-status"><%= order.status %></td>
                     <td>
                         <a href="/invoices/<%= order._id %>" target="_blank">Hoa don</a>
-                        <a onclick="cancelOrder('<%= order._id %>')">
+                        <a onclick="cancelOrder(event)">
                             Hủy đơn
                         </a>
                     </td>

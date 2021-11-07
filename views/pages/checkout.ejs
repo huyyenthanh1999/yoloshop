@@ -36,7 +36,7 @@
                                 <div class="address__info__1">
                                     <div class="receiver__name">
                                         <p class="p__info">Tên người nhận (*)</p>
-                                        <input class="address__info__input receiver__name__input" type="text" required="required">
+                                        <input class="address__info__input receiver__name__input" type="text" required="required" value="<%= order.receiverName %>">
                                     </div>
                                     <div class="message">
                                         <p class="p__info">Ghi chú</p>
@@ -46,11 +46,11 @@
                                 <div class="address__info__2">
                                     <div class="phone__number">
                                         <p class="p__info">Số điện thoại (*)</p>
-                                        <input class="address__info__input phone__number__input" type="tel" required="required">
+                                        <input class="address__info__input phone__number__input" type="tel" required="required" value="<%= order.phoneNumber %>">
                                     </div>
                                     <div class="detail__address">
                                         <p class="p__info">Địa chỉ (*)</p>
-                                        <textarea class="address__info__input detail__address__input" required="required"></textarea>
+                                        <textarea class="address__info__input detail__address__input" required="required"><%= order.address %></textarea>
                                     </div>
                                 </div>
                             </div>

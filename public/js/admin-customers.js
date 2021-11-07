@@ -15,7 +15,7 @@ function handlePagination(e) {
 
 // firstly, call api list of customers
 async function getCustomers() {
-	if(!checkOnline()){
+	if (!checkOnline()) {
 		alert('Không có kết nối internet')
 		return
 	}
@@ -121,12 +121,10 @@ async function deleteCustomer(event) {
 	// add lazing add product
 	showLazy()
 
-	const res = await $.ajax({
-		url: `/users/${idCustomer}`,
-		type: 'delete',
-	})
+	const res = await fetch(`/users/${idCustomer}`, {
+		method: 'DELETE',
+	}).then((response) => response.json())
 
-	hideLazy()
 	// console.log(res.status == 'success')
 	if (res.status == 'success') {
 		alert('Xóa khách hàng thành công')
@@ -139,8 +137,11 @@ async function deleteCustomer(event) {
 
 		document.querySelector('.total-products span').innerHTML--
 	} else {
-		alert('Xóa khách hàng thất bại')
+		if ((res.message = 'User đang có đơn hàng')) alert('User đang có đơn hàng')
+		else alert('Xóa khách hàng thất bại')
 	}
+
+	hideLazy()
 }
 
 const processChange = debounce(() => searchProduct())
@@ -154,8 +155,6 @@ function searchProduct() {
 }
 
 $('.customers-action .action-search input').on('keyup', processChange)
-
-
 
 // filter follow date
 let statusDate = ''
@@ -182,7 +181,6 @@ function handleActionDate() {
 
 	renderListOfCustomers(customers)
 }
-
 
 // // handle filter select
 // function handleFilter(obj) {

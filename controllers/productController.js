@@ -3,7 +3,7 @@ const ProductCode = require('../models/productCodeModel')
 const imgbbUploader = require('imgbb-uploader')
 const { removeVI } = require('jsrmvi')
 const dateFormat = require('date-and-time')
-// const Order = require('../models/OrderModel')
+const Order = require('../models/orderModel')
 
 // example:
 // /products/api?search=""&filter=""
@@ -167,29 +167,44 @@ module.exports.addProductCode = async (req, res) => {
 }
 
 module.exports.addProduct = async (req, res) => {
-	try {
-		// tìm kiếm xem đã tồn tại hay chưa
-		const product = await Product.findOne({ ...req.body })
-		if (product)
-			return res.status(200).json({
-				status: 'success',
-				product,
-			})
+	// try {
+	const { color, size, total, idProductCode, _id } = req.body
 
-		const newProduct = new Product({
-			...req.body,
-		})
+	// tìm kiếm xem đã tồn tại hay chưa
+	// chua co thi tao moi
+	// co roi thi update
+	let newProduct = null
+
+	if (_id == '') {
+		newProduct = new Product({ color, total, idProductCode, size })
 		await newProduct.save()
-		res.status(200).json({
-			status: 'success',
-			product: newProduct,
-		})
-	} catch (error) {
-		res.status(400).json({
-			status: 'fail',
-			message: 'Lỗi server',
-		})
+	} else {
+		newProduct = await Product.findByIdAndUpdate(
+			_id,
+			{
+				color,
+				size,
+				total,
+			}
+		)
+
+		if (!newProduct)
+			return res.status(400).json({
+				status: 'fail',
+				message: 'Không tìm thấy sản phẩm',
+			})
 	}
+
+	res.status(200).json({
+		status: 'success',
+		product: newProduct,
+	})
+	// } catch (error) {
+	// 	res.status(400).json({
+	// 		status: 'fail',
+	// 		message: 'Lỗi server',
+	// 	})
+	// }
 }
 
 module.exports.editProductCode = async (req, res) => {
@@ -242,9 +257,6 @@ module.exports.editProductCode = async (req, res) => {
 		// await product.save()
 		await productCode.save()
 
-		// xóa toàn bộ products thuộc productCode
-		await Product.deleteMany({ idProductCode: productCode._id })
-
 		// respond
 		res.status(200).json({
 			status: 'success',
@@ -263,11 +275,33 @@ module.exports.editProductCode = async (req, res) => {
 module.exports.deleteProductCode = async (req, res) => {
 	try {
 		const productCode = await ProductCode.findById(req.params.id)
-		
+
+		if (!productCode) {
+			return res.status(400).json({
+				status: 'fail',
+				message: 'Không tìm thấy sản phẩm',
+			})
+		}
+
+		// tìm xem có order nào đang có hay không
+		// tim product thuoc productCode -> tim order ma co 'waiting' va co product
+		const products = await Product.find({
+			idProductCode: productCode._id,
+		}).lean()
+		const arrId = products.map((item) => item._id)
+		const orders = await Order.find({
+			status: 'waiting',
+			'products.productId': { $in: arrId },
+		}).lean()
+
+		if (orders.length > 0)
+			return res.status(400).json({
+				status: 'fail',
+				message: 'Sản phẩm đang nằm trong danh sách order',
+			})
 
 		// tìm và xóa tất cả các product thuộc productCode đó
-		// await Product.deleteMany({ idProductCode: productCode._id })
-		// const orders = await Order.find({'products.productId'})
+		await Product.deleteMany({ idProductCode: productCode._id })
 
 		await ProductCode.findByIdAndDelete(req.params.id)
 
@@ -278,7 +312,7 @@ module.exports.deleteProductCode = async (req, res) => {
 	} catch (error) {
 		res.status(500).json({
 			status: 'fail',
-			message: 'Lỗi server',
+			message: 'Xóa sản phẩm thất bại',
 		})
 	}
 }

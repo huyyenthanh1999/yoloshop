@@ -266,14 +266,20 @@ $('#cancelavatar').click(function () {
 	$('.avatar-modal').css('display', 'none')
 })
 
-async function cancelOrder(id) {
+async function cancelOrder(event) {
+	event.preventDefault()
+	const tr = event.target.closest('tr')
+
+	const id = tr.querySelector('td').innerHTML
+
 	const result = await $.ajax({
-		url: `/account/cancel-order/${id}`,
-		type: 'delete',
+		url: `/orders/api/${id}/cancel`,
+		type: 'put',
 	})
 
 	if (result.status == 'success') {
-		alert('Hủy đơn hàng thành công')
+		alert(result.message)
+		tr.querySelector('.order-status').innerHTML = 'cancelled'
 	} else {
 		alert('Hủy đơn hàng thất bại')
 	}

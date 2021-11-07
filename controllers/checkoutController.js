@@ -10,7 +10,16 @@ module.exports.renderOrder = async (req, res) => {
 	// nếu cart không có gì, không cho checkout
 	const cart = await Cart.findOne({ userId: req.user._id })
 	if (!cart || cart.products.length === 0) return res.redirect('/')
-	res.render('pages/checkout')
+
+	// Lấy lịch sử order trước để tự động điền
+	let order = await Order.findOne({userId: req.user._id}).sort({ createdAt: -1 }).lean()
+	if (!order)
+		order = {
+			receiverName: '',
+			phoneNumber: '',
+			address: '',
+		}
+	res.render('pages/checkout', { order })
 }
 
 module.exports.detailOrder = async (req, res) => {
@@ -37,65 +46,70 @@ module.exports.detailOrder = async (req, res) => {
 }
 
 module.exports.createOrder = async (req, res) => {
-	try {
-		const userId = req.user._id
-		// console.log(userId)
-		// console.log(req.body)
+	// try {
+	const userId = req.user._id
 
-		// get order
-		const cart = await Cart.findOne({ userId })
+	// get order
+	const cart = await Cart.findOne({ userId })
 
-		// console.log(cart)
-		// handle totalCost
-		let totalCost = 0
-		for (let item of cart.products) {
-			// let productCode = await ProductCode.findById()
-			let product = await Product.findById(item.productId).lean()
-			let productCode = await ProductCode.findById(product.idProductCode).lean()
-			totalCost += productCode.cost
-		}
+	// handle totalCost
+	let totalCost = 0
+	for (let item of cart.products) {
+		// let productCode = await ProductCode.findById()
+		let product = await Product.findById(item.productId).lean()
 
-		// phi ship
-		totalCost += 30000
-		// console.log(54, cart.products)
+		let productCode = await ProductCode.findById(product.idProductCode).lean()
+		totalCost += productCode.cost
 
-		const order = await Order.create({
-			userId: userId,
-			receiverName: req.body._receiverName,
-			phoneNumber: req.body._phoneNumber,
-			message: req.body._message,
-			address: req.body._address,
-			products: cart.products,
-			totalCost: totalCost,
-			payment: req.body._payment,
-		})
-		if (!order)
+		// kiem tra xem con hang khong
+		if (product.total < item.quantity)
 			return res.status(400).json({
 				status: 'fail',
-				message: 'Không tạo được order',
+				message: `Xin lỗi sản phẩm ${productCode.name} - ${product.color} - ${product.size} hiện chỉ còn ${product.total} trong kho. Vui lòng quay lại trang cart!`,
 			})
-
-		// tru so luong san pham
-		for (let product of cart.products) {
-			const pro = await Product.findById(product.productId)
-			pro.total = pro.total - product.quantity
-			// await pro.update()
-			await Product.updateOne({ _id: pro._id }, { total: pro.total })
-		}
-
-		await cart.remove()
-
-		res.status(200).json({
-			status: 'success',
-			message: 'Create new order thành công',
-			order,
-		})
-	} catch (error) {
-		res.status(500).json({
-			status: 'fail',
-			message: 'Lỗi server',
-		})
 	}
+
+	// phi ship
+	totalCost += 30000
+	// console.log(54, cart.products)
+
+	const order = await Order.create({
+		userId: userId,
+		receiverName: req.body._receiverName,
+		phoneNumber: req.body._phoneNumber,
+		message: req.body._message,
+		address: req.body._address,
+		products: cart.products,
+		totalCost: totalCost,
+		payment: req.body._payment,
+	})
+	if (!order)
+		return res.status(400).json({
+			status: 'fail',
+			message: 'Không tạo được order',
+		})
+
+	// tru so luong san pham
+	for (let product of cart.products) {
+		const pro = await Product.findById(product.productId)
+		pro.total = pro.total - product.quantity
+		// await pro.update()
+		await Product.updateOne({ _id: pro._id }, { total: pro.total })
+	}
+
+	await cart.remove()
+
+	res.status(200).json({
+		status: 'success',
+		message: 'Create new order thành công',
+		order,
+	})
+	// } catch (error) {
+	// 	res.status(500).json({
+	// 		status: 'fail',
+	// 		message: 'Lỗi server',
+	// 	})
+	// }
 }
 
 module.exports.create_Order = async (req, res) => {

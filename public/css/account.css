@@ -405,3 +405,7 @@ td a {
     }
 
 }
+
+a {
+    cursor: pointer;
+}
