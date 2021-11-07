@@ -10,6 +10,7 @@ module.exports.getAllNews = async (req, res, next) => {
 		const products = await ProductCode.find().lean();
 		const arr = Array.from(Array(products.length).keys());
 		// var featuredIndex = getRandom(arr, 10)
+		// so luong bai bao khong du nen chi lay 6
 		var featuredIndex = getRandom(arr, 6)
 
 		function getRandom(arr, n) {
