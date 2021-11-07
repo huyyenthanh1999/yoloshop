@@ -3,11 +3,13 @@ const jwt = require('jsonwebtoken')
 
 module.exports.getLog = async (req, res, next) => {
     try {
-        const user = req.user;
+        // const user = req.user;
+        const user = 1
         if(user){
-            const cartNum = await Cart.findOne({userId: user._id}).lean()
+            // const cartNum = await Cart.findOne({userId: user._id}).lean()
+
             res.locals.cartNum = {
-                cartNum:cartNum
+                cartNum: 1
             }
             res.locals.logging = true;
         }else{

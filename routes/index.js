@@ -1,8 +1,8 @@
 const router = require('express').Router()
-// const {checkUser} = require('../middlewares/checkUser')
+const {checkUser} = require('../middlewares/checkUser')
 
 // gán req.user
-// router.use(checkUser)
+router.use(checkUser)
 
 const {getLog} = require('../middlewares/getNum');
 router.use(getLog)
