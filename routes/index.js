@@ -41,8 +41,8 @@ router.use(checkUser)
 // router.use("/admin", adminRoute);
 
 // users
-// const userRoute = require('./userRoute')
-// router.use("/users", userRoute)
+const userRoute = require('./userRoute')
+router.use("/users", userRoute)
 
 // orders
 // const orderRoute = require('./orderRoute')
