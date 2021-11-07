@@ -4,7 +4,7 @@ const {checkUser} = require('../middlewares/checkUser')
 // gán req.user
 router.use(checkUser)
 
-// const {getLog} = require('../middlewares/getNum');
+const {getLog} = require('../middlewares/getNum');
 // router.use(getLog)
 // home page
 // const indexRoute = require('./indexRoute')
