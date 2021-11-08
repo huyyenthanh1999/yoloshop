@@ -66,16 +66,6 @@ function renderListOfCustomers(customers) {
         <td class="name-customer">${formatDate(customer.createdAt)}</td>
         <td class="phone-customer">${customer.phoneNumber}</td>
         <!-- <td class="sold-customer">10</td>  -->
-        <td>
-            <div class="form-check form-switch">
-                <input
-                    class="form-check-input"
-                    type="checkbox"
-                    id="flexSwitchCheckDefault"
-                    checked
-                />
-            </div>
-        </td>
         <td class="action-customer">
             <a href="/admin/customers/${customer._id}">
                 <button>

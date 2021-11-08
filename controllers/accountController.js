@@ -25,7 +25,7 @@ module.exports.getAccount = async (req, res) => {
 				const pro = await Product.findById(product.productId).lean()
 				if (!pro) product.name = 'Sản phẩm đã bị xóa'
 				else {
-					const productCode = await ProductCode.findById(pro.idProductCode)
+					const productCode = await ProductCode.findById(pro.idProductCode).lean()
 					product.name = `${productCode.name} - ${pro.color} - ${pro.size}`
 				}
 			}

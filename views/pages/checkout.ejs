@@ -46,7 +46,7 @@
                                 <div class="address__info__2">
                                     <div class="phone__number">
                                         <p class="p__info">Số điện thoại (*)</p>
-                                        <input class="address__info__input phone__number__input" type="tel" required="required" value="<%= order.phoneNumber %>">
+                                        <input type="tel" class="address__info__input phone__number__input" required="required" value="<%= order.phoneNumber %>" pattern="0[0-9]{9}" title="Hãy điền đúng 10 chữ số điện thoại" autocomplete>
                                     </div>
                                     <div class="detail__address">
                                         <p class="p__info">Địa chỉ (*)</p>

@@ -224,9 +224,6 @@ module.exports.editProductCode = async (req, res) => {
 			})
 		}
 
-		// find if of product code
-		// let productCode = await ProductCode.findById(product.idProductCode)
-
 		// get images if admin changes images
 		let images = req.files.map((file) => {
 			return file.path

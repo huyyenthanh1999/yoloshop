@@ -9,7 +9,7 @@ module.exports.renderCart = (req, res) => {
 module.exports.detailCart = async (req, res) => {
 	try {
 		const userId = req.user._id
-		const cart = await Cart.findOne({ userId })
+		const cart = await Cart.findOne({ userId }).lean()
 		// console.log(cart)
 
 		if (!cart) {

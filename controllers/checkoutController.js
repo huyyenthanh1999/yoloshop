@@ -25,7 +25,7 @@ module.exports.renderOrder = async (req, res) => {
 module.exports.detailOrder = async (req, res) => {
 	try {
 		const userId = req.user._id
-		const order = await Order.findOne({ userId })
+		const order = await Order.findOne({ userId }).lean()
 
 		if (!order)
 			return res.status(400).json({

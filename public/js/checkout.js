@@ -58,7 +58,7 @@ document.querySelector('.btn-pay').addEventListener('click', async (e) => {
 	let _receiverName = $('.receiver__name__input').val()
 	let _phoneNumber = $('.phone__number__input').val()
 
-	let phoneRegex = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/
+	let phoneRegex = /^\(?([0]{1})\)?[-. ]?([0-9]{9})$/
 
 	if (!phoneRegex.test(_phoneNumber))
 		return alert('Vui lòng điền đúng số điện thoại!')

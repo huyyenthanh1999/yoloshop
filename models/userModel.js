@@ -44,8 +44,4 @@ const UserSchema = mongoose.Schema(
 	}
 )
 
-UserSchema.pre('find', () => {
-	
-})
-
 module.exports = mongoose.model('User', UserSchema)

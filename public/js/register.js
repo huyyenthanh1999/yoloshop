@@ -13,8 +13,14 @@ const form = document.querySelector('#form-register')
 form.addEventListener('submit', (e) => {
 	e.preventDefault()
 
+	
+
 	const formData = new FormData(form)
 	// for (let i of formData.entries()) console.log(i)
+	if($('#confirm').val() != $('#password').val()) {
+		alert('Mật khẩu không trùng với nhau')
+		return
+	}
 
 	fetch('/auth/register', {
 		method: 'POST',

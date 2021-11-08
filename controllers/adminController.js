@@ -5,7 +5,6 @@ const Order = require('../models/OrderModel')
 const News = require('../models/newsModel')
 const imgbbUploader = require('imgbb-uploader')
 
-
 // render dashboard
 module.exports.adminDashboard = async (req, res) => {
 	try {
@@ -74,7 +73,7 @@ module.exports.adminCustomers = async (req, res) => {
 // see and edit the product
 module.exports.adminEditCustomer = async (req, res) => {
 	try {
-		const user = await User.findById(req.params.id)
+		const user = await User.findById(req.params.id).lean()
 
 		res.render('components/admin/admin-base', {
 			content: 'edit-customer',
@@ -92,13 +91,9 @@ module.exports.adminEditCustomer = async (req, res) => {
 
 // admin render order page
 module.exports.adminOrder = async (req, res) => {
-	// const orders = await Order.find()
-	// console.log(orders)
 	res.render('components/admin/admin-base', {
 		content: 'orders',
-		data: {
-			// orders
-		},
+		data: {},
 	})
 }
 
@@ -140,9 +135,6 @@ module.exports.adminDetailOrder = async (req, res) => {
 // admin account render
 module.exports.adminAccount = async (req, res) => {
 	try {
-		// const user = await User.findById(req.params.id)
-		// const user = await User.find
-
 		res.render('components/admin/admin-base', {
 			content: 'edit-customer',
 			data: {
@@ -157,37 +149,31 @@ module.exports.adminAccount = async (req, res) => {
 	}
 }
 
-
-
 // news
 module.exports.getNews = async (req, res) => {
-	try {
-		let perPage = 10; 
-		let page = req.params.page || 1;
+	// try {
+		let perPage = 10
+		let page = req.params.page || 1
 
-		const totalNews = await News.find();
+		const totalNews = await News.countDocuments()
 
-		News
-			.find()
-			.skip((perPage * page) - perPage)
+		News.find()
+			.skip(perPage * page - perPage)
 			.limit(perPage)
 			.exec((err, news) => {
-				News.countDocuments((err, count) => { 
-					if (err) return next(err);
-					res.render('pages/admin-news', {
-						news,
-						current: page,
-            			pages: Math.ceil(count / perPage),
-						totalNews: totalNews.length
-					})
-				});
-			});
-	} catch (error) {
-		res.status(500).json({
-			status: 'fail',
-			message: 'Lỗi server',
-		})
-	}
+				res.render('pages/admin-news', {
+					news,
+					current: page,
+					pages: Math.ceil(totalNews / perPage),
+					totalNews: totalNews,
+				})
+			}).lean()
+	// } catch (error) {
+	// 	res.status(500).json({
+	// 		status: 'fail',
+	// 		message: 'Lỗi server',
+	// 	})
+	// }
 }
 
 module.exports.getAddNewPage = async (req, res) => {
@@ -201,11 +187,10 @@ module.exports.getAddNewPage = async (req, res) => {
 	}
 }
 
-
 module.exports.getAllNews = async (req, res, next) => {
 	try {
-		const products = await ProductCode.find().lean();
-		const arr = Array.from(Array(products.length).keys());
+		const products = await ProductCode.find().lean()
+		const arr = Array.from(Array(products.length).keys())
 		var featuredIndex = getRandom(arr, 10)
 
 		function getRandom(arr, n) {
@@ -222,26 +207,24 @@ module.exports.getAllNews = async (req, res, next) => {
 			return result
 		}
 
-		let perPage = 4; 
-		let page = req.params.page || 1;
+		let perPage = 4
+		let page = req.params.page || 1
 
-		News
-			.find()
-			.skip((perPage * page) - perPage)
+		News.find()
+			.skip(perPage * page - perPage)
 			.limit(perPage)
 			.exec((err, news) => {
-				News.countDocuments((err, count) => { 
-					if (err) return next(err);
+				News.countDocuments((err, count) => {
+					if (err) return next(err)
 					res.render('pages/news', {
 						products,
 						featuredIndex,
 						news,
 						current: page,
-            			pages: Math.ceil(count / perPage)
+						pages: Math.ceil(count / perPage),
 					})
-				});
-			});
-		
+				})
+			})
 	} catch (error) {
 		res.status(500).json({
 			status: 'fail',
@@ -253,30 +236,30 @@ module.exports.getAllNews = async (req, res, next) => {
 module.exports.getDetailNews = async (req, res) => {
 	try {
 		//get news's id
-		const newSlug = req.params.slug;
+		const newSlug = req.params.slug
 		//find news in database
-		const newsElement = await News.findOne({slug: newSlug});
+		const newsElement = await News.findOne({ slug: newSlug })
 		//get all news
-		const news = await News.find();
-		
-		// var before, after;
-		var current = news.findIndex(x => x.slug === newSlug);
+		const news = await News.find()
 
-		if(current == 0){
-			before = news[news.length - 1]._slug;
-		}else{
-			before = news[current - 1].slug;
+		// var before, after;
+		var current = news.findIndex((x) => x.slug === newSlug)
+
+		if (current == 0) {
+			before = news[news.length - 1]._slug
+		} else {
+			before = news[current - 1].slug
 		}
-		if(current == (news.length - 1)){
-			after = news[0].slug;
-		}else{
-			after = news[current + 1].slug;
+		if (current == news.length - 1) {
+			after = news[0].slug
+		} else {
+			after = news[current + 1].slug
 		}
 
 		res.render('pages/news-detail', {
 			newsElement,
 			before,
-			after
+			after,
 		})
 	} catch (error) {
 		res.status(500).json({
@@ -299,15 +282,19 @@ module.exports.getAddNewPage = async (req, res) => {
 
 module.exports.sendMail = async (req, res) => {
 	try {
-		const userMail = req.body.email;
+		const userMail = req.body.email
 		// Quá trình gửi email thành công thì gửi về thông báo success cho người dùng
-		const adminEmail = process.env.GMAIL_ACCOUNT;
-		const adminPassword = process.env.GMAIL_PASSWORD;
+		const adminEmail = process.env.GMAIL_ACCOUNT
+		const adminPassword = process.env.GMAIL_PASSWORD
 
-		const mailHost = 'smtp.gmail.com';
-		const mailPort = 587;
+		const mailHost = 'smtp.gmail.com'
+		const mailPort = 587
 
-		await sendMail(userMail, 'Welcome to YOLOShop', '<h2>Thanks for using YoLoShop</h2>')
+		await sendMail(
+			userMail,
+			'Welcome to YOLOShop',
+			'<h2>Thanks for using YoLoShop</h2>'
+		)
 		function sendMail(to, subject, htmlContent) {
 			const transporter = nodemailer.createTransport({
 				host: mailHost,
@@ -315,15 +302,15 @@ module.exports.sendMail = async (req, res) => {
 				secure: false,
 				auth: {
 					user: adminEmail,
-					pass: adminPassword
-				}
+					pass: adminPassword,
+				},
 			})
 
 			const options = {
 				from: adminEmail,
 				to: to,
 				subject: subject,
-				html: htmlContent
+				html: htmlContent,
 			}
 
 			return transporter.sendMail(options)
@@ -339,18 +326,18 @@ module.exports.sendMail = async (req, res) => {
 
 module.exports.addNews = async (req, res) => {
 	// try {
-		console.log(req.body)
-		// update banner
-		if (req.file) {
-			const upload = await imgbbUploader(process.env.IMGBB_KEY, req.file.path)
-			req.body.banner = upload.url
-		}
+	console.log(req.body)
+	// update banner
+	if (req.file) {
+		const upload = await imgbbUploader(process.env.IMGBB_KEY, req.file.path)
+		req.body.banner = upload.url
+	}
 
-		console.log(req.body)
-		await News.create(req.body)
-		res.status(200).json({
-			status: 'success'
-		})
+	console.log(req.body)
+	await News.create(req.body)
+	res.status(200).json({
+		status: 'success',
+	})
 	// } catch (error) {
 	// 	res.status(500).json({
 	// 		status: 'fail',
@@ -361,10 +348,10 @@ module.exports.addNews = async (req, res) => {
 
 module.exports.getEditNews = async (req, res) => {
 	try {
-		const slug = req.params.slug;
-		const newsElement = await News.findOne({slug});
-		res.render('pages/edit-news',{
-			newsElement
+		const slug = req.params.slug
+		const newsElement = await News.findOne({ slug }).lean()
+		res.render('pages/edit-news', {
+			newsElement,
 		})
 	} catch (error) {
 		res.status(500).json({
@@ -376,22 +363,25 @@ module.exports.getEditNews = async (req, res) => {
 
 module.exports.editNews = async (req, res) => {
 	try {
-		const id = req.params.id;
+		const id = req.params.id
 		// update banner
-		if(req.body.isNew === 'true') {
+		if (req.body.isNew === 'true') {
 			if (req.file) {
 				const upload = await imgbbUploader(process.env.IMGBB_KEY, req.file.path)
 				req.body.banner = upload.url
 			}
 		}
-		const banner = req.body.banner;
-		const slug = req.body.slug;
-		const title = req.body.title;
-		const description = req.body.description;
-		const result = await News.findByIdAndUpdate({_id: id},{title, description, slug, banner});
-		
+		const banner = req.body.banner
+		const slug = req.body.slug
+		const title = req.body.title
+		const description = req.body.description
+		const result = await News.findByIdAndUpdate(
+			{ _id: id },
+			{ title, description, slug, banner }
+		)
+
 		res.status(200).json({
-			status: 'success'
+			status: 'success',
 		})
 	} catch (error) {
 		res.status(500).json({
@@ -403,11 +393,11 @@ module.exports.editNews = async (req, res) => {
 
 module.exports.deleteNews = async (req, res) => {
 	try {
-		const id = req.params.id;
-		const data = await News.findByIdAndDelete(id);
+		const id = req.params.id
+		const data = await News.findByIdAndDelete(id)
 		res.status(200).json({
 			status: 'success',
-			data
+			data,
 		})
 	} catch (error) {
 		res.status(500).json({

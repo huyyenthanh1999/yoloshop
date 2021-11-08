@@ -80,18 +80,6 @@ function renderListOfProducts(productCodes) {
         <td class="cost-product">${productCode.cost.toLocaleString()}</td>
         <td class="sold-product">${productCode.type}</td>
         <td class="last-product">${productCode.total}</td>
-        <td>
-            <div class="form-check form-switch">
-				<label class="active">
-                <input
-                    class="form-check-input"
-                    type="checkbox"
-                    id="flexSwitchCheckDefault"
-					checked="0"
-                />
-				</label>
-            </div>
-        </td>
         <td class="action-product">
             <button onclick="showMoreProduct(event)">
                 <i class="fas fa-chevron-down"></i>

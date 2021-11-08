@@ -23,11 +23,11 @@
                 <form id="form-register">
                     <div class="input-form">
                         <span>Tên Đăng Nhập</span>
-                        <input type="text" required name="name" id="user" placeholder="UserName">
+                        <input type="text" required name="name" id="user" placeholder="UserName" minlength="6">  
                     </div>
                     <div class="input-form">
                         <span>Số Điện Thoại</span>
-                        <input type="text" required id="phoneNumber" name="phoneNumber" placeholder="Phone">
+                        <input type="tel" required id="phoneNumber" name="phoneNumber" placeholder="Phone" pattern="0[0-9]{9}" title="Hãy điền đúng 10 chữ số điện thoại">
                     </div>
                     <div class="input-form">
                         <span>Email</span>
@@ -35,11 +35,11 @@
                     </div>
                     <div class="input-form">
                         <span>Mật Khẩu</span>
-                        <input type="password" id="password" required name="password" placeholder="PassWord">
+                        <input type="password" id="password" required name="password" placeholder="Password" minlength="6">
                     </div>
                     <div class="input-form">
                         <span>Nhập Lại Mật Khẩu</span>
-                        <input type="password" required placeholder="Confirm" id="confirm">
+                        <input type="password" required placeholder="Confirm" id="confirm" minlength="6">
                     </div>
                     <div class="input-form">
                         <input type="submit" value="Register">

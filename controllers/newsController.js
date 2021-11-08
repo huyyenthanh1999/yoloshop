@@ -60,9 +60,9 @@ module.exports.getDetailNews = async (req, res) => {
 		//get news's id
 		const newSlug = req.params.slug;
 		//find news in database
-		const newsElement = await News.findOne({slug: newSlug});
+		const newsElement = await News.findOne({slug: newSlug}).lean();
 		//get all news
-		const news = await News.find();
+		const news = await News.find().lean();
 		
 		// var before, after;
 		var current = news.findIndex(x => x.slug === newSlug);
@@ -165,7 +165,7 @@ module.exports.addNews = async (req, res) => {
 module.exports.getEditNews = async (req, res) => {
 	try {
 		const slug = req.params.slug;
-		const newsElement = await News.findOne({slug});
+		const newsElement = await News.findOne({slug}).lean();
 		res.render('pages/edit-news',{
 			newsElement
 		})

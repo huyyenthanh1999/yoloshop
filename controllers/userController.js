@@ -53,7 +53,7 @@ module.exports.getAllUser = async (req, res) => {
 module.exports.editUser = async (req, res) => {
 	const idUser = req.params.id
 	try {
-		const user = await User.findById(idUser)
+		const user = await User.findById(idUser).lean()
 		if (!user)
 			return res.status(400).json({
 				status: 'fail',

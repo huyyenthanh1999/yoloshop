@@ -30,9 +30,4 @@ const ProductCodeSchema = mongoose.Schema(
 	}
 )
 
-ProductCodeSchema.pre(/^find/, function (next) {
-	this.find({ active: true })
-	next()
-})
-
 module.exports = mongoose.model('ProductCode', ProductCodeSchema)

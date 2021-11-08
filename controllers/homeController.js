@@ -8,7 +8,7 @@ const Product = require('../models/productModel')
 
 module.exports.getAllData = async (req, res) => {
 	try {
-		const products = await ProductCode.find()
+		const products = await ProductCode.find().lean()
 		const arr = Array.from(Array(products.length).keys())
 
 		var hotIndexes = getRandom(arr, 4)
@@ -49,7 +49,7 @@ module.exports.getSearchData = async (req, res) => {
 	try {
 		const name = req.query.name
 		// const products = await ProductCode.find({ name: { $regex: name, $options: 'i'} })
-		const products = await ProductCode.find()
+		const products = await ProductCode.find().lean()
 		res.status(200).json({
 			products,
 		})
