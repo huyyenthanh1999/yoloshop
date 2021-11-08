@@ -151,6 +151,9 @@ img {
     margin-top: 70px;
 }
 
+.pb-2 {
+    padding-bottom: 20px;
+}
 
 @media only screen and (max-width: 64em) {
     .grid-col-4,
