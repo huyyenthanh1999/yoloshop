@@ -59,7 +59,7 @@ module.exports.createOrder = async (req, res) => {
 		let product = await Product.findById(item.productId).lean()
 
 		let productCode = await ProductCode.findById(product.idProductCode).lean()
-		totalCost += productCode.cost
+		totalCost += productCode.cost * item.quantity
 
 		// kiem tra xem con hang khong
 		if (product.total < item.quantity)
@@ -71,7 +71,6 @@ module.exports.createOrder = async (req, res) => {
 
 	// phi ship
 	totalCost += 30000
-	// console.log(54, cart.products)
 
 	const order = await Order.create({
 		userId: userId,
@@ -80,7 +79,7 @@ module.exports.createOrder = async (req, res) => {
 		message: req.body._message,
 		address: req.body._address,
 		products: cart.products,
-		totalCost: totalCost,
+		totalCost,
 		payment: req.body._payment,
 	})
 	if (!order)
