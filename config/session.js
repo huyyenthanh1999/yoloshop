@@ -1,10 +1,10 @@
-// const session = require('express-session')
+const session = require('express-session')
 
-// const payload = {
-// 	secret: process.env.SESSION_SECRET,
-// 	resave: true,
-// 	saveUninitialized: true,
-// 	name: 'sessionId',
-// }
+const payload = {
+	secret: process.env.SESSION_SECRET,
+	resave: true,
+	saveUninitialized: true,
+	name: 'sessionId',
+}
 
-// module.exports = session(payload)
+module.exports = session(payload)

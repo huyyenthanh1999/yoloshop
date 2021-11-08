@@ -1,3 +1,9 @@
+function logout() {
+    document.cookie = "tokenId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    alert('Bạn đã đăng xuất')
+    window.location.reload();
+}
+
 //active css nav-item
 var pathName = window.location.pathname
 pathName = pathName.slice(1, pathName.length)
@@ -113,7 +119,7 @@ async function searchProduct() {
 				$('.search-result').append(`
             <a href="/products/detail/${product._id}" class="search-result__item">
                 <div class="search-result-item__icon">
-                    <img src="${product.images[0]}" />
+                    <img src="${product.images[0]}" loading="lazy"/>
                 </div>
                 <div class="search-result-item__name">
                     ${product.name}

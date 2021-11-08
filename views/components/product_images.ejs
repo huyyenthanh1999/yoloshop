@@ -2,13 +2,13 @@
     <div class="product-images__list">
         <% for (let i = 0; i < product.images.length; i ++){ %>
             <div class="product-images-list__item">
-                <img src="<%= product.images[i] %>" alt="">
+                <img src="<%= product.images[i] %>" alt="" loading="lazy" >
             </div>
         <% } %> 
     </div>
     <div class="product-images__main">
     <figure class = "zoom" onmousemove = "zoom (event)" style = "background-image: url('<%= product.images[0] %>')">
-        <img src="<%= product.images[0] %>" alt="">
+        <img src="<%= product.images[0] %>" alt="" loading="lazy" >
     </figure>
     </div>
     <div class="product-description">

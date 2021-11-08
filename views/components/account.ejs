@@ -2,7 +2,7 @@
     <div class="grid-rows">
         <div class="grid-col-4 ms-grid-col-full account-menu" height="100">
             <div class="account-avatar">
-                <img src="<%= user.avatar %>" alt="">
+                <img src="<%= user.avatar %>" alt="" loading="lazy">
                 <div class="account-avatar__info">
                     <span>Tài khoản của</span>
                     <strong class="user-account__name"><%= user.name %></strong>
@@ -119,7 +119,7 @@
         <div class="avatar-modal__inner">
             <div class="avatar-modal-inner__head">
                 <div class="avatar-preview">
-                    <img src="<%= user.avatar %>" alt="avatar error">
+                    <img src="<%= user.avatar %>" alt="avatar error" loading="lazy">
                     <div class="circle-loading hide"></div>
                 </div>
                 <h2>Avatar Profile</h2>

@@ -59,8 +59,8 @@ function render(page) {
                 <div class="product-card pb-2">
                     <a href="/products/detail/${product._id}">
                         <div class="product-card__image">
-                            <img src="${product.images[0]}" alt="" />
-                            <img src="${product.images[1]}" alt="" />
+                            <img src="${product.images[0]}" alt="" loading="lazy" />
+                            <img src="${product.images[1]}" alt="" loading="lazy" />
                         </div>
                         <h3 class="product-card__name">${product.name}</h3>
                         <div class="product-card__price">${formatMoney(product.cost)}</div>

@@ -17,7 +17,7 @@ function renderCartEmpty() {
 	$('.cart__info').attr('style', 'display:none')
 	cart_list.html(`
 		<div class='empty__cart'>
-			<img src='../../public/images/EmptyCart.png' alt='EmptyCart'>
+			<img src='../../public/images/EmptyCart.png' alt='EmptyCart' loading="lazy">
 			<h2>
 				Giỏ hàng của bạn còn trống!
 			</h2>
@@ -40,7 +40,7 @@ function renderCart(products) {
 				<tr class='tr1'>
 					<td class='td1 cart__item__image'>
 						<a href='/products/detail/${product.idProductCode._id}'>
-						<img src='${product.idProductCode.images[0]}' alt=''>
+						<img src='${product.idProductCode.images[0]}' alt='' loading="lazy">
 						</a>	
 					</td>
 					<td class='td1 cart__item__info__name'>
