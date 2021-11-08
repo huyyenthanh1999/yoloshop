@@ -101,7 +101,7 @@ async function incrementProduct(event) {
 	let quantity = table.querySelector('.product__info__item__quantity__input')
 
 	if (+quantity.innerHTML == product.total) {
-		alert('Số lượng sản phẩm đã đạt lớn nhất')
+		alert('Số lượng sản phẩm đã đạt lớn nhất!')
 		return
 	}
 
@@ -135,7 +135,7 @@ async function decrementProduct(event) {
 	let quantity = table.querySelector('.product__info__item__quantity__input')
 
 	if (+quantity.innerHTML == 1) {
-		alert('Số lượng sản phẩm đã đạt nhỏ nhất')
+		alert('Số lượng sản phẩm đã đạt nhỏ nhất!')
 		return
 	}
 
