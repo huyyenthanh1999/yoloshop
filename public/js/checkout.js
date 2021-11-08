@@ -1,8 +1,6 @@
 let tempPrice = 0
 let totalPrice = 0
-let _products = []
 
-const btn_pay = $('.btn-pay')
 const btn_back = $('.btn-back')
 
 let i = 0
@@ -63,7 +61,7 @@ document.querySelector('.btn-pay').addEventListener('click', async (e) => {
 	let phoneRegex = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/
 
 	if (!phoneRegex.test(_phoneNumber))
-		return alert('Vui lòng điền đúng số điện thoại')
+		return alert('Vui lòng điền đúng số điện thoại!')
 
 	let _message = $('.message__input').val()
 	let _address = $('.detail__address__input').val()
@@ -71,7 +69,7 @@ document.querySelector('.btn-pay').addEventListener('click', async (e) => {
 
 	// check input
 	if (!_receiverName || !_phoneNumber || !_address) {
-		alert('Vui lòng điền thông tin giao hàng')
+		alert('Vui lòng điền đầy đủ thông tin giao hàng!')
 		return
 	}
 
@@ -90,7 +88,7 @@ document.querySelector('.btn-pay').addEventListener('click', async (e) => {
 	}).then((response) => response.json())
 
 	if (res.status == 'success') {
-		alert('Tạo order thành công')
+		alert('Tạo order thành công!')
 		window.location.href = '/products'
 	} else {
 		alert(res.message)

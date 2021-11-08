@@ -1,203 +1,216 @@
-// let totalProduct = 0
-// let totalCost = 0
-// let total = []
+$('.btn-order').on('click', (e) => {
+	e.preventDefault()
+	window.location.href = '/checkout'
+})
 
-// const btn_order = $('.btn-order')
-// const btn_cart = $('.btn-cart')
-// let cart_list = $('.cart__list')
+$('.btn-cart').on('click', (e) => {
+	e.preventDefault()
+	window.location.href = '/products'
+})
 
-// let addCartInfo = () => {
-//   $('.total__product').html(`${totalProduct}`)
-//   $('.total__cost').html(`${totalCost.toLocaleString()} VNĐ`)
-// }
+let cart_list = $('.cart__list')
+let cart = undefined
+let totalProduct = 0
+let totalCost = 0
 
-// let i = 0
-// let addCartList = (product, index, _listData) => {
-// 	i++
-//   let div = `
-//     <table class='tb1' data-id="${product._id}">
-//       <tr>
-//           <td class='td1 cart__item__image'>
-//             <img src='${product.idProductCode.images[0]}' alt=''>
-//           </td>
-//           <td class='td1 cart__item__info__name'>
-//             <a href='/products/detail/${product.idProductCode._id}'>${product.idProductCode.name} - ${product.color} - ${product.size}</a>
-//             <p class='product__id'>${product._id}</p>
-//           </td>
-//           <td class='td1 cart__item__info__cost'>
-//             ${(product.idProductCode.cost * _listData[index].quantity).toLocaleString()}
-//           </td>
-//           <td class='td1 product_quantity'>
-//             <div class='product__info__item__quantity'>
-//               <button class='product__info__item__quantity__btn dec__btn'>
-//                   <i class='bx bx-minus'></i>
-//               </button>
-//               <div class='product__info__item__quantity__input'>${_listData[index].quantity}</div>
-//               <button class='product__info__item__quantity__btn inc__btn'>
-//                   <i class='bx bx-plus'></i>
-//               </button>
-//             </div>
-//           </td>
-//           <td class='td1'>
-//             <button class='cart__item__del'>
-//               <i class='bx bx-trash'></i>
-//             </button>
-//           </td>
-//       </tr>
-//     </table>
-//   `
-//   cart_list.append(div)
-//   totalCost += product.idProductCode.cost * _listData[index].quantity
-//   if (i == _listData.length) {
-//     addCartInfo()
-//     i = 0
-//   }
+function renderCartEmpty() {
+	$('.cart__info').attr('style', 'display:none')
+	cart_list.html(`
+		<div class='empty__cart'>
+			<img src='../../public/images/EmptyCart.png' alt='EmptyCart'>
+			<h2>
+				Giỏ hàng của bạn còn trống!
+			</h2>
+			<a href='/products'>
+				<button class='btn btn-small'>
+					<span class='btn-txt-cart'>MUA NGAY</span>
+				</button>
+			</a>
+		</div>
+	`)
+	$('.empty__cart').attr('style', 'width:150%')
+}
 
-//   // Delete button
-//   $($('.cart__item__del')[index]).on('click', () => {
-//     let _productId = $('.product__id')[index].innerHTML
-//     console.log(_productId)
-//     const temp = $.ajax({
-//       url: '/cart',
-//       type: 'DELETE',
-//       data: { _productId }
-//     })
-//     renderCart()
-//     // console.log('123')
-//   })
+function renderCart(products) {
+	let html = ''
 
-//   // Decrease button
-//   $($('.dec__btn')[index]).on('click', () => {
-//     let _productId = $('.product__id')[index].innerHTML
-//     let _quantity = $('.product__info__item__quantity__input')[index].innerHTML
-//     let _temp = $('.cart__item__info__cost')[index].innerHTML
-//     let _str = _temp.replace(/,/g, '')
-//     let _price = parseInt(_str)
-//     let _cost = parseInt(_price)/parseInt(_quantity)
-//     if (_quantity > 1) {
-//       _quantity--
-//       _price -= _cost
-//       totalProduct--
-//       totalCost -= _cost
-//     }
-//     else {
-//       alert('Không thể chọn số lượng nhỏ hơn!')
-//     }
-//     $('.product__info__item__quantity__input')[index].innerHTML = _quantity
-//     $('.cart__item__info__cost')[index].innerHTML = _price.toLocaleString()
-//     addCartInfo()
+	for (let product of products) {
+		html += `
+			<table class='tb1' data-id="${product._id}">
+				<tr class='tr1'>
+					<td class='td1 cart__item__image'>
+						<a href='/products/detail/${product.idProductCode._id}'>
+						<img src='${product.idProductCode.images[0]}' alt=''>
+						</a>	
+					</td>
+					<td class='td1 cart__item__info__name'>
+						<a href='/products/detail/${product.idProductCode._id}'>${
+						product.idProductCode.name
+					} - ${product.color} - ${product.size}</a>
+					</td>
+					<td class='td1 product_quantity'>
+						<div class='product__info__item__quantity'>
+							<button class='product__info__item__quantity__btn dec__btn' onclick='decrementProduct(event)'>
+								<i class='bx bx-minus'></i>
+							</button>
+							<div class='product__info__item__quantity__input'>
+								${product.quantity}
+							</div>
+							<button class='product__info__item__quantity__btn inc__btn' onclick="incrementProduct(event)">
+								<i class='bx bx-plus'></i>
+							</button>
+						</div>
+					</td>
+					<td class='td1 cart__item__info__cost'>
+						${(product.idProductCode.cost * product.quantity).toLocaleString()}
+					</td>
+					<td class='td1'>
+						<button class='cart__item__del' onclick="deleteProduct(event)">
+						<i class='bx bx-trash'></i>
+						</button>
+					</td>
+				</tr>
+			</table>
+        `
 
-//     const temp = $.ajax({
-//       url: '/cart',
-//       type: 'PUT',
-//       data: { _productId, _quantity }
-//     })
-//   })
+		totalProduct += product.quantity
+		totalCost += product.idProductCode.cost * product.quantity
+	}
 
-//   // Increase button
-//   $($('.inc__btn')[index]).on('click', () => {
-//     let _productId = $('.product__id')[index].innerHTML
-//     let _quantity = $('.product__info__item__quantity__input')[index].innerHTML
-//     let _temp = $('.cart__item__info__cost')[index].innerHTML
-//     let _str = _temp.replace(/,/g, '')
-//     let _price = parseInt(_str)
-//     let _cost = parseInt(_price)/parseInt(_quantity)
-//     if (_quantity < total[index]) {
-//       _quantity++
-//       _price += _cost
-//       totalProduct++
-//       totalCost += _cost
-//     }
-//     else {
-//       alert('Số lượng là tối đa!')
-//     }
-//     $('.product__info__item__quantity__input')[index].innerHTML = _quantity
-//     $('.cart__item__info__cost')[index].innerHTML = _price.toLocaleString()
-//     addCartInfo()
+	cart_list.html(html)
+	setReview()
+}
 
-//     const temp = $.ajax({
-//       url: '/cart',
-//       type: 'PUT',
-//       data: { _productId, _quantity }
-//     })
-//   })
-// }
+function setReview() {
+	$('.total__product').html(formatTotalProduct(totalProduct))
+	$('.total__cost').html(`${totalCost.toLocaleString()} VNĐ`)
+}
 
-// async function renderCart() {
-// 	try {
-//     cart_list.html('')
-//     totalProduct = 0
-//     totalCost = 0
-//     const data = await $.ajax({
-//       url: '/cart/detailCart',
-//       type: 'GET',
-//     })
+function getProduct(id) {
+	for (let product of cart.products) if (product._id == id) return product
+}
 
-//     // if(data.status == 'fail') {}
-    
+async function incrementProduct(event) {
+	event.preventDefault()
 
-//     if (data.status == 'fail') {
-//       $('.cart__info').attr('style', 'display:none')
-//       cart_list.html(`
-//         <div class='empty__cart'>  
-//           <img src='../../public/images/EmptyCart.png' alt='EmptyCart'>
-//           <h2>
-//             Giỏ hàng của bạn còn trống!
-//           </h2>
-//           <a href='/products'>
-//             <button class='btn btn-small'>
-//               <span class='btn-txt-cart'>MUA NGAY</span>
-//             </button>
-//           </a>
-//         </div>
-//       `)
-//       $('.empty__cart').attr('style', 'width:150%')
-//       return
-//     }
+	const table = event.target.closest('table')
+	const idProduct = table.getAttribute('data-id')
+	const product = getProduct(idProduct)
 
-//     data.cart.products.map((item) => {
-//       totalProduct += item.quantity
-//     })
-  
-//     cart_list.html('')
-//     data.cart.products.map(async (item, index) => {
-//       const result = await $.ajax({
-//         url: `products/api/detail/${item.productId}`,
-//         type: 'GET',
-//       })
+	// call api
+	let quantity = table.querySelector('.product__info__item__quantity__input')
 
-//       total[index] = result.data.product.total
-//       addCartList(result.data.product, index, data.cart.products)
-//     })
-//   } catch (error) {
-//     console.log(error);
-//   }
-// }
+	if (+quantity.innerHTML == product.total) {
+		alert('Số lượng sản phẩm đã đạt lớn nhất!')
+		return
+	}
 
-// renderCart()
+	const result = await $.ajax({
+		url: '/cart/api/' + idProduct,
+		type: 'PUT',
+		data: { quantity: +quantity.innerHTML + 1 },
+	})
 
-// function getCookie(cname) {
-//   let name = cname + '=';
-//   let decodedCookie = decodeURIComponent(document.cookie);
-//   let ca = decodedCookie.split(';');
-//   for(let i = 0; i <ca.length; i++) {
-//     let c = ca[i];
-//     while (c.charAt(0) == ' ') {
-//       c = c.substring(1);
-//     }
-//     if (c.indexOf(name) == 0) {
-//       return c.substring(name.length, c.length);
-//     }
-//   }
-//   return '';
-// }
+	// console.log(result)
+	// console.log(product)
+	if (result.status == 'success') {
+		totalProduct++
+		totalCost += product.idProductCode.cost
+		setReview()
+		quantity.innerHTML++
+		table.querySelector('.cart__item__info__cost').innerHTML = (
+			+quantity.innerHTML * product.idProductCode.cost
+		).toLocaleString()
+	}
+}
 
-// $(btn_order).on('click', (e) => {
-//   e.preventDefault()
-// 	window.location.href = '/checkout'
-// })
+async function decrementProduct(event) {
+	event.preventDefault()
 
-// $(btn_cart).on('click', (e) => {
-//   e.preventDefault()
-//   window.location.href = '/products'
-// })
+	const table = event.target.closest('table')
+	const idProduct = table.getAttribute('data-id')
+	const product = getProduct(idProduct)
+
+	// call api
+	let quantity = table.querySelector('.product__info__item__quantity__input')
+
+	if (+quantity.innerHTML == 1) {
+		alert('Số lượng sản phẩm đã đạt nhỏ nhất!')
+		return
+	}
+
+	const result = await $.ajax({
+		url: '/cart/api/' + idProduct,
+		type: 'PUT',
+		data: { quantity: +quantity.innerHTML - 1 },
+	})
+
+	// console.log(result)
+	if (result.status == 'success') {
+		totalProduct--
+		totalCost -= product.idProductCode.cost
+		setReview()
+		quantity.innerHTML--
+		table.querySelector('.cart__item__info__cost').innerHTML = (
+			+quantity.innerHTML * product.idProductCode.cost
+		).toLocaleString()
+	}
+}
+
+async function deleteProduct(event) {
+	event.preventDefault()
+
+	const table = event.target.closest('table')
+	const idProduct = table.getAttribute('data-id')
+	// const product = getProduct(idProduct)
+
+	// call api
+	const result = await $.ajax({
+		url: '/cart/api/' + idProduct,
+		type: 'delete',
+	})
+	const product = getProduct(idProduct)
+
+	// console.log(result)
+	if (result.status == 'success') {
+		const quantity = +table.querySelector(
+			'.product__info__item__quantity__input'
+		).innerHTML
+		totalProduct -= quantity
+		totalCost -= product.idProductCode.cost * quantity
+		setReview()
+		table.remove()
+
+		if (totalProduct == 0) renderCartEmpty()
+
+		document.querySelector('.cover-num a.cart-num').innerHTML--
+	}
+}
+
+async function getCart() {
+	const result = await $.ajax({
+		url: '/cart/api',
+		type: 'GET',
+	})
+
+	// console.log(result.data.cart)
+	if (result.status == 'fail' || result.data.cart.products.length == 0) {
+		renderCartEmpty()
+		return
+	}
+
+	cart = result.data.cart
+
+	renderCart(cart.products)
+}
+
+getCart()
+
+function changeCart() {}
+
+function formatTotalProduct(quantity) {
+	if (quantity < 10)
+		return '0' + quantity
+	else
+		return quantity
+}
