@@ -147,13 +147,6 @@ h3::after {
 	margin-bottom: 10px;
 }
 
-.btn__pay__info {
-	/* display: flex; */
-	/* flex-wrap: wrap; */
-	/* align-items: center; */
-	/* justify-content: center; */
-}
-
 .btn__pay__info > * {
 	padding: 10px;
 	display: inline-block;
@@ -180,10 +173,6 @@ h3::after {
 
 .btn__pay {
 	margin-left: 20px;
-}
-
-.btn__pay {
-	/* margin-left: auto; */
 }
 
 .price {
