@@ -28,6 +28,9 @@ $(document).ready(function () {
 		$(this).siblings().removeClass('active')
 		if ($(this).children('input').attr('name') == 'color') {
 			let currColor = $(this).children('input').val()
+			let totalVariantWithColor = 0;
+			listVariants.map(variant => variant.color === currColor ? totalVariantWithColor += variant.total : totalVariantWithColor)
+			$('.product-info-item__variant').text('Còn ' + totalVariantWithColor + ' sản phẩm')
 			color = currColor
 			const displayVariant = listVariants.filter(
 				(variant) => variant.color === currColor
@@ -45,6 +48,9 @@ $(document).ready(function () {
 		if ($(this).children('input').attr('name') == 'size') {
 			$('.product-info-item-quantity__input input').val(1)
 			let currSize = $(this).children('input').val()
+			let totalVariantWithSize = 0;
+			listVariants.map(variant => variant.size === currSize ? totalVariantWithSize += variant.total : totalVariantWithSize)
+			$('.product-info-item__variant').text('Còn ' + totalVariantWithSize + ' sản phẩm')
 			size = currSize
 			const displayVariant = listVariants.filter(
 				(variant) => variant.size === currSize
@@ -66,6 +72,7 @@ $(document).ready(function () {
 			)
 			idVariant = currVariant[0]._id
 			$('#quantity').attr('max', currVariant[0].total)
+			$('.product-info-item__variant').text('Còn ' + currVariant[0].total + ' sản phẩm')
 		}
 	})
 	//change main image

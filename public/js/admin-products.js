@@ -18,7 +18,7 @@ function handlePagination(e) {
 
 // firstly, call api list of products
 async function getProducts() {
-	if(!checkOnline()){
+	if (!checkOnline()) {
 		alert('Không có kết nối internet')
 		return
 	}
@@ -153,31 +153,23 @@ async function deleteProductCode(event) {
 	// add lazing add product
 	showLazy()
 
-	const res = await $.ajax({
-		url: `/products/code/api/${idProduct}`,
-		type: 'delete',
-	})
+	const res = await fetch(`/products/code/api/${idProduct}`, {
+		method: 'DELETE',
+	}).then((response) => response.json())
 
 	hideLazy()
+	console.log(res)
+
 	// console.log(res.status == 'success')
 	if (res.status == 'success') {
 		// lazy.classList.toggle('hide')
-		alert('Xóa sản phẩm thành công')
+		alert(res.message)
+		tr.nextElementSibling.remove()
 		tr.remove()
-
-		// update products
-		productCodes = productCodes.filter((item) => {
-			return item._id !== idProduct
-		})
-
-		// let totalProducts = 0
-		// productCodes.forEach((item) => {
-		// 	item.products.forEach((i) => (totalProducts += i.total))
-		// })
 
 		document.querySelector('.total-products span').innerHTML--
 	} else {
-		alert('Xóa sản phẩm thất bại')
+		alert(res.message)
 	}
 }
 

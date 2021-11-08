@@ -1,7 +1,8 @@
-const Order = require('../models/orderModel')
+const Order = require('../models/OrderModel')
 const { removeVI } = require('jsrmvi')
 const dateFormat = require('date-and-time')
 const Product = require('../models/productModel')
+const User = require('../models/userModel')
 
 module.exports.getAllOrders = async (req, res) => {
 	try {
@@ -83,31 +84,43 @@ module.exports.getAllOrders = async (req, res) => {
 module.exports.cancelOrder = async (req, res) => {
 	const idOrder = req.params.id
 
-	try {
-		const order = await Order.findOneAndUpdate(
+	// try {
+	// auth
+	const user = await User.findById(req.user._id)
+
+	let order = null
+
+	if (user.role == 'admin')
+		order = await Order.findOneAndUpdate(
 			{ _id: idOrder, status: 'waiting' },
 			{ status: 'cancelled' },
 			{ new: true }
 		)
+	else
+		order = await Order.findOneAndUpdate(
+			{ _id: idOrder, status: 'waiting', userId: req.user._id },
+			{ status: 'cancelled' },
+			{ new: true }
+		)
 
-		// lấy lại số lượng sản phẩm
-		for (let product of order.products) {
-			const pro = await Product.findById(product.productId)
-			pro.total += product.quantity
-			// await pro.updateOne()
-			await Product.updateOne({ _id: pro._id }, { total: pro.total })
-		}
-
-		res.status(200).json({
-			status: 'success',
-			message: 'Hủy đơn hàng thành công',
-		})
-	} catch (error) {
-		res.status(500).json({
-			status: 'fail',
-			message: 'Hủy đơn hàng thất bại',
-		})
+	// lấy lại số lượng sản phẩm
+	for (let product of order.products) {
+		const pro = await Product.findById(product.productId)
+		pro.total += product.quantity
+		// await pro.updateOne()
+		await Product.updateOne({ _id: pro._id }, { total: pro.total })
 	}
+
+	res.status(200).json({
+		status: 'success',
+		message: 'Hủy đơn hàng thành công',
+	})
+	// } catch (error) {
+	// 	res.status(500).json({
+	// 		status: 'fail',
+	// 		message: 'Hủy đơn hàng thất bại',
+	// 	})
+	// }
 }
 
 module.exports.deliveryOrder = async (req, res) => {

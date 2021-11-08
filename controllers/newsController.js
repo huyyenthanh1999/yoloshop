@@ -4,11 +4,14 @@ const nodemailer = require('nodemailer');
 const imgbbUploader = require('imgbb-uploader')
 
 
+
 module.exports.getAllNews = async (req, res, next) => {
-	try {
+	// try {
 		const products = await ProductCode.find().lean();
 		const arr = Array.from(Array(products.length).keys());
-		var featuredIndex = getRandom(arr, 10)
+		// var featuredIndex = getRandom(arr, 10)
+		// so luong bai bao khong du nen chi lay 6
+		var featuredIndex = getRandom(arr, 6)
 
 		function getRandom(arr, n) {
 			var result = new Array(n),
@@ -44,12 +47,12 @@ module.exports.getAllNews = async (req, res, next) => {
 				});
 			});
 		
-	} catch (error) {
-		res.status(500).json({
-			status: 'fail',
-			message: 'Lỗi server',
-		})
-	}
+	// } catch (error) {
+	// 	res.status(500).json({
+	// 		status: 'fail',
+	// 		message: 'Lỗi server',
+	// 	})
+	// }
 }
 
 module.exports.getDetailNews = async (req, res) => {
@@ -141,6 +144,7 @@ module.exports.sendMail = async (req, res) => {
 
 module.exports.addNews = async (req, res) => {
 	try {
+		console.log(req.file)
 		// update banner
 		if (req.file) {
 			const upload = await imgbbUploader(process.env.IMGBB_KEY, req.file.path)

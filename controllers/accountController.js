@@ -1,5 +1,5 @@
 const User = require('../models/userModel')
-const Order = require('../models/orderModel')
+const Order = require('../models/OrderModel')
 const Product = require('../models/productModel')
 const ProductCode = require('../models/productCodeModel')
 const jwt = require('jsonwebtoken')
@@ -11,13 +11,11 @@ const path = require('path')
 
 module.exports.getAccount = async (req, res) => {
 	try {
-		//giai ma token
-		// var decoded = jwt.verify(req.cookies.tokenId, process.env.TOKEN_KEY);
-		//doc id
-		// const accountId = decoded.userId;
-		//tim id trong db
-		// var account = await User.findById(req.user._id);
-		var orders = await Order.find({ userId: req.user._id }).lean()
+		if (!req.user) {
+			return res.redirect('/auth/login')
+		}
+
+		let orders = await Order.find({ userId: req.user._id }).lean()
 
 		for (let order of orders) {
 			// console.log(order.products)
@@ -25,14 +23,14 @@ module.exports.getAccount = async (req, res) => {
 				// find productCode -> name
 				//    console.log(product)
 				const pro = await Product.findById(product.productId).lean()
-				const productCode = await ProductCode.findById(pro.idProductCode)
-				product.name = `${productCode.name} - ${pro.color} - ${pro.size}`
+				if (!pro) product.name = 'Sản phẩm đã bị xóa'
+				else {
+					const productCode = await ProductCode.findById(pro.idProductCode)
+					product.name = `${productCode.name} - ${pro.color} - ${pro.size}`
+				}
 			}
 		}
 
-		if (!req.user) {
-			res.redirect('/auth/login')
-		}
 		res.render('pages/account', {
 			user: req.user,
 			orders,
@@ -133,7 +131,7 @@ module.exports.cancelOrder = async (req, res) => {
 		const order = await Order.findOne({
 			_id: req.params.id,
 			userId: req.user._id,
-			status: 'waiting'
+			status: 'waiting',
 		})
 
 		if (!order)

@@ -1,3 +1,14 @@
+const membersData = require('../public/data/membersData')
+
 module.exports.getContact = (req, res) => {
-    res.render('pages/contact')
+    try {
+        res.render('pages/contact',{
+            membersData
+        })
+    } catch (error) {
+        res.status(500).json({
+            message: error.message,
+        })
+    }
+    
 }

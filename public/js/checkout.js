@@ -60,7 +60,7 @@ document.querySelector('.btn-pay').addEventListener('click', async (e) => {
 	let _receiverName = $('.receiver__name__input').val()
 	let _phoneNumber = $('.phone__number__input').val()
 
-	let phoneRegex = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+	let phoneRegex = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/
 
 	if (!phoneRegex.test(_phoneNumber))
 		return alert('Vui lòng điền đúng số điện thoại')
@@ -70,20 +70,30 @@ document.querySelector('.btn-pay').addEventListener('click', async (e) => {
 	let _payment = $('input[name="pay__type"]:checked').val()
 
 	// check input
-	if (!_receiverName && !_phoneNumber && !_address) {
+	if (!_receiverName || !_phoneNumber || !_address) {
 		alert('Vui lòng điền thông tin giao hàng')
 		return
 	}
 
-	const newData = await $.ajax({
-		url: '/checkout',
-		type: 'POST',
-		data: { _receiverName, _phoneNumber, _message, _address, _payment },
-	})
-	// console.log(newData);
-	if (newData.status == 'success') {
+	const res = await fetch(`/checkout`, {
+		method: 'POST',
+		body: JSON.stringify({
+			_receiverName,
+			_phoneNumber,
+			_message,
+			_address,
+			_payment,
+		}),
+		headers: {
+			'Content-Type': 'application/json',
+		},
+	}).then((response) => response.json())
+
+	if (res.status == 'success') {
 		alert('Tạo order thành công')
 		window.location.href = '/products'
+	} else {
+		alert(res.message)
 	}
 })
 

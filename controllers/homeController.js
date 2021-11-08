@@ -1,9 +1,9 @@
 const ProductCode = require('../models/productCodeModel')
 const jwt = require('jsonwebtoken')
-const Cart = require('../models/cartModel')
+const Cart = require('../models/CartModel')
 const slides = require('../public/data/sliderData')
 const cards = require('../public/data/cardData')
-const Order = require('../models/orderModel')
+const Order = require('../models/OrderModel')
 const Product = require('../models/productModel')
 
 module.exports.getAllData = async (req, res) => {
@@ -62,19 +62,25 @@ module.exports.getSearchData = async (req, res) => {
 }
 
 module.exports.getDetailBill = async (req, res) => {
-	try {
-		var order = await Order.findById(req.params.id).lean()
-		for (let product of order.products) {
-			const pro = await Product.findById(product.productId)
+	// try {
+	var order = await Order.findById(req.params.id).lean()
+	for (let product of order.products) {
+		const pro = await Product.findById(product.productId)
+
+		if (!pro) {
+			product.name = 'Sản phẩm đã bị xóa'
+			product.price = 0
+		} else {
 			const productCode = await ProductCode.findById(pro.idProductCode)
 			product.name = `${productCode.name} - ${pro.color} - ${pro.size}`
 			product.price = productCode.cost
 		}
-		res.render('pages/bill', { order })
-	} catch (error) {
-		res.status(500).json({
-			status: 'fail',
-			message: 'Lỗi server',
-		})
 	}
+	res.render('pages/bill', { order })
+	// } catch (error) {
+	// 	res.status(500).json({
+	// 		status: 'fail',
+	// 		message: 'Lỗi server',
+	// 	})
+	// }
 }

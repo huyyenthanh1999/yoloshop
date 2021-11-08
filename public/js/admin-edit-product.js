@@ -1,4 +1,4 @@
-function createMoreProductItem(color = '', size = '', total = '') {
+function createMoreProductItem(color = '', size = '', total = '', _id = '') {
 	const moreProductItem = `<div class="col-3">
 <label class="mb-1">Chọn màu sắc</label>
 <div class="wrap-color d-flex align-items-center">
@@ -43,6 +43,7 @@ function createMoreProductItem(color = '', size = '', total = '') {
 
 	const moreProduct = document.createElement('div')
 	moreProduct.className = 'row more-product-item d-flex align-items-center'
+	moreProduct.setAttribute('data-id', _id)
 	moreProduct.innerHTML = moreProductItem // Insert text
 	document.querySelector('.more-product-wrap').appendChild(moreProduct)
 	return moreProduct
@@ -51,9 +52,6 @@ function createMoreProductItem(color = '', size = '', total = '') {
 const name = document.querySelector('#product-name')
 const cost = document.querySelector('#product-cost')
 const type = document.querySelector('#product-type')
-// const color = document.querySelector('#product-color')
-// const size = document.querySelector('#product-size')
-// const total = document.querySelector('#product-total')
 const description = document.querySelector('#product-description')
 const images = document.querySelector('#product-images')
 
@@ -61,25 +59,6 @@ const formData = new FormData()
 const form = document.querySelector('form')
 const previewImages = $('.preview-images')
 
-// // change color
-// color.addEventListener('input', () => {
-// 	const previewColor = color.previousElementSibling
-// 	// console.log(previewColor)
-// 	previewColor.style.backgroundColor = color.value
-// })
-
-// // change size
-// const sizeInputs = document.querySelectorAll('.wrap-size > div')
-// // console.log(sizeInputs)
-// sizeInputs.forEach((size) => {
-// 	size.addEventListener('click', (e) => {
-// 		sizeInputs.forEach((size) => {
-// 			size.classList.remove('active-size')
-// 		})
-
-// 		e.currentTarget.classList.add('active-size')
-// 	})
-// })
 
 const url = window.location.href.split('/')
 let idProductCode = url[url.length - 1]
@@ -103,7 +82,7 @@ async function getInfoProduct() {
 
 	// add products
 	for (let product of productCode.products) {
-		const moreProduct = createMoreProductItem(product.color, product.size, product.total)
+		const moreProduct = createMoreProductItem(product.color, product.size, product.total, product._id)
 		moreProduct.querySelector('.product-size').value = product.size
 	}
 
@@ -112,9 +91,7 @@ async function getInfoProduct() {
 
 	colorInputs.forEach((item, index) => {
 		item.addEventListener('input', () => {
-			// console.log(index, item)
 			const previewColor = item.previousElementSibling
-			// console.log(previewColor)
 			previewColor.style.backgroundColor = item.value
 		})
 	})
@@ -141,9 +118,7 @@ document
 
 		colorInputs.forEach((item, index) => {
 			item.addEventListener('input', () => {
-				// console.log(index, item)
 				const previewColor = item.previousElementSibling
-				// console.log(previewColor)
 				previewColor.style.backgroundColor = item.value
 			})
 		})
@@ -152,7 +127,6 @@ document
 // add images
 $('#product-images').on('change', function () {
 	let files = this.files
-	// console.log(files)
 	if (files.length == 0) return
 
 	previewImages.empty()
@@ -172,17 +146,9 @@ $('#product-images').on('change', function () {
 form.addEventListener('submit', async (e) => {
 	e.preventDefault()
 
-	// const sizeActive = document.querySelector('#product-size > .active-size')
-	// if (!sizeActive) {
-	// 	alert('Vui lòng nhập kích thước sản phẩm')
-	// 	return
-	// }
-
-	// formData.set('size', sizeActive.innerText)
 	const products = document.querySelectorAll(
 		'.more-product-wrap .more-product-item'
 	)
-	// console.log(products)
 	if (products.length == 0) {
 		alert('Vui lòng thêm chi tiết sản phẩm: màu sắc, size và số lượng...')
 		return
@@ -192,8 +158,7 @@ form.addEventListener('submit', async (e) => {
 	formData.set('name', name.value)
 	formData.set('cost', cost.value)
 	formData.set('type', type.value)
-	// formData.set('color', color.value)
-	// formData.set('total', total.value)
+
 	formData.set('description', description.value)
 
 	// warning when missing images of the product
@@ -203,11 +168,8 @@ form.addEventListener('submit', async (e) => {
 		return
 	}
 
-	// for (let i of formData.entries()) console.log(i)
-
 	// add lazing add product
-	const lazy = document.querySelector('.lazy-loading')
-	lazy.classList.toggle('hide')
+	showLazy()
 
 	// firstly, edit productCode, then edit products
 
@@ -220,16 +182,17 @@ form.addEventListener('submit', async (e) => {
 	// const idProductCode = result.data.productCode._id
     const postStatus = true
 
+	// edit products
 	for (let item of products) {
 		const color = item.querySelector('.product-color').value
 		const size = item.querySelector('.product-size').value
 		const total = item.querySelector('.product-total').value
+		const _id = item.getAttribute('data-id')
 
-		console.log(color, size, total)
 
         let result = await $.ajax({
             url: '/products/api',
-            data: {color, size, total, idProductCode},
+            data: {color, size, total, idProductCode, _id},
             type: 'POST',
         })
         // console.log(result)
@@ -239,7 +202,8 @@ form.addEventListener('submit', async (e) => {
 	}
 
 	// // console.log(result)
-    lazy.classList.toggle('hide')
-	if (postStatus) alert('Thêm sản phẩm thành công')
+    hideLazy()
+
+	if (postStatus) alert('Update sản phẩm thành công')
     else alert('Vui lòng kiểm tra và tiến hành tạo sản phẩm lại, vì do có 1 vài sản phẩm tạo lỗi')
 })

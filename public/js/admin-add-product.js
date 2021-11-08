@@ -60,18 +60,6 @@ colorInput.addEventListener('input', () => {
 	previewColor.style.backgroundColor = colorInput.value
 })
 
-// // change size
-// const sizeInputs = document.querySelectorAll('.wrap-size > div')
-// // console.log(sizeInputs)
-// sizeInputs.forEach((size) => {
-// 	size.addEventListener('click', (e) => {
-// 		sizeInputs.forEach((size) => {
-// 			size.classList.remove('active-size')
-// 		})
-
-// 		e.currentTarget.classList.add('active-size')
-// 	})
-// })
 
 // add images
 $('#product-images').on('change', function () {
@@ -110,34 +98,6 @@ document
 				previewColor.style.backgroundColor = item.value
 			})
 		})
-
-		// item.addEventListener('input', () => {
-		// 	const previewColor = colorInput.previousElementSibling
-		// 	// console.log(previewColor)
-		// 	previewColor.style.backgroundColor = colorInput.value
-		// })
-
-		// change color
-		// const colorInput = document.querySelector('.product-color')
-
-		// colorInput.addEventListener('input', () => {
-		// 	const previewColor = colorInput.previousElementSibling
-		// 	// console.log(previewColor)
-		// 	previewColor.style.backgroundColor = colorInput.value
-		// })
-
-		// // change size
-		// const sizeInputs = document.querySelectorAll('.wrap-size > div')
-		// // console.log(sizeInputs)
-		// sizeInputs.forEach((size) => {
-		// 	size.addEventListener('click', (e) => {
-		// 		sizeInputs.forEach((size) => {
-		// 			size.classList.remove('active-size')
-		// 		})
-
-		// 		e.currentTarget.classList.add('active-size')
-		// 	})
-		// })
 	})
 
 // add product
@@ -154,26 +114,15 @@ form.addEventListener('submit', async (e) => {
 		return
 	}
 
-	// const sizeActive = document.querySelector('.product-size > .active-size')
-	// if (!sizeActive) {
-	// 	alert('Vui lòng nhập kích thước sản phẩm')
-	// 	return
-	// }
-
-	// formData.set('size', sizeActive.innerText)
-
 	const name = document.querySelector('#product-name')
 	const cost = document.querySelector('#product-cost')
 	const type = document.querySelector('#product-type')
-	// const color = document.querySelector('.product-color')
-	// const total = document.querySelector('.product-total')
+
 	const description = document.querySelector('#product-description')
 
 	formData.set('name', name.value)
 	formData.set('cost', cost.value)
 	formData.set('type', type.value)
-	// formData.set('color', color.value)
-	// formData.set('total', total.value)
 	formData.set('description', description.value)
 
 	const previewImages = $('.preview-images img')
@@ -185,8 +134,7 @@ form.addEventListener('submit', async (e) => {
 	// console.log(formData.entries())
 
 	// add lazing add product
-	const lazy = document.querySelector('.lazy-loading')
-	lazy.classList.toggle('hide')
+	showLazy()
 
 	// firstly, create productCode, then create product
 
@@ -218,7 +166,7 @@ form.addEventListener('submit', async (e) => {
 	}
 
 	// // console.log(result)
-    lazy.classList.toggle('hide')
+    hideLazy()
 	if (postStatus) alert('Thêm sản phẩm thành công')
     else alert('Vui lòng kiểm tra và tiến hành tạo sản phẩm lại, vì do có 1 vài sản phẩm tạo lỗi')
 
