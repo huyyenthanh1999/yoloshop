@@ -12,6 +12,10 @@ html {
     font-size: 12.5px;
 }
 
+a.cart-num {
+    display: none;
+}
+
 .checkout__all {
     display: flex;
     width: 100%;
@@ -137,6 +141,10 @@ h3::after {
     bottom: 4px;
     box-shadow: 0 8px 24px rgb(149 157 165 / 20%);
     width: 100%;    
+}
+
+.pay__info > * {
+    margin-bottom: 10px;
 }
 
 .btn__pay__info {
