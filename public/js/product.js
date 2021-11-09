@@ -63,7 +63,7 @@ function render(page) {
                             <img src="${product.images[1]}" alt="" loading="lazy" />
                         </div>
                         <h3 class="product-card__name">${product.name}</h3>
-                        <div class="product-card__price">${formatMoney(product.cost)}</div>
+                        <div class="product-card__price">${product.cost.toLocaleString()}</div>
                     </a>
                     <div class="product-card__btn">
                         <a href="/products/detail/${product._id}">

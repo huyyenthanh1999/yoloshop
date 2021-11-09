@@ -31,8 +31,7 @@ form.addEventListener('submit', async (e) => {
 	// for (let i of newFormData.entries()) console.log(i)
 
 	// add lazing add product
-	const lazy = document.querySelector('.lazy-loading')
-	lazy.classList.toggle('hide')
+	showLazy()
 
     let response = await fetch('/users/' + user._id, {
 		method: 'PUT',
@@ -42,11 +41,11 @@ form.addEventListener('submit', async (e) => {
 
 	console.log(result)
 	if (response.status == 200) {
-		lazy.classList.toggle('hide')
 		alert('Sửa thông tin khách hàng thành công')
         // window.location.href = '/admin/products'
 	} else {
-		lazy.classList.toggle('hide')
 		alert('Sửa thông tin khách hàng thất bại')
 	}
+
+	hideLazy()
 })

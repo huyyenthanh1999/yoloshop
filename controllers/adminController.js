@@ -8,7 +8,7 @@ const imgbbUploader = require('imgbb-uploader')
 // render dashboard
 module.exports.adminDashboard = async (req, res) => {
 	try {
-		const productsCount = await Product.countDocuments()
+		const productsCount = await ProductCode.countDocuments()
 		const usersCount = await User.countDocuments()
 
 		const ordersCount = await Order.countDocuments()

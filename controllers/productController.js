@@ -175,7 +175,7 @@ module.exports.addProduct = async (req, res) => {
 	// co roi thi update
 	let newProduct = null
 
-	if (_id == '') {
+	if (_id == '' || _id == undefined) {
 		newProduct = new Product({ color, total, idProductCode, size })
 		await newProduct.save()
 	} else {

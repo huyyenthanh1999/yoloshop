@@ -204,7 +204,7 @@ $('.avatar-modal__inner').click(function (e) {
 })
 
 //change avatar
-const lazy = document.querySelector('.circle-loading')
+const lazyL = document.querySelector('.circle-loading')
 $('#FileUploadAvatar').change(async function () {
 	let [file] = this.files
 	if (file) {
@@ -216,7 +216,7 @@ $('#FileUploadAvatar').change(async function () {
 	formData.set('avatar', file)
 
 	// add lazing avatar
-	lazy.classList.toggle('hide')
+	lazyL.classList.toggle('hide')
 
 	let response = await fetch('/account/edit-avatar', {
 		method: 'PUT',
@@ -224,12 +224,12 @@ $('#FileUploadAvatar').change(async function () {
 	})
 
 	if (response.status == 200) {
-		lazy.classList.toggle('hide')
+		lazyL.classList.toggle('hide')
 		alert('Sửa avatar thành công')
 		//change avatar
 		$('.account-avatar img').attr('src', URL.createObjectURL(file))
 	} else {
-		lazy.classList.toggle('hide')
+		lazyL.classList.toggle('hide')
 		alert('Sửa avatar thất bại')
 	}
 })
@@ -242,7 +242,7 @@ $('#removeavatar').click(async function () {
 
 		const formData = new FormData()
 		formData.set('avatar', src)
-		lazy.classList.toggle('hide')
+		lazyL.classList.toggle('hide')
 
 		let response = await fetch('/account/edit-avatar', {
 			method: 'PUT',
@@ -250,12 +250,12 @@ $('#removeavatar').click(async function () {
 		})
 
 		if (response.status == 200) {
-			lazy.classList.toggle('hide')
+			lazyL.classList.toggle('hide')
 			alert('Xóa avatar thành công')
 			//change avatar
 			$('.account-avatar img').attr('src', src)
 		} else {
-			lazy.classList.toggle('hide')
+			lazyL.classList.toggle('hide')
 			alert('Xóa avatar thất bại')
 		}
 	}

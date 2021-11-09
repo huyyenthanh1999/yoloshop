@@ -139,3 +139,13 @@ async function searchProduct() {
 		}
 	}
 }
+
+
+const lazy = document.querySelector('.lazy-loading')
+function showLazy() {
+	lazy.classList.remove('hide')
+}
+
+function hideLazy() {
+	lazy.classList.add('hide')
+}

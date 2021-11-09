@@ -16,7 +16,7 @@ module.exports.checkLogging = async (req, res, next) => {
 
 		req.user = user
         // Nếu đã đăng nhập -> không cho login/register nữa -> trả lại về trang chủ
-		res.redirect('/')
+		return res.redirect('/')
 	} catch (error) {
 		// invalid token -> redirect to login page
 		next()
