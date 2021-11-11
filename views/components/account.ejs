@@ -26,19 +26,19 @@
                     <div class="form-control">
                         <label for="">Họ tên</label>
                         <div>
-                            <input type="text" name="fullName" maxlength="128" id="user-account__fullname" value="<%= user.name %>">
+                            <input type="text" name="fullName" minlength="6" maxlength="128" id="user-account__fullname" value="<%= user.name %>">
                         </div>
                     </div>
                     <div class="form-control">
                         <label for="">Số điện thoại</label>
                         <div>
-                            <input type="tel" id="user-account__tel" name="phoneNumber" placeholder="Hãy nhập SĐT để trải nghiệm tốt hơn" value="<%= user.phoneNumber %>">
+                            <input type="tel" id="user-account__tel" name="phoneNumber" placeholder="Hãy nhập SĐT để trải nghiệm tốt hơn" value="<%= user.phoneNumber %>" pattern="0[0-9]{9}" title="Hãy điền đúng 10 chữ số điện thoại">
                         </div>
                     </div>
                     <div class="form-control">
                         <label for="">Email</label>
                         <div>
-                            <input type="text" id="user-account__email" name="email" value="<%= user.email %>">
+                            <input type="email" id="user-account__email" name="email" value="<%= user.email %>">
                         </div>
                     </div>
                     <!-- <div class="form-control">
@@ -82,7 +82,7 @@
                             <span class="show-pass">
                                 <i class='bx bxs-show'></i>
                             </span>
-                            <input type="password" name="user-account__oldPassword" placeholder="Nhập mật khẩu cũ" value="">
+                            <input type="password" name="user-account__oldPassword" placeholder="Nhập mật khẩu cũ" value="" minlength="6">
                         </div>
                     </div>
                     <div class="form-control ">
@@ -91,7 +91,7 @@
                             <span class="show-pass">
                                 <i class='bx bxs-show'></i>
                             </span>
-                            <input type="password" name="user-account__newPassword" placeholder="Mật khẩu từ 6 đến 32 ký tự" value="">
+                            <input type="password" name="user-account__newPassword" placeholder="Mật khẩu từ 6 ký tự" value="" minlength="6">
                         </div>
                     </div>
                     <div class="form-control ">
@@ -100,7 +100,7 @@
                             <span class="show-pass">
                                 <i class='bx bxs-show'></i>
                             </span>
-                            <input type="password" name="user-account__confirmPassword" placeholder="Nhập lại mật khẩu mới" value="">
+                            <input type="password" minlength="6" name="user-account__confirmPassword" placeholder="Nhập lại mật khẩu mới" value="">
                         </div>
                     </div>
                     <div class="form-group">

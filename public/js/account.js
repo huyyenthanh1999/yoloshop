@@ -140,12 +140,16 @@ form.addEventListener('submit', async (e) => {
 			url: `/account/edit-info`,
 			type: 'put',
 			data: { name, phone, email },
-		})
-		if (res1.status == 'success') {
+		}).done(res1 => {
 			alert('Cập nhật thông tin thành công')
-		} else {
+		}).fail(res1 => {
 			alert('Cập nhật thông tin thất bại')
-		}
+		})
+		// if (res1.status == 'success') {
+		// 	alert('Cập nhật thông tin thành công')
+		// } else {
+		// 	alert('Cập nhật thông tin thất bại')
+		// }
 		oldPass = $('input[name="user-account__oldPassword"]').val()
 		newPass = $('input[name="user-account__newPassword"]').val()
 		confirmPass = $('input[name="user-account__confirmPassword"]').val()
@@ -169,14 +173,19 @@ form.addEventListener('submit', async (e) => {
 			url: `/account/edit-info`,
 			type: 'put',
 			data: { name, phone, email },
-		})
-
-		if (res.status == 'success') {
+		}).done(res => {
 			alert('Cập nhật thông tin tài khoản thành công')
 			location.reload()
-		} else {
+		}).fail(err => {
 			alert('Cập nhật thông tin thất bại')
-		}
+		})
+
+		// if (res.status == 'success') {
+		// 	alert('Cập nhật thông tin tài khoản thành công')
+		// 	location.reload()
+		// } else {
+		// 	alert('Cập nhật thông tin thất bại')
+		// }
 	}
 })
 
